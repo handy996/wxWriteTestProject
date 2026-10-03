@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-03T08:24:42.598427+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/scan_secrets.py",
+    "--gitleaks",
+    ".tools/t02/gitleaks/gitleaks.exe"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "4:24PM INF scanned ~6716969 bytes (6.72 MB) in 159ms\n4:24PM INF no leaks found\n\n[]\n\n",
+  "paidCalls": 0
+}

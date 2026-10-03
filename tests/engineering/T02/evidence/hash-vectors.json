@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-03T05:28:18.128743+00:00",
+  "command": [
+    "node",
+    "tests/contracts/T00/hash-vector-js.cjs"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "{\"mode\":\"OFFLINE_JS_CANONICAL_ONLY\",\"releaseHash\":\"db5a739cfbdb871d494ff001ad84c3f051f92088ecf27911daf0497bbb53de83\",\"anchorVectors\":[{\"name\":\"baseline\",\"releaseHash\":\"19dd1be39c127ac3d7b96f208e1978f70b95a5b5776aa5b69d2eb272e054c03a\"},{\"name\":\"moved\",\"releaseHash\":\"8dad7c4b98dc032b6ace9b7ff5c831fd8267ce9a2026f53822f4dc868654b0a9\"},{\"name\":\"side\",\"releaseHash\":\"56823888696bd3a8460e1e8fd61c1aab5fb1c664d97ce2d10966ceadc205c997\"},{\"name\":\"plan\",\"releaseHash\":\"2402904bf7d7d97820512225b64dab920d69b087df3c4487ea20088bc8cd026b\"},{\"name\":\"order\",\"releaseHash\":\"8d3f54068aa5194021680e98c68b08166755dfd2ea0298021f4b6dd27a678847\"}],\"matchesPython\":true,\"limitation\":\"Validates supplied Python projections; not a JavaScript Candidate projection implementation.\"}\n",
+  "paidCalls": 0
+}

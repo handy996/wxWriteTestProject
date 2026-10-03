@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-03T08:15:08.502223+00:00",
+  "command": [
+    "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+    "-B",
+    "-ntp",
+    "-o",
+    "-f",
+    "backend/pom.xml",
+    "-Dmaven.repo.local=.tools/t02/m2",
+    "verify"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 3 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.bootstrap.StartupPolicyTest\n[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.232 s -- in com.example.editorial.bootstrap.StartupPolicyTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] \n[INFO] --- jar:3.4.2:jar (default-jar) @ editorial ---\n[INFO] Building jar: E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar\n[INFO] \n[INFO] --- spring-boot:3.5.16:repackage (repackage) @ editorial ---\n[INFO] Replacing main artifact E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.\n[INFO] The original artifact has been renamed to E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar.original\n[WARNING] Goal makeAggregateBom requires online mode for execution but Maven is currently offline, skipping\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  11.365 s\n[INFO] Finished at: 2026-10-03T16:15:08+08:00\n[INFO] ------------------------------------------------------------------------\n",
+  "paidCalls": 0
+}

@@ -1,0 +1,5 @@
+editorial:
+  runtime:
+    mode: mock
+  providers:
+    mock-enabled: true

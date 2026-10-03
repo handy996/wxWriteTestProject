@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-03T05:46:16.501691+00:00",
+  "command": [
+    "E:\\project\\codex\\wxAgent\\.tools\\t02\\docker-compose.exe",
+    "-f",
+    "infra/compose.yml",
+    "config",
+    "--quiet"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "",
+  "paidCalls": 0
+}

@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-03T05:37:38.023741+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "backend/scripts/dev.py",
+    "up"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 1,
+  "output": "Docker with Compose v2 is required. No services were started.\n",
+  "paidCalls": 0
+}

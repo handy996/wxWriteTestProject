@@ -1,0 +1,984 @@
+[
+  {
+    "summary": "Apache Log4j API: Improper encoding of non-finite floating-point values during MapMessage JSON serialization",
+    "id": "GHSA-qv9r-c865-cp47",
+    "package": "org.apache.logging.log4j:log4j-api",
+    "ranges": [
+      {
+        "introduced": "2.13.1"
+      },
+      {
+        "fixed": "2.25.5"
+      },
+      {
+        "introduced": "2.26.0"
+      },
+      {
+        "fixed": "2.26.1"
+      }
+    ],
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49844"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/logging-log4j2/pull/4163"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/logging-log4j2/commit/19edb23e162d6c728a8c2221a240037d389ed300"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/logging-log4j2/commit/feadf8eb0b4acb6ddfa4c0ab2bbc6d88b8e12d82"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/apache/logging-log4j2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/logging-log4j2/releases/tag/rel/2.25.5"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/logging-log4j2/releases/tag/rel/2.26.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://logging.apache.org/cyclonedx/vdr.xml"
+      },
+      {
+        "type": "WEB",
+        "url": "https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#event-template-resolver-message"
+      },
+      {
+        "type": "WEB",
+        "url": "https://logging.apache.org/security.html#CVE-2026-49844"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind: @JsonView bypassed for @JsonUnwrapped container properties on deserialization",
+    "id": "GHSA-5gvw-p9qm-jgwh",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.21.0"
+      },
+      {
+        "fixed": "2.21.5"
+      },
+      {
+        "introduced": "2.18.0"
+      },
+      {
+        "fixed": "2.18.9"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.1"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-5gvw-p9qm-jgwh"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59889"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/6060"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6056"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/d627a8a86fcb062429282f79f3f256f181ed2c7b"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind has case-insensitive deserialization bypasses per-property @JsonIgnoreProperties",
+    "id": "GHSA-5jmj-h7xm-6q6v",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "3.1.0"
+      },
+      {
+        "fixed": "3.1.4"
+      },
+      {
+        "introduced": "2.8.0"
+      },
+      {
+        "fixed": "2.18.9"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.5"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.1"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-5jmj-h7xm-6q6v"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54515"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/5962"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/5964"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/0e1b0b211f7a53baa62ba2f4c9bd006c7bf4d5fa"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind quadratic forward-reference completion ",
+    "id": "GHSA-cxp5-3px4-pw24",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.7"
+      },
+      {
+        "introduced": "2.5.0"
+      },
+      {
+        "fixed": "2.18.11"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.3"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-cxp5-3px4-pw24"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91777"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/6204"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6204"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/37ad9b81712cbb9fb62c2d2c1813593252a24b67"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.11"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.3"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.3"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind: Comparable missing from DefaultBaseTypeLimitingValidator's unsafe base types (incomplete PolymorphicTypeValidator denylist)",
+    "id": "GHSA-gx83-3vf8-gh7j",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.11.0"
+      },
+      {
+        "fixed": "2.18.10"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.6"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.2"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-gx83-3vf8-gh7j"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83557"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/6156"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6155"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/eb3b7fc0f9c0d27f471550ac3316b17d1987388f"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.10"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.2"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind: `@JsonView` bypass for creator properties with `@JsonTypeInfo(include=As.EXTERNAL_PROPERTY)`",
+    "id": "GHSA-mhm7-754m-9p8w",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.18.0"
+      },
+      {
+        "fixed": "2.18.9"
+      },
+      {
+        "introduced": "2.21.0"
+      },
+      {
+        "fixed": "2.21.5"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-mhm7-754m-9p8w"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/c628b357ed143d8492756d5c1458cfb9fbeb29ed"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/dea7eb466e98cc226c4ac65587581fb49926820c"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      }
+    ]
+  },
+  {
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-vvgp-rfg2-7rr6"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77310"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6058"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/2fc7bd9057dd051d7dea0e5fcad89822d0fa5ebd"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.9"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.5"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.5"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.1"
+      }
+    ],
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "id": "GHSA-vvgp-rfg2-7rr6",
+    "summary": "jackson-databind: Incomplete fix for CVE-2026-54514: eager DNS resolution (SSRF) still present in InetAddress deserialization",
+    "ranges": [
+      {
+        "introduced": "2.0.0"
+      },
+      {
+        "fixed": "2.18.9"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.5"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.1"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind: Duration XMLGregorianCalendar Unbounded Number Parse DoS",
+    "id": "GHSA-q4xh-88c3-wmh7",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.14.0"
+      },
+      {
+        "fixed": "2.18.10"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.6"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.2"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-q4xh-88c3-wmh7"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68497"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6127"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/a99b7e74c8928f43f6975773a8c862c8316178bd"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.10"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.2"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind: Path Deserialization Missing Scheme Allowlist for FileSystemProvider Resolution",
+    "id": "GHSA-wjgm-6hv5-3cvf",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.8.0"
+      },
+      {
+        "fixed": "2.18.10"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.6"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.2"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-wjgm-6hv5-3cvf"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19032"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/pull/6129"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/cc6756b61ed90b6b9227f670e0408d5d9bd48551"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/ce26eda3481cd796f76ba4c53ffe1da23b53f166"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/d94bb632becfe0ba96926b9909ab06d1f87aad6d"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.10"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.2"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-databind retains every unknown raw type ID ",
+    "id": "GHSA-wv8q-qhhj-9h54",
+    "package": "com.fasterxml.jackson.core:jackson-databind",
+    "ranges": [
+      {
+        "introduced": "2.0.0"
+      },
+      {
+        "fixed": "2.18.11"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.7"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.3"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-wv8q-qhhj-9h54"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91776"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/issues/6203"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/commit/2870d1d6dc1b7e1c07ee11dd5b04ab71cddbb577"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-databind"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.18.11"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.21.7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-2.22.3"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.1.7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-databind/releases/tag/jackson-databind-3.2.3"
+      }
+    ]
+  },
+  {
+    "summary": "Apache Tomcat's DIGEST authenticator has an Authentication Bypass by Capture-replay vulnerability",
+    "id": "GHSA-9xv2-5v5q-p794",
+    "package": "org.apache.tomcat.embed:tomcat-embed-core",
+    "ranges": [
+      {
+        "introduced": "11.0.0-M1"
+      },
+      {
+        "fixed": "11.0.25"
+      },
+      {
+        "introduced": "10.1.0-M1"
+      },
+      {
+        "fixed": "10.1.58"
+      },
+      {
+        "introduced": "9.0.0.M1"
+      },
+      {
+        "fixed": "9.0.121"
+      },
+      {
+        "introduced": "8.5.0"
+      },
+      {
+        "last_affected": "8.5.100"
+      },
+      {
+        "introduced": "7.0.30"
+      },
+      {
+        "last_affected": "7.0.109"
+      }
+    ],
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65905"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/apache/tomcat"
+      },
+      {
+        "type": "WEB",
+        "url": "https://lists.apache.org/thread/9v114xlpgbzrrbzz5vf9f6r2q4wnxwwj"
+      },
+      {
+        "type": "WEB",
+        "url": "http://www.openwall.com/lists/oss-security/2026/08/26/4"
+      }
+    ]
+  },
+  {
+    "summary": "Apache Tomcat has an Improper Access Control, Incorrect Authorization vulnerability",
+    "id": "GHSA-gcx9-497g-6cp6",
+    "package": "org.apache.tomcat.embed:tomcat-embed-core",
+    "ranges": [
+      {
+        "introduced": "11.0.0-M1"
+      },
+      {
+        "fixed": "11.0.25"
+      },
+      {
+        "introduced": "10.1.0-M1"
+      },
+      {
+        "fixed": "10.1.58"
+      },
+      {
+        "introduced": "9.0.0-M1"
+      },
+      {
+        "fixed": "9.0.121"
+      },
+      {
+        "introduced": "8.5.0"
+      },
+      {
+        "last_affected": "8.5.100"
+      },
+      {
+        "introduced": "7.0.0"
+      },
+      {
+        "last_affected": "7.0.109"
+      }
+    ],
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65182"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/8bafd79a3b54684e80e9cb1bafd4746aede7d3f5"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/b2c56ec8f20c66773a1a813034ffcdb60841f1cf"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/b79752d2a8578d94743e2a95c50af297f780c0df"
+      },
+      {
+        "type": "WEB",
+        "url": "https://lists.apache.org/thread/joosxvzc9b49ttj8lj0jw9mqt0ml767m"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-10.html"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-11.html"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-9.html"
+      },
+      {
+        "type": "WEB",
+        "url": "http://www.openwall.com/lists/oss-security/2026/08/26/1"
+      }
+    ]
+  },
+  {
+    "summary": "Apache Tomcat's FORM authentication process has an Incorrect Authorization vulnerability",
+    "id": "GHSA-h3x4-894j-xpx5",
+    "package": "org.apache.tomcat.embed:tomcat-embed-core",
+    "ranges": [
+      {
+        "introduced": "11.0.0-M1"
+      },
+      {
+        "fixed": "11.0.25"
+      },
+      {
+        "introduced": "10.1.0-M1"
+      },
+      {
+        "fixed": "10.1.58"
+      },
+      {
+        "introduced": "9.0.0-M1"
+      },
+      {
+        "fixed": "9.0.121"
+      },
+      {
+        "introduced": "8.5.0"
+      },
+      {
+        "last_affected": "8.5.100"
+      },
+      {
+        "introduced": "7.0.0"
+      },
+      {
+        "last_affected": "7.0.109"
+      }
+    ],
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68525"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/10d048e16034ddf12055e0cede0da05b15c823b8"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/32f0c38526b4e655ff0c17cd97afedefc624fe43"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/apache/tomcat/commit/58123aa468a20e2a079b7e0c68a4009e2475c098"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/apache/tomcat"
+      },
+      {
+        "type": "WEB",
+        "url": "https://lists.apache.org/thread/x1y2lfsgzxwzc456f8954vbvgn03zhd7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-10.html"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-11.html"
+      },
+      {
+        "type": "WEB",
+        "url": "https://tomcat.apache.org/security-9.html"
+      },
+      {
+        "type": "WEB",
+        "url": "http://www.openwall.com/lists/oss-security/2026/08/26/7"
+      }
+    ]
+  },
+  {
+    "summary": "jackson-core: UTF8DataInputJsonParser._reportInvalidToken() missing maxErrorTokenLength limit -> unbounded StringBuilder growth (DoS)",
+    "id": "GHSA-7hhh-6rmp-j9qf",
+    "package": "com.fasterxml.jackson.core:jackson-core",
+    "ranges": [
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.7"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.3"
+      },
+      {
+        "introduced": "2.8.0"
+      },
+      {
+        "fixed": "2.18.11"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/security/advisories/GHSA-7hhh-6rmp-j9qf"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89425"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/pull/1698"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/commit/211cf2c5d91abbec38067f37efc1363cd4e88ee3"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-core"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/releases/tag/jackson-core-2.18.11"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/releases/tag/jackson-core-3.2.3"
+      }
+    ]
+  },
+  {
+    "summary": " jackson-core: ReDoS: quadratic backtracking in NumberInput.PATTERN_FLOAT via looksLikeValidNumber()",
+    "id": "GHSA-p6pp-m3f8-5c89",
+    "package": "com.fasterxml.jackson.core:jackson-core",
+    "ranges": [
+      {
+        "introduced": "2.17.0"
+      },
+      {
+        "fixed": "2.18.11"
+      },
+      {
+        "introduced": "2.19.0"
+      },
+      {
+        "fixed": "2.21.7"
+      },
+      {
+        "introduced": "2.22.0"
+      },
+      {
+        "fixed": "2.22.3"
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/security/advisories/GHSA-p6pp-m3f8-5c89"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89407"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/issues/1649"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/pull/1650"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/pull/1701"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/commit/731e794f62623aa0d86ced52490166be903fbb1d"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FasterXML/jackson-core/commit/e7acd64cc99bd346704423dc2bfea1ab0a08ddff"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/FasterXML/jackson-core"
+      }
+    ]
+  },
+  {
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/pgjdbc/pgjdbc/security/advisories/GHSA-j92g-9f8w-j867"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54291"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/pgjdbc/pgjdbc/commit/77df98e4e66c12936ded3478a0954f6f580bad99"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ongres/scram/releases/tag/3.3"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/pgjdbc/pgjdbc"
+      }
+    ],
+    "package": "org.postgresql:postgresql",
+    "id": "GHSA-j92g-9f8w-j867",
+    "summary": "PostgreSQL JDBC Driver: Silent channel-binding authentication downgrade via unsupported certificate algorithms",
+    "ranges": [
+      {
+        "introduced": "42.7.4"
+      },
+      {
+        "fixed": "42.7.12"
+      }
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-03T08:10:16.087636+00:00",
+  "command": [
+    "npx.cmd",
+    "--yes",
+    "--package",
+    "@playwright/cli",
+    "playwright-cli",
+    "-s=t02-live",
+    "open",
+    "http://127.0.0.1:5173"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02",
+  "exitCode": 0,
+  "output": "### Browser `t02-live` opened with pid 1344.\n### Ran Playwright code\n```js\nawait page.goto('http://127.0.0.1:5173');\n```\n### Page\n- Page URL: http://127.0.0.1:5173/\n- Page Title: AI 编辑工作台 · 工程预览\n### Snapshot\n- [Snapshot](.playwright-cli\\page-2026-10-03T08-10-16-054Z.yml)\n",
+  "paidCalls": 0
+}

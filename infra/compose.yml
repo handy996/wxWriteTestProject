@@ -1,0 +1,41 @@
+name: wxagent
+services:
+  db:
+    image: postgres:17.11-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_DB: editorial
+      POSTGRES_USER: editorial_admin
+      POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD:?Set DB_ADMIN_PASSWORD}
+      DB_RUNTIME_PASSWORD: ${DB_RUNTIME_PASSWORD:?Set DB_RUNTIME_PASSWORD}
+      DB_MIGRATION_PASSWORD: ${DB_MIGRATION_PASSWORD:?Set DB_MIGRATION_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../backend/docker/init-db.sh:/docker-entrypoint-initdb.d/10-editorial.sh:ro
+      - ../backend/docker/bootstrap.sql:/bootstrap/bootstrap.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U editorial_admin -d editorial"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  backend:
+    build: ../backend
+    environment:
+      SPRING_PROFILES_ACTIVE: ${APP_PROFILE:-mock}
+      DB_URL: jdbc:postgresql://db:5432/editorial
+      DB_RUNTIME_PASSWORD: ${DB_RUNTIME_PASSWORD:?Set DB_RUNTIME_PASSWORD}
+      DB_MIGRATION_PASSWORD: ${DB_MIGRATION_PASSWORD:?Set DB_MIGRATION_PASSWORD}
+    depends_on:
+      db: { condition: service_healthy }
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+  frontend:
+    build: ../frontend
+    ports: ["127.0.0.1:${WEB_PORT:-8080}:8080"]
+    depends_on: [backend]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+volumes:
+  pgdata:

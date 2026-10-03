@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-03T05:37:37.796254+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/scan_secrets.py",
+    "--gitleaks",
+    ".tools/t02/gitleaks/gitleaks.exe"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 1,
+  "output": "1:37PM INF scanned ~6504576 bytes (6.50 MB) in 141ms\n1:37PM WRN leaks found: 1\n\n[\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 937,\n  \"EndLine\": 937,\n  \"StartColumn\": 2,\n  \"EndColumn\": 54,\n  \"Match\": \"Idempotency-Key: REDACTED\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/tests/engineering/T02/.work/secret-scan-fh0u9c1x/docs/AI-Editorial-Agent-SRS-v1.0.md\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.6166987,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/tests/engineering/T02/.work/secret-scan-fh0u9c1x/docs/AI-Editorial-Agent-SRS-v1.0.md:generic-api-key:937\"\n }\n]\n\n",
+  "paidCalls": 0
+}

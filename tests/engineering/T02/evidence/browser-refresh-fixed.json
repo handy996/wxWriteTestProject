@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-03T05:46:59.984942+00:00",
+  "command": [
+    "npx.cmd",
+    "--yes",
+    "--package",
+    "@playwright/cli",
+    "playwright-cli",
+    "-s=t02",
+    "click",
+    "f1e12"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02",
+  "exitCode": 0,
+  "output": "### Ran Playwright code\n```js\nawait page.getByRole('button', { name: '重新检查连接' }).click();\n```\n### Page\n- Page URL: http://127.0.0.1:5173/\n- Page Title: AI 编辑工作台 · 工程预览\n- Console: 2 errors, 0 warnings\n### Snapshot\n- [Snapshot](.playwright-cli\\page-2026-10-03T05-46-59-955Z.yml)\n### Events\n- New console entries: .playwright-cli\\console-2026-10-03T05-45-06-151Z.log#L4\n",
+  "paidCalls": 0
+}

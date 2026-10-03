@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-03T05:36:07.720878+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/scan_secrets.py",
+    "--gitleaks",
+    ".tools/t02/gitleaks/gitleaks.exe"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 1,
+  "output": "",
+  "paidCalls": 0
+}

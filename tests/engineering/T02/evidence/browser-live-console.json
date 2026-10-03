@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-03T08:10:51.911404+00:00",
+  "command": [
+    "npx.cmd",
+    "--yes",
+    "--package",
+    "@playwright/cli",
+    "playwright-cli",
+    "-s=t02-live",
+    "console"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02",
+  "exitCode": 0,
+  "output": "### Result\nTotal messages: 3 (Errors: 1, Warnings: 0)\nReturning 1 messages for level \"info\"\n\n[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/actuator/info:0\n",
+  "paidCalls": 0
+}

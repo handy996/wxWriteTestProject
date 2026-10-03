@@ -1,0 +1,8 @@
+editorial:
+  runtime:
+    mode: prod
+server:
+  servlet:
+    session:
+      cookie:
+        secure: true

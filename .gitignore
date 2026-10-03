@@ -16,3 +16,4 @@ infra/.env
 .vscode/
 frontend/.npm-cache/
 tests/engineering/T02/.work/
+**/.playwright-cli/

@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: editorial
+  profiles:
+    default: mock
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/editorial}
+    username: editorial_runtime
+    password: ${DB_RUNTIME_PASSWORD:}
+    hikari:
+      maximum-pool-size: 4
+      connection-timeout: 5000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: editorial
+  sql:
+    init:
+      mode: never
+  flyway:
+    enabled: true
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/editorial}
+    user: editorial_migrator
+    password: ${DB_MIGRATION_PASSWORD:}
+    schemas: editorial_migrations,editorial
+    default-schema: editorial_migrations
+    create-schemas: false
+    clean-disabled: true
+    baseline-on-migrate: false
+    validate-migration-naming: true
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: strict
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: readinessState,db
+logging:
+  structured:
+    format:
+      console: logstash
+editorial:
+  providers:
+    paid-calls-enabled: false
+    mock-enabled: false

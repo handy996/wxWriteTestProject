@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-03T08:12:59.334365+00:00",
+  "command": [
+    "npm.cmd",
+    "run",
+    "build"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\frontend",
+  "exitCode": 0,
+  "output": "\n> editorial-workbench@0.1.0 build\n> npm run typecheck && vite build\n\n\n> editorial-workbench@0.1.0 typecheck\n> vue-tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 1590 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                  0.43 kB │ gzip:  0.34 kB\ndist/assets/index-npAhKnfO.css  28.42 kB │ gzip:  4.22 kB\ndist/assets/index-C7Qm5kaO.js   93.82 kB │ gzip: 36.75 kB\n\n✓ built in 365ms\n",
+  "paidCalls": 0
+}

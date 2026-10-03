@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-03T05:36:16.626336+00:00",
+  "command": [
+    "npm.cmd",
+    "ci",
+    "--cache",
+    ".npm-cache",
+    "--no-fund"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\frontend",
+  "exitCode": 0,
+  "output": "\nadded 74 packages, and audited 75 packages in 9s\n\nfound 0 vulnerabilities\n",
+  "paidCalls": 0
+}

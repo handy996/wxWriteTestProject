@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-03T05:46:24.034169+00:00",
+  "command": [
+    "npx.cmd",
+    "--yes",
+    "--package",
+    "@playwright/cli",
+    "playwright-cli",
+    "-s=t02",
+    "click",
+    "e12"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02",
+  "exitCode": 1,
+  "output": "### Error\nError: Ref e12 not found in the current page snapshot. Try capturing new snapshot.\n",
+  "paidCalls": 0
+}

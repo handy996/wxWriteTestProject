@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-03T08:10:18.110990+00:00",
+  "command": [
+    "npx.cmd",
+    "--yes",
+    "--package",
+    "@playwright/cli",
+    "playwright-cli",
+    "-s=t02-live",
+    "snapshot"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02",
+  "exitCode": 0,
+  "output": "### Page\n- Page URL: http://127.0.0.1:5173/\n- Page Title: AI 编辑工作台 · 工程预览\n### Snapshot\n```yaml\n- main [ref=e3]:\n  - paragraph [ref=e4]: AI EDITORIAL AGENT\n  - heading \"编辑工作台\" [level=1] [ref=e5]\n  - paragraph [ref=e6]: 内部编辑草稿，尚未完成事实与版权核查\n  - region [ref=e7]:\n    - heading \"工程连接状态\" [level=2] [ref=e8]\n    - status [ref=e9]: 后端已连接 · 工程骨架\n    - paragraph [ref=e10]:\n      - text: 运行模式：\n      - strong [ref=e11]: mock\n      - text: · 契约：1.0.0-rc.3\n    - button \"重新检查连接\" [ref=e12] [cursor=pointer]\n  - region [ref=e14]:\n    - heading \"能力尚未接入\" [level=2] [ref=e15]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - strong [ref=e18]: 文本编辑\n        - generic [ref=e19]: 不可用 · 等待 Provider 与预算模块接入\n      - listitem [ref=e20]:\n        - strong [ref=e21]: 视觉分析\n        - generic [ref=e22]: 不可用 · 等待 Provider 与预算模块接入\n      - listitem [ref=e23]:\n        - strong [ref=e24]: 网络检索\n        - generic [ref=e25]: 不可用 · 等待 Provider 与预算模块接入\n      - listitem [ref=e26]:\n        - strong [ref=e27]: 图像生成\n        - generic [ref=e28]: 不可用 · 等待 Provider 与预算模块接入\n    - paragraph [ref=e29]: 本页仅用于验证启动。mock 模式不代表模型调用成功；当前没有收费调用，也不能创建、批准或正式导出文章。\n```\n",
+  "paidCalls": 0
+}

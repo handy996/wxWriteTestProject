@@ -1,2 +1,10 @@
 * -text
 *.sh text eol=lf
+/backend/** text eol=lf
+/frontend/** text eol=lf
+/infra/** text eol=lf
+/.github/** text eol=lf
+/README.md text eol=lf
+/tests/engineering/** text eol=lf
+/tests/engineering/**/*.png -text
+/docs/execution/reports/T02.md text eol=lf

@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-03T05:26:18.644180+00:00",
+  "command": [
+    "npm.cmd",
+    "run",
+    "build"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent\\frontend",
+  "exitCode": 1,
+  "output": "\n> editorial-workbench@0.1.0 build\n> npm run typecheck && vite build\n\n\n> editorial-workbench@0.1.0 typecheck\n> vue-tsc --noEmit\n\nE:\\project\\codex\\wxAgent\\frontend\\node_modules\\vue-tsc\\index.js:68\n                throw err;\n                ^\n\nError [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './lib/tsc' is not defined by \"exports\" in E:\\project\\codex\\wxAgent\\frontend\\node_modules\\typescript\\package.json\n    at exportsNotFound (node:internal/modules/esm/resolve:310:10)\n    at packageExportsResolve (node:internal/modules/esm/resolve:658:9)\n    at resolveExports (node:internal/modules/cjs/loader:685:36)\n    at Module._findPath (node:internal/modules/cjs/loader:752:31)\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1461:27)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1049:27)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1094:12)\n    at require.resolve (node:internal/modules/helpers:171:31)\n    at resolveTscPath (E:\\project\\codex\\wxAgent\\frontend\\node_modules\\vue-tsc\\index.js:73:43)\n    at main (E:\\project\\codex\\wxAgent\\frontend\\node_modules\\vue-tsc\\index.js:44:45) {\n  code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'\n}\n\nNode.js v24.15.0\n",
+  "paidCalls": 0
+}

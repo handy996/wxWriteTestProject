@@ -1,0 +1,11 @@
+{
+  "name": "editorial-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.12.1",
+  "engines": { "node": "24.15.0", "npm": "11.12.1" },
+  "scripts": { "dev": "vite --host 127.0.0.1", "typecheck": "vue-tsc --noEmit", "build": "npm run typecheck && vite build" },
+  "dependencies": { "vue": "3.5.43", "pinia": "4.0.3", "element-plus": "2.14.7" },
+  "devDependencies": { "@vitejs/plugin-vue": "6.0.9", "typescript": "5.9.3", "vite": "8.3.2", "vue-tsc": "3.3.12" }
+}

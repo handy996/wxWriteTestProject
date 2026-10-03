@@ -1,0 +1,10 @@
+title = "T02 source scan with exact SRS fixture exception"
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "SRS line 937: public example request UUID, not an authentication credential"
+condition = "AND"
+paths = ['''docs[/\\]AI-Editorial-Agent-SRS-v1\.0\.md$''']
+regexTarget = "match"
+regexes = ['''Idempotency-Key: 397c4e7a-d8f0-4d83-b885-342f8248d8e2''']

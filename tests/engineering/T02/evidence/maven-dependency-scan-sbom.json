@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-03T08:21:02.588787+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/dependency_scan.py"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "{\n  \"source\": \"https://api.osv.dev/v1/querybatch\",\n  \"packagesChecked\": 78,\n  \"findings\": []\n}\n",
+  "paidCalls": 0
+}

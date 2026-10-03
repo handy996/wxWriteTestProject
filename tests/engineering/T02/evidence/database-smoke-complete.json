@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-03T08:11:04.062543+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/integration.py",
+    "--pg-bin",
+    ".tools/t02/postgresql-full/pgsql/bin",
+    "--java",
+    ".tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+    "--app-port",
+    "8080",
+    "--ui-wait-seconds",
+    "60"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "OK: Bootstrap creates separate runtime/migration roles on an empty real PostgreSQL database\nOK: No domain tables before application startup\nOK: Empty database: packaged Java 21 application reaches readiness UP\nOK: Mock mode is explicit and all real capabilities remain unavailable\nBrowser inspection window: http://127.0.0.1:8080\nOK: Blocked unauthenticated or sensitive route: /api/v1/articles\nOK: Blocked unauthenticated or sensitive route: /actuator/env\nOK: Blocked unauthenticated or sensitive route: /actuator/configprops\nOK: Flyway applied only infrastructure permissions\nOK: Second application startup leaves migration history unchanged\nOK: Runtime cannot create tables/temp tables/schemas, read history, or assume migrator\nOK: Default deny; explicit INSERT and column UPDATE work without blanket UPDATE/DELETE\nOK: Packaged application rejects T02_PROFILE\nOK: Packaged application rejects T02_MOCK\nOK: Packaged application rejects T02_PAID_CALLS\nOK: Packaged application rejects T02_DDL\nOK: Packaged application rejects T02_FLYWAY\nOK: Effective database privilege escalation is rejected\nOK: Unreachable database fails startup instead of reporting ready\nOK: No business tables introduced\n",
+  "paidCalls": 0
+}

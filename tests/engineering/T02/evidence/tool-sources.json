@@ -1,0 +1,67 @@
+{
+  "verifiedDate": "2026-10-03",
+  "baselineCommit": "74c25251248752205f82d6c909fb3815b08fd8e9",
+  "contractVersion": "1.0.0-rc.3",
+  "python": "3.12.14",
+  "jdkWindows": {
+    "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jdk_x64_windows_hotspot_21.0.12.1_1.zip",
+    "sha256": "f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e"
+  },
+  "jdkLinux": {
+    "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz",
+    "sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94"
+  },
+  "images": [
+    {
+      "image": "maven",
+      "tag": "3.9.11-eclipse-temurin-21",
+      "digest": "sha256:6fdc855a6ed81d288ca7ca37ac6ff5e9308b612485c0801d70b25a858c83d237"
+    },
+    {
+      "image": "eclipse-temurin",
+      "tag": "21-jre-jammy",
+      "digest": "sha256:f04fb34e053148344e83317976114ec3f37e4b830ec8bdab5a2fe3cecd7d010b"
+    },
+    {
+      "image": "postgres",
+      "tag": "17.11-alpine",
+      "digest": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+    },
+    {
+      "image": "nginx",
+      "tag": "1.28.0-alpine",
+      "digest": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+    },
+    {
+      "image": "node",
+      "tag": "24.15.0-alpine",
+      "digest": "sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f"
+    }
+  ],
+  "downloads": [
+    {
+      "url": "https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.11/apache-maven-3.9.11-bin.zip",
+      "sha256": "0d7125e8c91097b36edb990ea5934e6c68b4440eef4ea96510a0f6815e7eeadb",
+      "size": 9278421,
+      "verification": "publisher checksum verified"
+    },
+    {
+      "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_windows_x64.zip",
+      "sha256": "d29144deff3a68aa93ced33dddf84b7fdc26070add4aa0f4513094c8332afc4e",
+      "size": 8438883,
+      "verification": "publisher checksum verified"
+    },
+    {
+      "url": "https://get.enterprisedb.com/postgresql/postgresql-17.11-1-windows-x64-binaries.zip",
+      "sha256": "6eabdf00d2893713b75db4336a23c3fdf505f056e217ec6e2e95d901750cfea3",
+      "size": 340719294,
+      "verification": "HTTPS vendor download; observed SHA256, not independent signature verification"
+    },
+    {
+      "url": "https://github.com/docker/compose/releases/download/v5.6.0/docker-compose-windows-x86_64.exe",
+      "sha256": "8aeaa0055e660e12cf07cd70680dc8333957fe6718528b91ec3da084eab62483",
+      "size": 33352192,
+      "verification": "publisher checksum verified"
+    }
+  ]
+}
