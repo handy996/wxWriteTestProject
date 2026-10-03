@@ -1,0 +1,92 @@
+[
+  {
+    "id": "under-minimum",
+    "path": "tests/fixtures/inputs/under-minimum.txt",
+    "sha256": "77893b927f3bc5595063a43d5cb3d004572bf8e9c7fcd7b63e161a0ed98971b9",
+    "expected": "422",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "minimum",
+    "path": "tests/fixtures/inputs/minimum.txt",
+    "sha256": "640b91e6c574cfb25147b077eff49ffef468bd8f67973d9a72ecdab9d4f37748",
+    "expected": "ACCEPT_INPUT_ONLY",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "maximum",
+    "path": "tests/fixtures/inputs/maximum.txt",
+    "sha256": "a780339333b5d89335733d9566dcb198a40a55361bb2c49653fa246b48b8ac86",
+    "expected": "ACCEPT_INPUT_ONLY",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "over-maximum",
+    "path": "tests/fixtures/inputs/over-maximum.txt",
+    "sha256": "4843255ee4047feba6423eae80fa53db17a559616ca866230c3ab707e4a29960",
+    "expected": "422",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "unicode-codepoints",
+    "path": "tests/fixtures/inputs/unicode-codepoints.txt",
+    "sha256": "d2e4423454983672a3cc6df5d3bc69f7ecf4bf6e6b17043e61da2f665da045f2",
+    "expected": "ACCEPT_INPUT_ONLY",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "html",
+    "path": "tests/fixtures/inputs/html.txt",
+    "sha256": "89710d621b553131f429e5061fb154512433fbcf8fbed697fea84fbb2f76f4c8",
+    "expected": "422",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "prompt-injection",
+    "path": "tests/fixtures/inputs/prompt-injection.txt",
+    "sha256": "016da6c7e6feec8bcdcc2942f9ee4843fc2219644fa3fadc0cad38735e69c43b",
+    "expected": "DATA_ONLY",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "markdown-code",
+    "path": "tests/fixtures/inputs/markdown-code.txt",
+    "sha256": "98731ce8b7f33f8ad9a6955a850e0d3788ef484fd88b21af04fe51349dd85c7c",
+    "expected": "REJECT_UNSUPPORTED_BLOCK_NO_EXECUTION",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  },
+  {
+    "id": "over-upload-bytes",
+    "path": "tests/fixtures/inputs/over-upload-bytes.txt",
+    "sha256": "9d78de4e5b12fc166bed811cd230621ea1e1e353553fe31b92a73bfbf45d68ee",
+    "expected": "422",
+    "ac": [
+      "AC-01",
+      "AC-27"
+    ]
+  }
+]

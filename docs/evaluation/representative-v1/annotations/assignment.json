@@ -1,0 +1,15 @@
+{
+  "status": "UNASSIGNED",
+  "reviewerA": null,
+  "reviewerB": null,
+  "adjudicator": null,
+  "independenceEvidence": null,
+  "productRepresentativenessApproval": null,
+  "rightsApproval": null,
+  "requiredActions": [
+    "通读每篇并补漏，不仅勾选候选200条",
+    "A/B独立标注后保留原表",
+    "逐条复核分歧并保留理由和证据",
+    "确认五类素材代表性，必要时新版本加入获权真实材料"
+  ]
+}

@@ -1,0 +1,2253 @@
+{
+  "mode": "OFFLINE_SYNTHETIC",
+  "version": {
+    "meta": {
+      "id": "00000000-0000-4000-8000-000000000014",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "ownerId": "00000000-0000-4000-8000-00000000001e",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "executionId": "00000000-0000-4000-8000-000000000001",
+      "schemaVersion": "1.0.0-rc.3",
+      "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+      "stale": false,
+      "createdBy": "00000000-0000-4000-8000-000000000001",
+      "createdAt": "2026-10-02T12:00:00Z",
+      "traceId": "00000000-0000-4000-8000-000000000001",
+      "mode": "MOCK"
+    },
+    "versionNo": 1,
+    "parentVersionId": "00000000-0000-4000-8000-000000000001",
+    "restoredFromVersionId": "00000000-0000-4000-8000-000000000001",
+    "kind": "ORIGINAL",
+    "changeSource": "AI",
+    "title": "x",
+    "subtitle": "x",
+    "contentAst": {
+      "schemaVersion": "1.0.0-rc.3",
+      "blocks": [
+        {
+          "sectionId": "section-1",
+          "blockId": "block-A",
+          "blockType": "paragraph",
+          "text": "第一段😀。",
+          "marks": [],
+          "claimRefs": [],
+          "level": null,
+          "items": [],
+          "slotId": null
+        },
+        {
+          "sectionId": "section-1",
+          "blockId": "block-B",
+          "blockType": "paragraph",
+          "text": "第二段。",
+          "marks": [],
+          "claimRefs": [],
+          "level": null,
+          "items": [],
+          "slotId": null
+        }
+      ]
+    },
+    "plainText": "x",
+    "changeSummary": "x",
+    "blockMappings": []
+  },
+  "manifest": {
+    "meta": {
+      "id": "00000000-0000-4000-8000-000000000028",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "ownerId": "00000000-0000-4000-8000-00000000001e",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "executionId": "00000000-0000-4000-8000-000000000001",
+      "schemaVersion": "1.0.0-rc.3",
+      "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "contentHash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+      "stale": false,
+      "createdBy": "00000000-0000-4000-8000-000000000001",
+      "createdAt": "2026-10-02T12:00:00Z",
+      "traceId": "00000000-0000-4000-8000-000000000001",
+      "mode": "MOCK"
+    },
+    "items": [
+      {
+        "displayOrder": 1,
+        "slotId": "00000000-0000-4000-8000-000000000046",
+        "selectionId": "00000000-0000-4000-8000-000000000032",
+        "assetId": "00000000-0000-4000-8000-00000000003c",
+        "variantId": "00000000-0000-4000-8000-000000000033",
+        "assetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "licenseMetadataId": "00000000-0000-4000-8000-000000000034",
+        "caption": "同一图注",
+        "attributionText": "x",
+        "attributionLinks": [],
+        "modifications": [],
+        "obligations": [],
+        "obligationsSatisfied": false,
+        "generatedDisclosure": "x"
+      },
+      {
+        "displayOrder": 2,
+        "slotId": "00000000-0000-4000-8000-0000000000aa",
+        "selectionId": "00000000-0000-4000-8000-000000000096",
+        "assetId": "00000000-0000-4000-8000-0000000000a0",
+        "variantId": "00000000-0000-4000-8000-000000000097",
+        "assetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "licenseMetadataId": "00000000-0000-4000-8000-000000000098",
+        "caption": "同一图注",
+        "attributionText": "x",
+        "attributionLinks": [],
+        "modifications": [],
+        "obligations": [],
+        "obligationsSatisfied": false,
+        "generatedDisclosure": "x"
+      }
+    ],
+    "noticeCompact": "x",
+    "noticeFull": "x",
+    "policyVersionId": "00000000-0000-4000-8000-000000000001"
+  },
+  "vectors": [
+    {
+      "name": "baseline",
+      "candidate": {
+        "meta": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "ownerId": "00000000-0000-4000-8000-00000000001e",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "executionId": "00000000-0000-4000-8000-000000000001",
+          "schemaVersion": "1.0.0-rc.3",
+          "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "createdBy": "00000000-0000-4000-8000-000000000001",
+          "createdAt": "2026-10-02T12:00:00Z",
+          "traceId": "00000000-0000-4000-8000-000000000001",
+          "mode": "MOCK"
+        },
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERSION",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "stale": false
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "MANIFEST",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+          "stale": false
+        },
+        "factSet": {
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "claims": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "CLAIM",
+              "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+              "stale": false
+            }
+          ],
+          "verifications": [
+            {
+              "id": "00000000-0000-4000-8000-00000000002a",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "VERIFICATION",
+              "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+              "stale": false
+            }
+          ],
+          "removedClaimIds": [],
+          "policyVersionId": "00000000-0000-4000-8000-000000000001",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "validUntil": "2026-10-02T12:00:00Z"
+        },
+        "skillSnapshot": {
+          "id": "00000000-0000-4000-8000-00000000005a",
+          "skillId": "00000000-0000-4000-8000-000000000001",
+          "version": "x",
+          "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaVersion": "1.0.0-rc.3",
+          "config": {
+            "name": "x",
+            "description": "x",
+            "locale": "zh-CN",
+            "channel": "WECHAT",
+            "audience": [],
+            "tone": [],
+            "structureRules": [],
+            "titleRules": [],
+            "openingRules": {
+              "problemWithinChars": 1
+            },
+            "headingRules": [],
+            "readabilityRules": {
+              "recommendedMin": 1,
+              "recommendedMax": 1,
+              "longParagraphWarning": 1,
+              "veryLongParagraph": 1,
+              "shortParagraphMax": 1,
+              "shortParagraphRun": 1
+            },
+            "imageRules": {
+              "maxBodyImages": 0,
+              "optionalCover": false
+            },
+            "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+            "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+            "promptBindings": [
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              }
+            ],
+            "examples": [],
+            "antiExamples": [],
+            "evaluationRubric": []
+          },
+          "policySnapshots": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            }
+          ],
+          "status": "PUBLISHED"
+        },
+        "policyRefs": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "type": "FACT",
+            "version": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rules": {
+              "key": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 0,
+              "mime": "x",
+              "encrypted": false
+            }
+          }
+        ],
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2",
+            "stale": false
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "sourceSnapshots",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+            "stale": false
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349",
+            "stale": false
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40",
+            "stale": false
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ],
+        "rightsSnapshot": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "basis": "OWNED",
+          "notes": "本稿原创测试材料",
+          "evidenceIds": [],
+          "recordedBy": "00000000-0000-4000-8000-000000000001",
+          "recordedAt": "2026-10-02T12:00:00Z",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "releaseHash": "19dd1be39c127ac3d7b96f208e1978f70b95a5b5776aa5b69d2eb272e054c03a",
+        "validUntil": "2026-10-02T12:00:00Z"
+      },
+      "projection": {
+        "schemaVersion": "1.0.0-rc.3",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "ownerId": "00000000-0000-4000-8000-00000000001e",
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860"
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda"
+        },
+        "factSetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "skillVersionId": "00000000-0000-4000-8000-00000000005a",
+        "skillRulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rights": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2"
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349"
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40"
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b"
+          }
+        ],
+        "claims": [
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593"
+          }
+        ],
+        "verifications": [
+          {
+            "id": "00000000-0000-4000-8000-00000000002a",
+            "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437"
+          }
+        ],
+        "policies": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ]
+      },
+      "expectedReleaseHash": "19dd1be39c127ac3d7b96f208e1978f70b95a5b5776aa5b69d2eb272e054c03a",
+      "positions": [
+        {
+          "slotId": "00000000-0000-4000-8000-000000000046",
+          "selectionId": "00000000-0000-4000-8000-000000000032",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 0,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-00000000003c",
+          "variantId": "00000000-0000-4000-8000-000000000033"
+        },
+        {
+          "slotId": "00000000-0000-4000-8000-0000000000aa",
+          "selectionId": "00000000-0000-4000-8000-000000000096",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 1,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-0000000000a0",
+          "variantId": "00000000-0000-4000-8000-000000000097"
+        }
+      ]
+    },
+    {
+      "name": "moved",
+      "candidate": {
+        "meta": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "ownerId": "00000000-0000-4000-8000-00000000001e",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "executionId": "00000000-0000-4000-8000-000000000001",
+          "schemaVersion": "1.0.0-rc.3",
+          "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "createdBy": "00000000-0000-4000-8000-000000000001",
+          "createdAt": "2026-10-02T12:00:00Z",
+          "traceId": "00000000-0000-4000-8000-000000000001",
+          "mode": "MOCK"
+        },
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERSION",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "stale": false
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "MANIFEST",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+          "stale": false
+        },
+        "factSet": {
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "claims": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "CLAIM",
+              "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+              "stale": false
+            }
+          ],
+          "verifications": [
+            {
+              "id": "00000000-0000-4000-8000-00000000002a",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "VERIFICATION",
+              "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+              "stale": false
+            }
+          ],
+          "removedClaimIds": [],
+          "policyVersionId": "00000000-0000-4000-8000-000000000001",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "validUntil": "2026-10-02T12:00:00Z"
+        },
+        "skillSnapshot": {
+          "id": "00000000-0000-4000-8000-00000000005a",
+          "skillId": "00000000-0000-4000-8000-000000000001",
+          "version": "x",
+          "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaVersion": "1.0.0-rc.3",
+          "config": {
+            "name": "x",
+            "description": "x",
+            "locale": "zh-CN",
+            "channel": "WECHAT",
+            "audience": [],
+            "tone": [],
+            "structureRules": [],
+            "titleRules": [],
+            "openingRules": {
+              "problemWithinChars": 1
+            },
+            "headingRules": [],
+            "readabilityRules": {
+              "recommendedMin": 1,
+              "recommendedMax": 1,
+              "longParagraphWarning": 1,
+              "veryLongParagraph": 1,
+              "shortParagraphMax": 1,
+              "shortParagraphRun": 1
+            },
+            "imageRules": {
+              "maxBodyImages": 0,
+              "optionalCover": false
+            },
+            "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+            "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+            "promptBindings": [
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              }
+            ],
+            "examples": [],
+            "antiExamples": [],
+            "evaluationRubric": []
+          },
+          "policySnapshots": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            }
+          ],
+          "status": "PUBLISHED"
+        },
+        "policyRefs": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "type": "FACT",
+            "version": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rules": {
+              "key": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 0,
+              "mime": "x",
+              "encrypted": false
+            }
+          }
+        ],
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2",
+            "stale": false
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "sourceSnapshots",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+            "stale": false
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349",
+            "stale": false
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40",
+            "stale": false
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-B",
+            "blockHash": "4140b4993a44564d92a712b651aacd0655dae5bafab88d31d9aa1736cc6154d9",
+            "anchorSide": "BEFORE",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ],
+        "rightsSnapshot": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "basis": "OWNED",
+          "notes": "本稿原创测试材料",
+          "evidenceIds": [],
+          "recordedBy": "00000000-0000-4000-8000-000000000001",
+          "recordedAt": "2026-10-02T12:00:00Z",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "releaseHash": "8dad7c4b98dc032b6ace9b7ff5c831fd8267ce9a2026f53822f4dc868654b0a9",
+        "validUntil": "2026-10-02T12:00:00Z"
+      },
+      "projection": {
+        "schemaVersion": "1.0.0-rc.3",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "ownerId": "00000000-0000-4000-8000-00000000001e",
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860"
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda"
+        },
+        "factSetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "skillVersionId": "00000000-0000-4000-8000-00000000005a",
+        "skillRulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rights": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2"
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349"
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40"
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b"
+          }
+        ],
+        "claims": [
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593"
+          }
+        ],
+        "verifications": [
+          {
+            "id": "00000000-0000-4000-8000-00000000002a",
+            "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437"
+          }
+        ],
+        "policies": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-B",
+            "blockHash": "4140b4993a44564d92a712b651aacd0655dae5bafab88d31d9aa1736cc6154d9",
+            "anchorSide": "BEFORE",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ]
+      },
+      "expectedReleaseHash": "8dad7c4b98dc032b6ace9b7ff5c831fd8267ce9a2026f53822f4dc868654b0a9",
+      "positions": [
+        {
+          "slotId": "00000000-0000-4000-8000-0000000000aa",
+          "selectionId": "00000000-0000-4000-8000-000000000096",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 1,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-0000000000a0",
+          "variantId": "00000000-0000-4000-8000-000000000097"
+        },
+        {
+          "slotId": "00000000-0000-4000-8000-000000000046",
+          "selectionId": "00000000-0000-4000-8000-000000000032",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-B",
+          "blockHash": "4140b4993a44564d92a712b651aacd0655dae5bafab88d31d9aa1736cc6154d9",
+          "anchorSide": "BEFORE",
+          "position": 0,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-00000000003c",
+          "variantId": "00000000-0000-4000-8000-000000000033"
+        }
+      ]
+    },
+    {
+      "name": "side",
+      "candidate": {
+        "meta": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "ownerId": "00000000-0000-4000-8000-00000000001e",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "executionId": "00000000-0000-4000-8000-000000000001",
+          "schemaVersion": "1.0.0-rc.3",
+          "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "createdBy": "00000000-0000-4000-8000-000000000001",
+          "createdAt": "2026-10-02T12:00:00Z",
+          "traceId": "00000000-0000-4000-8000-000000000001",
+          "mode": "MOCK"
+        },
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERSION",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "stale": false
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "MANIFEST",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+          "stale": false
+        },
+        "factSet": {
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "claims": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "CLAIM",
+              "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+              "stale": false
+            }
+          ],
+          "verifications": [
+            {
+              "id": "00000000-0000-4000-8000-00000000002a",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "VERIFICATION",
+              "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+              "stale": false
+            }
+          ],
+          "removedClaimIds": [],
+          "policyVersionId": "00000000-0000-4000-8000-000000000001",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "validUntil": "2026-10-02T12:00:00Z"
+        },
+        "skillSnapshot": {
+          "id": "00000000-0000-4000-8000-00000000005a",
+          "skillId": "00000000-0000-4000-8000-000000000001",
+          "version": "x",
+          "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaVersion": "1.0.0-rc.3",
+          "config": {
+            "name": "x",
+            "description": "x",
+            "locale": "zh-CN",
+            "channel": "WECHAT",
+            "audience": [],
+            "tone": [],
+            "structureRules": [],
+            "titleRules": [],
+            "openingRules": {
+              "problemWithinChars": 1
+            },
+            "headingRules": [],
+            "readabilityRules": {
+              "recommendedMin": 1,
+              "recommendedMax": 1,
+              "longParagraphWarning": 1,
+              "veryLongParagraph": 1,
+              "shortParagraphMax": 1,
+              "shortParagraphRun": 1
+            },
+            "imageRules": {
+              "maxBodyImages": 0,
+              "optionalCover": false
+            },
+            "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+            "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+            "promptBindings": [
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              }
+            ],
+            "examples": [],
+            "antiExamples": [],
+            "evaluationRubric": []
+          },
+          "policySnapshots": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            }
+          ],
+          "status": "PUBLISHED"
+        },
+        "policyRefs": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "type": "FACT",
+            "version": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rules": {
+              "key": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 0,
+              "mime": "x",
+              "encrypted": false
+            }
+          }
+        ],
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2",
+            "stale": false
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "sourceSnapshots",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+            "stale": false
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349",
+            "stale": false
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40",
+            "stale": false
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "BEFORE",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ],
+        "rightsSnapshot": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "basis": "OWNED",
+          "notes": "本稿原创测试材料",
+          "evidenceIds": [],
+          "recordedBy": "00000000-0000-4000-8000-000000000001",
+          "recordedAt": "2026-10-02T12:00:00Z",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "releaseHash": "56823888696bd3a8460e1e8fd61c1aab5fb1c664d97ce2d10966ceadc205c997",
+        "validUntil": "2026-10-02T12:00:00Z"
+      },
+      "projection": {
+        "schemaVersion": "1.0.0-rc.3",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "ownerId": "00000000-0000-4000-8000-00000000001e",
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860"
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda"
+        },
+        "factSetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "skillVersionId": "00000000-0000-4000-8000-00000000005a",
+        "skillRulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rights": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2"
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349"
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40"
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b"
+          }
+        ],
+        "claims": [
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593"
+          }
+        ],
+        "verifications": [
+          {
+            "id": "00000000-0000-4000-8000-00000000002a",
+            "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437"
+          }
+        ],
+        "policies": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "BEFORE",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ]
+      },
+      "expectedReleaseHash": "56823888696bd3a8460e1e8fd61c1aab5fb1c664d97ce2d10966ceadc205c997",
+      "positions": [
+        {
+          "slotId": "00000000-0000-4000-8000-000000000046",
+          "selectionId": "00000000-0000-4000-8000-000000000032",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "BEFORE",
+          "position": 0,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-00000000003c",
+          "variantId": "00000000-0000-4000-8000-000000000033"
+        },
+        {
+          "slotId": "00000000-0000-4000-8000-0000000000aa",
+          "selectionId": "00000000-0000-4000-8000-000000000096",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 1,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-0000000000a0",
+          "variantId": "00000000-0000-4000-8000-000000000097"
+        }
+      ]
+    },
+    {
+      "name": "plan",
+      "candidate": {
+        "meta": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "ownerId": "00000000-0000-4000-8000-00000000001e",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "executionId": "00000000-0000-4000-8000-000000000001",
+          "schemaVersion": "1.0.0-rc.3",
+          "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "createdBy": "00000000-0000-4000-8000-000000000001",
+          "createdAt": "2026-10-02T12:00:00Z",
+          "traceId": "00000000-0000-4000-8000-000000000001",
+          "mode": "MOCK"
+        },
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERSION",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "stale": false
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "MANIFEST",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+          "stale": false
+        },
+        "factSet": {
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "claims": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "CLAIM",
+              "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+              "stale": false
+            }
+          ],
+          "verifications": [
+            {
+              "id": "00000000-0000-4000-8000-00000000002a",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "VERIFICATION",
+              "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+              "stale": false
+            }
+          ],
+          "removedClaimIds": [],
+          "policyVersionId": "00000000-0000-4000-8000-000000000001",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "validUntil": "2026-10-02T12:00:00Z"
+        },
+        "skillSnapshot": {
+          "id": "00000000-0000-4000-8000-00000000005a",
+          "skillId": "00000000-0000-4000-8000-000000000001",
+          "version": "x",
+          "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaVersion": "1.0.0-rc.3",
+          "config": {
+            "name": "x",
+            "description": "x",
+            "locale": "zh-CN",
+            "channel": "WECHAT",
+            "audience": [],
+            "tone": [],
+            "structureRules": [],
+            "titleRules": [],
+            "openingRules": {
+              "problemWithinChars": 1
+            },
+            "headingRules": [],
+            "readabilityRules": {
+              "recommendedMin": 1,
+              "recommendedMax": 1,
+              "longParagraphWarning": 1,
+              "veryLongParagraph": 1,
+              "shortParagraphMax": 1,
+              "shortParagraphRun": 1
+            },
+            "imageRules": {
+              "maxBodyImages": 0,
+              "optionalCover": false
+            },
+            "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+            "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+            "promptBindings": [
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              }
+            ],
+            "examples": [],
+            "antiExamples": [],
+            "evaluationRubric": []
+          },
+          "policySnapshots": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            }
+          ],
+          "status": "PUBLISHED"
+        },
+        "policyRefs": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "type": "FACT",
+            "version": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rules": {
+              "key": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 0,
+              "mime": "x",
+              "encrypted": false
+            }
+          }
+        ],
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2",
+            "stale": false
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "sourceSnapshots",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+            "stale": false
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349",
+            "stale": false
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40",
+            "stale": false
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "94f87276dce980d075c531f3f5eb73a0760ce569764e80dc7ad6fd7f217181be"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ],
+        "rightsSnapshot": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "basis": "OWNED",
+          "notes": "本稿原创测试材料",
+          "evidenceIds": [],
+          "recordedBy": "00000000-0000-4000-8000-000000000001",
+          "recordedAt": "2026-10-02T12:00:00Z",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "releaseHash": "2402904bf7d7d97820512225b64dab920d69b087df3c4487ea20088bc8cd026b",
+        "validUntil": "2026-10-02T12:00:00Z"
+      },
+      "projection": {
+        "schemaVersion": "1.0.0-rc.3",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "ownerId": "00000000-0000-4000-8000-00000000001e",
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860"
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda"
+        },
+        "factSetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "skillVersionId": "00000000-0000-4000-8000-00000000005a",
+        "skillRulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rights": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2"
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349"
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40"
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b"
+          }
+        ],
+        "claims": [
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593"
+          }
+        ],
+        "verifications": [
+          {
+            "id": "00000000-0000-4000-8000-00000000002a",
+            "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437"
+          }
+        ],
+        "policies": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "94f87276dce980d075c531f3f5eb73a0760ce569764e80dc7ad6fd7f217181be"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ]
+      },
+      "expectedReleaseHash": "2402904bf7d7d97820512225b64dab920d69b087df3c4487ea20088bc8cd026b",
+      "positions": [
+        {
+          "slotId": "00000000-0000-4000-8000-000000000046",
+          "selectionId": "00000000-0000-4000-8000-000000000032",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 0,
+          "planHash": "94f87276dce980d075c531f3f5eb73a0760ce569764e80dc7ad6fd7f217181be",
+          "assetId": "00000000-0000-4000-8000-00000000003c",
+          "variantId": "00000000-0000-4000-8000-000000000033"
+        },
+        {
+          "slotId": "00000000-0000-4000-8000-0000000000aa",
+          "selectionId": "00000000-0000-4000-8000-000000000096",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 1,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-0000000000a0",
+          "variantId": "00000000-0000-4000-8000-000000000097"
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "candidate": {
+        "meta": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "ownerId": "00000000-0000-4000-8000-00000000001e",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "executionId": "00000000-0000-4000-8000-000000000001",
+          "schemaVersion": "1.0.0-rc.3",
+          "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "createdBy": "00000000-0000-4000-8000-000000000001",
+          "createdAt": "2026-10-02T12:00:00Z",
+          "traceId": "00000000-0000-4000-8000-000000000001",
+          "mode": "MOCK"
+        },
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERSION",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "stale": false
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "MANIFEST",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda",
+          "stale": false
+        },
+        "factSet": {
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "claims": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "CLAIM",
+              "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+              "stale": false
+            }
+          ],
+          "verifications": [
+            {
+              "id": "00000000-0000-4000-8000-00000000002a",
+              "articleId": "00000000-0000-4000-8000-00000000000a",
+              "versionId": "00000000-0000-4000-8000-000000000014",
+              "kind": "VERIFICATION",
+              "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+              "stale": false
+            }
+          ],
+          "removedClaimIds": [],
+          "policyVersionId": "00000000-0000-4000-8000-000000000001",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "stale": false,
+          "validUntil": "2026-10-02T12:00:00Z"
+        },
+        "skillSnapshot": {
+          "id": "00000000-0000-4000-8000-00000000005a",
+          "skillId": "00000000-0000-4000-8000-000000000001",
+          "version": "x",
+          "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schemaVersion": "1.0.0-rc.3",
+          "config": {
+            "name": "x",
+            "description": "x",
+            "locale": "zh-CN",
+            "channel": "WECHAT",
+            "audience": [],
+            "tone": [],
+            "structureRules": [],
+            "titleRules": [],
+            "openingRules": {
+              "problemWithinChars": 1
+            },
+            "headingRules": [],
+            "readabilityRules": {
+              "recommendedMin": 1,
+              "recommendedMax": 1,
+              "longParagraphWarning": 1,
+              "veryLongParagraph": 1,
+              "shortParagraphMax": 1,
+              "shortParagraphRun": 1
+            },
+            "imageRules": {
+              "maxBodyImages": 0,
+              "optionalCover": false
+            },
+            "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+            "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+            "promptBindings": [
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              },
+              {
+                "agentName": "x",
+                "promptVersionId": "00000000-0000-4000-8000-000000000001",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "outputSchema": "x"
+              }
+            ],
+            "examples": [],
+            "antiExamples": [],
+            "evaluationRubric": []
+          },
+          "policySnapshots": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "type": "FACT",
+              "version": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "rules": {
+                "key": "x",
+                "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size": 0,
+                "mime": "x",
+                "encrypted": false
+              }
+            }
+          ],
+          "status": "PUBLISHED"
+        },
+        "policyRefs": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "type": "FACT",
+            "version": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "rules": {
+              "key": "x",
+              "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 0,
+              "mime": "x",
+              "encrypted": false
+            }
+          }
+        ],
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "selections",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2",
+            "stale": false
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "sourceSnapshots",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+            "stale": false
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "variants",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349",
+            "stale": false
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+            "stale": false
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "articleId": "00000000-0000-4000-8000-00000000000a",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "kind": "licenses",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40",
+            "stale": false
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ],
+        "rightsSnapshot": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "contentHash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860",
+          "basis": "OWNED",
+          "notes": "本稿原创测试材料",
+          "evidenceIds": [],
+          "recordedBy": "00000000-0000-4000-8000-000000000001",
+          "recordedAt": "2026-10-02T12:00:00Z",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "releaseHash": "8d3f54068aa5194021680e98c68b08166755dfd2ea0298021f4b6dd27a678847",
+        "validUntil": "2026-10-02T12:00:00Z"
+      },
+      "projection": {
+        "schemaVersion": "1.0.0-rc.3",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "ownerId": "00000000-0000-4000-8000-00000000001e",
+        "version": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "hash": "1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860"
+        },
+        "manifest": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "hash": "aa5d3bb473156d431d3ecbc1ba661f876efdebe930370be9403d29972bd47cda"
+        },
+        "factSetHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "skillVersionId": "00000000-0000-4000-8000-00000000005a",
+        "skillRulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rights": {
+          "id": "00000000-0000-4000-8000-000000000050",
+          "hash": "ff37dcb0fa28b4b447cfba598038afbd9a31d9156a500bd8b1a80c7dcdf91843"
+        },
+        "selections": [
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000096",
+            "hash": "c07abacb36324a879e7d7cea79b03a640ab93bf0e146213621a20b050dfb92c2"
+          }
+        ],
+        "variants": [
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000097",
+            "hash": "c9fff33328327f72d9fa479fb7061a904e9ebc78a1962d8fe506861fd1338349"
+          }
+        ],
+        "licenses": [
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000098",
+            "hash": "2ecfdf40a00be9fc1c82c2327f90f6b8a2c0d8b5647371b4dd6481ed8d99df40"
+          }
+        ],
+        "sourceSnapshots": [
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b"
+          }
+        ],
+        "claims": [
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593"
+          }
+        ],
+        "verifications": [
+          {
+            "id": "00000000-0000-4000-8000-00000000002a",
+            "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437"
+          }
+        ],
+        "policies": [
+          {
+            "id": "00000000-0000-4000-8000-00000000005b",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ],
+        "selectionBindings": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "assetId": "00000000-0000-4000-8000-00000000003c",
+            "variantId": "00000000-0000-4000-8000-000000000033",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "assetId": "00000000-0000-4000-8000-0000000000a0",
+            "variantId": "00000000-0000-4000-8000-000000000097",
+            "licenseMetadataId": "00000000-0000-4000-8000-000000000098"
+          }
+        ],
+        "slotAnchors": [
+          {
+            "slotId": "00000000-0000-4000-8000-000000000046",
+            "selectionId": "00000000-0000-4000-8000-000000000032",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 1,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          },
+          {
+            "slotId": "00000000-0000-4000-8000-0000000000aa",
+            "selectionId": "00000000-0000-4000-8000-000000000096",
+            "versionId": "00000000-0000-4000-8000-000000000014",
+            "anchorBlockId": "block-A",
+            "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+            "anchorSide": "AFTER",
+            "position": 0,
+            "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c"
+          }
+        ]
+      },
+      "expectedReleaseHash": "8d3f54068aa5194021680e98c68b08166755dfd2ea0298021f4b6dd27a678847",
+      "positions": [
+        {
+          "slotId": "00000000-0000-4000-8000-0000000000aa",
+          "selectionId": "00000000-0000-4000-8000-000000000096",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 0,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-0000000000a0",
+          "variantId": "00000000-0000-4000-8000-000000000097"
+        },
+        {
+          "slotId": "00000000-0000-4000-8000-000000000046",
+          "selectionId": "00000000-0000-4000-8000-000000000032",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "anchorBlockId": "block-A",
+          "blockHash": "7743af9316a0dc886da75cc2afec712d04f81ab78b8050e2c4c062722d71bf9e",
+          "anchorSide": "AFTER",
+          "position": 1,
+          "planHash": "dbf9868785714c2519824d5a01bea297a3ef16fa141bec86a4caff8320cdbc4c",
+          "assetId": "00000000-0000-4000-8000-00000000003c",
+          "variantId": "00000000-0000-4000-8000-000000000033"
+        }
+      ]
+    }
+  ]
+}

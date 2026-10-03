@@ -1,0 +1,362 @@
+[
+  {
+    "id": "responses-refusal",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "REFUSED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_AUTORETRY",
+    "ac": [
+      "AC-27",
+      "AC-30"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "responses-incomplete",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "INCOMPLETE",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "ONE_BUDGETED_CORRECTION",
+    "ac": [
+      "AC-30"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "schema-invalid",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "SCHEMA_INVALID",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "ONE_BUDGETED_CORRECTION",
+    "ac": [
+      "AC-30"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "valid-json-invalid-reference",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "SEMANTIC_INVALID",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "REJECT_NO_NEXT_STEP",
+    "ac": [
+      "AC-30"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "provider-429",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "RATE_LIMITED",
+      "providerRequestId": null,
+      "retryAfterSeconds": 30
+    },
+    "expectedAction": "RETRY_AFTER",
+    "ac": [
+      "AC-10",
+      "AC-21"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "known-not-accepted-5xx",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "NOT_ACCEPTED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "BOUNDED_RETRY",
+    "ac": [
+      "AC-21"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "accepted-connection-lost",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "OUTCOME_UNKNOWN",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "KEEP_RESERVATION_RECONCILE",
+    "ac": [
+      "AC-21",
+      "AC-28"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "generation-no-query-support",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "OUTCOME_UNKNOWN",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "WAIT_MANUAL_NO_RESEND",
+    "ac": [
+      "AC-13",
+      "AC-21"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "ai-search-unsupported",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "CAPABILITY_UNSUPPORTED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_FAKE_RESULTS",
+    "ac": [
+      "AC-09",
+      "AC-13"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "commons-failed-pexels-ok",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PARTIAL",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "KEEP_OTHER_RESULTS",
+    "ac": [
+      "AC-09",
+      "AC-10"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "pexels-failed-commons-ok",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PARTIAL",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "KEEP_OTHER_RESULTS",
+    "ac": [
+      "AC-09",
+      "AC-10"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "download-redirect-private",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "SSRF_BLOCKED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_READY_ASSET",
+    "ac": [
+      "AC-26"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "download-mime-mismatch",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "UNSAFE_IMAGE",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_READY_ASSET",
+    "ac": [
+      "AC-26"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "download-pixel-bomb",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PIXEL_LIMIT",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_READY_ASSET",
+    "ac": [
+      "AC-26"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "watermark-font-missing",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "FONT_MISSING",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_EXPORT_ORIGINAL",
+    "ac": [
+      "AC-14"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "image-text-unreadable",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "UNREADABLE",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "REQUIRED_MANUAL_TASK",
+    "ac": [
+      "AC-04",
+      "AC-16"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "source-temporary-unavailable",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "UNAVAILABLE",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "SEPARATE_ACCESS_FROM_FACT",
+    "ac": [
+      "AC-24"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "source-retracted",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "RETRACTED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "INVALIDATE_DEPENDENTS",
+    "ac": [
+      "AC-24",
+      "AC-32"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "cancel-late-response",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "CANCELLED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "SETTLE_NO_ADVANCE",
+    "ac": [
+      "AC-31"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "pause-late-response",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PAUSED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "SETTLE_NO_ADVANCE",
+    "ac": [
+      "AC-31"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "unknown-price",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PRICE_UNKNOWN",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_PAID_CALL",
+    "ac": [
+      "AC-28"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "tool-limit",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "TOOL_LIMIT",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "STOP_AT_EIGHT",
+    "ac": [
+      "AC-27"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "secret-exfiltration-in-source",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "PROMPT_INJECTION",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "DATA_ONLY_NO_TOOL_ESCALATION",
+    "ac": [
+      "AC-27",
+      "AC-33"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "export-object-missing",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "OBJECT_MISSING",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "NO_DOWNLOAD",
+    "ac": [
+      "AC-32"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "qa-checker-offline",
+    "mode": "SYNTHETIC_NORMALIZED_NOT_CAPTURED_PROVIDER_RESPONSE",
+    "input": {
+      "status": "NOT_EXECUTED",
+      "providerRequestId": null,
+      "retryAfterSeconds": null
+    },
+    "expectedAction": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "executionStatus": "NOT_INTEGRATED"
+  }
+]

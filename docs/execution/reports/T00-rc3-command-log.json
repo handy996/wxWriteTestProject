@@ -1,0 +1,80 @@
+{
+  "scope": "R02-A rc.3",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "docs/execution/contracts/build_contract.py"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "Built 164 schemas and API inventory, 1.0.0-rc.3; awaiting main-agent review.\n",
+      "stderr": "",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "docs/execution/contracts/build_registry.py"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "Registry: 38 tables, 28 article states, 29 ports, 18 open decisions.\n",
+      "stderr": "",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/contracts/T00",
+        "-v"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "",
+      "stderr": "test_api_inventory_exactly_covers_srs_plus_requested_deletion (test_contracts.Contracts.test_api_inventory_exactly_covers_srs_plus_requested_deletion) ... ok\ntest_approval_fencing_budget_and_safe_fetch_oracles (test_contracts.Contracts.test_approval_fencing_budget_and_safe_fetch_oracles) ... ok\ntest_baseline_hashes_and_ownership_dag (test_contracts.Contracts.test_baseline_hashes_and_ownership_dag) ... ok\ntest_codepoint_span_and_business_reference_failures (test_contracts.Contracts.test_codepoint_span_and_business_reference_failures) ... ok\ntest_every_schema_has_positive_and_negative_structural_example (test_contracts.Contracts.test_every_schema_has_positive_and_negative_structural_example) ... ok\ntest_no_client_actor_status_or_model_approval (test_contracts.Contracts.test_no_client_actor_status_or_model_approval) ... ok\ntest_release_hash_covers_evidence_variant_and_excludes_mutable_flags (test_contracts.Contracts.test_release_hash_covers_evidence_variant_and_excludes_mutable_flags) ... ok\ntest_selection_exclusive_and_license_nullable (test_contracts.Contracts.test_selection_exclusive_and_license_nullable) ... ok\ntest_standard_openapi_and_schema_validators (test_contracts.Contracts.test_standard_openapi_and_schema_validators) ... C:\\Users\\eie04\\AppData\\Local\\Temp\\wxagent-t00-validation\\openapi_spec_validator\\shortcuts.py:66: DeprecationWarning: validate_spec shortcut is deprecated. Use validate instead.\n  warnings.warn(\nok\ntest_unicode_and_canonical_vectors (test_contracts.Contracts.test_unicode_and_canonical_vectors) ... ok\ntest_r01_srs_create_request_and_rights_lifecycle (test_review_regressions.ReviewRegressions.test_r01_srs_create_request_and_rights_lifecycle) ... ok\ntest_r02_schema_candidate_projection_and_protected_inputs (test_review_regressions.ReviewRegressions.test_r02_schema_candidate_projection_and_protected_inputs) ... ok\ntest_r03_new_claim_references_resolve_once (test_review_regressions.ReviewRegressions.test_r03_new_claim_references_resolve_once) ... ok\ntest_r04_first_version_copy_publish_and_switch_plan (test_review_regressions.ReviewRegressions.test_r04_first_version_copy_publish_and_switch_plan) ... ok\ntest_r05_limits_are_scoped (test_review_regressions.ReviewRegressions.test_r05_limits_are_scoped) ... ok\ntest_routes_and_restore_fail_closed (test_review_regressions.ReviewRegressions.test_routes_and_restore_fail_closed) ... ok\ntest_anchor_side_order_plan_hash_and_vectors (test_slot_anchors.SlotAnchors.test_anchor_side_order_plan_hash_and_vectors) ... ok\ntest_body_hash_block_hash_and_version_fail_closed (test_slot_anchors.SlotAnchors.test_body_hash_block_hash_and_version_fail_closed) ... ok\ntest_freeze_rejects_missing_extra_duplicate_foreign_and_invalid_blocks (test_slot_anchors.SlotAnchors.test_freeze_rejects_missing_extra_duplicate_foreign_and_invalid_blocks) ... ok\ntest_frozen_anchor_and_manifest_exact_binding_coverage (test_slot_anchors.SlotAnchors.test_frozen_anchor_and_manifest_exact_binding_coverage) ... ok\ntest_history_uses_only_frozen_body_and_candidate (test_slot_anchors.SlotAnchors.test_history_uses_only_frozen_body_and_candidate) ... ok\ntest_patch_and_invalidation_contract (test_slot_anchors.SlotAnchors.test_patch_and_invalidation_contract) ... ok\ntest_placeholder_is_not_a_second_position_authority (test_slot_anchors.SlotAnchors.test_placeholder_is_not_a_second_position_authority) ... ok\ntest_unordered_sets_and_empty_selection (test_slot_anchors.SlotAnchors.test_unordered_sets_and_empty_selection) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 2.252s\n\nOK\n",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/evaluation/T01",
+        "-v"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "",
+      "stderr": "test_blind_templates_are_not_fabricated_annotations (test_evaluation.Evaluation.test_blind_templates_are_not_fabricated_annotations) ... ok\ntest_dataset_counts_lengths_sources_hashes_and_unreviewed (test_evaluation.Evaluation.test_dataset_counts_lengths_sources_hashes_and_unreviewed) ... ok\ntest_demo_metrics_known_counts_and_no_acceptance (test_evaluation.Evaluation.test_demo_metrics_known_counts_and_no_acceptance) ... ok\ntest_empty_predictions_are_zero_precision_not_divide_by_zero (test_evaluation.Evaluation.test_empty_predictions_are_zero_precision_not_divide_by_zero) ... ok\ntest_frozen_manifest_bytes_match (test_evaluation.Evaluation.test_frozen_manifest_bytes_match) ... ok\ntest_incomplete_or_changed_runs_rejected (test_evaluation.Evaluation.test_incomplete_or_changed_runs_rejected) ... ok\ntest_license_vectors_and_coverage_inventory (test_evaluation.Evaluation.test_license_vectors_and_coverage_inventory) ... ok\ntest_matching_rejects_cross_article_unknown_and_duplicate_ids (test_evaluation.Evaluation.test_matching_rejects_cross_article_unknown_and_duplicate_ids) ... ok\ntest_r06_average_four_and_analyzer_ninety_percent_boundaries (test_evaluation.Evaluation.test_r06_average_four_and_analyzer_ninety_percent_boundaries) ... ok\ntest_r06_low_editing_mean_cannot_pass (test_evaluation.Evaluation.test_r06_low_editing_mean_cannot_pass) ... ok\ntest_r06_reversal_and_missing_evidence_block (test_evaluation.Evaluation.test_r06_reversal_and_missing_evidence_block) ... ok\ntest_regeneration_refuses_to_overwrite_human_work (test_evaluation.Evaluation.test_regeneration_refuses_to_overwrite_human_work) ... ok\ntest_representative_dataset_is_separate_and_has_category_specific_material (test_evaluation.Evaluation.test_representative_dataset_is_separate_and_has_category_specific_material) ... ok\ntest_unknown_and_estimated_cost_not_silently_free (test_evaluation.Evaluation.test_unknown_and_estimated_cost_not_silently_free) ... ok\ntest_unreviewed_and_fake_independent_humans_block (test_evaluation.Evaluation.test_unreviewed_and_fake_independent_humans_block) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.104s\n\nOK\n",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "tests/contracts/T00/hash-vector-js.cjs"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "{\"mode\":\"OFFLINE_JS_CANONICAL_ONLY\",\"releaseHash\":\"db5a739cfbdb871d494ff001ad84c3f051f92088ecf27911daf0497bbb53de83\",\"anchorVectors\":[{\"name\":\"baseline\",\"releaseHash\":\"19dd1be39c127ac3d7b96f208e1978f70b95a5b5776aa5b69d2eb272e054c03a\"},{\"name\":\"moved\",\"releaseHash\":\"8dad7c4b98dc032b6ace9b7ff5c831fd8267ce9a2026f53822f4dc868654b0a9\"},{\"name\":\"side\",\"releaseHash\":\"56823888696bd3a8460e1e8fd61c1aab5fb1c664d97ce2d10966ceadc205c997\"},{\"name\":\"plan\",\"releaseHash\":\"2402904bf7d7d97820512225b64dab920d69b087df3c4487ea20088bc8cd026b\"},{\"name\":\"order\",\"releaseHash\":\"8d3f54068aa5194021680e98c68b08166755dfd2ea0298021f4b6dd27a678847\"}],\"matchesPython\":true,\"limitation\":\"Validates supplied Python projections; not a JavaScript Candidate projection implementation.\"}\n",
+      "stderr": "",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    }
+  ],
+  "protectedFiles": 214,
+  "protectedChanges": [],
+  "paidCalls": 0,
+  "integration": "NOT_RUN",
+  "runnerExitCode": 0
+}

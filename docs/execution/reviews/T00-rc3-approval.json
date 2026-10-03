@@ -1,0 +1,130 @@
+{
+  "reviewDate": "2026-10-03",
+  "reviewer": "MAIN_AGENT",
+  "contractVersion": "1.0.0-rc.3",
+  "decision": "PASS",
+  "scope": "T00 development contract baseline; not production or model-quality acceptance",
+  "gate": "G0_ENGINEERING_CONTRACT_PASS",
+  "manifestPath": "docs/execution/contracts/candidate-manifest.json",
+  "manifestSha256": "3db28b3c6ec67ed770adc1c2b7c098b9a7425a66c561d3b9fa75d5a7ccc1b743",
+  "files": [
+    {
+      "path": "docs/adr/ADR-001-architecture.md",
+      "sha256": "37c35eaf20e3042e6a547349eac27f6201f4bf8f44d87e56909fe1bd6c03c585"
+    },
+    {
+      "path": "docs/adr/ADR-002-fact-policy.md",
+      "sha256": "8dce7b02b91ed392af20d24401db95b24f698241257b7a7fb067f99084e9dceb"
+    },
+    {
+      "path": "docs/adr/ADR-003-image-policy.md",
+      "sha256": "f57a2e3505bfd0659299f6ed134dff5a42c8646d72389baad9c32f797d005d5c"
+    },
+    {
+      "path": "docs/adr/ADR-004-storage-deletion-and-database.md",
+      "sha256": "e09c59d70455561f4b704ac3b6018decd55361aa7700686a05e00623e82e1173"
+    },
+    {
+      "path": "docs/adr/ADR-005-rc2-contract-closure.md",
+      "sha256": "1542a7db4aceaf5d2c242fcbe330aec4537617e6204ca395e3f7e660368a3c71"
+    },
+    {
+      "path": "docs/adr/ADR-006-deletion-journal-recovery.md",
+      "sha256": "3953aefbbace14b20f73d54a0898941f979769ffab4bb2905b5a2835c91facd2"
+    },
+    {
+      "path": "docs/adr/ADR-007-frozen-slot-anchors.md",
+      "sha256": "3b010681d49e28e09f4d24baf792afda9e839ff87faad38654d9a67957fb2b71"
+    },
+    {
+      "path": "docs/api/openapi.yaml",
+      "sha256": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b"
+    },
+    {
+      "path": "docs/execution/contracts/api-inventory.json",
+      "sha256": "3ee6b99d1546c53afa80ffce3073a31ab13d164741a204149c9aa2ac6dd9b050"
+    },
+    {
+      "path": "docs/execution/contracts/baseline.json",
+      "sha256": "6efeb8dbee8bc9bb522cfc1512a4d278270b86d1876d9aee622b8974d25e6e7c"
+    },
+    {
+      "path": "docs/execution/contracts/build_contract.py",
+      "sha256": "781bb7e13dcb432a7bef6717c305058b01709ab9e6509f0d0a16c59d4f2ac8ce"
+    },
+    {
+      "path": "docs/execution/contracts/build_registry.py",
+      "sha256": "238588e1c8918ad7ccc19ca1ec6eb0b4c7784d5d637570aafb10f5a9b95c69ce"
+    },
+    {
+      "path": "docs/execution/contracts/change-requests.md",
+      "sha256": "13ed7518427e7395f3e50fe45e8fd241905cfe1e6a51bcb9160637ef3c7b4b59"
+    },
+    {
+      "path": "docs/execution/contracts/invalidation.json",
+      "sha256": "4eff5de4a285c231db990267a8591681a6410074543c3b1fb7ec5477cffa3c07"
+    },
+    {
+      "path": "docs/execution/contracts/migration-draft.sql",
+      "sha256": "6f9b3ff71294d0274b4240703804fba263cd9be54db3c49a88ddb511bc9ccb29"
+    },
+    {
+      "path": "docs/execution/contracts/module-dependencies.json",
+      "sha256": "4e621f27a0c19ef145ae5bef381671c6780bcffa1ae77a8373098a6ca2b97b3c"
+    },
+    {
+      "path": "docs/execution/contracts/open-questions.json",
+      "sha256": "c8a44adba3e46ec2ff05d4bba4fbf648eefa268712de36b03181eea207dd936a"
+    },
+    {
+      "path": "docs/execution/contracts/ownership-and-fk.md",
+      "sha256": "814c50ea3376de7659da3cadb1bc6b16d147d30cb7481df0273fd3a0af0c0cdf"
+    },
+    {
+      "path": "docs/execution/contracts/ports.json",
+      "sha256": "79e27d3213ce7a407ab96fe035bd90694faefea42ee494124bca6f6e2c642cda"
+    },
+    {
+      "path": "docs/execution/contracts/README.md",
+      "sha256": "01ddc906b1a66610e7002b6d966d5ac19738f81976eb029f19f1fd3d8be408da"
+    },
+    {
+      "path": "docs/execution/contracts/reference.py",
+      "sha256": "de945e7294010990abc6cb6abb33952b57a088d35bdd58d915971c9383a7c6b7"
+    },
+    {
+      "path": "docs/execution/contracts/state-guards.json",
+      "sha256": "9890b5a8e42760f95f4aa21d89adfdb28b67ca5138d3b9d8978724b57e5be5f7"
+    },
+    {
+      "path": "docs/execution/contracts/tables.json",
+      "sha256": "6ece209cbb632ce5b37c4adff2161f28cf4608200ad09672c5a6c0c11ab52590"
+    },
+    {
+      "path": "docs/schemas/editorial.schema.json",
+      "sha256": "7b5872e129817bbcbb32e8b841e430eb69f35d4ca18bac21bc24a708cfcbe2aa"
+    }
+  ],
+  "closedFindings": [
+    "R01",
+    "R02",
+    "R02-A",
+    "R03",
+    "R04",
+    "R05",
+    "R06"
+  ],
+  "T01": {
+    "engineeringPreparation": "PASS",
+    "completeTask": "BLOCKED_HUMAN_EVIDENCE",
+    "remaining": [
+      "independent human annotations",
+      "adjudication",
+      "representativeness and rights confirmation"
+    ]
+  },
+  "report": "docs/execution/reviews/T00-T01-Review-v3.0.md",
+  "evidence": "docs/execution/reviews/T00-T01/reaudit-rc3-results.json",
+  "gitCommit": null,
+  "changeRule": "Any change to the approved file set requires a versioned review; this record does not auto-approve regeneration."
+}

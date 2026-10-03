@@ -1,0 +1,55 @@
+{
+  "mode": "INDEPENDENT_OFFLINE_REVIEW",
+  "findings": {
+    "R01_original_rights": {
+      "OWNED": true,
+      "AUTHORIZED": false,
+      "REFERENCE_ONLY": false,
+      "UNKNOWN": false,
+      "LICENSED": true,
+      "PERMISSION": true
+    },
+    "R02_release_hash": {
+      "schemaCandidateValid": true,
+      "hashResult": "KeyError: 'schemaVersion'",
+      "oracleVectorValidAsCandidate": false
+    },
+    "R03_analyzer_local_reference": {
+      "claimLocalKeyAccepted": true,
+      "titleReferencingThatLocalKeyAccepted": false
+    },
+    "R04_skill_lifecycle": {
+      "firstVersionWithoutBaseAccepted": false,
+      "switchSkillPatchAccepted": false
+    },
+    "R05_export_object_size": {
+      "zip21MiBAccepted": false,
+      "globalObjectSizeMax": 20971520
+    },
+    "R06_quality_gate": {
+      "syntheticOnly": true,
+      "allRunThresholdsMet": true,
+      "rubricMean": {
+        "THESIS": 4,
+        "STRUCTURE": 1,
+        "LOGIC": 1,
+        "READABILITY": 1,
+        "TITLE": 1,
+        "TONE": 1,
+        "FACT_FIDELITY": 1
+      },
+      "overallMean": 1.4285714285714286,
+      "acceptancePassed": false
+    }
+  },
+  "manifestChecks": {
+    "docs/execution/contracts/candidate-manifest.json": {
+      "fileCount": 21,
+      "mismatches": []
+    },
+    "tests/fixtures/freeze-manifest.json": {
+      "fileCount": 61,
+      "mismatches": []
+    }
+  }
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "QA-01",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-02",
+    "injected": "FAIL",
+    "expected": "UNRESOLVED_WARNING",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-03",
+    "injected": "FAIL",
+    "expected": "UNRESOLVED_WARNING",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-04",
+    "injected": "FAIL",
+    "expected": "UNRESOLVED_WARNING",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-05",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-06",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-07",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-08",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-09",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-10",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-11",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-12",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-13",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-14",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-15",
+    "injected": "FAIL",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "QA-16",
+    "injected": "NOT_EXECUTED",
+    "expected": "BLOCKER",
+    "ac": [
+      "AC-16"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  }
+]

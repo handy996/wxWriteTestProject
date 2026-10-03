@@ -1,0 +1,587 @@
+[
+  {
+    "id": "open-license-complete",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "ALLOW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "unknown",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "UNKNOWN",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "missing-evidence",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": false,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "nc",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": false,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "nd",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": false,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "sa-unresolved",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": true,
+        "publicDomain": false
+      }
+    },
+    "expected": "REQUIRES_REVIEW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "sa-resolved",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": true,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": true,
+        "publicDomain": false
+      }
+    },
+    "expected": "ALLOW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "missing-author",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": false,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "cc0-with-evidence",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": false,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": true
+      }
+    },
+    "expected": "ALLOW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "multi-license-selected-valid",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      },
+      "selectedOption": "synthetic-open",
+      "licenseOptions": [
+        "synthetic-nc",
+        "synthetic-open"
+      ]
+    },
+    "expected": "ALLOW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "multi-license-selected-nc",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": false,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      },
+      "selectedOption": "synthetic-nc",
+      "licenseOptions": [
+        "synthetic-nc",
+        "synthetic-open"
+      ]
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "wrong-metadata",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "REJECTED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "generated-terms",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      },
+      "rightsBasis": "GENERATED_TERMS",
+      "generationRecord": "synthetic-generation"
+    },
+    "expected": "ALLOW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "generated-without-terms",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": false,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      },
+      "rightsBasis": "GENERATED_TERMS"
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "portrait-review",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "REVIEW_REQUIRED",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "REQUIRES_REVIEW",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "rights-blocked",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "BLOCKED",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "missing-final-attribution",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": false,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "null-attributionRequired",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": null,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "null-commercialUseAllowed",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": null,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "null-modificationAllowed",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": null,
+        "shareAlikeRequired": false,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "null-shareAlikeRequired",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": null,
+        "publicDomain": false
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  },
+  {
+    "id": "null-publicDomain",
+    "mode": "SYNTHETIC_MOCK",
+    "input": {
+      "verificationStatus": "VERIFIED",
+      "evidencePresent": true,
+      "authorPresent": true,
+      "otherRightsStatus": "CLEAR",
+      "saObligationsSatisfied": false,
+      "obligationsSatisfied": true,
+      "permission": {
+        "attributionRequired": true,
+        "commercialUseAllowed": true,
+        "modificationAllowed": true,
+        "shareAlikeRequired": false,
+        "publicDomain": null
+      }
+    },
+    "expected": "BLOCKED",
+    "ac": [
+      "AC-11"
+    ],
+    "fr": [
+      "FR-11"
+    ]
+  }
+]

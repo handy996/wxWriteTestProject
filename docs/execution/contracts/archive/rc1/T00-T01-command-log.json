@@ -1,0 +1,110 @@
+[
+  {
+    "task": "T00",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "docs/execution/contracts/build_contract.py"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "Built 149 schemas and API inventory, 1.0.0-rc.1; awaiting main-agent review.\n",
+    "stderr": "",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T00",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "docs/execution/contracts/build_registry.py"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "Registry: 38 tables, 28 article states, 29 ports, 18 open decisions.\n",
+    "stderr": "",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T00",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/contracts/T00",
+      "-v"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "",
+    "stderr": "test_api_inventory_exactly_covers_srs_plus_requested_deletion (test_contracts.Contracts.test_api_inventory_exactly_covers_srs_plus_requested_deletion) ... ok\ntest_approval_fencing_budget_and_safe_fetch_oracles (test_contracts.Contracts.test_approval_fencing_budget_and_safe_fetch_oracles) ... ok\ntest_baseline_hashes_and_ownership_dag (test_contracts.Contracts.test_baseline_hashes_and_ownership_dag) ... ok\ntest_codepoint_span_and_business_reference_failures (test_contracts.Contracts.test_codepoint_span_and_business_reference_failures) ... ok\ntest_every_schema_has_positive_and_negative_structural_example (test_contracts.Contracts.test_every_schema_has_positive_and_negative_structural_example) ... ok\ntest_no_client_actor_status_or_model_approval (test_contracts.Contracts.test_no_client_actor_status_or_model_approval) ... ok\ntest_release_hash_covers_evidence_variant_and_excludes_mutable_flags (test_contracts.Contracts.test_release_hash_covers_evidence_variant_and_excludes_mutable_flags) ... ok\ntest_selection_exclusive_and_license_nullable (test_contracts.Contracts.test_selection_exclusive_and_license_nullable) ... ok\ntest_standard_openapi_and_schema_validators (test_contracts.Contracts.test_standard_openapi_and_schema_validators) ... C:\\Users\\eie04\\AppData\\Local\\Temp\\wxagent-t00-validation\\openapi_spec_validator\\shortcuts.py:66: DeprecationWarning: validate_spec shortcut is deprecated. Use validate instead.\n  warnings.warn(\nok\ntest_unicode_and_canonical_vectors (test_contracts.Contracts.test_unicode_and_canonical_vectors) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 2.162s\n\nOK\n",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T01",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "docs/evaluation/build_fixtures.py"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "Prepared 20 synthetic articles and 200 UNREVIEWED claim candidates; no human gold produced.\n",
+    "stderr": "",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T01",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/evaluation/T01",
+      "-v"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "",
+    "stderr": "test_blind_templates_are_not_fabricated_annotations (test_evaluation.Evaluation.test_blind_templates_are_not_fabricated_annotations) ... ok\ntest_dataset_counts_lengths_sources_hashes_and_unreviewed (test_evaluation.Evaluation.test_dataset_counts_lengths_sources_hashes_and_unreviewed) ... ok\ntest_demo_metrics_known_counts_and_no_acceptance (test_evaluation.Evaluation.test_demo_metrics_known_counts_and_no_acceptance) ... ok\ntest_empty_predictions_are_zero_precision_not_divide_by_zero (test_evaluation.Evaluation.test_empty_predictions_are_zero_precision_not_divide_by_zero) ... ok\ntest_frozen_manifest_bytes_match (test_evaluation.Evaluation.test_frozen_manifest_bytes_match) ... ok\ntest_incomplete_or_changed_runs_rejected (test_evaluation.Evaluation.test_incomplete_or_changed_runs_rejected) ... ok\ntest_license_vectors_and_coverage_inventory (test_evaluation.Evaluation.test_license_vectors_and_coverage_inventory) ... ok\ntest_matching_rejects_cross_article_unknown_and_duplicate_ids (test_evaluation.Evaluation.test_matching_rejects_cross_article_unknown_and_duplicate_ids) ... ok\ntest_regeneration_refuses_to_overwrite_human_work (test_evaluation.Evaluation.test_regeneration_refuses_to_overwrite_human_work) ... ok\ntest_unknown_and_estimated_cost_not_silently_free (test_evaluation.Evaluation.test_unknown_and_estimated_cost_not_silently_free) ... ok\ntest_unreviewed_and_fake_independent_humans_block (test_evaluation.Evaluation.test_unreviewed_and_fake_independent_humans_block) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.090s\n\nOK\n",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T01",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "docs/evaluation/evaluate.py",
+      "--demo",
+      "--output",
+      "docs/evaluation/results/demo.json"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 0,
+    "actualExitCode": 0,
+    "stdout": "{\"status\": \"SYNTHETIC_TOOL_DEMO\", \"acceptancePassed\": false, \"output\": \"docs\\\\evaluation\\\\results\\\\demo.json\"}\n",
+    "stderr": "",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  },
+  {
+    "task": "T01",
+    "command": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "docs/evaluation/evaluate.py",
+      "--input",
+      "docs/evaluation/examples/unreviewed.json",
+      "--output",
+      "docs/evaluation/results/unreviewed-blocked.json"
+    ],
+    "cwd": "E:\\project\\codex\\wxAgent",
+    "expectedExitCode": 2,
+    "actualExitCode": 2,
+    "stdout": "{\"status\": \"BLOCKED_INCOMPLETE_EVIDENCE\", \"acceptancePassed\": false, \"output\": \"docs\\\\evaluation\\\\results\\\\unreviewed-blocked.json\"}\n",
+    "stderr": "",
+    "mode": "OFFLINE_CONTRACT_OR_SYNTHETIC_MOCK"
+  }
+]

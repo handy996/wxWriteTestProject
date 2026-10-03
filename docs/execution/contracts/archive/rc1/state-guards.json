@@ -1,0 +1,278 @@
+{
+  "article": [
+    {
+      "from": "CREATED",
+      "to": [
+        "ANALYZING"
+      ],
+      "dynamic": false,
+      "guard": "start/analyze 命令通过校验、写入持久化队列"
+    },
+    {
+      "from": "ANALYZING",
+      "to": [
+        "ANALYZED"
+      ],
+      "dynamic": false,
+      "guard": "AnalysisResult 结构与锚点校验成功"
+    },
+    {
+      "from": "ANALYZED",
+      "to": [
+        "FACT_CHECKING"
+      ],
+      "dynamic": false,
+      "guard": "初次事实核查步骤被领取"
+    },
+    {
+      "from": "FACT_CHECKING",
+      "to": [
+        "FACT_VERIFIED",
+        "WAITING_MANUAL"
+      ],
+      "dynamic": false,
+      "guard": "重要事实有证据或删除方案；否则等人工补料"
+    },
+    {
+      "from": "FACT_VERIFIED",
+      "to": [
+        "WRITING"
+      ],
+      "dynamic": false,
+      "guard": "RewritePlan 固化且规则满足"
+    },
+    {
+      "from": "WRITING",
+      "to": [
+        "DRAFTED"
+      ],
+      "dynamic": false,
+      "guard": "V1 入库、输入头仍匹配"
+    },
+    {
+      "from": "DRAFTED",
+      "to": [
+        "REVIEWING"
+      ],
+      "dynamic": false,
+      "guard": "Reviewer 开始"
+    },
+    {
+      "from": "REVIEWING",
+      "to": [
+        "REVIEWED"
+      ],
+      "dynamic": false,
+      "guard": "ReviewReport 有效入库"
+    },
+    {
+      "from": "REVIEWED",
+      "to": [
+        "REVISING"
+      ],
+      "dynamic": false,
+      "guard": "Revision 开始"
+    },
+    {
+      "from": "REVISING",
+      "to": [
+        "REVISED"
+      ],
+      "dynamic": false,
+      "guard": "V2 及意见处置入库"
+    },
+    {
+      "from": "REVISED",
+      "to": [
+        "FACT_RECHECKING"
+      ],
+      "dynamic": false,
+      "guard": "对 V2 提取全部 Claim、核验新增/变化"
+    },
+    {
+      "from": "FACT_RECHECKING",
+      "to": [
+        "FACT_RECHECKED",
+        "WAITING_MANUAL"
+      ],
+      "dynamic": false,
+      "guard": "当前稿事实门禁通过或等待处理"
+    },
+    {
+      "from": "FACT_RECHECKED",
+      "to": [
+        "IMAGE_PLANNING",
+        "FINAL_QA"
+      ],
+      "dynamic": false,
+      "guard": "正文进入配图阶段；若图片已就绪且本轮仅补核图注/图中文字，则组装审核包后进入 QA"
+    },
+    {
+      "from": "IMAGE_PLANNING",
+      "to": [
+        "IMAGE_SEARCHING",
+        "IMAGES_READY"
+      ],
+      "dynamic": false,
+      "guard": "有 Slot 开始搜图；合法无图计划直接完成"
+    },
+    {
+      "from": "IMAGE_SEARCHING",
+      "to": [
+        "WAITING_IMAGE_SELECTION",
+        "IMAGE_GENERATING",
+        "WAITING_MANUAL"
+      ],
+      "dynamic": false,
+      "guard": "发现候选、允许自动生图或必须补真实图"
+    },
+    {
+      "from": "IMAGE_GENERATING",
+      "to": [
+        "WAITING_IMAGE_SELECTION",
+        "WAITING_MANUAL"
+      ],
+      "dynamic": false,
+      "guard": "生成/水印完成，或生成不可用"
+    },
+    {
+      "from": "WAITING_IMAGE_SELECTION",
+      "to": [
+        "IMAGES_READY",
+        "IMAGE_SEARCHING",
+        "IMAGE_GENERATING"
+      ],
+      "dynamic": false,
+      "guard": "全部必需 Slot 有合格选择；或用户继续搜索/生成"
+    },
+    {
+      "from": "IMAGES_READY",
+      "to": [
+        "FACT_RECHECKING",
+        "FINAL_QA"
+      ],
+      "dynamic": false,
+      "guard": "图注/图中文字有新增待核 Claim 时先增量核验；否则固化 Manifest、声明、ReleaseCandidate"
+    },
+    {
+      "from": "FINAL_QA",
+      "to": [
+        "READY_FOR_REVIEW",
+        "NEEDS_REVISION"
+      ],
+      "dynamic": false,
+      "guard": "完整 QA 通过或未通过"
+    },
+    {
+      "from": "READY_FOR_REVIEW",
+      "to": [
+        "HUMAN_REVIEW",
+        "NEEDS_REVISION"
+      ],
+      "dynamic": false,
+      "guard": "用户开始审核，或依赖失效"
+    },
+    {
+      "from": "HUMAN_REVIEW",
+      "to": [
+        "APPROVED",
+        "REJECTED",
+        "NEEDS_REVISION"
+      ],
+      "dynamic": false,
+      "guard": "用户决定，或编辑/依赖变化"
+    },
+    {
+      "from": "APPROVED",
+      "to": [
+        "NEEDS_REVISION"
+      ],
+      "dynamic": false,
+      "guard": "重新打开编辑或当前候选被证据更新失效；导出不改变状态"
+    },
+    {
+      "from": "REJECTED",
+      "to": [
+        "NEEDS_REVISION"
+      ],
+      "dynamic": false,
+      "guard": "用户开始处理驳回理由"
+    },
+    {
+      "from": "NEEDS_REVISION",
+      "to": [
+        "REVISING",
+        "FACT_RECHECKING",
+        "IMAGE_PLANNING",
+        "IMAGE_SEARCHING",
+        "WAITING_IMAGE_SELECTION",
+        "FINAL_QA"
+      ],
+      "dynamic": false,
+      "guard": "DependencyResolver 选择最早必要步骤，守卫校验前置产物"
+    },
+    {
+      "from": "WAITING_MANUAL",
+      "to": [],
+      "dynamic": true,
+      "guard": "指定 ManualTask 完成，重新验证后恢复；不是任意跳转"
+    },
+    {
+      "from": "PAUSED",
+      "to": [],
+      "dynamic": true,
+      "guard": "用户继续且输入未变化；变化时重新计算失效链"
+    },
+    {
+      "from": "FAILED",
+      "to": [
+        "CANCELLED"
+      ],
+      "dynamic": true,
+      "guard": "人工 retry/resume 或取消；重试生成新 attempt"
+    },
+    {
+      "from": "CANCELLED",
+      "to": [],
+      "dynamic": false,
+      "guard": "终态；继续生产使用克隆任务，保留原审计链"
+    }
+  ],
+  "execution": [
+    "QUEUED",
+    "RUNNING",
+    "WAITING",
+    "PAUSED",
+    "SUCCEEDED",
+    "FAILED",
+    "CANCELLED"
+  ],
+  "step": [
+    "PENDING",
+    "RUNNING",
+    "RETRY_WAIT",
+    "WAITING_HUMAN",
+    "SUCCEEDED",
+    "FAILED",
+    "TIMED_OUT",
+    "CANCELLED",
+    "STALE"
+  ],
+  "globalMachineTransitions": [
+    "PAUSED",
+    "FAILED",
+    "CANCELLED"
+  ],
+  "globalGuard": "Only active machine steps; authenticated command or exhausted technical failure. CANCELLED has no exits.",
+  "approvalGuard": [
+    "OWNER",
+    "HUMAN_REVIEW",
+    "matching ETag",
+    "matching candidate and releaseHash",
+    "QA PASS and fresh",
+    "no hard blockers",
+    "all required human tasks resolved",
+    "all dependencies fresh"
+  ],
+  "transactionGuard": "ownership -> request idempotency -> aggregate lock -> ETag -> input/fencing -> evidence -> append artifacts/audit -> commit"
+}

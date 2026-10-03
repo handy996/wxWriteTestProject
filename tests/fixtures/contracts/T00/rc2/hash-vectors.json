@@ -1,0 +1,252 @@
+{
+  "canonical": "canonical-v1",
+  "candidate": {
+    "meta": {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "ownerId": "00000000-0000-4000-8000-00000000001e",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "executionId": "00000000-0000-4000-8000-000000000001",
+      "schemaVersion": "1.0.0-rc.2",
+      "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "contentHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "stale": false,
+      "createdBy": "00000000-0000-4000-8000-000000000001",
+      "createdAt": "2026-10-02T12:00:00Z",
+      "traceId": "00000000-0000-4000-8000-000000000001",
+      "mode": "MOCK"
+    },
+    "version": {
+      "id": "00000000-0000-4000-8000-000000000014",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "kind": "VERSION",
+      "hash": "1ff1675bb06b52d1e0ced6e4bab3203cf5507b2c764751fb677e3494784c056f",
+      "stale": false
+    },
+    "manifest": {
+      "id": "00000000-0000-4000-8000-000000000028",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "kind": "MANIFEST",
+      "hash": "4143e20c5bad9ad8ed62d4b766d55d9f996f059641525555724b52263d02d6d8",
+      "stale": false
+    },
+    "factSet": {
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "claims": [
+        {
+          "id": "00000000-0000-4000-8000-000000000029",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "CLAIM",
+          "hash": "7d92263311823338e8af8d578852f1818b6c91e9305dfce110b98dfcb2f7c593",
+          "stale": false
+        }
+      ],
+      "verifications": [
+        {
+          "id": "00000000-0000-4000-8000-00000000002a",
+          "articleId": "00000000-0000-4000-8000-00000000000a",
+          "versionId": "00000000-0000-4000-8000-000000000014",
+          "kind": "VERIFICATION",
+          "hash": "7f7d0e0ac927a6268a71cf5b985f72fd1eacfcc2b3fc9b1b325d83c9c396f437",
+          "stale": false
+        }
+      ],
+      "removedClaimIds": [],
+      "policyVersionId": "00000000-0000-4000-8000-000000000001",
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "stale": false,
+      "validUntil": "2026-10-02T12:00:00Z"
+    },
+    "skillSnapshot": {
+      "id": "00000000-0000-4000-8000-00000000005a",
+      "skillId": "00000000-0000-4000-8000-000000000001",
+      "version": "x",
+      "rulesHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "schemaVersion": "1.0.0-rc.2",
+      "config": {
+        "name": "x",
+        "description": "x",
+        "locale": "zh-CN",
+        "channel": "WECHAT",
+        "audience": [],
+        "tone": [],
+        "structureRules": [],
+        "titleRules": [],
+        "openingRules": {
+          "problemWithinChars": 1
+        },
+        "headingRules": [],
+        "readabilityRules": {
+          "recommendedMin": 1,
+          "recommendedMax": 1,
+          "longParagraphWarning": 1,
+          "veryLongParagraph": 1,
+          "shortParagraphMax": 1,
+          "shortParagraphRun": 1
+        },
+        "imageRules": {
+          "maxBodyImages": 0,
+          "optionalCover": false
+        },
+        "factPolicyRef": "00000000-0000-4000-8000-000000000001",
+        "licensePolicyRef": "00000000-0000-4000-8000-000000000001",
+        "promptBindings": [
+          {
+            "agentName": "x",
+            "promptVersionId": "00000000-0000-4000-8000-000000000001",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "outputSchema": "x"
+          },
+          {
+            "agentName": "x",
+            "promptVersionId": "00000000-0000-4000-8000-000000000001",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "outputSchema": "x"
+          },
+          {
+            "agentName": "x",
+            "promptVersionId": "00000000-0000-4000-8000-000000000001",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "outputSchema": "x"
+          },
+          {
+            "agentName": "x",
+            "promptVersionId": "00000000-0000-4000-8000-000000000001",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "outputSchema": "x"
+          }
+        ],
+        "examples": [],
+        "antiExamples": [],
+        "evaluationRubric": []
+      },
+      "policySnapshots": [
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "type": "FACT",
+          "version": "x",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rules": {
+            "key": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "size": 0,
+            "mime": "x",
+            "encrypted": false
+          }
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "type": "FACT",
+          "version": "x",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rules": {
+            "key": "x",
+            "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "size": 0,
+            "mime": "x",
+            "encrypted": false
+          }
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    "policyRefs": [
+      {
+        "id": "00000000-0000-4000-8000-00000000005b",
+        "type": "FACT",
+        "version": "x",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rules": {
+          "key": "x",
+          "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "size": 0,
+          "mime": "x",
+          "encrypted": false
+        }
+      }
+    ],
+    "selections": [
+      {
+        "id": "00000000-0000-4000-8000-000000000032",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "versionId": "00000000-0000-4000-8000-000000000014",
+        "kind": "selections",
+        "hash": "b99df1eb3aee1525dc4075e06dd02cc994947c4184636ec004833978db8e3c27",
+        "stale": false
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "id": "00000000-0000-4000-8000-000000000035",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "versionId": "00000000-0000-4000-8000-000000000014",
+        "kind": "sourceSnapshots",
+        "hash": "85a0d959d424fce471feb98030df2119e3bff04b6bcba14ee31a96614269308b",
+        "stale": false
+      }
+    ],
+    "variants": [
+      {
+        "id": "00000000-0000-4000-8000-000000000033",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "versionId": "00000000-0000-4000-8000-000000000014",
+        "kind": "variants",
+        "hash": "508c5b61549b6466cc475470ef8acad15441856c60d250f3f7515a61aa529156",
+        "stale": false
+      }
+    ],
+    "licenses": [
+      {
+        "id": "00000000-0000-4000-8000-000000000034",
+        "articleId": "00000000-0000-4000-8000-00000000000a",
+        "versionId": "00000000-0000-4000-8000-000000000014",
+        "kind": "licenses",
+        "hash": "31296bf7ec63deead2c99071453c555006d079f4967915e938fe9e7916dba19c",
+        "stale": false
+      }
+    ],
+    "selectionBindings": [
+      {
+        "selectionId": "00000000-0000-4000-8000-000000000032",
+        "assetId": "00000000-0000-4000-8000-00000000003c",
+        "variantId": "00000000-0000-4000-8000-000000000033",
+        "licenseMetadataId": "00000000-0000-4000-8000-000000000034"
+      }
+    ],
+    "rightsSnapshot": {
+      "id": "00000000-0000-4000-8000-000000000050",
+      "articleId": "00000000-0000-4000-8000-00000000000a",
+      "versionId": "00000000-0000-4000-8000-000000000014",
+      "contentHash": "1ff1675bb06b52d1e0ced6e4bab3203cf5507b2c764751fb677e3494784c056f",
+      "basis": "OWNED",
+      "notes": "本稿原创测试材料",
+      "evidenceIds": [],
+      "recordedBy": "00000000-0000-4000-8000-000000000001",
+      "recordedAt": "2026-10-02T12:00:00Z",
+      "hash": "d80c798ef8a84183813c51598e9e8a3caf0e2511e659574d80bdaef92c7fae88"
+    },
+    "releaseHash": "834dd3d0997e1fe3f4e02994657305cee223f15baee7db3fdfd1aa8a9b39f78f",
+    "validUntil": "2026-10-02T12:00:00Z"
+  },
+  "expectedReleaseHash": "834dd3d0997e1fe3f4e02994657305cee223f15baee7db3fdfd1aa8a9b39f78f",
+  "version": {
+    "schemaVersion": "1.0.0-rc.2",
+    "title": "标题",
+    "subtitle": null,
+    "contentAst": {
+      "blocks": []
+    }
+  },
+  "expectedVersionHash": "29266f8a895fabac529779ff0b11ea44f14524c74af32cafdda8da1cda30c0f0",
+  "manifest": {
+    "items": [],
+    "noticeCompact": "",
+    "noticeFull": "",
+    "policyVersionId": "00000000-0000-4000-8000-000000000001"
+  },
+  "expectedManifestHash": "55b4198ac6885647be006c959315ed7f84dc4aaa2e84641150f9fb062c1589af"
+}

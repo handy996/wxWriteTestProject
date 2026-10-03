@@ -1,0 +1,23 @@
+{
+  "manifests": [
+    {
+      "manifest": "docs/execution/contracts/candidate-manifest.json",
+      "files": 24,
+      "mismatches": []
+    },
+    {
+      "manifest": "tests/fixtures/freeze-manifest.json",
+      "files": 61,
+      "mismatches": []
+    },
+    {
+      "manifest": "tests/fixtures/representative-v1/manifest.json",
+      "files": 85,
+      "mismatches": []
+    }
+  ],
+  "brokenDeliveryLinks": [],
+  "gitRevParseExitCode": 128,
+  "mode": "OFFLINE_FILE_INTEGRITY",
+  "exitCode": 0
+}

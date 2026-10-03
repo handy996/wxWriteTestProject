@@ -1,0 +1,72 @@
+{
+  "reviewDate": "2026-10-03",
+  "contractVersion": "1.0.0-rc.3",
+  "mode": "MAIN_AGENT_OFFLINE_REVIEW",
+  "R02_A": "PASS",
+  "vectors": {
+    "baseline": {
+      "hash": "19dd1be39c127ac3d7b96f208e1978f70b95a5b5776aa5b69d2eb272e054c03a",
+      "positionsVerified": true
+    },
+    "moved": {
+      "hash": "8dad7c4b98dc032b6ace9b7ff5c831fd8267ce9a2026f53822f4dc868654b0a9",
+      "positionsVerified": true
+    },
+    "side": {
+      "hash": "56823888696bd3a8460e1e8fd61c1aab5fb1c664d97ce2d10966ceadc205c997",
+      "positionsVerified": true
+    },
+    "plan": {
+      "hash": "2402904bf7d7d97820512225b64dab920d69b087df3c4487ea20088bc8cd026b",
+      "positionsVerified": true
+    },
+    "order": {
+      "hash": "8d3f54068aa5194021680e98c68b08166755dfd2ea0298021f4b6dd27a678847",
+      "positionsVerified": true
+    }
+  },
+  "immutableHistoryAfterLiveSlotsRemoved": true,
+  "negativeCases": {
+    "missing": "SLOT_ANCHOR_COVERAGE",
+    "duplicate": "DUPLICATE_SLOT_BINDING",
+    "foreign_version": "SLOT_VERSION_MISMATCH",
+    "missing_block": "RELEASE_HASH_MISMATCH",
+    "wrong_owner": "VERSION_SCOPE_MISMATCH"
+  },
+  "manifests": {
+    "docs/execution/contracts/candidate-manifest.json": {
+      "fileCount": 24,
+      "mismatches": [],
+      "manifestSha256": "3db28b3c6ec67ed770adc1c2b7c098b9a7425a66c561d3b9fa75d5a7ccc1b743"
+    },
+    "tests/fixtures/freeze-manifest.json": {
+      "fileCount": 61,
+      "mismatches": [],
+      "manifestSha256": "82a28818612c71fc114e7a2a219239973d797ca7c82e2929c1121bc7ddb9839c"
+    },
+    "tests/fixtures/representative-v1/manifest.json": {
+      "fileCount": 85,
+      "mismatches": [],
+      "manifestSha256": "14d92be7f4a82da6ee3b00c2803d86504e3d7de2877a63fd583ed71049a66875"
+    }
+  },
+  "humanAssignment": {
+    "status": "UNASSIGNED",
+    "reviewerA": null,
+    "reviewerB": null,
+    "adjudicator": null,
+    "independenceEvidence": null,
+    "productRepresentativenessApproval": null,
+    "rightsApproval": null,
+    "requiredActions": [
+      "通读每篇并补漏，不仅勾选候选200条",
+      "A/B独立标注后保留原表",
+      "逐条复核分歧并保留理由和证据",
+      "确认五类素材代表性，必要时新版本加入获权真实材料"
+    ]
+  },
+  "limitations": [
+    "Not an HTTP, database, storage, renderer or Provider integration test.",
+    "Human gold annotation and representativeness approval remain pending."
+  ]
+}

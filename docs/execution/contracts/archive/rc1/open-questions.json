@@ -1,0 +1,146 @@
+[
+  {
+    "id": "OQ-01",
+    "question": "个人工具还是 SaaS？",
+    "developmentDefault": "单 Owner、单部署；保留 ownerId，不做租户平台",
+    "decisionOwnerAndDeadline": "产品 / Phase 0；SaaS 改变数据隔离和计费设计",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-02",
+    "question": "后续是否多人协作/双人审批？",
+    "developmentDefault": "V1 自审，V2 再定义角色",
+    "decisionOwnerAndDeadline": "产品 / V2 规划前",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-03",
+    "question": "是否直接发布微信公众号？",
+    "developmentDefault": "MVP 不实现",
+    "decisionOwnerAndDeadline": "产品 / V4 立项前",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-04",
+    "question": "原文与素材使用依据由谁确认？",
+    "developmentDefault": "用户声明 + 有争议项人工补证",
+    "decisionOwnerAndDeadline": "业务/版权负责人 / 上线前必须确认",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-05",
+    "question": "是否保存完整图片？",
+    "developmentDefault": "保存已选原文件和导出变体；候选仅缓存",
+    "decisionOwnerAndDeadline": "产品/版权负责人 / Phase 0",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-06",
+    "question": "国内部署/数据存储及外部 API 可用性？",
+    "developmentDefault": "存储适配层；部署区域待定",
+    "decisionOwnerAndDeadline": "负责人/运维 / 上线前必须确认合法可用接入与数据安排",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-07",
+    "question": "OpenAI Key 归谁，是否用户自带？",
+    "developmentDefault": "部署者服务端 Key；MVP 不做 BYOK 界面",
+    "decisionOwnerAndDeadline": "负责人 / Phase 0 凭证与预算确认",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-08",
+    "question": "使用哪些文本、视觉和生图模型？",
+    "developmentDefault": "能力路由配置，Phase 0 真实账号探针确定",
+    "decisionOwnerAndDeadline": "技术负责人 / Phase 0",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-09",
+    "question": "每篇/每天成本上限？",
+    "developmentDefault": "示例 5/20 USD，自动生图默认关闭",
+    "decisionOwnerAndDeadline": "产品 / 真实 API 测试前",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-10",
+    "question": "Skill 是否允许普通用户任意自定义？",
+    "developmentDefault": "Owner 可修改受约束 JSON，不能覆盖硬政策",
+    "decisionOwnerAndDeadline": "产品 / V1 评审",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-11",
+    "question": "SA、肖像、品牌标识场景的接受策略？",
+    "developmentDefault": "SA 逐项复核；高风险人物/品牌图人工处理",
+    "decisionOwnerAndDeadline": "版权/业务负责人 / 上线前必须确认",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-12",
+    "question": "AI 内容标识是否有额外发布地/平台要求？",
+    "developmentDefault": "实现显式水印、图注与生成记录，其他要求待目标渠道确认",
+    "decisionOwnerAndDeadline": "业务负责人 / 上线前必须确认；不宣称显式水印覆盖所有法规",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-13",
+    "question": "最终交付格式？",
+    "developmentDefault": "Markdown+简单 HTML+素材与清单 ZIP",
+    "decisionOwnerAndDeadline": "产品 / Phase 1；DOCX/PDF 后置",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-14",
+    "question": "典型文章类型与最大字数？",
+    "developmentDefault": "中文知识/评论/叙事；100–30,000 字",
+    "decisionOwnerAndDeadline": "产品 / 冻结验收集前",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-15",
+    "question": "高风险领域是否纳入？",
+    "developmentDefault": "可分析；重要健康/法律主张须人工证据复核",
+    "decisionOwnerAndDeadline": "产品/业务负责人 / 上线前必须确认范围",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-16",
+    "question": "保留期、删除、灾备要求？",
+    "developmentDefault": "第 32/33 节默认值",
+    "decisionOwnerAndDeadline": "负责人 / 上线前必须确认",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-17",
+    "question": "Boot 3 的维护与补丁来源？",
+    "developmentDefault": "Java 21 + Boot 3.5 兼容基线",
+    "decisionOwnerAndDeadline": "技术负责人 / Phase 0；必要时购买支持或提升级决策",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  },
+  {
+    "id": "OQ-18",
+    "question": "计划用户量和生产 SLO？",
+    "developmentDefault": "单用户、2 篇并发、99.5% 目标",
+    "decisionOwnerAndDeadline": "产品/运维 / 压测前",
+    "status": "UNCONFIRMED",
+    "evidence": null
+  }
+]

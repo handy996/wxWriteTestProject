@@ -1,0 +1,37 @@
+{
+  "contractVersion": "1.0.0-rc.2",
+  "mode": "OFFLINE_REVISION_PROBE",
+  "correctedExpectationsMet": true,
+  "findings": {
+    "R01": {
+      "OWNED": true,
+      "AUTHORIZED": true,
+      "REFERENCE_ONLY": true,
+      "UNKNOWN": true,
+      "LICENSED": false,
+      "PERMISSION": false
+    },
+    "R02": {
+      "candidateValid": true,
+      "projectionValid": true,
+      "hashMatches": true
+    },
+    "R03": {
+      "localReferenceValid": true
+    },
+    "R04": {
+      "firstWithoutBaseValid": true,
+      "switchValid": true
+    },
+    "R05": {
+      "zip21MiBValid": true,
+      "image21MiBRejected": true
+    },
+    "R06": {
+      "editorialMean": 1.6,
+      "analyzerPassesIndependently": true,
+      "allRunThresholdsMet": false
+    }
+  },
+  "note": "Review script retained unchanged; request wire format/local-key fields and fixture paths migrated explicitly. No production acceptance."
+}

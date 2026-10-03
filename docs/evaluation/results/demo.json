@@ -1,0 +1,222 @@
+{
+  "status": "SYNTHETIC_TOOL_DEMO",
+  "mode": "SYNTHETIC_ORACLE",
+  "datasetHash": "6d6b4fe6dddc41956c9638792f1826024e56f54ed282acdf4299ee52973be0f6",
+  "goldHash": "6874a204894f28132a348608f3b496beb06574cdfd21c8cad75b137322842408",
+  "humanGoldVerifiedByThisTool": false,
+  "acceptancePassed": false,
+  "allRunThresholdsMet": false,
+  "runs": [
+    {
+      "runId": "synthetic-run-1",
+      "recall": 1.0,
+      "precision": 1.0,
+      "truePositiveCount": 200,
+      "goldMajorCount": 200,
+      "predictedMajorCount": 200,
+      "falsePositiveIds": [],
+      "criticalMisses": [],
+      "falseSupportedCount": 0,
+      "falseSupportedCases": [],
+      "supportedWithoutGoldMatch": [],
+      "thesisAtLeast4Rate": 1.0,
+      "rubricMean": {
+        "THESIS": 4,
+        "STRUCTURE": 4,
+        "LOGIC": 4,
+        "READABILITY": 4,
+        "TITLE": 4,
+        "TONE": 4,
+        "FACT_FIDELITY": 4
+      },
+      "cost": {
+        "currency": "USD",
+        "actual": "0.000000",
+        "estimated": "0.000000",
+        "unknownReserved": "0.000000",
+        "unknownEntries": [],
+        "actualByArticle": {
+          "science-01": "0.000000",
+          "science-02": "0.000000",
+          "science-03": "0.000000",
+          "science-04": "0.000000",
+          "history-01": "0.000000",
+          "history-02": "0.000000",
+          "history-03": "0.000000",
+          "history-04": "0.000000",
+          "policy-01": "0.000000",
+          "policy-02": "0.000000",
+          "policy-03": "0.000000",
+          "policy-04": "0.000000",
+          "brand-01": "0.000000",
+          "brand-02": "0.000000",
+          "brand-03": "0.000000",
+          "brand-04": "0.000000",
+          "narrative-01": "0.000000",
+          "narrative-02": "0.000000",
+          "narrative-03": "0.000000",
+          "narrative-04": "0.000000"
+        }
+      },
+      "thresholdsMet": true
+    },
+    {
+      "runId": "synthetic-run-2",
+      "recall": 0.995,
+      "precision": 1.0,
+      "truePositiveCount": 199,
+      "goldMajorCount": 200,
+      "predictedMajorCount": 199,
+      "falsePositiveIds": [],
+      "criticalMisses": [
+        {
+          "goldId": "science-01-c01",
+          "articleId": "science-01",
+          "text": "在虚构的纸桥载荷项目中，登记册列出13份原始记录。",
+          "requiredAction": "逐例分析原因、修复、同冻结集重测"
+        }
+      ],
+      "falseSupportedCount": 0,
+      "falseSupportedCases": [],
+      "supportedWithoutGoldMatch": [],
+      "thesisAtLeast4Rate": 1.0,
+      "rubricMean": {
+        "THESIS": 4,
+        "STRUCTURE": 4,
+        "LOGIC": 4,
+        "READABILITY": 4,
+        "TITLE": 4,
+        "TONE": 4,
+        "FACT_FIDELITY": 4
+      },
+      "cost": {
+        "currency": "USD",
+        "actual": "0.000000",
+        "estimated": "0.000000",
+        "unknownReserved": "0.000000",
+        "unknownEntries": [],
+        "actualByArticle": {
+          "science-01": "0.000000",
+          "science-02": "0.000000",
+          "science-03": "0.000000",
+          "science-04": "0.000000",
+          "history-01": "0.000000",
+          "history-02": "0.000000",
+          "history-03": "0.000000",
+          "history-04": "0.000000",
+          "policy-01": "0.000000",
+          "policy-02": "0.000000",
+          "policy-03": "0.000000",
+          "policy-04": "0.000000",
+          "brand-01": "0.000000",
+          "brand-02": "0.000000",
+          "brand-03": "0.000000",
+          "brand-04": "0.000000",
+          "narrative-01": "0.000000",
+          "narrative-02": "0.000000",
+          "narrative-03": "0.000000",
+          "narrative-04": "0.000000"
+        }
+      },
+      "thresholdsMet": false
+    },
+    {
+      "runId": "synthetic-run-3",
+      "recall": 1.0,
+      "precision": 0.9950248756218906,
+      "truePositiveCount": 200,
+      "goldMajorCount": 200,
+      "predictedMajorCount": 201,
+      "falsePositiveIds": [
+        "duplicate-semantic-claim"
+      ],
+      "criticalMisses": [],
+      "falseSupportedCount": 1,
+      "falseSupportedCases": [
+        {
+          "predictionId": "r3-science-01-c10",
+          "goldId": "science-01-c10",
+          "articleId": "science-01",
+          "goldDecision": "UNVERIFIABLE"
+        }
+      ],
+      "supportedWithoutGoldMatch": [],
+      "thesisAtLeast4Rate": 1.0,
+      "rubricMean": {
+        "THESIS": 4,
+        "STRUCTURE": 4,
+        "LOGIC": 4,
+        "READABILITY": 4,
+        "TITLE": 4,
+        "TONE": 4,
+        "FACT_FIDELITY": 4
+      },
+      "cost": {
+        "currency": "USD",
+        "actual": "0.000000",
+        "estimated": "0.000000",
+        "unknownReserved": "0.000000",
+        "unknownEntries": [],
+        "actualByArticle": {
+          "science-01": "0.000000",
+          "science-02": "0.000000",
+          "science-03": "0.000000",
+          "science-04": "0.000000",
+          "history-01": "0.000000",
+          "history-02": "0.000000",
+          "history-03": "0.000000",
+          "history-04": "0.000000",
+          "policy-01": "0.000000",
+          "policy-02": "0.000000",
+          "policy-03": "0.000000",
+          "policy-04": "0.000000",
+          "brand-01": "0.000000",
+          "brand-02": "0.000000",
+          "brand-03": "0.000000",
+          "brand-04": "0.000000",
+          "narrative-01": "0.000000",
+          "narrative-02": "0.000000",
+          "narrative-03": "0.000000",
+          "narrative-04": "0.000000"
+        }
+      },
+      "thresholdsMet": false
+    }
+  ],
+  "distributions": {
+    "recall": {
+      "min": 0.995,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "precision": {
+      "min": 0.9950248756218906,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "falseSupportedCount": {
+      "min": 0,
+      "median": 0,
+      "max": 1
+    },
+    "thesisAtLeast4Rate": {
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    }
+  },
+  "threeRunCosts": {
+    "actualTotal": "0.000000",
+    "perArticleMin": "0.000000",
+    "perArticleMedian": "0.000000",
+    "perArticleP95": "0.000000",
+    "perArticleMax": "0.000000",
+    "currency": "USD",
+    "note": "UNKNOWN and ESTIMATED reported separately; no token/reasoning-token double counting."
+  },
+  "limits": [
+    "Identity and annotation evidence must be checked by the main agent; nonempty fields alone do not authenticate humans.",
+    "Metrics describe the frozen set only. Mock and synthetic results are not real model quality evidence.",
+    "Actual paid-call ledger reconciliation and integration remain T08/T09/T36/T37 responsibilities."
+  ]
+}

@@ -1,0 +1,667 @@
+[
+  {
+    "ac": "AC-01",
+    "fr": "FR-01",
+    "scenario": "输入约 3,000 字原文并创建；相同幂等 key 连点",
+    "requiredResult": "仅一个 Job 和一个 Original；原文 hash 不变；<100 或 >30,000 字返回 422；未填使用依据不可完成创建",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-02",
+    "fr": "FR-02",
+    "scenario": "创建时选公众号 v1.0.0，后来发布 v1.1.0",
+    "requiredResult": "已创建任务继续用 v1.0.0；主动更换产生新运行及下游失效；未发布版本不能选择",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-03",
+    "fr": "FR-03",
+    "scenario": "已知核心论点/重复段样例",
+    "requiredResult": "输出第 11 节所有必需字段；锚点均可定位；人工按量表对核心论点准确性评分≥4/5 的文章占比≥90%",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-04",
+    "fr": "FR-04",
+    "scenario": "运行冻结事实集并加入反证/转载样例",
+    "requiredResult": "达到 38.1 指标；显示摘录、来源及核验时间；两篇转载不能当两个独立来源；无证据重要事实阻断",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-05",
+    "fr": "FR-05",
+    "scenario": "核验/删除方案齐全后生成",
+    "requiredResult": "产生独立 V1 和 RewritePlan 关联；重要新增事实进入待核查；原文不变；输出不能伪造 sourceId",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-06",
+    "fr": "FR-06",
+    "scenario": "V1 有重复结论、弱标题与逻辑跳跃",
+    "requiredResult": "产生 ReviewReport/ReviewItem；必需维度完整；Reviewer 不修改正文；问题能定位段落",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-07",
+    "fr": "FR-07",
+    "scenario": "对报告执行二次修改",
+    "requiredResult": "新 V2、逐项处置理由；全部当前 Claim 重对齐；新增数字触发核验；待处理硬事实不通过 QA",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-08",
+    "fr": "FR-08",
+    "scenario": "3,000 字文章及无图短文",
+    "requiredResult": "默认 2–3 个正文 Slot，或明确无图理由；锚点存在；证据位始终禁止 AI；超上限有提示",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-09",
+    "fr": "FR-09",
+    "scenario": "固定响应及真实 API smoke",
+    "requiredResult": "返回缩略图/文件页/作者/许可证据；多许可可查看；缺许可候选不可选",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-10",
+    "fr": "FR-10",
+    "scenario": "固定响应及真实 API smoke",
+    "requiredResult": "保存摄影师、素材页、Provider 许可依据；页面显示平台/作者链接；429 按策略等待",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-11",
+    "fr": "FR-11",
+    "scenario": "UNKNOWN/NC/ND/SA/缺作者夹具",
+    "requiredResult": "UNKNOWN/NC/ND 默认拒绝；SA 未落实义务不可用；手工改前端 eligible 不能绕过后端",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-12",
+    "fr": "FR-12",
+    "scenario": "用户从合法候选选择，再换图",
+    "requiredResult": "新 selection、旧记录保留；Manifest/QA 失效；Slot 不属于文章返回拒绝；无人工选择不会自动确认",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-13",
+    "fr": "FR-13",
+    "scenario": "合格候选最高 60 分，且 Slot 可生成",
+    "requiredResult": "提示生图或按已开启策略调用；记录 Prompt/模型/费用；EVIDENCE、mustBeReal=true 请求返回 422",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-14",
+    "fr": "FR-14",
+    "scenario": "生成图、裁剪图与中文字体缺失样例",
+    "requiredResult": "最终导出变体包含可见“AI生成”；每边裁 10% 仍有内侧标记；缺字体处理失败并阻断，不导出原图",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-15",
+    "fr": "FR-15",
+    "scenario": "3 张不同依据图片，删除中间一张",
+    "requiredResult": "简洁和完整声明均覆盖实际图片、正确重编号；必要署名/链接/变换说明不缺；无选用素材不出现在清单",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-16",
+    "fr": "FR-16",
+    "scenario": "逐个注入 QA-01–16 失败",
+    "requiredResult": "所有 BLOCKER 能阻断；检查器不可用不能视为 PASS；通过后为 READY_FOR_REVIEW，仍不能正式导出",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-17",
+    "fr": "FR-17",
+    "scenario": "用户对固定审核包批准/驳回",
+    "requiredResult": "批准记录 reviewer、hash、QA；驳回必须有理由；AI/匿名直接调用批准接口失败；工作头变化返回冲突",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-18",
+    "fr": "FR-18",
+    "scenario": "已批准含公开图及 AI 图的审核包",
+    "requiredResult": "ZIP/Markdown/HTML 正确；图片、清单与 hash 一致；不含无水印图/密钥；未批准仅可导出显著草稿预览",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-19",
+    "fr": "FR-19",
+    "scenario": "人工修改/恢复历史",
+    "requiredResult": "版本递增、Original 不变、diff 可见；恢复不恢复旧审批有效性",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-20",
+    "fr": "FR-19",
+    "scenario": "AI 执行中人工保存",
+    "requiredResult": "新人工版本成为头；晚到 AI 不覆盖头，保存为候选/历史并显示冲突",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-21",
+    "fr": "FR-20",
+    "scenario": "Worker 在外部调用前/后、入库前/后被杀",
+    "requiredResult": "各故障点可恢复；数据库产物唯一；已受理未知调用进入对账，不能盲重试付费图",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-22",
+    "fr": "FR-20",
+    "scenario": "两 Worker 同时领取/旧 Worker 租约过期",
+    "requiredResult": "只有有效 fencingToken 可提交；一个逻辑结果最多被提交一次",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-23",
+    "fr": "FR-20",
+    "scenario": "重复网络 POST/页面连点/重放消息",
+    "requiredResult": "同幂等请求返回同 operation；相同 key 不同 payload 409；无重复批准记录",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-24",
+    "fr": "FR-04",
+    "scenario": "来源过期、撤稿、网页暂时不可达",
+    "requiredResult": "区分访问状态与事实结论；撤稿/过期引起失效；暂不可达有证据复核流程",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-25",
+    "fr": "FR-17",
+    "scenario": "批准后改图/标题/正文/图注",
+    "requiredResult": "新工作头旧批准不适用；新正式导出被拒；旧有效快照单独标识",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-26",
+    "fr": "FR-09",
+    "scenario": "图片从安全 URL 重定向到私网/坏格式/巨像素",
+    "requiredResult": "下载阻断，文件不进入 READY；错误不泄漏内部网络信息",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-27",
+    "fr": "FR-21",
+    "scenario": "原文、网页或元数据包含越权指令",
+    "requiredResult": "工具集与门禁不变，不能取密钥、改状态、批准、执行代码",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-28",
+    "fr": "FR-21",
+    "scenario": "预算最后余额被两个任务同时预占",
+    "requiredResult": "原子检查，一方停止；总预占与已花费不超过用户预算，最终对账误差单独报告",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-29",
+    "fr": "FR-20",
+    "scenario": "对象写成功但数据库失败",
+    "requiredResult": "不产生成功任务状态；暂存对象可被引用恢复或在 TTL 后清理；历史引用对象不误删",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-30",
+    "fr": "FR-21",
+    "scenario": "模型输出合法 JSON 但引用不存在/数字越界",
+    "requiredResult": "业务校验拒绝；记录解析成功但语义校验失败；不进入下步",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-31",
+    "fr": "FR-20",
+    "scenario": "暂停/取消中远端返回",
+    "requiredResult": "可记录响应与费用，但不推进旧任务；取消任务不自动恢复",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-32",
+    "fr": "FR-18",
+    "scenario": "导出时存储缺失/事实过期/QA 过期",
+    "requiredResult": "不生成可下载正式包；明确 NEEDS_REVISION 或重检任务",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-33",
+    "fr": "FR-21",
+    "scenario": "权限与日志",
+    "requiredResult": "其他 owner 数据不可访问；所有关键动作含 actor 与 trace；日志无明文凭证",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-34",
+    "fr": "FR-20",
+    "scenario": "性能/恢复/备份",
+    "requiredResult": "达到 NFR-01–10；从备份恢复一个已批准任务并验证所有 hash",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  },
+  {
+    "ac": "AC-35",
+    "fr": "FR-21",
+    "scenario": "全链路追踪",
+    "requiredResult": "从正式 ZIP 任意一图/硬事实反查到批准、版本、资产/来源快照、步骤及 Agent/人工操作",
+    "fixtureMode": "MOCK_PREPARATION",
+    "businessTestStatus": "NOT_EXECUTED",
+    "fixtureFamilies": [
+      "articles",
+      "claims",
+      "licenses",
+      "provider-responses",
+      "concurrency",
+      "qa",
+      "inputs"
+    ],
+    "integrationOwner": "T36/T37 plus domain task owner",
+    "evidence": null
+  }
+]

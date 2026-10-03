@@ -1,0 +1,69 @@
+{
+  "canonical": "canonical-v1",
+  "candidate": {
+    "schemaVersion": "1.0.0-rc.1",
+    "version": {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "manifest": {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "factSetHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "skillRulesHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "selections": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "variants": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "licenses": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "verifications": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "policies": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  },
+  "expectedReleaseHash": "42a3576f2ae2270ad598404edcd3612348d6a79d988a82e29eab1c3534a83775",
+  "version": {
+    "schemaVersion": "1.0.0-rc.1",
+    "title": "标题",
+    "subtitle": null,
+    "contentAst": {
+      "blocks": []
+    }
+  },
+  "expectedVersionHash": "5fd1d82f0d4236de7055b5f55c4f5de41fc5bc5d8f74c9b0cdca6a75b3152471",
+  "manifest": {
+    "items": [],
+    "noticeCompact": "",
+    "noticeFull": "",
+    "policyVersionId": "00000000-0000-4000-8000-000000000001"
+  },
+  "expectedManifestHash": "55b4198ac6885647be006c959315ed7f84dc4aaa2e84641150f9fb062c1589af"
+}

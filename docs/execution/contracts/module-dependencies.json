@@ -1,0 +1,54 @@
+{
+  "compileDependencies": {
+    "shared": [],
+    "identity": [
+      "shared"
+    ],
+    "audit": [
+      "shared"
+    ],
+    "storage": [
+      "shared"
+    ],
+    "cost": [
+      "shared"
+    ],
+    "settings": [
+      "shared"
+    ],
+    "article": [
+      "shared"
+    ],
+    "editorial": [
+      "shared"
+    ],
+    "research": [
+      "shared"
+    ],
+    "factcheck": [
+      "shared"
+    ],
+    "image": [
+      "shared"
+    ],
+    "license": [
+      "shared"
+    ],
+    "qa": [
+      "shared"
+    ],
+    "review": [
+      "shared"
+    ],
+    "export": [
+      "shared"
+    ],
+    "ai": [
+      "shared"
+    ],
+    "workflow": [
+      "shared"
+    ]
+  },
+  "note": "shared holds small types and contract-only ports. Each domain owns implementation. Composition root wires ports. Runtime event loops are guarded generations, not compile-time dependency cycles."
+}

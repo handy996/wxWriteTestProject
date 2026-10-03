@@ -1,0 +1,51 @@
+{
+  "scope": "R02-A rc.3",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "docs/execution/contracts/build_contract.py"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "Built 164 schemas and API inventory, 1.0.0-rc.3; awaiting main-agent review.\n",
+      "stderr": "",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "docs/execution/contracts/build_registry.py"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 0,
+      "expectedExitCode": 0,
+      "stdout": "Registry: 38 tables, 28 article states, 29 ports, 18 open decisions.\n",
+      "stderr": "",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    },
+    {
+      "command": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/contracts/T00",
+        "-v"
+      ],
+      "cwd": "E:\\project\\codex\\wxAgent",
+      "actualExitCode": 1,
+      "expectedExitCode": 0,
+      "stdout": "",
+      "stderr": "test_api_inventory_exactly_covers_srs_plus_requested_deletion (test_contracts.Contracts.test_api_inventory_exactly_covers_srs_plus_requested_deletion) ... ok\ntest_approval_fencing_budget_and_safe_fetch_oracles (test_contracts.Contracts.test_approval_fencing_budget_and_safe_fetch_oracles) ... ok\ntest_baseline_hashes_and_ownership_dag (test_contracts.Contracts.test_baseline_hashes_and_ownership_dag) ... ok\ntest_codepoint_span_and_business_reference_failures (test_contracts.Contracts.test_codepoint_span_and_business_reference_failures) ... ok\ntest_every_schema_has_positive_and_negative_structural_example (test_contracts.Contracts.test_every_schema_has_positive_and_negative_structural_example) ... ok\ntest_no_client_actor_status_or_model_approval (test_contracts.Contracts.test_no_client_actor_status_or_model_approval) ... ok\ntest_release_hash_covers_evidence_variant_and_excludes_mutable_flags (test_contracts.Contracts.test_release_hash_covers_evidence_variant_and_excludes_mutable_flags) ... ok\ntest_selection_exclusive_and_license_nullable (test_contracts.Contracts.test_selection_exclusive_and_license_nullable) ... ok\ntest_standard_openapi_and_schema_validators (test_contracts.Contracts.test_standard_openapi_and_schema_validators) ... C:\\Users\\eie04\\AppData\\Local\\Temp\\wxagent-t00-validation\\openapi_spec_validator\\shortcuts.py:66: DeprecationWarning: validate_spec shortcut is deprecated. Use validate instead.\n  warnings.warn(\nok\ntest_unicode_and_canonical_vectors (test_contracts.Contracts.test_unicode_and_canonical_vectors) ... ok\ntest_r01_srs_create_request_and_rights_lifecycle (test_review_regressions.ReviewRegressions.test_r01_srs_create_request_and_rights_lifecycle) ... ok\ntest_r02_schema_candidate_projection_and_protected_inputs (test_review_regressions.ReviewRegressions.test_r02_schema_candidate_projection_and_protected_inputs) ... ok\ntest_r03_new_claim_references_resolve_once (test_review_regressions.ReviewRegressions.test_r03_new_claim_references_resolve_once) ... ok\ntest_r04_first_version_copy_publish_and_switch_plan (test_review_regressions.ReviewRegressions.test_r04_first_version_copy_publish_and_switch_plan) ... ok\ntest_r05_limits_are_scoped (test_review_regressions.ReviewRegressions.test_r05_limits_are_scoped) ... ok\ntest_routes_and_restore_fail_closed (test_review_regressions.ReviewRegressions.test_routes_and_restore_fail_closed) ... ok\ntest_anchor_side_order_plan_hash_and_vectors (test_slot_anchors.SlotAnchors.test_anchor_side_order_plan_hash_and_vectors) ... ok\ntest_body_hash_block_hash_and_version_fail_closed (test_slot_anchors.SlotAnchors.test_body_hash_block_hash_and_version_fail_closed) ... ok\ntest_freeze_rejects_missing_extra_duplicate_foreign_and_invalid_blocks (test_slot_anchors.SlotAnchors.test_freeze_rejects_missing_extra_duplicate_foreign_and_invalid_blocks) ... ok\ntest_frozen_anchor_and_manifest_exact_binding_coverage (test_slot_anchors.SlotAnchors.test_frozen_anchor_and_manifest_exact_binding_coverage) ... ok\ntest_history_uses_only_frozen_body_and_candidate (test_slot_anchors.SlotAnchors.test_history_uses_only_frozen_body_and_candidate) ... ok\ntest_patch_and_invalidation_contract (test_slot_anchors.SlotAnchors.test_patch_and_invalidation_contract) ... ERROR\ntest_unordered_sets_and_empty_selection (test_slot_anchors.SlotAnchors.test_unordered_sets_and_empty_selection) ... ok\n\n======================================================================\nERROR: test_patch_and_invalidation_contract (test_slot_anchors.SlotAnchors.test_patch_and_invalidation_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"E:\\project\\codex\\wxAgent\\tests\\contracts\\T00\\test_slot_anchors.py\", line 143, in test_patch_and_invalidation_contract\n    validator('PatchSlotRequest').validate(patch)\n  File \"C:\\Users\\eie04\\AppData\\Local\\Temp\\wxagent-t00-validation\\jsonschema\\validators.py\", line 450, in validate\n    raise error\njsonschema.exceptions.ValidationError: Additional properties are not allowed ('anchorBlockId' was unexpected)\n\nFailed validating 'additionalProperties' in schema:\n    {'type': 'object',\n     'additionalProperties': False,\n     'properties': {'anchor': {'type': 'object',\n                               'additionalProperties': False,\n                               'properties': {'blockId': {'type': 'string',\n                                                          'minLength': 1,\n                                                          'maxLength': 80},\n                                              'side': {'type': 'string',\n                                                       'enum': ['BEFORE',\n                                                                'AFTER']}},\n                               'required': ['blockId', 'side']},\n                    'position': {'type': 'integer',\n                                 'minimum': 0,\n                                 'maximum': 2147483647},\n                    'purpose': {'type': 'string',\n                                'enum': ['EVIDENCE',\n                                         'EXPLANATION',\n                                         'SCENE',\n                                         'EMOTION',\n                                         'COVER']},\n                    'mandatory': {'type': 'boolean'},\n                    'description': {'type': 'string',\n                                    'minLength': 1,\n                                    'maxLength': 1000}},\n     'required': [],\n     'minProperties': 1}\n\nOn instance:\n    {'anchorBlockId': 'block-B'}\n\n----------------------------------------------------------------------\nRan 23 tests in 2.264s\n\nFAILED (errors=1)\n",
+      "mode": "OFFLINE_CONTRACT_SYNTHETIC_MOCK"
+    }
+  ],
+  "protectedFiles": 214,
+  "protectedChanges": [],
+  "paidCalls": 0,
+  "integration": "NOT_RUN",
+  "runnerExitCode": 1
+}

@@ -1,0 +1,101 @@
+{
+  "contractVersion": "1.0.0-rc.2",
+  "mode": "MAIN_AGENT_OFFLINE_REVIEW",
+  "regressions": {
+    "R01": {
+      "OWNED": true,
+      "AUTHORIZED": true,
+      "REFERENCE_ONLY": true,
+      "UNKNOWN": true,
+      "LICENSED": false,
+      "PERMISSION": false
+    },
+    "R02_wire_projection": "PASS",
+    "R03": "PASS",
+    "R04": "PASS",
+    "R05": "PASS",
+    "R06": {
+      "lowMean": 1.6,
+      "below_four": "REJECTED",
+      "reversal": "REJECTED",
+      "analyzer_below_ninety": "REJECTED"
+    }
+  },
+  "remainingFindings": {
+    "R02_ANCHOR_SNAPSHOT": {
+      "anchorOnlyPatchSchemaValid": true,
+      "candidateWithFrozenAnchorsSchemaValid": false,
+      "hashProjectionFields": [
+        "articleId",
+        "claims",
+        "factSetHash",
+        "licenses",
+        "manifest",
+        "ownerId",
+        "policies",
+        "rights",
+        "schemaVersion",
+        "selectionBindings",
+        "selections",
+        "skillRulesHash",
+        "skillVersionId",
+        "sourceSnapshots",
+        "variants",
+        "verifications",
+        "version"
+      ],
+      "manifestItemFields": [
+        "assetHash",
+        "assetId",
+        "attributionLinks",
+        "attributionText",
+        "caption",
+        "displayOrder",
+        "generatedDisclosure",
+        "licenseMetadataId",
+        "modifications",
+        "obligations",
+        "obligationsSatisfied",
+        "selectionId",
+        "slotId",
+        "variantId"
+      ],
+      "frozenSelectionBindingFields": [
+        "assetId",
+        "licenseMetadataId",
+        "selectionId",
+        "variantId"
+      ],
+      "note": "No typed frozen slot anchor or required AST rewrite contract; actual HTTP/DB behavior not executed."
+    }
+  },
+  "manifests": {
+    "docs/execution/contracts/candidate-manifest.json": {
+      "files": 23,
+      "mismatches": []
+    },
+    "tests/fixtures/freeze-manifest.json": {
+      "files": 61,
+      "mismatches": []
+    },
+    "tests/fixtures/representative-v1/manifest.json": {
+      "files": 85,
+      "mismatches": []
+    }
+  },
+  "humanAssignment": {
+    "status": "UNASSIGNED",
+    "reviewerA": null,
+    "reviewerB": null,
+    "adjudicator": null,
+    "independenceEvidence": null,
+    "productRepresentativenessApproval": null,
+    "rightsApproval": null,
+    "requiredActions": [
+      "通读每篇并补漏，不仅勾选候选200条",
+      "A/B独立标注后保留原表",
+      "逐条复核分歧并保留理由和证据",
+      "确认五类素材代表性，必要时新版本加入获权真实材料"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "contractVersion": "1.0.0-rc.3",
+  "status": "REVIEW_CANDIDATE",
+  "gitCommit": null,
+  "gitReason": "Git directory exists but HEAD has no commit; T02 owns the commit baseline.",
+  "reviewedDependencies": [],
+  "sourceHashes": {
+    "AI-Editorial-Agent-Execution-Plan-v1.0.md": "739a24f3d95e1731fb15076772efac92e183c6c0e9f3d0160af8871910c6174a",
+    "AI-Editorial-Agent-SRS-v1.0.md": "27def5eb5a59bd093052900eaad7c678c7970cfa410a8b9ea21eaf6cb50cd2e3"
+  }
+}

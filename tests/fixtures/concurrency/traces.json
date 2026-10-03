@@ -1,0 +1,122 @@
+[
+  {
+    "id": "two-workers",
+    "trace": "lease(A,1); expire; lease(B,2); commit(A,1); commit(B,2)",
+    "expected": "A rejected; B commits once",
+    "ac": [
+      "AC-22"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "human-save-late-ai",
+    "trace": "AI(base=v1,fence=1); USER save(v2,fence=2); AI result",
+    "expected": "v2 stays head; AI history/proposal",
+    "ac": [
+      "AC-20"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "last-budget",
+    "trace": "balance=1; reserve(A,1) || reserve(B,1)",
+    "expected": "exactly one accepted; total<=1",
+    "ac": [
+      "AC-28"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "object-db-failure",
+    "trace": "stage object; DB commit fails; wait TTL; scan refs",
+    "expected": "no business success; unreferenced object cleaned",
+    "ac": [
+      "AC-29"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "duplicate-command",
+    "trace": "POST key=k,payload=x twice",
+    "expected": "same operation; one logical result",
+    "ac": [
+      "AC-23"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "conflicting-command",
+    "trace": "POST key=k,x; POST key=k,y",
+    "expected": "409; no second operation",
+    "ac": [
+      "AC-23"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "approve-head-change",
+    "trace": "freeze(candidate1); save(head2); approve(candidate1)",
+    "expected": "412/409; no approval",
+    "ac": [
+      "AC-17"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "replace-selection",
+    "trace": "select(A); replace(B); export(old approval as current)",
+    "expected": "old selection kept; current export blocked",
+    "ac": [
+      "AC-25"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "kill-before-call",
+    "trace": "claim lease; kill before provider request",
+    "expected": "recover after lease; no fabricated settled cost",
+    "ac": [
+      "AC-21"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "kill-after-call",
+    "trace": "provider accepts; kill before response save",
+    "expected": "OUTCOME_UNKNOWN; no blind paid retry",
+    "ac": [
+      "AC-21"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "kill-before-db",
+    "trace": "stage result; kill before business transaction",
+    "expected": "recover through idempotent result or reconcile",
+    "ac": [
+      "AC-21"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  },
+  {
+    "id": "kill-after-db",
+    "trace": "commit artifacts; kill before HTTP reply",
+    "expected": "replay original operation; no duplicated result",
+    "ac": [
+      "AC-21"
+    ],
+    "mode": "MOCK_SCENARIO",
+    "executionStatus": "NOT_INTEGRATED"
+  }
+]

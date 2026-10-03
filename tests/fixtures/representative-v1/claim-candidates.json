@@ -1,0 +1,3802 @@
+[
+  {
+    "id": "science-01-c01",
+    "articleId": "science-01",
+    "text": "试验随机分配了80名夜班志愿者，每组40人。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 22,
+    "quote": "试验随机分配了80名夜班志愿者，每组40人。",
+    "blockHash": "b7a5c691d9010993b67b671e0b74a8cac93e1602deffd7460b73aefbd9a6f87b",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c02",
+    "articleId": "science-01",
+    "text": "呼吸训练持续两周，每天十分钟。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 15,
+    "quote": "呼吸训练持续两周，每天十分钟。",
+    "blockHash": "9f65160342035972671846d22253fe99fc2844a29fb7a7228450278607763125",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c03",
+    "articleId": "science-01",
+    "text": "对照组每天听十分钟音乐，未接受呼吸指导。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 20,
+    "quote": "对照组每天听十分钟音乐，未接受呼吸指导。",
+    "blockHash": "b788d06015d7663e45d703310ff995c8dd9ab4dbd9d9a38e9e0f558052c25a81",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c04",
+    "articleId": "science-01",
+    "text": "研究预先指定的主要终点是七级疲劳量表。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 19,
+    "quote": "研究预先指定的主要终点是七级疲劳量表。",
+    "blockHash": "d7885c91dda29b0cf4fd027d3ca258139f0fc7f0f64edf83792fecde64c80b6e",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c05",
+    "articleId": "science-01",
+    "text": "两周后完成问卷的训练组有36人，对照组有38人。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 24,
+    "quote": "两周后完成问卷的训练组有36人，对照组有38人。",
+    "blockHash": "773611db189233021243717167035381701b7e4d00fbeb6f6fd6c1e7c1026a48",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c06",
+    "articleId": "science-01",
+    "text": "公开附表仅报告完成随访者的结果。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 16,
+    "quote": "公开附表仅报告完成随访者的结果。",
+    "blockHash": "315aa8bb5b0a1d62d0fd8f92c5b6798ee6f185aacb4bde1e514539abcb494a7f",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c07",
+    "articleId": "science-01",
+    "text": "两组平均疲劳评分的差值为0.6分，区间跨过零。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 23,
+    "quote": "两组平均疲劳评分的差值为0.6分，区间跨过零。",
+    "blockHash": "8e01577c3db6269f9c3e118b24aeca9c6c20f25d541c18ef8ba09c53804cdc28",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c08",
+    "articleId": "science-01",
+    "text": "研究没有测量实际工作产量，也没有追踪一年后的情况。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 25,
+    "quote": "研究没有测量实际工作产量，也没有追踪一年后的情况。",
+    "blockHash": "76d230bb2c46890bec945fe04a614f5afd9bc36c6f4fc0ce3ceaa1aa4ae068b1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c09",
+    "articleId": "science-01",
+    "text": "两组疲劳评分差值的区间完全高于零。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 17,
+    "quote": "两组疲劳评分差值的区间完全高于零。",
+    "blockHash": "3a4d247396c3b8e0c2f49cad92eafec090d30747ea3e58b9718f6008745edac2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "science-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-01-c10",
+    "articleId": "science-01",
+    "text": "每天练习十分钟就能让所有夜班员工的产量提高一倍。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 24,
+    "quote": "每天练习十分钟就能让所有夜班员工的产量提高一倍。",
+    "blockHash": "c3834e16041da5b45646f98d018a98610c6c8adba48070db7bd32bf72c900420",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "science-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c01",
+    "articleId": "science-02",
+    "text": "调查通过社区公告招募240名成年居民。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 19,
+    "quote": "调查通过社区公告招募240名成年居民。",
+    "blockHash": "5aecbf312c19b13d19656d48c7e4871899933f943d2af6e4a04184754a697452",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c02",
+    "articleId": "science-02",
+    "text": "参加者自行报告过去七天的睡眠时长。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 17,
+    "quote": "参加者自行报告过去七天的睡眠时长。",
+    "blockHash": "52294c72cac898e89f5ff72a0c3a162dc4edab08a36a9376d1ff24abc74c737d",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c03",
+    "articleId": "science-02",
+    "text": "步道距离依据住址到入口的道路距离计算。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 19,
+    "quote": "步道距离依据住址到入口的道路距离计算。",
+    "blockHash": "1bc88e732a6e2b906233391a202a41c62ed7b602773adecb268d645ebff6fa1c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c04",
+    "articleId": "science-02",
+    "text": "研究没有随机分配参加者的居住位置。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 17,
+    "quote": "研究没有随机分配参加者的居住位置。",
+    "blockHash": "b7f7b05ab074bf2c23de88df277f2e713631025ba2bb861c4f447c5a10823d17",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c05",
+    "articleId": "science-02",
+    "text": "回归模型纳入年龄与是否夜班两个变量。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 18,
+    "quote": "回归模型纳入年龄与是否夜班两个变量。",
+    "blockHash": "b5ffc51d073e6c68a58aaef1e229abb639147aac5c4684bdc8cc80e03cded890",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c06",
+    "articleId": "science-02",
+    "text": "本次问卷没有收集家庭收入。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 13,
+    "quote": "本次问卷没有收集家庭收入。",
+    "blockHash": "afcc70e8ed75c0dd8c7f14ed6a579ac868004118502cbf7d1756647712cc38d1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c07",
+    "articleId": "science-02",
+    "text": "距离较近一组的平均自报睡眠长18分钟。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 19,
+    "quote": "距离较近一组的平均自报睡眠长18分钟。",
+    "blockHash": "f956255f14f10f8e6037b1dbdba646595fbacd82cce000d9504db7cdbae76d86",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c08",
+    "articleId": "science-02",
+    "text": "作者将该结果标为横断面关联，未建立时间先后。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 22,
+    "quote": "作者将该结果标为横断面关联，未建立时间先后。",
+    "blockHash": "c3a47ab36f2568a6e3221f85b9030cbb68d499804e5d1ad22e6fb8d34ef8fac9",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c09",
+    "articleId": "science-02",
+    "text": "模型已经控制了家庭收入这一因素。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 16,
+    "quote": "模型已经控制了家庭收入这一因素。",
+    "blockHash": "e0d303eb316f142350f678559e6ac2ea7c253546ebdf5b86f9c9b9b5e88eef03",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "science-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-02-c10",
+    "articleId": "science-02",
+    "text": "把所有居民迁到步道附近就一定能治疗失眠。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 20,
+    "quote": "把所有居民迁到步道附近就一定能治疗失眠。",
+    "blockHash": "12766ef0795d57261a32f26d74c62b1883637d5034961c6c26ebcc30be689e5f",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "science-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c01",
+    "articleId": "science-03",
+    "text": "台架使用粒径五微米的标准聚合物微粒。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 18,
+    "quote": "台架使用粒径五微米的标准聚合物微粒。",
+    "blockHash": "b3cf2be99be917c46ec8288f04618b8ba4fca908be1547272c1a6011b129874e",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c02",
+    "articleId": "science-03",
+    "text": "进样液为实验室配制液，不是自然河水。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 18,
+    "quote": "进样液为实验室配制液，不是自然河水。",
+    "blockHash": "dc519acfe8b1775ba90b42ccdad57bb62042204edd184ce963ac9e78aca140ef",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c03",
+    "articleId": "science-03",
+    "text": "测试压力固定在0.2兆帕。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 13,
+    "quote": "测试压力固定在0.2兆帕。",
+    "blockHash": "36cb8ed31159aa8f01fecbd5423da04a9a3a58b07c085c641c2e7ea9acefc2ce",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c04",
+    "articleId": "science-03",
+    "text": "每种薄膜测试了六片独立样品。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 14,
+    "quote": "每种薄膜测试了六片独立样品。",
+    "blockHash": "5c586dfa9b373b9a6594ef7c8ee1f053c7af1a2b96e1f0b4052297f76721ebef",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c05",
+    "articleId": "science-03",
+    "text": "报告给出的截留率范围为91%至95%。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 19,
+    "quote": "报告给出的截留率范围为91%至95%。",
+    "blockHash": "3bfdb58b54e60647f384300d5d9ef54fa9701ec29d108f65b5709b20eeb7401a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c06",
+    "articleId": "science-03",
+    "text": "单次连续运行最长为八小时。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 13,
+    "quote": "单次连续运行最长为八小时。",
+    "blockHash": "4a7352f335bd7e51257bce4c550348bb4b5d4b009393335c94f31c3bfa68bf89",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c07",
+    "articleId": "science-03",
+    "text": "方案没有安排细菌培养检测。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 13,
+    "quote": "方案没有安排细菌培养检测。",
+    "blockHash": "76373d58314323750f95db9423e9700c828424049ca41d261d892f7251bd6d52",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c08",
+    "articleId": "science-03",
+    "text": "样品中不包含使用一年的老化薄膜。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 16,
+    "quote": "样品中不包含使用一年的老化薄膜。",
+    "blockHash": "89f8aef4ecaacfe313f758679a2c9d6224901a58c78e01dd0ace7d2638ffc614",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c09",
+    "articleId": "science-03",
+    "text": "薄膜已经在自然河水中连续运行一年。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 17,
+    "quote": "薄膜已经在自然河水中连续运行一年。",
+    "blockHash": "a30ce2428a583a7981794abb294d7a7cf73188048f82459fe2f76a9c52b5821a",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "science-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-03-c10",
+    "articleId": "science-03",
+    "text": "经这种薄膜过滤的任何污水都可以安全饮用。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 20,
+    "quote": "经这种薄膜过滤的任何污水都可以安全饮用。",
+    "blockHash": "cdd1dc35db6ee075bee7af99f209adcac29ada105c5b2e5c122c3433f93f6f2e",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "science-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c01",
+    "articleId": "science-04",
+    "text": "第一版预印本在模拟时间2030年4月2日发布。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 23,
+    "quote": "第一版预印本在模拟时间2030年4月2日发布。",
+    "blockHash": "40339b6a8c57813a5a508a09fabaaa9e1ec92924bc39c045293f45954afa1e53",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c02",
+    "articleId": "science-04",
+    "text": "该版本未经过同行评审。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 11,
+    "quote": "该版本未经过同行评审。",
+    "blockHash": "1741191658a7245fe13856ed082c606c587fc1086e22ca679844a28270ead249",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c03",
+    "articleId": "science-04",
+    "text": "作者在4月9日发出撤回通知。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 14,
+    "quote": "作者在4月9日发出撤回通知。",
+    "blockHash": "a17ac00df3a89e60564a0f4e0db77272e3e6728443460c1ba3fa6e98e4a8d0b1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c04",
+    "articleId": "science-04",
+    "text": "撤回理由是图像处理脚本使用了错误标尺。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 19,
+    "quote": "撤回理由是图像处理脚本使用了错误标尺。",
+    "blockHash": "4b729a024f9b6999e675db31a07f326854ae961fee4ab5ecb83df18b16ecfe42",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c05",
+    "articleId": "science-04",
+    "text": "最初新闻稿引用的是第一版预印本。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 16,
+    "quote": "最初新闻稿引用的是第一版预印本。",
+    "blockHash": "4e521a45cde50e3791afe31a3705cc63c4dbdb9d2096246309e01a0e6fa5df53",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c06",
+    "articleId": "science-04",
+    "text": "聚合网站注明全文转自该新闻稿。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 15,
+    "quote": "聚合网站注明全文转自该新闻稿。",
+    "blockHash": "c1da4eee84671508d59dec10cb7a068b842df554c42a3a01256b6021b4c71311",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c07",
+    "articleId": "science-04",
+    "text": "作者尚未发布经过修正的新数据。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 15,
+    "quote": "作者尚未发布经过修正的新数据。",
+    "blockHash": "be253ce93a5905694afc7f639cac88e421a9f7f182e7bb975110ef4b09df9239",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c08",
+    "articleId": "science-04",
+    "text": "撤回通知没有断言所有实验现象都是伪造。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 19,
+    "quote": "撤回通知没有断言所有实验现象都是伪造。",
+    "blockHash": "c4117472e3e1108760ff72505542528c5610452bf12641fc05a73e0076a64f0b",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c09",
+    "articleId": "science-04",
+    "text": "这项结论已经由两家独立研究机构重复验证。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 20,
+    "quote": "这项结论已经由两家独立研究机构重复验证。",
+    "blockHash": "11c01906137b164535dace8b64d30a4bd204a6b72ccc7b26c620a294c69ab8db",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "science-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "science-04-c10",
+    "articleId": "science-04",
+    "text": "即使数值标尺有误，该蛋白也必然使细胞寿命翻倍。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 23,
+    "quote": "即使数值标尺有误，该蛋白也必然使细胞寿命翻倍。",
+    "blockHash": "1850a06b76ace659fbf3edc65f66a2b9d7e0efbeb70f34b2e63082fb67ec6ec2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "science-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c01",
+    "articleId": "history-01",
+    "text": "日记条目署为虚构历法明河十二年五月初三。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 20,
+    "quote": "日记条目署为虚构历法明河十二年五月初三。",
+    "blockHash": "10f2af8adf7f51df479c93c571b6ce4a5571c46ba5f6e980a875a7cebdf56912",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c02",
+    "articleId": "history-01",
+    "text": "条目描述的是一次没有售票的试航。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 16,
+    "quote": "条目描述的是一次没有售票的试航。",
+    "blockHash": "cf9eb259e56eccc466db7526897f53527977c3cd750ceb34264138c5157a4ffc",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c03",
+    "articleId": "history-01",
+    "text": "管理处公告指定五月初六开始公开载客。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 18,
+    "quote": "管理处公告指定五月初六开始公开载客。",
+    "blockHash": "1807d83fc95c4d879cc7e3da1808e3b7ccade01a7dd01e38b11b6d06a6065882",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c04",
+    "articleId": "history-01",
+    "text": "公告原件保存在本地档案卷宗甲三。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 16,
+    "quote": "公告原件保存在本地档案卷宗甲三。",
+    "blockHash": "7010f0356187fd1a381c040f711d248deac30cc2af78fdce686e31cd2b51afff",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c05",
+    "articleId": "history-01",
+    "text": "后来县志引用了这份管理处公告。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 15,
+    "quote": "后来县志引用了这份管理处公告。",
+    "blockHash": "6af46e8c65c31187cb4d30512d62aaed415f41b41f831c6f188d224c78e64fc2",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c06",
+    "articleId": "history-01",
+    "text": "县志没有附加新的同时代目击记录。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 16,
+    "quote": "县志没有附加新的同时代目击记录。",
+    "blockHash": "943e3cdef5790334ba980ae8abb3445bc015cfd9d96c0233091b59c6c362c750",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c07",
+    "articleId": "history-01",
+    "text": "纪念碑落成于公开载客五十年之后。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 16,
+    "quote": "纪念碑落成于公开载客五十年之后。",
+    "blockHash": "47df4e4b0344d0eb947989d7780287d7c6f89403a791e9db17bcf90dbf042b0c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c08",
+    "articleId": "history-01",
+    "text": "日记作者没有参加公告所述的启用仪式。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 18,
+    "quote": "日记作者没有参加公告所述的启用仪式。",
+    "blockHash": "0f0af762e94a8bbea506696ca111df803f1ee1819937a74aef6b7dca04c1d1b7",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c09",
+    "articleId": "history-01",
+    "text": "五月初三已经开始向所有旅客正式售票。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 18,
+    "quote": "五月初三已经开始向所有旅客正式售票。",
+    "blockHash": "5456d7b6aedb081f66a899628655504d4f5302121818176a6403cc356ec92a69",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "history-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-01-c10",
+    "articleId": "history-01",
+    "text": "一次试航就证明当地所有商户当年收入翻倍。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 20,
+    "quote": "一次试航就证明当地所有商户当年收入翻倍。",
+    "blockHash": "a9a6e1cd42c73e2ddc99cf38fefdc87931bff7448ac600d2e006d62ee35c748d",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "history-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c01",
+    "articleId": "history-02",
+    "text": "前一年度账册以小斗记录入库数量。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 16,
+    "quote": "前一年度账册以小斗记录入库数量。",
+    "blockHash": "6a8912507fd40ff133769a6d43eaf077408ff32152f9c3fd2bd48c91512b199c",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c02",
+    "articleId": "history-02",
+    "text": "后一年度账册改用大斗。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 11,
+    "quote": "后一年度账册改用大斗。",
+    "blockHash": "069aa278e3991e98e34b44e0e93bdef53625761a4a74b469e8a4bd335dc0ef3b",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c03",
+    "articleId": "history-02",
+    "text": "封底注明一大斗等于两小斗。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 13,
+    "quote": "封底注明一大斗等于两小斗。",
+    "blockHash": "4db5dc2073966ba39cfc918338ab2498b3bcc4153129b279396dda24f0b1f439",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c04",
+    "articleId": "history-02",
+    "text": "前一年度入库量为六百小斗。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 13,
+    "quote": "前一年度入库量为六百小斗。",
+    "blockHash": "12dbb0e44f45e4e202533ae83ec0d2e4cc9cc68c9621a701ac71f6cf6a5f2fae",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c05",
+    "articleId": "history-02",
+    "text": "后一年度入库量为三百大斗。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 13,
+    "quote": "后一年度入库量为三百大斗。",
+    "blockHash": "2cd9f207b084768ad899666821b89f7ee4fc32d2f798d9bc29a0dcde05f6b568",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c06",
+    "articleId": "history-02",
+    "text": "两个年度数字都表示入库量，不是年末存量。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 20,
+    "quote": "两个年度数字都表示入库量，不是年末存量。",
+    "blockHash": "ba209c5bf4dc66b539e1013a8ca305be18a0986a5c926520c8d62bb59c5140d0",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c07",
+    "articleId": "history-02",
+    "text": "保存下来的账页缺少后一年度的出库栏目。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 19,
+    "quote": "保存下来的账页缺少后一年度的出库栏目。",
+    "blockHash": "e3c70a192145eb2480661a3e79e9b3d1e3a8712457b12448868a9d4ef046b8e2",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c08",
+    "articleId": "history-02",
+    "text": "展板说明由整理人员在账册成书百年后撰写。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 20,
+    "quote": "展板说明由整理人员在账册成书百年后撰写。",
+    "blockHash": "51c657f7e91a3be5e36b403209394f43e6e9bbdf7e53e161b350e4fc92b00af7",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c09",
+    "articleId": "history-02",
+    "text": "换算为相同单位后，后一年度入库量恰好翻倍。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 21,
+    "quote": "换算为相同单位后，后一年度入库量恰好翻倍。",
+    "blockHash": "fff21c22b7562f7b3ae0687008b927b375ad45c1455d0f391abcfd1ec635a4b3",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "history-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-02-c10",
+    "articleId": "history-02",
+    "text": "粮仓入库不变说明当年每户居民都没有遭遇饥荒。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 22,
+    "quote": "粮仓入库不变说明当年每户居民都没有遭遇饥荒。",
+    "blockHash": "5c7ce20a8359b3204cc5eec624afaa56cbfbd5a2aa368917324c9648c2cc99b2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "history-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c01",
+    "articleId": "history-03",
+    "text": "铭牌记录坊主姓名和织坊所在街巷。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 16,
+    "quote": "铭牌记录坊主姓名和织坊所在街巷。",
+    "blockHash": "7dc437efa98ac4e977bc66ebd89276e3011ae3f0cd08007b76d078ccae1c8234",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c02",
+    "articleId": "history-03",
+    "text": "铭牌没有列出全部工人的姓名。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 14,
+    "quote": "铭牌没有列出全部工人的姓名。",
+    "blockHash": "0cf89bea4161c9a4be3731ef2e39a0a2df4f471108f3819ffacde58ef1718e37",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c03",
+    "articleId": "history-03",
+    "text": "采购单显示织坊向外地商人购入染料。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 17,
+    "quote": "采购单显示织坊向外地商人购入染料。",
+    "blockHash": "2e399b3399e07fa99d94e174d11987c24cace8e92feedeaa9c26a5029a9b80b4",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c04",
+    "articleId": "history-03",
+    "text": "一封同时代书信提到染色由多名工人轮班完成。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 21,
+    "quote": "一封同时代书信提到染色由多名工人轮班完成。",
+    "blockHash": "29d9571b4b6c2a830bb13175907c71dac25f1ac7f8e33b986005a52afd0455fc",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c05",
+    "articleId": "history-03",
+    "text": "家族回忆录在织坊关闭四十年后成书。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 17,
+    "quote": "家族回忆录在织坊关闭四十年后成书。",
+    "blockHash": "9c252a27e76eabdb7a6a9edba35b610193e81aadb3146d2ffcbe7b9ffe694a03",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c06",
+    "articleId": "history-03",
+    "text": "回忆录作者转述了长辈的口述。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 14,
+    "quote": "回忆录作者转述了长辈的口述。",
+    "blockHash": "09a73b94dfae1162df43f4f6fdacc761b6ca38f23ad0ff2d581cd8521dd0a038",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c07",
+    "articleId": "history-03",
+    "text": "现存材料没有提供某项工艺的专利或首创证明。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 21,
+    "quote": "现存材料没有提供某项工艺的专利或首创证明。",
+    "blockHash": "a5e3075d2c85bf5f3c66b605d8131b6b2cf5444bce4cce28445f677695a262b9",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c08",
+    "articleId": "history-03",
+    "text": "展览图录将铭牌上的姓名释读为坊主署名。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 19,
+    "quote": "展览图录将铭牌上的姓名释读为坊主署名。",
+    "blockHash": "96d2efd8db57ab8ef777e19c2a582cf667285954dba169824f320de8d579975e",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c09",
+    "articleId": "history-03",
+    "text": "铭牌完整列出了参加生产的每一位劳动者。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 19,
+    "quote": "铭牌完整列出了参加生产的每一位劳动者。",
+    "blockHash": "eec9ebb97e5750247ee2af01df496f248eed46c6bcdf99ce50ab94f89027a875",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "history-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-03-c10",
+    "articleId": "history-03",
+    "text": "坊主独自发明了当时全部染织工艺。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 16,
+    "quote": "坊主独自发明了当时全部染织工艺。",
+    "blockHash": "b2efdc394c0d4ad8988416b8f4e3920ccac6c15d571dc6a7fe89786a7e9a55fc",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "history-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c01",
+    "articleId": "history-04",
+    "text": "旧图标称比例尺为一比五万。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 13,
+    "quote": "旧图标称比例尺为一比五万。",
+    "blockHash": "d734dad0d4279885be7cdebb0219b5b493cf39359657e71f082fc310273e1aea",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c02",
+    "articleId": "history-04",
+    "text": "图例称该图主要服务近岸航行。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 14,
+    "quote": "图例称该图主要服务近岸航行。",
+    "blockHash": "99ea6006d76a724c2a09dec0ee222a7a9e54571121ad8f55bfdca904f1eb37bb",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c03",
+    "articleId": "history-04",
+    "text": "图中水深以寻为单位标注。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 12,
+    "quote": "图中水深以寻为单位标注。",
+    "blockHash": "bd144fdcb3301dce87d58c9bd7f8a784ca70b7b8a49d6bc6e697b0a819919e2c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c04",
+    "articleId": "history-04",
+    "text": "图例没有承诺记录所有居民点。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 14,
+    "quote": "图例没有承诺记录所有居民点。",
+    "blockHash": "dd5b1f1fd63e35b11fa56eb930b03fb198a64bf5d80873d277dc446b93b17157",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c05",
+    "articleId": "history-04",
+    "text": "一份同年名册记载湾内三个聚落的户名。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 18,
+    "quote": "一份同年名册记载湾内三个聚落的户名。",
+    "blockHash": "3ea9de0fe61709fa5caea557281b6193dcebb29d65a24c8b944e887f277297be",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c06",
+    "articleId": "history-04",
+    "text": "名册与地图来自不同的行政机构。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 15,
+    "quote": "名册与地图来自不同的行政机构。",
+    "blockHash": "b85362dc4b2d81fa630f07cbd7b2e139a0943a0941b8441b20d9d18c4b912f4c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c07",
+    "articleId": "history-04",
+    "text": "后出的旅游册直接扫描旧图作为插图。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 17,
+    "quote": "后出的旅游册直接扫描旧图作为插图。",
+    "blockHash": "233239fb88e709d06de83379e478720b371b278bc8894202a907fc397df22f5c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c08",
+    "articleId": "history-04",
+    "text": "旅游册没有开展新的历史测绘。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 14,
+    "quote": "旅游册没有开展新的历史测绘。",
+    "blockHash": "46738390087e2ea7eb5c8a1e17fa10a30da95b347c57c29b84cdc4ff85ed7d76",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c09",
+    "articleId": "history-04",
+    "text": "地图图例明确要求标出沿岸每一个居民点。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 19,
+    "quote": "地图图例明确要求标出沿岸每一个居民点。",
+    "blockHash": "db958a05491ed7af699354c684de75c4eb19b48f33fb367a3c95237f7c90eb83",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "history-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "history-04-c10",
+    "articleId": "history-04",
+    "text": "地图上的空白足以证明当地从未有人居住。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 19,
+    "quote": "地图上的空白足以证明当地从未有人居住。",
+    "blockHash": "ff51c8bbac90e29afbaf7e55c32f96370d6a4d0e3e52030143f36e9a0ea493be",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "history-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c01",
+    "articleId": "policy-01",
+    "text": "模拟通知于2030年6月1日发布。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 17,
+    "quote": "模拟通知于2030年6月1日发布。",
+    "blockHash": "4d3289c0529c40f8e65222e60dd6011001a8d9c420abcc9c6889e78b98d5cc39",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c02",
+    "articleId": "policy-01",
+    "text": "规则从2030年7月1日起生效。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 16,
+    "quote": "规则从2030年7月1日起生效。",
+    "blockHash": "9dcf0ed896e9869db805463b99f6317f63b7af1f935da93699a99508cb1dac0e",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c03",
+    "articleId": "policy-01",
+    "text": "试行适用范围仅为虚构青浦社区。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 15,
+    "quote": "试行适用范围仅为虚构青浦社区。",
+    "blockHash": "9a183bf55e19528baff3a0c6ff68a84d5ed282f00cab95f7142d06cb381c38d7",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c04",
+    "articleId": "policy-01",
+    "text": "一般申请者每次最多借用两件工具。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 16,
+    "quote": "一般申请者每次最多借用两件工具。",
+    "blockHash": "30431afa162465f5e3fafc50771bc0bf93e4f2e8fd1bb405b00b1055ec91ef45",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c05",
+    "articleId": "policy-01",
+    "text": "持有效志愿服务凭证者免交押金。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 15,
+    "quote": "持有效志愿服务凭证者免交押金。",
+    "blockHash": "a8c2124b66132af4a6a9abc47c5f964f7dc03835d99f76b0c14bea13090d21c5",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c06",
+    "articleId": "policy-01",
+    "text": "带动力的切割工具不在借阅目录中。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 16,
+    "quote": "带动力的切割工具不在借阅目录中。",
+    "blockHash": "60d1bc37b5eeca7aa4b982802873bc643ad856264f7cd920b4d0a7868aa0f325",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c07",
+    "articleId": "policy-01",
+    "text": "本次试行截止日为2030年12月31日。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 20,
+    "quote": "本次试行截止日为2030年12月31日。",
+    "blockHash": "c1422e653f066448c03b7c375907b9dcd26c078527795b4457c04423d9a110a7",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c08",
+    "articleId": "policy-01",
+    "text": "社区公众号海报摘录自同一份通知。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 16,
+    "quote": "社区公众号海报摘录自同一份通知。",
+    "blockHash": "bea4447bf32b25f6acb50ce9941954ba64f3941573637366a1fdf22d691dc600",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c09",
+    "articleId": "policy-01",
+    "text": "规则在6月1日发布当天已经正式生效。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 18,
+    "quote": "规则在6月1日发布当天已经正式生效。",
+    "blockHash": "b538ff8456e3846dbbc6ef84d603b39d312f31565c007c69f63a6ad9d6aa71a9",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-01-c10",
+    "articleId": "policy-01",
+    "text": "这项虚构社区通知在现实所有城市都具有法律效力。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 23,
+    "quote": "这项虚构社区通知在现实所有城市都具有法律效力。",
+    "blockHash": "c9e9d7b3ca5e216fd9eef0ffb150a7cf8660dee0a49f20d1f3a02246ecc3f5e0",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "policy-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c01",
+    "articleId": "policy-02",
+    "text": "旧版规则允许提前十四天预约。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 14,
+    "quote": "旧版规则允许提前十四天预约。",
+    "blockHash": "888415e735354bcb8e956107c1e85b801bf9a44ad548bbc96117c3af7a8d81a3",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c02",
+    "articleId": "policy-02",
+    "text": "新版规则允许提前七天预约。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 13,
+    "quote": "新版规则允许提前七天预约。",
+    "blockHash": "dce1ecdc1f24ca77ab825c130d976f13dcdfd39fe818dbad3ec6fb3f6b4ff9ac",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c03",
+    "articleId": "policy-02",
+    "text": "新版在2030年8月10日开始生效。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 18,
+    "quote": "新版在2030年8月10日开始生效。",
+    "blockHash": "d60ed17ac74db52418734645e68554ada82ea51e122ce7a847f0d38edaa5c264",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c04",
+    "articleId": "policy-02",
+    "text": "8月10日前已确认的预约继续有效。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 17,
+    "quote": "8月10日前已确认的预约继续有效。",
+    "blockHash": "c06002564ad98513fdf7cddc300d5ac2a7471b499a3e7fa6f5f6bb184b62804a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c05",
+    "articleId": "policy-02",
+    "text": "团体预约须另填联系人信息。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 13,
+    "quote": "团体预约须另填联系人信息。",
+    "blockHash": "501bf4517a844c1abf78ba46a9e35839df173162e04a7c35b092c2e356b9a976",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c06",
+    "articleId": "policy-02",
+    "text": "单个团体人数上限为二十人。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 13,
+    "quote": "单个团体人数上限为二十人。",
+    "blockHash": "7ed4c78b034ab1b993a82360f2070c2895381d08387bf6594d9d819939142df3",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c07",
+    "articleId": "policy-02",
+    "text": "帮助页缓存仍展示旧版十四天窗口。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 16,
+    "quote": "帮助页缓存仍展示旧版十四天窗口。",
+    "blockHash": "973a034f1993ddce16a71fcee5d21579941adbd448b1c8c8a1964050257c53bd",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c08",
+    "articleId": "policy-02",
+    "text": "正式变更通知标明替代旧版预约条款。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 17,
+    "quote": "正式变更通知标明替代旧版预约条款。",
+    "blockHash": "b588bacf121583836e9be090f58dc23c213569f9981fdb8da1dd75e965b3de39",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c09",
+    "articleId": "policy-02",
+    "text": "8月10日前确认的全部预约都被自动取消。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 20,
+    "quote": "8月10日前确认的全部预约都被自动取消。",
+    "blockHash": "7249c67edeba4bee5b4633570d314c58e84a24efd4e0c592975363d5ca2a2a70",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-02-c10",
+    "articleId": "policy-02",
+    "text": "只要任意旧网页仍可访问，旧版规则就永远优先。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 22,
+    "quote": "只要任意旧网页仍可访问，旧版规则就永远优先。",
+    "blockHash": "88c8887906cd2ace9f993c4046237690eb734d839a77d90cd9cef74264d6f6d2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "policy-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c01",
+    "articleId": "policy-03",
+    "text": "维护范围为二号入口至观景台之间的栈道。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 19,
+    "quote": "维护范围为二号入口至观景台之间的栈道。",
+    "blockHash": "2a7d343a2ac31218a20e8e7d9b191bd1d51e8293a5bf42ab9425b085134acfc2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c02",
+    "articleId": "policy-03",
+    "text": "限制日期为2030年9月2日至9月20日。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 21,
+    "quote": "限制日期为2030年9月2日至9月20日。",
+    "blockHash": "ed036de8372e9f930ef7e922c32872456b529ab23b912b9766d9fdc169446d81",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c03",
+    "articleId": "policy-03",
+    "text": "工作日的封闭时段是上午八点至下午五点。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 19,
+    "quote": "工作日的封闭时段是上午八点至下午五点。",
+    "blockHash": "b5d5efe9453858dca418349ddb2d258c1b33ee651eb7b97f75e0e8f13346d2c0",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c04",
+    "articleId": "policy-03",
+    "text": "公告说明周末仍按原时间开放。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 14,
+    "quote": "公告说明周末仍按原时间开放。",
+    "blockHash": "01e8f84be7268011c301324b1eb857bcaea4a37f4a8a42d7859db2da1767ea8f",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c05",
+    "articleId": "policy-03",
+    "text": "公园其余步道未列入该封闭安排。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 15,
+    "quote": "公园其余步道未列入该封闭安排。",
+    "blockHash": "bc3091b13ce7bf52e84d155faaee75f35c075edb6347bcc0717c1db218a8b08e",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c06",
+    "articleId": "policy-03",
+    "text": "临时绕行入口设在三号门。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 12,
+    "quote": "临时绕行入口设在三号门。",
+    "blockHash": "33938470b2db0c5fbffe84f227a6a7b83176ab6cb03544670dadc5343ffaad62",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c07",
+    "articleId": "policy-03",
+    "text": "现场指示图与公告使用同一路段编号。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 17,
+    "quote": "现场指示图与公告使用同一路段编号。",
+    "blockHash": "d896df69e73b1f6d8908a36a552b3d8316dfa42130655a7e9b19cf7706dac0ba",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c08",
+    "articleId": "policy-03",
+    "text": "转发帖没有提供不同于公告的新现场调查。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 19,
+    "quote": "转发帖没有提供不同于公告的新现场调查。",
+    "blockHash": "c117fb9a6d63bc1cdb77043719fd06bae381c6330e468ddada0cead0ed25a090",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c09",
+    "articleId": "policy-03",
+    "text": "维护期间每个周末也全天封闭。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 14,
+    "quote": "维护期间每个周末也全天封闭。",
+    "blockHash": "f990d0feac929b911c4c84ac740ea558dcd3c8eef6a407d6ba8d3d217b778ac1",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-03-c10",
+    "articleId": "policy-03",
+    "text": "这项临时安排证明整个公园存在永久性危险。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 20,
+    "quote": "这项临时安排证明整个公园存在永久性危险。",
+    "blockHash": "de576cb95216de061253522b1281d4882cfe96891439c52ff44ab60a29fd1b2d",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "policy-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c01",
+    "articleId": "policy-04",
+    "text": "申请主体限在虚构南庭登记的非营利社团。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 19,
+    "quote": "申请主体限在虚构南庭登记的非营利社团。",
+    "blockHash": "515bed88ebe461c0369ce4a4498584ee1645f0ef2bbb4621d6c8c1b16ad02d1c",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c02",
+    "articleId": "policy-04",
+    "text": "单个项目申请金额上限为两千元模拟记账单位。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 21,
+    "quote": "单个项目申请金额上限为两千元模拟记账单位。",
+    "blockHash": "ae1c2b06a1ad36de39d6b124662197d357f8c24c4930df1b9b336b451eef1aec",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c03",
+    "articleId": "policy-04",
+    "text": "当期拟支持项目不超过十个。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 13,
+    "quote": "当期拟支持项目不超过十个。",
+    "blockHash": "33adf99e2f8cc1ad82eb286bcf2608a05c3318fa4c481f5c9512b95440f22185",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c04",
+    "articleId": "policy-04",
+    "text": "申请截止日为2030年10月15日。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 18,
+    "quote": "申请截止日为2030年10月15日。",
+    "blockHash": "c6b3f105f88e6c4cf3734545583fa4ccb94e0f10de619a7e0b8c48120b8ecf26",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c05",
+    "articleId": "policy-04",
+    "text": "办法要求提交项目计划与支出预算。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 16,
+    "quote": "办法要求提交项目计划与支出预算。",
+    "blockHash": "d73b2ab71e01656c63144220f5bc248ac23eb9839927f6d3176bfcad6dc07b24",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c06",
+    "articleId": "policy-04",
+    "text": "受理申请不表示已经批准资助。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 14,
+    "quote": "受理申请不表示已经批准资助。",
+    "blockHash": "17881646284bf0686cfff6021c1a531f5761e3aec58ec863bb69bb5e64838aef",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c07",
+    "articleId": "policy-04",
+    "text": "拟支持名单需要经过五天公示。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 14,
+    "quote": "拟支持名单需要经过五天公示。",
+    "blockHash": "ace6de1a9cf442ee6a47e51cc52b5d976b726716c4c46ceda79aeb1a66df1be1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c08",
+    "articleId": "policy-04",
+    "text": "商业广告活动不属于补助范围。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 14,
+    "quote": "商业广告活动不属于补助范围。",
+    "blockHash": "0d6844970433e9e93431b582751a3ff9b9051f38e69acf533ce61b4260b1110d",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c09",
+    "articleId": "policy-04",
+    "text": "提交申请当天就会自动获得两千元补助。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 18,
+    "quote": "提交申请当天就会自动获得两千元补助。",
+    "blockHash": "70f1baa1342c073df3b58d975b91a7185643ac941cc0370fc49de71435d7fc25",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "policy-04-c10",
+    "articleId": "policy-04",
+    "text": "该虚构办法保证所有现实创业者都能得到资金。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 21,
+    "quote": "该虚构办法保证所有现实创业者都能得到资金。",
+    "blockHash": "c9d022b4a0e5da7af2179ba33162741dbc90df663c1402c09858a449f3633679",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "policy-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c01",
+    "articleId": "brand-01",
+    "text": "新品包装标示额定功率为六瓦。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 14,
+    "quote": "新品包装标示额定功率为六瓦。",
+    "blockHash": "5c484729e623121afa789bca6dbaac628822ff5ec406a52778ea2d336e71da3b",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c02",
+    "articleId": "brand-01",
+    "text": "老款包装标示额定功率为十瓦。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 14,
+    "quote": "老款包装标示额定功率为十瓦。",
+    "blockHash": "3662fefa7429ead1580ae4c231d16484281c56c74c479ebf83785bcf5784671c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c03",
+    "articleId": "brand-01",
+    "text": "宣传页的半功耗对比使用新品低亮度档。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 18,
+    "quote": "宣传页的半功耗对比使用新品低亮度档。",
+    "blockHash": "dda885f7fed90dab981468993ae7a6d8b9d58d8f6e51a95fc2d90271ee2f94e0",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c04",
+    "articleId": "brand-01",
+    "text": "第三方测试在桌面五百勒克斯附近进行比较。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 20,
+    "quote": "第三方测试在桌面五百勒克斯附近进行比较。",
+    "blockHash": "34f585ee73d7e2fae83f0ce2700b262b389bd0a72cbdad82d65207565cd551e8",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c05",
+    "articleId": "brand-01",
+    "text": "该测试测得新品功率为五瓦，老款为七瓦。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 19,
+    "quote": "该测试测得新品功率为五瓦，老款为七瓦。",
+    "blockHash": "395dbf2c0d2a8569c5680c6681f7254fbd5b7d599370a43489c603b07016e3cb",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c06",
+    "articleId": "brand-01",
+    "text": "测试只覆盖送检的各两台样机。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 14,
+    "quote": "测试只覆盖送检的各两台样机。",
+    "blockHash": "1a2db9eddfecf234404bb630597bfda787379c66c4fe0789ebd0e6dba859902c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c07",
+    "articleId": "brand-01",
+    "text": "评测文章披露样机由品牌免费提供。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 16,
+    "quote": "评测文章披露样机由品牌免费提供。",
+    "blockHash": "c27708bbd0487a8a3c04101a1bf6c0fb312696961578cd33efb4a36faec40237",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c08",
+    "articleId": "brand-01",
+    "text": "品牌没有提供对所有使用场景的长期电费跟踪。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 21,
+    "quote": "品牌没有提供对所有使用场景的长期电费跟踪。",
+    "blockHash": "d26335a8dad9c558baf0d355f540fd239be6256095a7cca410e003c6b829cdca",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c09",
+    "articleId": "brand-01",
+    "text": "在相同照度下，新品功耗严格等于老款的一半。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 21,
+    "quote": "在相同照度下，新品功耗严格等于老款的一半。",
+    "blockHash": "d6950cc124c99d435a95cfcef44d32d16d035e14c2cc6bd054a7516c19c95c4b",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-01-c10",
+    "articleId": "brand-01",
+    "text": "购买该灯必然让每个家庭全年电费减半。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 18,
+    "quote": "购买该灯必然让每个家庭全年电费减半。",
+    "blockHash": "837a198a322ff59ba114c83fb34b33e6b991aa7b4c84f8b2c9d5d73001065335",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "brand-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c01",
+    "articleId": "brand-02",
+    "text": "厂商报告测试对象是背包外层面料样片。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 18,
+    "quote": "厂商报告测试对象是背包外层面料样片。",
+    "blockHash": "b7863c4d38df0c66ef157ea31a0fc3356400e682d3547f8992344d0be6b6e915",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c02",
+    "articleId": "brand-02",
+    "text": "试验采用五分钟定向喷淋。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 12,
+    "quote": "试验采用五分钟定向喷淋。",
+    "blockHash": "f4503001b7a486fa18bb6e05d5ad2620c3c0b3232fed3f5a3a3c66c23437a8cd",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c03",
+    "articleId": "brand-02",
+    "text": "测试中没有将完整背包浸入水下。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 15,
+    "quote": "测试中没有将完整背包浸入水下。",
+    "blockHash": "0d521213c92b6314b3756e74d98ac4886f30c5d59491d8b78a0795d9e8b92b6a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c04",
+    "articleId": "brand-02",
+    "text": "送检面料来自二号生产批次。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 13,
+    "quote": "送检面料来自二号生产批次。",
+    "blockHash": "e613e2774ab21afbcf09c4f37f0e4cb7ababf69b1a9863abfb7c719f19387f44",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c05",
+    "articleId": "brand-02",
+    "text": "拉链与缝线未包含在该报告的测试对象中。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 19,
+    "quote": "拉链与缝线未包含在该报告的测试对象中。",
+    "blockHash": "2c837314433ab46d164c28548feb06cc8b9b1b5959bcf9e7a14a0939ac419af1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c06",
+    "articleId": "brand-02",
+    "text": "使用说明要求避免长时间浸泡。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 14,
+    "quote": "使用说明要求避免长时间浸泡。",
+    "blockHash": "c97815f238e030aaf1ffa22688678f63901408b51b8c08ac95a690c247144766",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c07",
+    "articleId": "brand-02",
+    "text": "演示短视频由品牌制作并投放。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 14,
+    "quote": "演示短视频由品牌制作并投放。",
+    "blockHash": "912342a8d0355528a00bcbb0949f80a7566a5f29f1eb2bcd090dfcb078c96596",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c08",
+    "articleId": "brand-02",
+    "text": "第三方开箱文引用了同一份厂商报告。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 17,
+    "quote": "第三方开箱文引用了同一份厂商报告。",
+    "blockHash": "cd7beb3fe45d4dec0b24fce086f4c8b77fe5e84dea26d3073ab50a45cbe01afa",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c09",
+    "articleId": "brand-02",
+    "text": "报告已经验证整包在水下一小时不会进水。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 19,
+    "quote": "报告已经验证整包在水下一小时不会进水。",
+    "blockHash": "0088988cbad40320523698ac1121305c1ad17bf604fee699c75b05e960f5fbea",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-02-c10",
+    "articleId": "brand-02",
+    "text": "这款背包能保证任何电子设备在洪水中安全。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 20,
+    "quote": "这款背包能保证任何电子设备在洪水中安全。",
+    "blockHash": "de64066ca3574302918b58a7e130a0e1fa49e4cfe111e51369826855006610f1",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "brand-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c01",
+    "articleId": "brand-03",
+    "text": "内页材料声明写明再生纤维比例为百分之八十。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 21,
+    "quote": "内页材料声明写明再生纤维比例为百分之八十。",
+    "blockHash": "4fd3258bfaef8fffde99c28841188ec97591cfc33173e23a6fe0e920e0da4ac9",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c02",
+    "articleId": "brand-03",
+    "text": "声明的检测对象是内页用纸。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 13,
+    "quote": "声明的检测对象是内页用纸。",
+    "blockHash": "d8b73cfe889d717c5cb0d4b11cf7568802b59f87201b21d844aad8d0e4f5498f",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c03",
+    "articleId": "brand-03",
+    "text": "封面表面有塑料覆膜。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 10,
+    "quote": "封面表面有塑料覆膜。",
+    "blockHash": "e145fe3873f929799e405d1a0a4544744fd199d8c55cb3e4a714f77f230d51fe",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c04",
+    "articleId": "brand-03",
+    "text": "装订部分使用金属线圈。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 11,
+    "quote": "装订部分使用金属线圈。",
+    "blockHash": "6f10790dda43c2d400e84f4858091e7a06f6f7371da26ccdee8cb0098bbe2a13",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c05",
+    "articleId": "brand-03",
+    "text": "证书登记的主体是供纸企业。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 13,
+    "quote": "证书登记的主体是供纸企业。",
+    "blockHash": "951d19640e42e7cf9dd32bb6be963813a6545fabf24af0e7070bd4e9b4ad8248",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c06",
+    "articleId": "brand-03",
+    "text": "证书适用范围没有列出整本笔记本成品。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 18,
+    "quote": "证书适用范围没有列出整本笔记本成品。",
+    "blockHash": "f5d814c0ef6f2edc43ecedaf3b8ec41a8c58194c182a62958f1f87f2f850bf61",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c07",
+    "articleId": "brand-03",
+    "text": "品牌素材包要求保留纸厂证书链接。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 16,
+    "quote": "品牌素材包要求保留纸厂证书链接。",
+    "blockHash": "5da2ecbc96fecb36bdbf0dbb27555f6e9d67146db0485fa7c57d19685783c79a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c08",
+    "articleId": "brand-03",
+    "text": "评测者没有实际追踪当地回收设施的处理过程。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 21,
+    "quote": "评测者没有实际追踪当地回收设施的处理过程。",
+    "blockHash": "9364ad7a8048c2869e3b64f4e15b0c88ed56a460d5f3aa84e1d25b89758af7de",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c09",
+    "articleId": "brand-03",
+    "text": "证书已经认证整本笔记本全部材料都百分之百可回收。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 24,
+    "quote": "证书已经认证整本笔记本全部材料都百分之百可回收。",
+    "blockHash": "7af9051e0b09d19984b7a5b8a2b8b2428af34dd8a9ec8195e1d3c0fbf035de87",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-03-c10",
+    "articleId": "brand-03",
+    "text": "使用这一本笔记本就能抵消任意人的全年排放。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 21,
+    "quote": "使用这一本笔记本就能抵消任意人的全年排放。",
+    "blockHash": "a7bbe310dc0f34daf3b29441d08c51f20921d275905ae789210ed1491dda488e",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "brand-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c01",
+    "articleId": "brand-04",
+    "text": "旧详情页标称容量为五百毫升。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 14,
+    "quote": "旧详情页标称容量为五百毫升。",
+    "blockHash": "3df6b3691fed0a1fa07a06f8f289c1e30812d0f5bf07fa2b1de4046b2af6725c",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c02",
+    "articleId": "brand-04",
+    "text": "售后说明称五百毫升采用满口测量口径。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 18,
+    "quote": "售后说明称五百毫升采用满口测量口径。",
+    "blockHash": "d56bd05bb001c894eed810f3bf98529727ffa5dcb33e4bb85f7c065ad7dbe4dc",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c03",
+    "articleId": "brand-04",
+    "text": "样杯到推荐使用线的测量值为四百六十毫升。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 20,
+    "quote": "样杯到推荐使用线的测量值为四百六十毫升。",
+    "blockHash": "9e91a5bfcd878e55ba09c1ea890f88e1ad935d716f987b242cd54f87aa297b9f",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c04",
+    "articleId": "brand-04",
+    "text": "本次实测只有一个样杯。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 11,
+    "quote": "本次实测只有一个样杯。",
+    "blockHash": "6ee5647bd68e1bb52d9c5c3e96008e66772a797723c0150c7926a57fea98e3d9",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c05",
+    "articleId": "brand-04",
+    "text": "样杯批次码为模拟批次B7。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 13,
+    "quote": "样杯批次码为模拟批次B7。",
+    "blockHash": "b8e6672b6d793dcb4610234e0a45db98eac73e0118c74a6e178c3641f5859a4a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c06",
+    "articleId": "brand-04",
+    "text": "售后公告在2030年5月6日发布。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 17,
+    "quote": "售后公告在2030年5月6日发布。",
+    "blockHash": "ed904feac2fd890e0f09247129392c2ab6ae64e4f48f34426fc0226d306e25bf",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c07",
+    "articleId": "brand-04",
+    "text": "公告建议热饮不要超过使用线。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 14,
+    "quote": "公告建议热饮不要超过使用线。",
+    "blockHash": "b11b2cb4983ee44d17acfd873e1f77f4efa24cb98ae557225ebf37fe910787e6",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c08",
+    "articleId": "brand-04",
+    "text": "旧宣传截图没有包含后补的口径说明。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 17,
+    "quote": "旧宣传截图没有包含后补的口径说明。",
+    "blockHash": "c478f6130f6c44d0170877a9714edc30407811929653507d6448f75fe606b904",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c09",
+    "articleId": "brand-04",
+    "text": "所有批次的每一个水杯都已经被测得只有四百六十毫升。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 25,
+    "quote": "所有批次的每一个水杯都已经被测得只有四百六十毫升。",
+    "blockHash": "e1a203c5f2981d82a1a757ee3b407a4d407e6490e19ba1d580d0cf1ab24e3ee3",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "brand-04-c10",
+    "articleId": "brand-04",
+    "text": "一个样杯的结果足以证明品牌全部产品都是假货。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 22,
+    "quote": "一个样杯的结果足以证明品牌全部产品都是假货。",
+    "blockHash": "ba227a07ebabb30d5c5ee91b3729b9f84df50a873421b2918559b0f9c96ce124",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "brand-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c01",
+    "articleId": "narrative-01",
+    "text": "阿岑的购买票据时间为晚上九点二十分。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 18,
+    "quote": "阿岑的购买票据时间为晚上九点二十分。",
+    "blockHash": "df9655a2b26f5c06303076f9a1a9a8522f11ce1b69e13880515164e2c53b2bb3",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c02",
+    "articleId": "narrative-01",
+    "text": "摊主日记写在九点半开始收摊。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 14,
+    "quote": "摊主日记写在九点半开始收摊。",
+    "blockHash": "ec96d0c6f2fc54ecc86f8fba4b0fbb4ece56ddbfdc865926601273c252e0dfec",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c03",
+    "articleId": "narrative-01",
+    "text": "阿岑在采访中说自己记不清离开的确切时间。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 20,
+    "quote": "阿岑在采访中说自己记不清离开的确切时间。",
+    "blockHash": "7a78e15cc91e2c744d17896fa7af28fd2ee10f6284074f555044aaaec1e12a27",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c04",
+    "articleId": "narrative-01",
+    "text": "邻居没有亲自在当晚到过书摊。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 14,
+    "quote": "邻居没有亲自在当晚到过书摊。",
+    "blockHash": "c4190b3eaf6c4bcbde34064d24dadaf9d3030df71b625e822bc93f072c9b928c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c05",
+    "articleId": "narrative-01",
+    "text": "第二天清点单记载受潮旧书十七本。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 16,
+    "quote": "第二天清点单记载受潮旧书十七本。",
+    "blockHash": "0314af56eb0cde68fbd5eb7cbb91ab6e8a0685087f92145bd6f881978e1afc84",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c06",
+    "articleId": "narrative-01",
+    "text": "清点单没有记录书摊全部库存数量。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 16,
+    "quote": "清点单没有记录书摊全部库存数量。",
+    "blockHash": "46cbb2fa2fef9014b8ea942096b6842939f84c2cca9a75fdc53950c9a363a73a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c07",
+    "articleId": "narrative-01",
+    "text": "采访原话是“那一刻，我以为书全毁了”。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 19,
+    "quote": "采访原话是“那一刻，我以为书全毁了”。",
+    "blockHash": "60f0a4329a1b190cee01c25ebb2db202889c3ab11c28a94befb6da3bedf1882b",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c08",
+    "articleId": "narrative-01",
+    "text": "阿岑同意公开笔名，没有同意公开家庭住址。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 20,
+    "quote": "阿岑同意公开笔名，没有同意公开家庭住址。",
+    "blockHash": "91a49b430231a4fa78f76e0028f0064ea1923627b7131e09f5ef783518daefba",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c09",
+    "articleId": "narrative-01",
+    "text": "摊主当晚到午夜仍持续营业。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 13,
+    "quote": "摊主当晚到午夜仍持续营业。",
+    "blockHash": "ca8cb2fc4b1266083e4d6f990397231be404c32f54a8332e3067aaae7b4cae21",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-01-c10",
+    "articleId": "narrative-01",
+    "text": "附近所有住户都因这场雨失去了全部藏书。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 19,
+    "quote": "附近所有住户都因这场雨失去了全部藏书。",
+    "blockHash": "e8cea410ff23b00b2948ba289d54b5154aba2883ce7a06fc213815dbb6e9a617",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "narrative-01-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c01",
+    "articleId": "narrative-02",
+    "text": "合照文件记录的时间是上午十点四十分。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 18,
+    "quote": "合照文件记录的时间是上午十点四十分。",
+    "blockHash": "b656a57294c159e2e88d7baefea0067b2cdb0a342706d4c9096e2a18b18c4396",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c02",
+    "articleId": "narrative-02",
+    "text": "照片拍摄地点是半山休息亭。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 13,
+    "quote": "照片拍摄地点是半山休息亭。",
+    "blockHash": "bb5a32889d7a2d53a20ccfcc4d4944089d943160eced7288460a57e1f748367a",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c03",
+    "articleId": "narrative-02",
+    "text": "领队日志记载中午十二点在山脚用餐。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 17,
+    "quote": "领队日志记载中午十二点在山脚用餐。",
+    "blockHash": "300c52af32664b9113c873fcce1e4cf6333fe115a0bfb57af54cd67fa0144298",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c04",
+    "articleId": "narrative-02",
+    "text": "迟到队员在下午一点才与队伍会合。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 16,
+    "quote": "迟到队员在下午一点才与队伍会合。",
+    "blockHash": "434ddd6646da76b27a889253cb0b40e453ae2bf58961b6f0c934d72deae3a91c",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c05",
+    "articleId": "narrative-02",
+    "text": "团队没有在本次活动中登顶。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 13,
+    "quote": "团队没有在本次活动中登顶。",
+    "blockHash": "167b2f27fa25a092cc666e5d0ae5bae49c33e0568c2157d0f1487b77cb24634d",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c06",
+    "articleId": "narrative-02",
+    "text": "队员的语音说“下次再去山顶画画”。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 17,
+    "quote": "队员的语音说“下次再去山顶画画”。",
+    "blockHash": "7b7e2e13ca2977e9fbbbe07ccbcf10561c855b496a6782b0f0d923bf31506fe1",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c07",
+    "articleId": "narrative-02",
+    "text": "天气记录只覆盖活动当日上午。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 14,
+    "quote": "天气记录只覆盖活动当日上午。",
+    "blockHash": "7eba9aa7270f4887f9de80293148c9f9c58a9c91dd4a3c6f7cb14cdbc76a020e",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c08",
+    "articleId": "narrative-02",
+    "text": "迟到队员同意公开采访内容但要求隐去真实姓名。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 22,
+    "quote": "迟到队员同意公开采访内容但要求隐去真实姓名。",
+    "blockHash": "69ef37e30f3ab69999bea377aeb6c8190a4f1d758178439322e1abfdb2a6e5b9",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c09",
+    "articleId": "narrative-02",
+    "text": "迟到队员出现在上午十点四十分的团队合照里。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 21,
+    "quote": "迟到队员出现在上午十点四十分的团队合照里。",
+    "blockHash": "637d194f82f545f76ed5b9c094926cc01913228d59df59744829f42b43aeb76a",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-02-c10",
+    "articleId": "narrative-02",
+    "text": "这次短途活动永久治愈了所有队员的焦虑。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 19,
+    "quote": "这次短途活动永久治愈了所有队员的焦虑。",
+    "blockHash": "6971c6fea95cb01292dd73393abeb05ac21d6a68de38328631d57752baa3fff6",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "narrative-02-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c01",
+    "articleId": "narrative-03",
+    "text": "集市登记显示木盒以交换方式转手。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 16,
+    "quote": "集市登记显示木盒以交换方式转手。",
+    "blockHash": "5b4a3ea6d8ea000cafde3d06d1f2accfe87d8427babb2e276c33b13e3b3768b5",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c02",
+    "articleId": "narrative-03",
+    "text": "卖主称自己三年前在旧货店购得木盒。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 17,
+    "quote": "卖主称自己三年前在旧货店购得木盒。",
+    "blockHash": "494ec7d1336b802a100019e04d79ed2c95cbecc647fb3684ee10f1302b385b42",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c03",
+    "articleId": "narrative-03",
+    "text": "盒底标签印有模拟工厂林叶制造的字样。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 18,
+    "quote": "盒底标签印有模拟工厂林叶制造的字样。",
+    "blockHash": "1c7e656e95d3f2bd35e099e43bf2714dec481a899b788a2f6e3fba04c5c7fad6",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c04",
+    "articleId": "narrative-03",
+    "text": "工厂样本册中有外观相同的量产型号。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 17,
+    "quote": "工厂样本册中有外观相同的量产型号。",
+    "blockHash": "34d16aad1a089e90ab157ea3033165de45efa8b1240abd59fa3703c1577b14d7",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c05",
+    "articleId": "narrative-03",
+    "text": "样本册的发行日期晚于传说中的航海年代。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 19,
+    "quote": "样本册的发行日期晚于传说中的航海年代。",
+    "blockHash": "ccfd007b006e117425ff327f051bc30b125efbbce01467ca3322aba22454c86d",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c06",
+    "articleId": "narrative-03",
+    "text": "现场录音里的船长故事由一位围观者讲述。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 19,
+    "quote": "现场录音里的船长故事由一位围观者讲述。",
+    "blockHash": "a2b4d5b8836490ee3cb073f26463a346d9c1d8c284795321136eb6589bf9f1e5",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c07",
+    "articleId": "narrative-03",
+    "text": "这位围观者没有提供购买凭据或家族档案。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 19,
+    "quote": "这位围观者没有提供购买凭据或家族档案。",
+    "blockHash": "d980705d7e07669e099d1f31cfaf640598fb5f38e2a77566c7170adddcafa5eb",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c08",
+    "articleId": "narrative-03",
+    "text": "新主人只同意使用木盒照片，不同意展示联系方式。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 23,
+    "quote": "新主人只同意使用木盒照片，不同意展示联系方式。",
+    "blockHash": "0ca24d058024edd2a284a7f24d850e2958442a42682a50c8ed550829e2394e02",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c09",
+    "articleId": "narrative-03",
+    "text": "现有档案已经证明木盒属于传说中的船长。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 19,
+    "quote": "现有档案已经证明木盒属于传说中的船长。",
+    "blockHash": "7756d10f24d7991f5120ed8478c39056e0e6df52c96d9071df3d5208a2cff6dd",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-03-c10",
+    "articleId": "narrative-03",
+    "text": "木盒的收藏价值必然在一年内上涨十倍。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 18,
+    "quote": "木盒的收藏价值必然在一年内上涨十倍。",
+    "blockHash": "6bd7de75332ffd58b760308e6b580a0e9521f931fd1c7ed254413667b3141297",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "narrative-03-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c01",
+    "articleId": "narrative-04",
+    "text": "种植日志记载同一天移栽两株番茄。",
+    "blockId": "b01",
+    "start": 0,
+    "end": 16,
+    "quote": "种植日志记载同一天移栽两株番茄。",
+    "blockHash": "bc0076c3dab0ff8dbc17b3eebc911bfbe52e1f818d77669cb08630c5034ce1e2",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目1"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c02",
+    "articleId": "narrative-04",
+    "text": "靠墙花盆下午会被屋檐遮阴。",
+    "blockId": "b02",
+    "start": 0,
+    "end": 13,
+    "quote": "靠墙花盆下午会被屋檐遮阴。",
+    "blockHash": "9aaf7dddd1eba53d925ba9f12c01cf8c079c2b977ffa2437adcb52204a63bcee",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目2"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c03",
+    "articleId": "narrative-04",
+    "text": "门边花盆的日照时间没有连续测量。",
+    "blockId": "b03",
+    "start": 0,
+    "end": 16,
+    "quote": "门边花盆的日照时间没有连续测量。",
+    "blockHash": "8ed00b000af8c147c3c97bf991d47b81793f53d77124fbf93d2ca8bd8ffc12ce",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目3"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c04",
+    "articleId": "narrative-04",
+    "text": "浇水记录显示两盆在三天中用水量不同。",
+    "blockId": "b04",
+    "start": 0,
+    "end": 18,
+    "quote": "浇水记录显示两盆在三天中用水量不同。",
+    "blockHash": "f1332f9e204e6ab8cae1f75616eeb7bd35756d8fba9a23621925cc4a72d263e2",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目4"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c05",
+    "articleId": "narrative-04",
+    "text": "靠墙一株在6月8日出现第一个成熟果。",
+    "blockId": "b05",
+    "start": 0,
+    "end": 18,
+    "quote": "靠墙一株在6月8日出现第一个成熟果。",
+    "blockHash": "6737f3b606080de8357036befb0d2973887e17992de2e8bc7f5e9afd83800e54",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目5"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c06",
+    "articleId": "narrative-04",
+    "text": "门边一株在6月12日出现第一个成熟果。",
+    "blockId": "b06",
+    "start": 0,
+    "end": 19,
+    "quote": "门边一株在6月12日出现第一个成熟果。",
+    "blockHash": "89a46e9ec7b726d722d31d386881562b932dbf6805d7876d227e1497f4c66eb2",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目6"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c07",
+    "articleId": "narrative-04",
+    "text": "小满说“我愿意相信它喜欢这首歌”。",
+    "blockId": "b07",
+    "start": 0,
+    "end": 17,
+    "quote": "小满说“我愿意相信它喜欢这首歌”。",
+    "blockHash": "474f08f84b1db2d794bae53e707af6269f17889ac36ede9950018d209450c84b",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目7"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c08",
+    "articleId": "narrative-04",
+    "text": "整个观察只有两株植物，没有随机分组。",
+    "blockId": "b08",
+    "start": 0,
+    "end": 18,
+    "quote": "整个观察只有两株植物，没有随机分组。",
+    "blockHash": "3e01cd576a5890336d63b5ce5ea163658c478f77e55b57510fd57deae0d5bc43",
+    "importance": "MAJOR",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "SUPPORTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-primary",
+      "locator": "条目8"
+    },
+    "suggestedDisposition": "KEEP",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c09",
+    "articleId": "narrative-04",
+    "text": "两盆在全部光照和浇水条件上完全相同。",
+    "blockId": "b09",
+    "start": 0,
+    "end": 18,
+    "quote": "两盆在全部光照和浇水条件上完全相同。",
+    "blockHash": "10422a48872d0a29450f379b98d825dc689d625806bc1214ad3df38c8c3ffc33",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "CONTRADICTED",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  },
+  {
+    "id": "narrative-04-c10",
+    "articleId": "narrative-04",
+    "text": "播放这首歌能让任何地方的番茄提前四天成熟。",
+    "blockId": "b10",
+    "start": 0,
+    "end": 21,
+    "quote": "播放这首歌能让任何地方的番茄提前四天成熟。",
+    "blockHash": "4ff1405e1c535f1e15ccfa6769022a8b927224723a3fe64d2565cba974aaa420",
+    "importance": "CRITICAL",
+    "status": "UNREVIEWED",
+    "suggestedDecision": "UNVERIFIABLE",
+    "suggestedEvidence": {
+      "sourceId": "narrative-04-correction",
+      "locator": "正文"
+    },
+    "suggestedDisposition": "REMOVE",
+    "humanEvidence": null
+  }
+]

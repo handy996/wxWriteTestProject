@@ -1,0 +1,2010 @@
+{
+  "datasetVersion": "representative-v1.0.0-rc.1",
+  "contractVersion": "1.0.0-rc.2",
+  "status": "REPRESENTATIVE_CANDIDATE_UNREVIEWED",
+  "humanGoldReady": false,
+  "articles": [
+    {
+      "id": "science-01",
+      "category": "SCIENCE",
+      "title": "呼吸训练与夜班疲劳",
+      "thesisCandidate": "随机分组的结果能说明什么",
+      "path": "tests/fixtures/representative-v1/articles/science-01.md",
+      "sha256": "3a8b99055df0222622c4b181bd86cd6269364a1ecd80121ba5d55092f6a60f24",
+      "codepointCount": 1381,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "science-01-c01",
+        "science-01-c02",
+        "science-01-c03",
+        "science-01-c04",
+        "science-01-c05",
+        "science-01-c06",
+        "science-01-c07",
+        "science-01-c08",
+        "science-01-c09",
+        "science-01-c10"
+      ],
+      "sources": [
+        {
+          "id": "science-01-primary",
+          "path": "tests/fixtures/representative-v1/sources/science-01-primary.md",
+          "sha256": "1419c23403dfa4e3d4a293cf85c5761e935ff1f8047036d16f275216402bf61d",
+          "role": "PRIMARY",
+          "independenceGroup": "science-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-01-reprint",
+          "path": "tests/fixtures/representative-v1/sources/science-01-reprint.md",
+          "sha256": "52396f46bb919fb3d7414374fbc43eb436412545cf31e70f7c1e94273afe5e02",
+          "role": "REPRINT",
+          "independenceGroup": "science-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-01-correction",
+          "path": "tests/fixtures/representative-v1/sources/science-01-correction.md",
+          "sha256": "afdc4f84ffaa43ac2a8ee98a34d3c2c1a245108987597668809fdae784e43331",
+          "role": "CORRECTION",
+          "independenceGroup": "science-01-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "试验随机分配了80名夜班志愿者，每组40人。这项模拟研究关心的是一个受限问题。样本如何进入研究，决定了结果可以推广到哪些人或材料；未参加的人和没有测试的环境仍然处在结论之外。文章将招募或送样方式放在前面，避免读者把研究对象理解成没有边界的整体。"
+        },
+        {
+          "id": "b02",
+          "text": "呼吸训练持续两周，每天十分钟。实验或观察的持续时间与承诺的有效时间应当一致。短期记录能够呈现短期变化，却没有自动回答变化能否维持。报道中的时间单位也需要一致，不能把一次测量换写成长期表现，或者在压缩段落时删去随访期限。"
+        },
+        {
+          "id": "b03",
+          "text": "对照组每天听十分钟音乐，未接受呼吸指导。比较需要清楚的参照对象。对照方式、测试介质或者变量测量方式发生改变时，同一个数值可能表达不同含义。将这些条件放在结果附近，可以让没有专业背景的读者看懂研究实际比较了什么，以及没有比较什么。"
+        },
+        {
+          "id": "b04",
+          "text": "研究预先指定的主要终点是七级疲劳量表。指标名称不能被更有冲击力的词替换。自报量表、实验室截留率、睡眠记录和图像信号各自对应不同终点。从指标跳到生活承诺之间，还需要额外资料；缺少这部分资料时，作者应停在已有数据能够支持的位置。"
+        },
+        {
+          "id": "b05",
+          "text": "两周后完成问卷的训练组有36人，对照组有38人。记录的数量并不是可靠性的唯一来源。退出、选择和测量误差可能影响结果解释，同源转载也不会增加独立样本。文章保留方法中的限制，是为了说明结果的边界，并非为了用不确定性抹去已经观察到的现象。"
+        },
+        {
+          "id": "b06",
+          "text": "公开附表仅报告完成随访者的结果。核对附表时，应留意正文、图题和坐标单位是否一致。原始数据能够支持的命题必须可以定位到具体材料；图像只是呈现的一部分。若发生撤回或修订，相关摘录与核验版本需要一起更新，不能只改一条网页链接。"
+        },
+        {
+          "id": "b07",
+          "text": "两组平均疲劳评分的差值为0.6分，区间跨过零。负面和不确定结果同样属于完整解释的一部分。区间跨零、未采集变量或未验证终点，都不宜在标题中消失。只有把这些条件公开，读者才有机会判断某个有吸引力的说法究竟是观察、推测还是已经得到支持的结论。"
+        },
+        {
+          "id": "b08",
+          "text": "研究没有测量实际工作产量，也没有追踪一年后的情况。当多个页面引用同一份研究时，应回到共同的原始材料。媒体的表达可能不同，数据来源却没有增加。证据链中的独立性要由材料关系说明，不能用页面数量、域名数量或模型给出的高置信度来替代。"
+        },
+        {
+          "id": "b09",
+          "text": "两组疲劳评分差值的区间完全高于零。初稿中这一句与已有资料发生冲突，不能只靠降低语气强度保留。编辑应展示具体冲突位置，先修正命题再核查。若冲突关系尚未厘清，可以保留研究争议的叙述，但不能据此让一个重要事实获得通过状态。"
+        },
+        {
+          "id": "b10",
+          "text": "每天练习十分钟就能让所有夜班员工的产量提高一倍。这句更宽泛的承诺没有相应测量支持。后续修订应删除它，或换成严格受当前对象、条件和时间限定的新命题。科学解释的可读性可以来自方法与发现之间的张力，不必依赖未经核实的巨大效果或普遍保证。"
+        }
+      ]
+    },
+    {
+      "id": "science-02",
+      "category": "SCIENCE",
+      "title": "步道距离与睡眠",
+      "thesisCandidate": "观察关联不能直接改写成因果",
+      "path": "tests/fixtures/representative-v1/articles/science-02.md",
+      "sha256": "d2e040ed3c80e2c0ceca9f64430ee646a0cade58d0357daef79c585831adbbef",
+      "codepointCount": 1339,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "science-02-c01",
+        "science-02-c02",
+        "science-02-c03",
+        "science-02-c04",
+        "science-02-c05",
+        "science-02-c06",
+        "science-02-c07",
+        "science-02-c08",
+        "science-02-c09",
+        "science-02-c10"
+      ],
+      "sources": [
+        {
+          "id": "science-02-primary",
+          "path": "tests/fixtures/representative-v1/sources/science-02-primary.md",
+          "sha256": "64e747aebf70e8c5c2d0e3783486f45037f3c57047a4005e92beaa3e8a2dcc7c",
+          "role": "PRIMARY",
+          "independenceGroup": "science-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-02-reprint",
+          "path": "tests/fixtures/representative-v1/sources/science-02-reprint.md",
+          "sha256": "ae4722b008cc3ef0f49a6b9e33661f38a5dcc54d343782da0034735e73e23cc0",
+          "role": "REPRINT",
+          "independenceGroup": "science-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-02-correction",
+          "path": "tests/fixtures/representative-v1/sources/science-02-correction.md",
+          "sha256": "ffe6a7c5205504731f1173a3dd69bdc0c4e6bf3811518ca5212ed5d4ee258c5a",
+          "role": "CORRECTION",
+          "independenceGroup": "science-02-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "调查通过社区公告招募240名成年居民。这项模拟研究关心的是一个受限问题。样本如何进入研究，决定了结果可以推广到哪些人或材料；未参加的人和没有测试的环境仍然处在结论之外。文章将招募或送样方式放在前面，避免读者把研究对象理解成没有边界的整体。"
+        },
+        {
+          "id": "b02",
+          "text": "参加者自行报告过去七天的睡眠时长。实验或观察的持续时间与承诺的有效时间应当一致。短期记录能够呈现短期变化，却没有自动回答变化能否维持。报道中的时间单位也需要一致，不能把一次测量换写成长期表现，或者在压缩段落时删去随访期限。"
+        },
+        {
+          "id": "b03",
+          "text": "步道距离依据住址到入口的道路距离计算。比较需要清楚的参照对象。对照方式、测试介质或者变量测量方式发生改变时，同一个数值可能表达不同含义。将这些条件放在结果附近，可以让没有专业背景的读者看懂研究实际比较了什么，以及没有比较什么。"
+        },
+        {
+          "id": "b04",
+          "text": "研究没有随机分配参加者的居住位置。指标名称不能被更有冲击力的词替换。自报量表、实验室截留率、睡眠记录和图像信号各自对应不同终点。从指标跳到生活承诺之间，还需要额外资料；缺少这部分资料时，作者应停在已有数据能够支持的位置。"
+        },
+        {
+          "id": "b05",
+          "text": "回归模型纳入年龄与是否夜班两个变量。记录的数量并不是可靠性的唯一来源。退出、选择和测量误差可能影响结果解释，同源转载也不会增加独立样本。文章保留方法中的限制，是为了说明结果的边界，并非为了用不确定性抹去已经观察到的现象。"
+        },
+        {
+          "id": "b06",
+          "text": "本次问卷没有收集家庭收入。核对附表时，应留意正文、图题和坐标单位是否一致。原始数据能够支持的命题必须可以定位到具体材料；图像只是呈现的一部分。若发生撤回或修订，相关摘录与核验版本需要一起更新，不能只改一条网页链接。"
+        },
+        {
+          "id": "b07",
+          "text": "距离较近一组的平均自报睡眠长18分钟。负面和不确定结果同样属于完整解释的一部分。区间跨零、未采集变量或未验证终点，都不宜在标题中消失。只有把这些条件公开，读者才有机会判断某个有吸引力的说法究竟是观察、推测还是已经得到支持的结论。"
+        },
+        {
+          "id": "b08",
+          "text": "作者将该结果标为横断面关联，未建立时间先后。当多个页面引用同一份研究时，应回到共同的原始材料。媒体的表达可能不同，数据来源却没有增加。证据链中的独立性要由材料关系说明，不能用页面数量、域名数量或模型给出的高置信度来替代。"
+        },
+        {
+          "id": "b09",
+          "text": "模型已经控制了家庭收入这一因素。初稿中这一句与已有资料发生冲突，不能只靠降低语气强度保留。编辑应展示具体冲突位置，先修正命题再核查。若冲突关系尚未厘清，可以保留研究争议的叙述，但不能据此让一个重要事实获得通过状态。"
+        },
+        {
+          "id": "b10",
+          "text": "把所有居民迁到步道附近就一定能治疗失眠。这句更宽泛的承诺没有相应测量支持。后续修订应删除它，或换成严格受当前对象、条件和时间限定的新命题。科学解释的可读性可以来自方法与发现之间的张力，不必依赖未经核实的巨大效果或普遍保证。"
+        }
+      ]
+    },
+    {
+      "id": "science-03",
+      "category": "SCIENCE",
+      "title": "薄膜过滤与微粒",
+      "thesisCandidate": "实验室指标不能扩展成饮水承诺",
+      "path": "tests/fixtures/representative-v1/articles/science-03.md",
+      "sha256": "bd67e520e7732ead5a1b0b5c8c65ce6100b8a8961c577d2214db8413047f0384",
+      "codepointCount": 1320,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "science-03-c01",
+        "science-03-c02",
+        "science-03-c03",
+        "science-03-c04",
+        "science-03-c05",
+        "science-03-c06",
+        "science-03-c07",
+        "science-03-c08",
+        "science-03-c09",
+        "science-03-c10"
+      ],
+      "sources": [
+        {
+          "id": "science-03-primary",
+          "path": "tests/fixtures/representative-v1/sources/science-03-primary.md",
+          "sha256": "8258bebaf1bd20702ec43ff1fccb15a8298abe31d9cf90dff7f3f2ae8e3a1517",
+          "role": "PRIMARY",
+          "independenceGroup": "science-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-03-reprint",
+          "path": "tests/fixtures/representative-v1/sources/science-03-reprint.md",
+          "sha256": "e5a04fd755787d6bc9bf599fb018117ceb35b2b3e87e3b5455f427279d755ed2",
+          "role": "REPRINT",
+          "independenceGroup": "science-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-03-correction",
+          "path": "tests/fixtures/representative-v1/sources/science-03-correction.md",
+          "sha256": "a2bdd1c27f43c67e647921614958a3f966fa5e41056f58e8d8483050eb8f63d9",
+          "role": "CORRECTION",
+          "independenceGroup": "science-03-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "台架使用粒径五微米的标准聚合物微粒。这项模拟研究关心的是一个受限问题。样本如何进入研究，决定了结果可以推广到哪些人或材料；未参加的人和没有测试的环境仍然处在结论之外。文章将招募或送样方式放在前面，避免读者把研究对象理解成没有边界的整体。"
+        },
+        {
+          "id": "b02",
+          "text": "进样液为实验室配制液，不是自然河水。实验或观察的持续时间与承诺的有效时间应当一致。短期记录能够呈现短期变化，却没有自动回答变化能否维持。报道中的时间单位也需要一致，不能把一次测量换写成长期表现，或者在压缩段落时删去随访期限。"
+        },
+        {
+          "id": "b03",
+          "text": "测试压力固定在0.2兆帕。比较需要清楚的参照对象。对照方式、测试介质或者变量测量方式发生改变时，同一个数值可能表达不同含义。将这些条件放在结果附近，可以让没有专业背景的读者看懂研究实际比较了什么，以及没有比较什么。"
+        },
+        {
+          "id": "b04",
+          "text": "每种薄膜测试了六片独立样品。指标名称不能被更有冲击力的词替换。自报量表、实验室截留率、睡眠记录和图像信号各自对应不同终点。从指标跳到生活承诺之间，还需要额外资料；缺少这部分资料时，作者应停在已有数据能够支持的位置。"
+        },
+        {
+          "id": "b05",
+          "text": "报告给出的截留率范围为91%至95%。记录的数量并不是可靠性的唯一来源。退出、选择和测量误差可能影响结果解释，同源转载也不会增加独立样本。文章保留方法中的限制，是为了说明结果的边界，并非为了用不确定性抹去已经观察到的现象。"
+        },
+        {
+          "id": "b06",
+          "text": "单次连续运行最长为八小时。核对附表时，应留意正文、图题和坐标单位是否一致。原始数据能够支持的命题必须可以定位到具体材料；图像只是呈现的一部分。若发生撤回或修订，相关摘录与核验版本需要一起更新，不能只改一条网页链接。"
+        },
+        {
+          "id": "b07",
+          "text": "方案没有安排细菌培养检测。负面和不确定结果同样属于完整解释的一部分。区间跨零、未采集变量或未验证终点，都不宜在标题中消失。只有把这些条件公开，读者才有机会判断某个有吸引力的说法究竟是观察、推测还是已经得到支持的结论。"
+        },
+        {
+          "id": "b08",
+          "text": "样品中不包含使用一年的老化薄膜。当多个页面引用同一份研究时，应回到共同的原始材料。媒体的表达可能不同，数据来源却没有增加。证据链中的独立性要由材料关系说明，不能用页面数量、域名数量或模型给出的高置信度来替代。"
+        },
+        {
+          "id": "b09",
+          "text": "薄膜已经在自然河水中连续运行一年。初稿中这一句与已有资料发生冲突，不能只靠降低语气强度保留。编辑应展示具体冲突位置，先修正命题再核查。若冲突关系尚未厘清，可以保留研究争议的叙述，但不能据此让一个重要事实获得通过状态。"
+        },
+        {
+          "id": "b10",
+          "text": "经这种薄膜过滤的任何污水都可以安全饮用。这句更宽泛的承诺没有相应测量支持。后续修订应删除它，或换成严格受当前对象、条件和时间限定的新命题。科学解释的可读性可以来自方法与发现之间的张力，不必依赖未经核实的巨大效果或普遍保证。"
+        }
+      ]
+    },
+    {
+      "id": "science-04",
+      "category": "SCIENCE",
+      "title": "发光蛋白预印本",
+      "thesisCandidate": "撤回与转载如何影响证据链",
+      "path": "tests/fixtures/representative-v1/articles/science-04.md",
+      "sha256": "4232fb2163f06228a2f11f728ca26f150f267b5ebf6e85a8f961d571b413ffb7",
+      "codepointCount": 1343,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "science-04-c01",
+        "science-04-c02",
+        "science-04-c03",
+        "science-04-c04",
+        "science-04-c05",
+        "science-04-c06",
+        "science-04-c07",
+        "science-04-c08",
+        "science-04-c09",
+        "science-04-c10"
+      ],
+      "sources": [
+        {
+          "id": "science-04-primary",
+          "path": "tests/fixtures/representative-v1/sources/science-04-primary.md",
+          "sha256": "013d7f7f5a93df8c993c49ed79bb05d8c15f7f6feb67ab8ed3fa07c6502dd89e",
+          "role": "PRIMARY",
+          "independenceGroup": "science-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-04-reprint",
+          "path": "tests/fixtures/representative-v1/sources/science-04-reprint.md",
+          "sha256": "039b5d067ca9a279a2f49e97f9c9a7aadec086db1631faed76bbf9b688cbb8e8",
+          "role": "REPRINT",
+          "independenceGroup": "science-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "science-04-correction",
+          "path": "tests/fixtures/representative-v1/sources/science-04-correction.md",
+          "sha256": "19812368027d96e36b6376f177ad8f5b958eae2a29a5d4338bb32c360806d497",
+          "role": "CORRECTION",
+          "independenceGroup": "science-04-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "第一版预印本在模拟时间2030年4月2日发布。这项模拟研究关心的是一个受限问题。样本如何进入研究，决定了结果可以推广到哪些人或材料；未参加的人和没有测试的环境仍然处在结论之外。文章将招募或送样方式放在前面，避免读者把研究对象理解成没有边界的整体。"
+        },
+        {
+          "id": "b02",
+          "text": "该版本未经过同行评审。实验或观察的持续时间与承诺的有效时间应当一致。短期记录能够呈现短期变化，却没有自动回答变化能否维持。报道中的时间单位也需要一致，不能把一次测量换写成长期表现，或者在压缩段落时删去随访期限。"
+        },
+        {
+          "id": "b03",
+          "text": "作者在4月9日发出撤回通知。比较需要清楚的参照对象。对照方式、测试介质或者变量测量方式发生改变时，同一个数值可能表达不同含义。将这些条件放在结果附近，可以让没有专业背景的读者看懂研究实际比较了什么，以及没有比较什么。"
+        },
+        {
+          "id": "b04",
+          "text": "撤回理由是图像处理脚本使用了错误标尺。指标名称不能被更有冲击力的词替换。自报量表、实验室截留率、睡眠记录和图像信号各自对应不同终点。从指标跳到生活承诺之间，还需要额外资料；缺少这部分资料时，作者应停在已有数据能够支持的位置。"
+        },
+        {
+          "id": "b05",
+          "text": "最初新闻稿引用的是第一版预印本。记录的数量并不是可靠性的唯一来源。退出、选择和测量误差可能影响结果解释，同源转载也不会增加独立样本。文章保留方法中的限制，是为了说明结果的边界，并非为了用不确定性抹去已经观察到的现象。"
+        },
+        {
+          "id": "b06",
+          "text": "聚合网站注明全文转自该新闻稿。核对附表时，应留意正文、图题和坐标单位是否一致。原始数据能够支持的命题必须可以定位到具体材料；图像只是呈现的一部分。若发生撤回或修订，相关摘录与核验版本需要一起更新，不能只改一条网页链接。"
+        },
+        {
+          "id": "b07",
+          "text": "作者尚未发布经过修正的新数据。负面和不确定结果同样属于完整解释的一部分。区间跨零、未采集变量或未验证终点，都不宜在标题中消失。只有把这些条件公开，读者才有机会判断某个有吸引力的说法究竟是观察、推测还是已经得到支持的结论。"
+        },
+        {
+          "id": "b08",
+          "text": "撤回通知没有断言所有实验现象都是伪造。当多个页面引用同一份研究时，应回到共同的原始材料。媒体的表达可能不同，数据来源却没有增加。证据链中的独立性要由材料关系说明，不能用页面数量、域名数量或模型给出的高置信度来替代。"
+        },
+        {
+          "id": "b09",
+          "text": "这项结论已经由两家独立研究机构重复验证。初稿中这一句与已有资料发生冲突，不能只靠降低语气强度保留。编辑应展示具体冲突位置，先修正命题再核查。若冲突关系尚未厘清，可以保留研究争议的叙述，但不能据此让一个重要事实获得通过状态。"
+        },
+        {
+          "id": "b10",
+          "text": "即使数值标尺有误，该蛋白也必然使细胞寿命翻倍。这句更宽泛的承诺没有相应测量支持。后续修订应删除它，或换成严格受当前对象、条件和时间限定的新命题。科学解释的可读性可以来自方法与发现之间的张力，不必依赖未经核实的巨大效果或普遍保证。"
+        }
+      ]
+    },
+    {
+      "id": "history-01",
+      "category": "HISTORY",
+      "title": "南渡口的开航日期",
+      "thesisCandidate": "日记日期与公文日期描述不同事件",
+      "path": "tests/fixtures/representative-v1/articles/history-01.md",
+      "sha256": "e3a090768c0bdd3d4c9a5b4e60df953e28c13c4326cabd8e1b45b2b616822aeb",
+      "codepointCount": 1303,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "history-01-c01",
+        "history-01-c02",
+        "history-01-c03",
+        "history-01-c04",
+        "history-01-c05",
+        "history-01-c06",
+        "history-01-c07",
+        "history-01-c08",
+        "history-01-c09",
+        "history-01-c10"
+      ],
+      "sources": [
+        {
+          "id": "history-01-primary",
+          "path": "tests/fixtures/representative-v1/sources/history-01-primary.md",
+          "sha256": "b7b2e307bb5a34c87b7ad5ae6fa50c4e8413cb877346e3c84b186716c51d97f5",
+          "role": "PRIMARY",
+          "independenceGroup": "history-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-01-reprint",
+          "path": "tests/fixtures/representative-v1/sources/history-01-reprint.md",
+          "sha256": "353b1781253b6b340570a94d6786e1e5caf352dee57b15ea40bb5f2a211ac875",
+          "role": "REPRINT",
+          "independenceGroup": "history-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-01-correction",
+          "path": "tests/fixtures/representative-v1/sources/history-01-correction.md",
+          "sha256": "964e3d446157b7cc770888e9631ddc7022305adf30356cb1ed9ca5fb0d93aa1e",
+          "role": "CORRECTION",
+          "independenceGroup": "history-01-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "日记条目署为虚构历法明河十二年五月初三。故事从一份可以定位的材料开始。读者看见的是特定作者在特定情境下留下的记录，而非对历史的完整摄录。材料的成书时间、保存状态和原先用途，都决定了它能够回答的问题，亦提示叙述中仍然存在的空白。"
+        },
+        {
+          "id": "b02",
+          "text": "条目描述的是一次没有售票的试航。当时人的语言需要放回它的语境。相似的词可能指不同事件，计量名称也可能随时期变化。保留原文短摘录之后，再说明现代读者容易误解的地方，比直接用今天最熟悉的词改写更加稳妥，也更能呈现材料的质感。"
+        },
+        {
+          "id": "b03",
+          "text": "管理处公告指定五月初六开始公开载客。另一份记录带来不同视角，却不一定在反驳第一份。私人记忆、行政公文和物品标记可能各有目的。编辑先区分记录对象，再比较差异，避免把可以并存的叙述误写成非此即彼的冲突，也避免强行消除真实分歧。"
+        },
+        {
+          "id": "b04",
+          "text": "公告原件保存在本地档案卷宗甲三。证据应当能够回到卷宗、页码或具体条目。只有一个笼统出处，往往不足以判断标题中的结论来自哪里。数字、日期或人名如果经过换算和释读，还要保留使用的规则，而不是把推导后的结果伪装成原件直接记载。"
+        },
+        {
+          "id": "b05",
+          "text": "后来县志引用了这份管理处公告。较晚形成的回忆与纪念文本可以帮助理解后人如何讲述过去，但它们与同时代材料的位置不同。时间距离不是自动否定的理由，却要求作者交代信息经过了怎样的转述，哪些细节来自亲见，哪些来自后来的整理。"
+        },
+        {
+          "id": "b06",
+          "text": "县志没有附加新的同时代目击记录。多份文本可能共享一个祖本。同一公告进入县志，又被旅游册引用，意味着传播链变长，并不意味着出现更多独立目击者。将这一关系说明白，可以保留各材料的用途，同时避免把反复转述当成重复验证。"
+        },
+        {
+          "id": "b07",
+          "text": "纪念碑落成于公开载客五十年之后。没有记载不等于没有发生。档案损失、登记目的和记录者的视角，都可能造成沉默。文章应明确说明现有材料未提供何种证据，避免从一个未出现的姓名、居民点或栏目直接推断普遍而永久的不存在。"
+        },
+        {
+          "id": "b08",
+          "text": "日记作者没有参加公告所述的启用仪式。图像材料同样有说明条件。铭牌、地图和照片中的可读文字，应和正文命题一起核查；图注不能替它们补写来历。若需要示意图，必须标明示意，不能让后来生成的视觉场景承担同时代证据的角色。"
+        },
+        {
+          "id": "b09",
+          "text": "五月初三已经开始向所有旅客正式售票。这条初稿判断与可见的材料发生了直接冲突。保留故事感染力不需要保留错误事实。修稿应在相应位置展示材料及其限定条件，避免只在文章末尾加一个含糊注释，却让正文继续传播原来的错误说法。"
+        },
+        {
+          "id": "b10",
+          "text": "一次试航就证明当地所有商户当年收入翻倍。从一份局部记录推到所有人的生活，需要更多不同类型的证据。没有这些资料时，可以把问题留给后续研究，或将结尾转向材料本身揭示的有限变化。历史叙事允许不完整，但不应把想象填写成已经证明的事实。"
+        }
+      ]
+    },
+    {
+      "id": "history-02",
+      "category": "HISTORY",
+      "title": "远山粮仓账页",
+      "thesisCandidate": "计量单位变化会制造增长幻觉",
+      "path": "tests/fixtures/representative-v1/articles/history-02.md",
+      "sha256": "9b6027fd14c097bf870548a54bfbddd54b37038a720f0f3b4bdea0ae8c17ec37",
+      "codepointCount": 1287,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "history-02-c01",
+        "history-02-c02",
+        "history-02-c03",
+        "history-02-c04",
+        "history-02-c05",
+        "history-02-c06",
+        "history-02-c07",
+        "history-02-c08",
+        "history-02-c09",
+        "history-02-c10"
+      ],
+      "sources": [
+        {
+          "id": "history-02-primary",
+          "path": "tests/fixtures/representative-v1/sources/history-02-primary.md",
+          "sha256": "09c4fc909e346eedb13c5e483f5a5ef8e5814150faca3f6a668e5296d0063c44",
+          "role": "PRIMARY",
+          "independenceGroup": "history-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-02-reprint",
+          "path": "tests/fixtures/representative-v1/sources/history-02-reprint.md",
+          "sha256": "40a88758352cc0254e0c40a4531738222c69597bc2b3ff71360a0be16eafe840",
+          "role": "REPRINT",
+          "independenceGroup": "history-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-02-correction",
+          "path": "tests/fixtures/representative-v1/sources/history-02-correction.md",
+          "sha256": "2b6cb33d5636d2b820c5452c939462e9f66f48b4d9e70e100e20fb6743b8203e",
+          "role": "CORRECTION",
+          "independenceGroup": "history-02-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "前一年度账册以小斗记录入库数量。故事从一份可以定位的材料开始。读者看见的是特定作者在特定情境下留下的记录，而非对历史的完整摄录。材料的成书时间、保存状态和原先用途，都决定了它能够回答的问题，亦提示叙述中仍然存在的空白。"
+        },
+        {
+          "id": "b02",
+          "text": "后一年度账册改用大斗。当时人的语言需要放回它的语境。相似的词可能指不同事件，计量名称也可能随时期变化。保留原文短摘录之后，再说明现代读者容易误解的地方，比直接用今天最熟悉的词改写更加稳妥，也更能呈现材料的质感。"
+        },
+        {
+          "id": "b03",
+          "text": "封底注明一大斗等于两小斗。另一份记录带来不同视角，却不一定在反驳第一份。私人记忆、行政公文和物品标记可能各有目的。编辑先区分记录对象，再比较差异，避免把可以并存的叙述误写成非此即彼的冲突，也避免强行消除真实分歧。"
+        },
+        {
+          "id": "b04",
+          "text": "前一年度入库量为六百小斗。证据应当能够回到卷宗、页码或具体条目。只有一个笼统出处，往往不足以判断标题中的结论来自哪里。数字、日期或人名如果经过换算和释读，还要保留使用的规则，而不是把推导后的结果伪装成原件直接记载。"
+        },
+        {
+          "id": "b05",
+          "text": "后一年度入库量为三百大斗。较晚形成的回忆与纪念文本可以帮助理解后人如何讲述过去，但它们与同时代材料的位置不同。时间距离不是自动否定的理由，却要求作者交代信息经过了怎样的转述，哪些细节来自亲见，哪些来自后来的整理。"
+        },
+        {
+          "id": "b06",
+          "text": "两个年度数字都表示入库量，不是年末存量。多份文本可能共享一个祖本。同一公告进入县志，又被旅游册引用，意味着传播链变长，并不意味着出现更多独立目击者。将这一关系说明白，可以保留各材料的用途，同时避免把反复转述当成重复验证。"
+        },
+        {
+          "id": "b07",
+          "text": "保存下来的账页缺少后一年度的出库栏目。没有记载不等于没有发生。档案损失、登记目的和记录者的视角，都可能造成沉默。文章应明确说明现有材料未提供何种证据，避免从一个未出现的姓名、居民点或栏目直接推断普遍而永久的不存在。"
+        },
+        {
+          "id": "b08",
+          "text": "展板说明由整理人员在账册成书百年后撰写。图像材料同样有说明条件。铭牌、地图和照片中的可读文字，应和正文命题一起核查；图注不能替它们补写来历。若需要示意图，必须标明示意，不能让后来生成的视觉场景承担同时代证据的角色。"
+        },
+        {
+          "id": "b09",
+          "text": "换算为相同单位后，后一年度入库量恰好翻倍。这条初稿判断与可见的材料发生了直接冲突。保留故事感染力不需要保留错误事实。修稿应在相应位置展示材料及其限定条件，避免只在文章末尾加一个含糊注释，却让正文继续传播原来的错误说法。"
+        },
+        {
+          "id": "b10",
+          "text": "粮仓入库不变说明当年每户居民都没有遭遇饥荒。从一份局部记录推到所有人的生活，需要更多不同类型的证据。没有这些资料时，可以把问题留给后续研究，或将结尾转向材料本身揭示的有限变化。历史叙事允许不完整，但不应把想象填写成已经证明的事实。"
+        }
+      ]
+    },
+    {
+      "id": "history-03",
+      "category": "HISTORY",
+      "title": "织坊里的署名",
+      "thesisCandidate": "作品署名与劳动者身份并不等同",
+      "path": "tests/fixtures/representative-v1/articles/history-03.md",
+      "sha256": "0d5db160e424c7e1afa24a6ba83f6e2173224bfb057255d05793dcadf9ed04e3",
+      "codepointCount": 1314,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "history-03-c01",
+        "history-03-c02",
+        "history-03-c03",
+        "history-03-c04",
+        "history-03-c05",
+        "history-03-c06",
+        "history-03-c07",
+        "history-03-c08",
+        "history-03-c09",
+        "history-03-c10"
+      ],
+      "sources": [
+        {
+          "id": "history-03-primary",
+          "path": "tests/fixtures/representative-v1/sources/history-03-primary.md",
+          "sha256": "4ed7ee2ae2b583435466e8edab060c951d5f1c1162eb7932807e8eeb2e89dd4c",
+          "role": "PRIMARY",
+          "independenceGroup": "history-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-03-reprint",
+          "path": "tests/fixtures/representative-v1/sources/history-03-reprint.md",
+          "sha256": "8bbd3a304ed1132b14d0e0132b479d7dd3c5cbd735ed09789b44c32af540f0b6",
+          "role": "REPRINT",
+          "independenceGroup": "history-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-03-correction",
+          "path": "tests/fixtures/representative-v1/sources/history-03-correction.md",
+          "sha256": "abbeee35eb486e69efb8a2d410a557f10551464a04913f88ab475616a5e74276",
+          "role": "CORRECTION",
+          "independenceGroup": "history-03-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "铭牌记录坊主姓名和织坊所在街巷。故事从一份可以定位的材料开始。读者看见的是特定作者在特定情境下留下的记录，而非对历史的完整摄录。材料的成书时间、保存状态和原先用途，都决定了它能够回答的问题，亦提示叙述中仍然存在的空白。"
+        },
+        {
+          "id": "b02",
+          "text": "铭牌没有列出全部工人的姓名。当时人的语言需要放回它的语境。相似的词可能指不同事件，计量名称也可能随时期变化。保留原文短摘录之后，再说明现代读者容易误解的地方，比直接用今天最熟悉的词改写更加稳妥，也更能呈现材料的质感。"
+        },
+        {
+          "id": "b03",
+          "text": "采购单显示织坊向外地商人购入染料。另一份记录带来不同视角，却不一定在反驳第一份。私人记忆、行政公文和物品标记可能各有目的。编辑先区分记录对象，再比较差异，避免把可以并存的叙述误写成非此即彼的冲突，也避免强行消除真实分歧。"
+        },
+        {
+          "id": "b04",
+          "text": "一封同时代书信提到染色由多名工人轮班完成。证据应当能够回到卷宗、页码或具体条目。只有一个笼统出处，往往不足以判断标题中的结论来自哪里。数字、日期或人名如果经过换算和释读，还要保留使用的规则，而不是把推导后的结果伪装成原件直接记载。"
+        },
+        {
+          "id": "b05",
+          "text": "家族回忆录在织坊关闭四十年后成书。较晚形成的回忆与纪念文本可以帮助理解后人如何讲述过去，但它们与同时代材料的位置不同。时间距离不是自动否定的理由，却要求作者交代信息经过了怎样的转述，哪些细节来自亲见，哪些来自后来的整理。"
+        },
+        {
+          "id": "b06",
+          "text": "回忆录作者转述了长辈的口述。多份文本可能共享一个祖本。同一公告进入县志，又被旅游册引用，意味着传播链变长，并不意味着出现更多独立目击者。将这一关系说明白，可以保留各材料的用途，同时避免把反复转述当成重复验证。"
+        },
+        {
+          "id": "b07",
+          "text": "现存材料没有提供某项工艺的专利或首创证明。没有记载不等于没有发生。档案损失、登记目的和记录者的视角，都可能造成沉默。文章应明确说明现有材料未提供何种证据，避免从一个未出现的姓名、居民点或栏目直接推断普遍而永久的不存在。"
+        },
+        {
+          "id": "b08",
+          "text": "展览图录将铭牌上的姓名释读为坊主署名。图像材料同样有说明条件。铭牌、地图和照片中的可读文字，应和正文命题一起核查；图注不能替它们补写来历。若需要示意图，必须标明示意，不能让后来生成的视觉场景承担同时代证据的角色。"
+        },
+        {
+          "id": "b09",
+          "text": "铭牌完整列出了参加生产的每一位劳动者。这条初稿判断与可见的材料发生了直接冲突。保留故事感染力不需要保留错误事实。修稿应在相应位置展示材料及其限定条件，避免只在文章末尾加一个含糊注释，却让正文继续传播原来的错误说法。"
+        },
+        {
+          "id": "b10",
+          "text": "坊主独自发明了当时全部染织工艺。从一份局部记录推到所有人的生活，需要更多不同类型的证据。没有这些资料时，可以把问题留给后续研究，或将结尾转向材料本身揭示的有限变化。历史叙事允许不完整，但不应把想象填写成已经证明的事实。"
+        }
+      ]
+    },
+    {
+      "id": "history-04",
+      "category": "HISTORY",
+      "title": "海岸线旧地图",
+      "thesisCandidate": "地图比例尺与未标地点",
+      "path": "tests/fixtures/representative-v1/articles/history-04.md",
+      "sha256": "428dc9ae909396f2e8ad539a765219682f41bbd2cd06e4142921615714b3be90",
+      "codepointCount": 1274,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "history-04-c01",
+        "history-04-c02",
+        "history-04-c03",
+        "history-04-c04",
+        "history-04-c05",
+        "history-04-c06",
+        "history-04-c07",
+        "history-04-c08",
+        "history-04-c09",
+        "history-04-c10"
+      ],
+      "sources": [
+        {
+          "id": "history-04-primary",
+          "path": "tests/fixtures/representative-v1/sources/history-04-primary.md",
+          "sha256": "040bb069df04c93f5f80fc03eff0a0d80393e2e9fa8aaa2c56e4b6abccdb09db",
+          "role": "PRIMARY",
+          "independenceGroup": "history-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-04-reprint",
+          "path": "tests/fixtures/representative-v1/sources/history-04-reprint.md",
+          "sha256": "4dcd1110fe4cdcce34aefc8d5be9c170ece52d8ad700b15f7cf179fbc0eaed0c",
+          "role": "REPRINT",
+          "independenceGroup": "history-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "history-04-correction",
+          "path": "tests/fixtures/representative-v1/sources/history-04-correction.md",
+          "sha256": "ee92225c701d9434ec26902a3619c272d154e011d9f7134054c50554f59f9d63",
+          "role": "CORRECTION",
+          "independenceGroup": "history-04-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "旧图标称比例尺为一比五万。故事从一份可以定位的材料开始。读者看见的是特定作者在特定情境下留下的记录，而非对历史的完整摄录。材料的成书时间、保存状态和原先用途，都决定了它能够回答的问题，亦提示叙述中仍然存在的空白。"
+        },
+        {
+          "id": "b02",
+          "text": "图例称该图主要服务近岸航行。当时人的语言需要放回它的语境。相似的词可能指不同事件，计量名称也可能随时期变化。保留原文短摘录之后，再说明现代读者容易误解的地方，比直接用今天最熟悉的词改写更加稳妥，也更能呈现材料的质感。"
+        },
+        {
+          "id": "b03",
+          "text": "图中水深以寻为单位标注。另一份记录带来不同视角，却不一定在反驳第一份。私人记忆、行政公文和物品标记可能各有目的。编辑先区分记录对象，再比较差异，避免把可以并存的叙述误写成非此即彼的冲突，也避免强行消除真实分歧。"
+        },
+        {
+          "id": "b04",
+          "text": "图例没有承诺记录所有居民点。证据应当能够回到卷宗、页码或具体条目。只有一个笼统出处，往往不足以判断标题中的结论来自哪里。数字、日期或人名如果经过换算和释读，还要保留使用的规则，而不是把推导后的结果伪装成原件直接记载。"
+        },
+        {
+          "id": "b05",
+          "text": "一份同年名册记载湾内三个聚落的户名。较晚形成的回忆与纪念文本可以帮助理解后人如何讲述过去，但它们与同时代材料的位置不同。时间距离不是自动否定的理由，却要求作者交代信息经过了怎样的转述，哪些细节来自亲见，哪些来自后来的整理。"
+        },
+        {
+          "id": "b06",
+          "text": "名册与地图来自不同的行政机构。多份文本可能共享一个祖本。同一公告进入县志，又被旅游册引用，意味着传播链变长，并不意味着出现更多独立目击者。将这一关系说明白，可以保留各材料的用途，同时避免把反复转述当成重复验证。"
+        },
+        {
+          "id": "b07",
+          "text": "后出的旅游册直接扫描旧图作为插图。没有记载不等于没有发生。档案损失、登记目的和记录者的视角，都可能造成沉默。文章应明确说明现有材料未提供何种证据，避免从一个未出现的姓名、居民点或栏目直接推断普遍而永久的不存在。"
+        },
+        {
+          "id": "b08",
+          "text": "旅游册没有开展新的历史测绘。图像材料同样有说明条件。铭牌、地图和照片中的可读文字，应和正文命题一起核查；图注不能替它们补写来历。若需要示意图，必须标明示意，不能让后来生成的视觉场景承担同时代证据的角色。"
+        },
+        {
+          "id": "b09",
+          "text": "地图图例明确要求标出沿岸每一个居民点。这条初稿判断与可见的材料发生了直接冲突。保留故事感染力不需要保留错误事实。修稿应在相应位置展示材料及其限定条件，避免只在文章末尾加一个含糊注释，却让正文继续传播原来的错误说法。"
+        },
+        {
+          "id": "b10",
+          "text": "地图上的空白足以证明当地从未有人居住。从一份局部记录推到所有人的生活，需要更多不同类型的证据。没有这些资料时，可以把问题留给后续研究，或将结尾转向材料本身揭示的有限变化。历史叙事允许不完整，但不应把想象填写成已经证明的事实。"
+        }
+      ]
+    },
+    {
+      "id": "policy-01",
+      "category": "POLICY",
+      "title": "青浦试行借阅规则",
+      "thesisCandidate": "生效日、适用地区与例外",
+      "path": "tests/fixtures/representative-v1/articles/policy-01.md",
+      "sha256": "9460a1f2e990611bade95e24c0066d90ecf6e918c4d78e94ed9eaf115a032ff7",
+      "codepointCount": 1342,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "policy-01-c01",
+        "policy-01-c02",
+        "policy-01-c03",
+        "policy-01-c04",
+        "policy-01-c05",
+        "policy-01-c06",
+        "policy-01-c07",
+        "policy-01-c08",
+        "policy-01-c09",
+        "policy-01-c10"
+      ],
+      "sources": [
+        {
+          "id": "policy-01-primary",
+          "path": "tests/fixtures/representative-v1/sources/policy-01-primary.md",
+          "sha256": "356f21c20ddaefb13f9295315a2bc72b4f18f8b2bfac840fe0cc0d3c7820362d",
+          "role": "PRIMARY",
+          "independenceGroup": "policy-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-01-reprint",
+          "path": "tests/fixtures/representative-v1/sources/policy-01-reprint.md",
+          "sha256": "28dde5fcf742eadbd7dbf406f7f27e66488052889c9733f9b71331f9da82def7",
+          "role": "REPRINT",
+          "independenceGroup": "policy-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-01-correction",
+          "path": "tests/fixtures/representative-v1/sources/policy-01-correction.md",
+          "sha256": "aa6d981580a36440c285eeb2e9a4434579b806831a8ffa5b87a425973e265857",
+          "role": "CORRECTION",
+          "independenceGroup": "policy-01-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "模拟通知于2030年6月1日发布。这份完全虚构的通知用于测试政策信息阅读，不对应现实办事规定。读者首先需要知道发布主体、适用对象和原始文本在哪里，才能判断一段转述与自己是否有关。文章不能将虚构地区的安排写成任何现实地区的法律意见。"
+        },
+        {
+          "id": "b02",
+          "text": "规则从2030年7月1日起生效。发布、实施和截止是不同的时间节点。一个页面仍能打开，不等于其中的规则当前有效。整理资料时应把各日期写明，尤其要核对新旧通知之间是否存在替代、延长或者仅部分调整，不能只留下最方便记忆的日期。"
+        },
+        {
+          "id": "b03",
+          "text": "试行适用范围仅为虚构青浦社区。范围通常写在标题之外，可能是一个地点、一类主体或特定项目。摘要如果省略这些条件，就会把局部安排扩展成普遍承诺。面对限制性条款，编辑应说明适用范围，并将范围与主要规则放在读者能够同时看见的位置。"
+        },
+        {
+          "id": "b04",
+          "text": "一般申请者每次最多借用两件工具。最高限额、允许窗口和实际结果不是同一类信息。名额不足、材料审核或现场条件都可能影响最终处理。文章可以帮助读者理解流程，但不能用确定语气预先替管理方作出个案决定，也不能省略需要进一步确认的环节。"
+        },
+        {
+          "id": "b05",
+          "text": "持有效志愿服务凭证者免交押金。例外条款与一般规则同样重要。它们有时决定某位读者是否需要交费、补充材料或改变安排。为了缩短文章而删除例外，可能使主句在特定场景下直接变错，因此应保留例外的触发条件及其可核验的出处。"
+        },
+        {
+          "id": "b06",
+          "text": "带动力的切割工具不在借阅目录中。过渡安排解决的是规则切换时已经发生的行为。新规则开始后，既有预约或申请究竟按哪一版处理，需要查看明确条文。若文本没有说明，正确做法是标为待确认，而不是从作者希望达到的效果推导出追溯适用。"
+        },
+        {
+          "id": "b07",
+          "text": "本次试行截止日为2030年12月31日。附图、海报和帮助页可以方便理解，却可能落后于正式通知。出现不一致时，需要记录各自版本和更新时间，而不是对网页数量进行表决。临时无法访问与明确失效也应分别记录，不能把网络故障当成规则已撤销。"
+        },
+        {
+          "id": "b08",
+          "text": "社区公众号海报摘录自同一份通知。同一机构的不同渠道转发同一通知，通常仍属于同一信息来源。核验可以利用它们发现原文，却不能把每份转发视为新的独立官方证据。最终命题应绑定具体有效文本、时间和适用地区，方便后来更新时定位影响范围。"
+        },
+        {
+          "id": "b09",
+          "text": "规则在6月1日发布当天已经正式生效。初稿中的这项说法超出了条文或者与条文明文冲突，需要回到原句更正。重要政策主张不能仅加上“可能”而保留原有误导。修改后应重新核验新命题，避免正文改了，标题或图注里却仍然保留旧结论。"
+        },
+        {
+          "id": "b10",
+          "text": "这项虚构社区通知在现实所有城市都具有法律效力。这里的扩展性保证没有材料支持，应从当前稿删除。文章结尾可以告诉读者需要核对哪些条件，而非给出无依据的确定收益或法律结论。现实高风险内容仍需人工证据复核，本案例只训练和验证相应的边界识别。"
+        }
+      ]
+    },
+    {
+      "id": "policy-02",
+      "category": "POLICY",
+      "title": "星港展馆预约新旧版",
+      "thesisCandidate": "新通知并非无条件追溯适用",
+      "path": "tests/fixtures/representative-v1/articles/policy-02.md",
+      "sha256": "ccdba891e23b0a7d3b9d4b09b3e2dcc2bbae9e3465a999a64e7295162ac3046d",
+      "codepointCount": 1336,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "policy-02-c01",
+        "policy-02-c02",
+        "policy-02-c03",
+        "policy-02-c04",
+        "policy-02-c05",
+        "policy-02-c06",
+        "policy-02-c07",
+        "policy-02-c08",
+        "policy-02-c09",
+        "policy-02-c10"
+      ],
+      "sources": [
+        {
+          "id": "policy-02-primary",
+          "path": "tests/fixtures/representative-v1/sources/policy-02-primary.md",
+          "sha256": "bc972ca436fecbe95175ea7d3f13c39e45d8cb883c462b5b35cb7d3e5fb9425b",
+          "role": "PRIMARY",
+          "independenceGroup": "policy-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-02-reprint",
+          "path": "tests/fixtures/representative-v1/sources/policy-02-reprint.md",
+          "sha256": "e754f22598c7905278638c04dc9430da647b29d044cf4cad5cf6fc6973354b3d",
+          "role": "REPRINT",
+          "independenceGroup": "policy-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-02-correction",
+          "path": "tests/fixtures/representative-v1/sources/policy-02-correction.md",
+          "sha256": "a584edfa68c97bccfa9a7faa150a6a69d859e7358c9153244adff704643605ea",
+          "role": "CORRECTION",
+          "independenceGroup": "policy-02-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "旧版规则允许提前十四天预约。这份完全虚构的通知用于测试政策信息阅读，不对应现实办事规定。读者首先需要知道发布主体、适用对象和原始文本在哪里，才能判断一段转述与自己是否有关。文章不能将虚构地区的安排写成任何现实地区的法律意见。"
+        },
+        {
+          "id": "b02",
+          "text": "新版规则允许提前七天预约。发布、实施和截止是不同的时间节点。一个页面仍能打开，不等于其中的规则当前有效。整理资料时应把各日期写明，尤其要核对新旧通知之间是否存在替代、延长或者仅部分调整，不能只留下最方便记忆的日期。"
+        },
+        {
+          "id": "b03",
+          "text": "新版在2030年8月10日开始生效。范围通常写在标题之外，可能是一个地点、一类主体或特定项目。摘要如果省略这些条件，就会把局部安排扩展成普遍承诺。面对限制性条款，编辑应说明适用范围，并将范围与主要规则放在读者能够同时看见的位置。"
+        },
+        {
+          "id": "b04",
+          "text": "8月10日前已确认的预约继续有效。最高限额、允许窗口和实际结果不是同一类信息。名额不足、材料审核或现场条件都可能影响最终处理。文章可以帮助读者理解流程，但不能用确定语气预先替管理方作出个案决定，也不能省略需要进一步确认的环节。"
+        },
+        {
+          "id": "b05",
+          "text": "团体预约须另填联系人信息。例外条款与一般规则同样重要。它们有时决定某位读者是否需要交费、补充材料或改变安排。为了缩短文章而删除例外，可能使主句在特定场景下直接变错，因此应保留例外的触发条件及其可核验的出处。"
+        },
+        {
+          "id": "b06",
+          "text": "单个团体人数上限为二十人。过渡安排解决的是规则切换时已经发生的行为。新规则开始后，既有预约或申请究竟按哪一版处理，需要查看明确条文。若文本没有说明，正确做法是标为待确认，而不是从作者希望达到的效果推导出追溯适用。"
+        },
+        {
+          "id": "b07",
+          "text": "帮助页缓存仍展示旧版十四天窗口。附图、海报和帮助页可以方便理解，却可能落后于正式通知。出现不一致时，需要记录各自版本和更新时间，而不是对网页数量进行表决。临时无法访问与明确失效也应分别记录，不能把网络故障当成规则已撤销。"
+        },
+        {
+          "id": "b08",
+          "text": "正式变更通知标明替代旧版预约条款。同一机构的不同渠道转发同一通知，通常仍属于同一信息来源。核验可以利用它们发现原文，却不能把每份转发视为新的独立官方证据。最终命题应绑定具体有效文本、时间和适用地区，方便后来更新时定位影响范围。"
+        },
+        {
+          "id": "b09",
+          "text": "8月10日前确认的全部预约都被自动取消。初稿中的这项说法超出了条文或者与条文明文冲突，需要回到原句更正。重要政策主张不能仅加上“可能”而保留原有误导。修改后应重新核验新命题，避免正文改了，标题或图注里却仍然保留旧结论。"
+        },
+        {
+          "id": "b10",
+          "text": "只要任意旧网页仍可访问，旧版规则就永远优先。这里的扩展性保证没有材料支持，应从当前稿删除。文章结尾可以告诉读者需要核对哪些条件，而非给出无依据的确定收益或法律结论。现实高风险内容仍需人工证据复核，本案例只训练和验证相应的边界识别。"
+        }
+      ]
+    },
+    {
+      "id": "policy-03",
+      "category": "POLICY",
+      "title": "北岭步道临时封闭",
+      "thesisCandidate": "分时段限制与安全范围",
+      "path": "tests/fixtures/representative-v1/articles/policy-03.md",
+      "sha256": "6e352b2515ceaa76f1c8666613facd9978a8a32dcb96a25e82dabc4cc1cb9cf2",
+      "codepointCount": 1322,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "policy-03-c01",
+        "policy-03-c02",
+        "policy-03-c03",
+        "policy-03-c04",
+        "policy-03-c05",
+        "policy-03-c06",
+        "policy-03-c07",
+        "policy-03-c08",
+        "policy-03-c09",
+        "policy-03-c10"
+      ],
+      "sources": [
+        {
+          "id": "policy-03-primary",
+          "path": "tests/fixtures/representative-v1/sources/policy-03-primary.md",
+          "sha256": "f7ac69109bf85d979628afbf7bf7e2fe383a95c1549ceead9047ef823178956b",
+          "role": "PRIMARY",
+          "independenceGroup": "policy-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-03-reprint",
+          "path": "tests/fixtures/representative-v1/sources/policy-03-reprint.md",
+          "sha256": "ad2f38f3e9612ccb68ac02a3a279eea536a20d8770294e44b86266496b6b9622",
+          "role": "REPRINT",
+          "independenceGroup": "policy-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-03-correction",
+          "path": "tests/fixtures/representative-v1/sources/policy-03-correction.md",
+          "sha256": "0e5463fa7997e54460ed74424ef6e596a992a63c54080d3abd74f3daf0041643",
+          "role": "CORRECTION",
+          "independenceGroup": "policy-03-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "维护范围为二号入口至观景台之间的栈道。这份完全虚构的通知用于测试政策信息阅读，不对应现实办事规定。读者首先需要知道发布主体、适用对象和原始文本在哪里，才能判断一段转述与自己是否有关。文章不能将虚构地区的安排写成任何现实地区的法律意见。"
+        },
+        {
+          "id": "b02",
+          "text": "限制日期为2030年9月2日至9月20日。发布、实施和截止是不同的时间节点。一个页面仍能打开，不等于其中的规则当前有效。整理资料时应把各日期写明，尤其要核对新旧通知之间是否存在替代、延长或者仅部分调整，不能只留下最方便记忆的日期。"
+        },
+        {
+          "id": "b03",
+          "text": "工作日的封闭时段是上午八点至下午五点。范围通常写在标题之外，可能是一个地点、一类主体或特定项目。摘要如果省略这些条件，就会把局部安排扩展成普遍承诺。面对限制性条款，编辑应说明适用范围，并将范围与主要规则放在读者能够同时看见的位置。"
+        },
+        {
+          "id": "b04",
+          "text": "公告说明周末仍按原时间开放。最高限额、允许窗口和实际结果不是同一类信息。名额不足、材料审核或现场条件都可能影响最终处理。文章可以帮助读者理解流程，但不能用确定语气预先替管理方作出个案决定，也不能省略需要进一步确认的环节。"
+        },
+        {
+          "id": "b05",
+          "text": "公园其余步道未列入该封闭安排。例外条款与一般规则同样重要。它们有时决定某位读者是否需要交费、补充材料或改变安排。为了缩短文章而删除例外，可能使主句在特定场景下直接变错，因此应保留例外的触发条件及其可核验的出处。"
+        },
+        {
+          "id": "b06",
+          "text": "临时绕行入口设在三号门。过渡安排解决的是规则切换时已经发生的行为。新规则开始后，既有预约或申请究竟按哪一版处理，需要查看明确条文。若文本没有说明，正确做法是标为待确认，而不是从作者希望达到的效果推导出追溯适用。"
+        },
+        {
+          "id": "b07",
+          "text": "现场指示图与公告使用同一路段编号。附图、海报和帮助页可以方便理解，却可能落后于正式通知。出现不一致时，需要记录各自版本和更新时间，而不是对网页数量进行表决。临时无法访问与明确失效也应分别记录，不能把网络故障当成规则已撤销。"
+        },
+        {
+          "id": "b08",
+          "text": "转发帖没有提供不同于公告的新现场调查。同一机构的不同渠道转发同一通知，通常仍属于同一信息来源。核验可以利用它们发现原文，却不能把每份转发视为新的独立官方证据。最终命题应绑定具体有效文本、时间和适用地区，方便后来更新时定位影响范围。"
+        },
+        {
+          "id": "b09",
+          "text": "维护期间每个周末也全天封闭。初稿中的这项说法超出了条文或者与条文明文冲突，需要回到原句更正。重要政策主张不能仅加上“可能”而保留原有误导。修改后应重新核验新命题，避免正文改了，标题或图注里却仍然保留旧结论。"
+        },
+        {
+          "id": "b10",
+          "text": "这项临时安排证明整个公园存在永久性危险。这里的扩展性保证没有材料支持，应从当前稿删除。文章结尾可以告诉读者需要核对哪些条件，而非给出无依据的确定收益或法律结论。现实高风险内容仍需人工证据复核，本案例只训练和验证相应的边界识别。"
+        }
+      ]
+    },
+    {
+      "id": "policy-04",
+      "category": "POLICY",
+      "title": "南庭小额补助",
+      "thesisCandidate": "申请资格与实际获批须分开",
+      "path": "tests/fixtures/representative-v1/articles/policy-04.md",
+      "sha256": "cc8a4d43105c8dccdc332f9335716841b4adb48d954af908e079a88ba25b6cfd",
+      "codepointCount": 1323,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "policy-04-c01",
+        "policy-04-c02",
+        "policy-04-c03",
+        "policy-04-c04",
+        "policy-04-c05",
+        "policy-04-c06",
+        "policy-04-c07",
+        "policy-04-c08",
+        "policy-04-c09",
+        "policy-04-c10"
+      ],
+      "sources": [
+        {
+          "id": "policy-04-primary",
+          "path": "tests/fixtures/representative-v1/sources/policy-04-primary.md",
+          "sha256": "ca3dcb3555c6ea2ee3d7167b4c2456a6b2dcbf5a4df4cbfb114a7abe57460499",
+          "role": "PRIMARY",
+          "independenceGroup": "policy-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-04-reprint",
+          "path": "tests/fixtures/representative-v1/sources/policy-04-reprint.md",
+          "sha256": "4ff2fdc535dd205dfbf5a20a4419dc7fd3625ffa5c1b1f4cc2529c09e5414bc1",
+          "role": "REPRINT",
+          "independenceGroup": "policy-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "policy-04-correction",
+          "path": "tests/fixtures/representative-v1/sources/policy-04-correction.md",
+          "sha256": "06a570ec7713836f5a5484a7d2474935c96d21f493bb2bb1fe1860301b441424",
+          "role": "CORRECTION",
+          "independenceGroup": "policy-04-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "申请主体限在虚构南庭登记的非营利社团。这份完全虚构的通知用于测试政策信息阅读，不对应现实办事规定。读者首先需要知道发布主体、适用对象和原始文本在哪里，才能判断一段转述与自己是否有关。文章不能将虚构地区的安排写成任何现实地区的法律意见。"
+        },
+        {
+          "id": "b02",
+          "text": "单个项目申请金额上限为两千元模拟记账单位。发布、实施和截止是不同的时间节点。一个页面仍能打开，不等于其中的规则当前有效。整理资料时应把各日期写明，尤其要核对新旧通知之间是否存在替代、延长或者仅部分调整，不能只留下最方便记忆的日期。"
+        },
+        {
+          "id": "b03",
+          "text": "当期拟支持项目不超过十个。范围通常写在标题之外，可能是一个地点、一类主体或特定项目。摘要如果省略这些条件，就会把局部安排扩展成普遍承诺。面对限制性条款，编辑应说明适用范围，并将范围与主要规则放在读者能够同时看见的位置。"
+        },
+        {
+          "id": "b04",
+          "text": "申请截止日为2030年10月15日。最高限额、允许窗口和实际结果不是同一类信息。名额不足、材料审核或现场条件都可能影响最终处理。文章可以帮助读者理解流程，但不能用确定语气预先替管理方作出个案决定，也不能省略需要进一步确认的环节。"
+        },
+        {
+          "id": "b05",
+          "text": "办法要求提交项目计划与支出预算。例外条款与一般规则同样重要。它们有时决定某位读者是否需要交费、补充材料或改变安排。为了缩短文章而删除例外，可能使主句在特定场景下直接变错，因此应保留例外的触发条件及其可核验的出处。"
+        },
+        {
+          "id": "b06",
+          "text": "受理申请不表示已经批准资助。过渡安排解决的是规则切换时已经发生的行为。新规则开始后，既有预约或申请究竟按哪一版处理，需要查看明确条文。若文本没有说明，正确做法是标为待确认，而不是从作者希望达到的效果推导出追溯适用。"
+        },
+        {
+          "id": "b07",
+          "text": "拟支持名单需要经过五天公示。附图、海报和帮助页可以方便理解，却可能落后于正式通知。出现不一致时，需要记录各自版本和更新时间，而不是对网页数量进行表决。临时无法访问与明确失效也应分别记录，不能把网络故障当成规则已撤销。"
+        },
+        {
+          "id": "b08",
+          "text": "商业广告活动不属于补助范围。同一机构的不同渠道转发同一通知，通常仍属于同一信息来源。核验可以利用它们发现原文，却不能把每份转发视为新的独立官方证据。最终命题应绑定具体有效文本、时间和适用地区，方便后来更新时定位影响范围。"
+        },
+        {
+          "id": "b09",
+          "text": "提交申请当天就会自动获得两千元补助。初稿中的这项说法超出了条文或者与条文明文冲突，需要回到原句更正。重要政策主张不能仅加上“可能”而保留原有误导。修改后应重新核验新命题，避免正文改了，标题或图注里却仍然保留旧结论。"
+        },
+        {
+          "id": "b10",
+          "text": "该虚构办法保证所有现实创业者都能得到资金。这里的扩展性保证没有材料支持，应从当前稿删除。文章结尾可以告诉读者需要核对哪些条件，而非给出无依据的确定收益或法律结论。现实高风险内容仍需人工证据复核，本案例只训练和验证相应的边界识别。"
+        }
+      ]
+    },
+    {
+      "id": "brand-01",
+      "category": "BRAND",
+      "title": "木云桌灯的省电宣传",
+      "thesisCandidate": "同亮度比较与厂商自述",
+      "path": "tests/fixtures/representative-v1/articles/brand-01.md",
+      "sha256": "757a6f653a1317e4d0efe5527769cb43aca3c2740f154aecb68c87969cc3ae92",
+      "codepointCount": 1323,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "brand-01-c01",
+        "brand-01-c02",
+        "brand-01-c03",
+        "brand-01-c04",
+        "brand-01-c05",
+        "brand-01-c06",
+        "brand-01-c07",
+        "brand-01-c08",
+        "brand-01-c09",
+        "brand-01-c10"
+      ],
+      "sources": [
+        {
+          "id": "brand-01-primary",
+          "path": "tests/fixtures/representative-v1/sources/brand-01-primary.md",
+          "sha256": "8afabc19ca7382e3eb284c58cac8061b5fdf89f26028e164a12c7d356e13ad66",
+          "role": "PRIMARY",
+          "independenceGroup": "brand-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-01-reprint",
+          "path": "tests/fixtures/representative-v1/sources/brand-01-reprint.md",
+          "sha256": "f62669e0d284d7ee5dda17fa0ddbc4214ecc6fa71f8a7fec64d72c12c577244f",
+          "role": "REPRINT",
+          "independenceGroup": "brand-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-01-correction",
+          "path": "tests/fixtures/representative-v1/sources/brand-01-correction.md",
+          "sha256": "12c3138cbac0a92de692e6dc63cf0e678663ed0f17bda5e73877ea3c97fd6347",
+          "role": "CORRECTION",
+          "independenceGroup": "brand-01-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "新品包装标示额定功率为六瓦。产品文章首先区分可观察规格与效果主张。包装或官网可以证明品牌曾这样介绍产品，却不能自动证明使用效果适用于所有人。把规格、宣传和独立测试分开呈现，可以让读者理解不同材料的来源及其各自能够支持的命题。"
+        },
+        {
+          "id": "b02",
+          "text": "老款包装标示额定功率为十瓦。比较需要一致的测量口径。容量、亮度、功率和材料比例看似都是清楚的数字，但测试对象或条件不同，直接相除就可能失真。文章保留原始单位和测量方式，避免为了一个整齐的标题制造实际不存在的对比。"
+        },
+        {
+          "id": "b03",
+          "text": "宣传页的半功耗对比使用新品低亮度档。广告常突出最有利的条件，完整说明则可能列出限制。两者需要同时检查，不能只截取最醒目的词。编辑把限制放回正文，并不是替品牌辩护或指控品牌，而是让读者知道宣传数值是在何种范围内被提出。"
+        },
+        {
+          "id": "b04",
+          "text": "第三方测试在桌面五百勒克斯附近进行比较。第三方测量同样有边界。样机数量、送样方式、批次以及测量程序，都影响结果可以推广到哪些产品。即便数据与宣传不同，也不能仅凭一次观察推断所有批次的表现，或将技术差异直接写成未经认定的违法结论。"
+        },
+        {
+          "id": "b05",
+          "text": "该测试测得新品功率为五瓦，老款为七瓦。证书的主体和适用对象必须逐项核对。一个材料、部件或工厂拥有某项说明，不等于最终产品的每个部分都具有相同属性。文章应让证书对应到正确对象，同时保留原始链接，避免依靠标志外观替代实质证据。"
+        },
+        {
+          "id": "b06",
+          "text": "测试只覆盖送检的各两台样机。评测内容可能存在送样、赞助或推广关系。这些关系应被披露，但不能简单代替对具体证据的审查。读者需要看到的是数据从哪里来、方法能否复查，以及作者是否把商业来源的自述清楚标注为自述。"
+        },
+        {
+          "id": "b07",
+          "text": "评测文章披露样机由品牌免费提供。版本变动会改变素材含义。旧详情页、售后更正和新的说明书应分别保存，不能覆盖成一个看不出时间顺序的页面。尤其是文章准备再次导出时，需要确认引用的规格、批次和授权资料仍然适用于本次写作对象。"
+        },
+        {
+          "id": "b08",
+          "text": "品牌没有提供对所有使用场景的长期电费跟踪。转载品牌素材的多个页面不会自动形成独立检验。它们可以证明传播范围，却不能增加测试样本。图片同样需要确认来源、授权和实际产品关系；漂亮的示意图不能替代检测，也不应制造品牌或人物认可某结论的印象。"
+        },
+        {
+          "id": "b09",
+          "text": "在相同照度下，新品功耗严格等于老款的一半。这一句初稿把有限信息扩大或改写成了与证据冲突的事实，应明确更正。品牌报道可以保留批评，但批评必须建立在可定位的资料上。不能为了语气强烈而跳过批次、口径或者测试对象这些会改变判断的条件。"
+        },
+        {
+          "id": "b10",
+          "text": "购买该灯必然让每个家庭全年电费减半。这类对每个人、全年表现或者投资回报的保证需要远多于现有材料的支持。当前资料不足时应删除，而不是加入一个模糊副词后继续传播。文章仍可通过解释读者真正需要比较的条件，提供具体而克制的信息价值。"
+        }
+      ]
+    },
+    {
+      "id": "brand-02",
+      "category": "BRAND",
+      "title": "云舟背包防水测试",
+      "thesisCandidate": "耐泼溅不等于潜水密封",
+      "path": "tests/fixtures/representative-v1/articles/brand-02.md",
+      "sha256": "6b7669377d002e18bd30d337b476c426d6a7e7cec7b1544f6f54730b91ab2163",
+      "codepointCount": 1295,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "brand-02-c01",
+        "brand-02-c02",
+        "brand-02-c03",
+        "brand-02-c04",
+        "brand-02-c05",
+        "brand-02-c06",
+        "brand-02-c07",
+        "brand-02-c08",
+        "brand-02-c09",
+        "brand-02-c10"
+      ],
+      "sources": [
+        {
+          "id": "brand-02-primary",
+          "path": "tests/fixtures/representative-v1/sources/brand-02-primary.md",
+          "sha256": "fa6ebf5654c782b6aa672b0625491bae5f932f795110b8748303489ec47b1191",
+          "role": "PRIMARY",
+          "independenceGroup": "brand-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-02-reprint",
+          "path": "tests/fixtures/representative-v1/sources/brand-02-reprint.md",
+          "sha256": "538ed9db03ca6724f35c3ce4974b964a3ecb9ce07eb2610e72e7a03534af8544",
+          "role": "REPRINT",
+          "independenceGroup": "brand-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-02-correction",
+          "path": "tests/fixtures/representative-v1/sources/brand-02-correction.md",
+          "sha256": "2249a00e2a0056c5757cba05d0cb9e84cd2111f8aef60851c6e9e2cea966ccd2",
+          "role": "CORRECTION",
+          "independenceGroup": "brand-02-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "厂商报告测试对象是背包外层面料样片。产品文章首先区分可观察规格与效果主张。包装或官网可以证明品牌曾这样介绍产品，却不能自动证明使用效果适用于所有人。把规格、宣传和独立测试分开呈现，可以让读者理解不同材料的来源及其各自能够支持的命题。"
+        },
+        {
+          "id": "b02",
+          "text": "试验采用五分钟定向喷淋。比较需要一致的测量口径。容量、亮度、功率和材料比例看似都是清楚的数字，但测试对象或条件不同，直接相除就可能失真。文章保留原始单位和测量方式，避免为了一个整齐的标题制造实际不存在的对比。"
+        },
+        {
+          "id": "b03",
+          "text": "测试中没有将完整背包浸入水下。广告常突出最有利的条件，完整说明则可能列出限制。两者需要同时检查，不能只截取最醒目的词。编辑把限制放回正文，并不是替品牌辩护或指控品牌，而是让读者知道宣传数值是在何种范围内被提出。"
+        },
+        {
+          "id": "b04",
+          "text": "送检面料来自二号生产批次。第三方测量同样有边界。样机数量、送样方式、批次以及测量程序，都影响结果可以推广到哪些产品。即便数据与宣传不同，也不能仅凭一次观察推断所有批次的表现，或将技术差异直接写成未经认定的违法结论。"
+        },
+        {
+          "id": "b05",
+          "text": "拉链与缝线未包含在该报告的测试对象中。证书的主体和适用对象必须逐项核对。一个材料、部件或工厂拥有某项说明，不等于最终产品的每个部分都具有相同属性。文章应让证书对应到正确对象，同时保留原始链接，避免依靠标志外观替代实质证据。"
+        },
+        {
+          "id": "b06",
+          "text": "使用说明要求避免长时间浸泡。评测内容可能存在送样、赞助或推广关系。这些关系应被披露，但不能简单代替对具体证据的审查。读者需要看到的是数据从哪里来、方法能否复查，以及作者是否把商业来源的自述清楚标注为自述。"
+        },
+        {
+          "id": "b07",
+          "text": "演示短视频由品牌制作并投放。版本变动会改变素材含义。旧详情页、售后更正和新的说明书应分别保存，不能覆盖成一个看不出时间顺序的页面。尤其是文章准备再次导出时，需要确认引用的规格、批次和授权资料仍然适用于本次写作对象。"
+        },
+        {
+          "id": "b08",
+          "text": "第三方开箱文引用了同一份厂商报告。转载品牌素材的多个页面不会自动形成独立检验。它们可以证明传播范围，却不能增加测试样本。图片同样需要确认来源、授权和实际产品关系；漂亮的示意图不能替代检测，也不应制造品牌或人物认可某结论的印象。"
+        },
+        {
+          "id": "b09",
+          "text": "报告已经验证整包在水下一小时不会进水。这一句初稿把有限信息扩大或改写成了与证据冲突的事实，应明确更正。品牌报道可以保留批评，但批评必须建立在可定位的资料上。不能为了语气强烈而跳过批次、口径或者测试对象这些会改变判断的条件。"
+        },
+        {
+          "id": "b10",
+          "text": "这款背包能保证任何电子设备在洪水中安全。这类对每个人、全年表现或者投资回报的保证需要远多于现有材料的支持。当前资料不足时应删除，而不是加入一个模糊副词后继续传播。文章仍可通过解释读者真正需要比较的条件，提供具体而克制的信息价值。"
+        }
+      ]
+    },
+    {
+      "id": "brand-03",
+      "category": "BRAND",
+      "title": "青禾笔记本的回收声明",
+      "thesisCandidate": "材料比例与整件产品认证",
+      "path": "tests/fixtures/representative-v1/articles/brand-03.md",
+      "sha256": "64f65c0ee81b82c5c8fc1d3b8129809a56ba0d8e96b396e14b9e2f9788b7c521",
+      "codepointCount": 1317,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "brand-03-c01",
+        "brand-03-c02",
+        "brand-03-c03",
+        "brand-03-c04",
+        "brand-03-c05",
+        "brand-03-c06",
+        "brand-03-c07",
+        "brand-03-c08",
+        "brand-03-c09",
+        "brand-03-c10"
+      ],
+      "sources": [
+        {
+          "id": "brand-03-primary",
+          "path": "tests/fixtures/representative-v1/sources/brand-03-primary.md",
+          "sha256": "7c64b8390b216ecd0dbbc51e97c7375e9866a4af4092be42ab6c9d188fc13e91",
+          "role": "PRIMARY",
+          "independenceGroup": "brand-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-03-reprint",
+          "path": "tests/fixtures/representative-v1/sources/brand-03-reprint.md",
+          "sha256": "08af7b99db63575b6d8fedc97b030a0af3e909354a29fa7c6af758f5af5da5cd",
+          "role": "REPRINT",
+          "independenceGroup": "brand-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-03-correction",
+          "path": "tests/fixtures/representative-v1/sources/brand-03-correction.md",
+          "sha256": "df48cf441e6fe8f0507a440f592c8b85c554bbb137a986cce595b4c7745e7d3a",
+          "role": "CORRECTION",
+          "independenceGroup": "brand-03-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "内页材料声明写明再生纤维比例为百分之八十。产品文章首先区分可观察规格与效果主张。包装或官网可以证明品牌曾这样介绍产品，却不能自动证明使用效果适用于所有人。把规格、宣传和独立测试分开呈现，可以让读者理解不同材料的来源及其各自能够支持的命题。"
+        },
+        {
+          "id": "b02",
+          "text": "声明的检测对象是内页用纸。比较需要一致的测量口径。容量、亮度、功率和材料比例看似都是清楚的数字，但测试对象或条件不同，直接相除就可能失真。文章保留原始单位和测量方式，避免为了一个整齐的标题制造实际不存在的对比。"
+        },
+        {
+          "id": "b03",
+          "text": "封面表面有塑料覆膜。广告常突出最有利的条件，完整说明则可能列出限制。两者需要同时检查，不能只截取最醒目的词。编辑把限制放回正文，并不是替品牌辩护或指控品牌，而是让读者知道宣传数值是在何种范围内被提出。"
+        },
+        {
+          "id": "b04",
+          "text": "装订部分使用金属线圈。第三方测量同样有边界。样机数量、送样方式、批次以及测量程序，都影响结果可以推广到哪些产品。即便数据与宣传不同，也不能仅凭一次观察推断所有批次的表现，或将技术差异直接写成未经认定的违法结论。"
+        },
+        {
+          "id": "b05",
+          "text": "证书登记的主体是供纸企业。证书的主体和适用对象必须逐项核对。一个材料、部件或工厂拥有某项说明，不等于最终产品的每个部分都具有相同属性。文章应让证书对应到正确对象，同时保留原始链接，避免依靠标志外观替代实质证据。"
+        },
+        {
+          "id": "b06",
+          "text": "证书适用范围没有列出整本笔记本成品。评测内容可能存在送样、赞助或推广关系。这些关系应被披露，但不能简单代替对具体证据的审查。读者需要看到的是数据从哪里来、方法能否复查，以及作者是否把商业来源的自述清楚标注为自述。"
+        },
+        {
+          "id": "b07",
+          "text": "品牌素材包要求保留纸厂证书链接。版本变动会改变素材含义。旧详情页、售后更正和新的说明书应分别保存，不能覆盖成一个看不出时间顺序的页面。尤其是文章准备再次导出时，需要确认引用的规格、批次和授权资料仍然适用于本次写作对象。"
+        },
+        {
+          "id": "b08",
+          "text": "评测者没有实际追踪当地回收设施的处理过程。转载品牌素材的多个页面不会自动形成独立检验。它们可以证明传播范围，却不能增加测试样本。图片同样需要确认来源、授权和实际产品关系；漂亮的示意图不能替代检测，也不应制造品牌或人物认可某结论的印象。"
+        },
+        {
+          "id": "b09",
+          "text": "证书已经认证整本笔记本全部材料都百分之百可回收。这一句初稿把有限信息扩大或改写成了与证据冲突的事实，应明确更正。品牌报道可以保留批评，但批评必须建立在可定位的资料上。不能为了语气强烈而跳过批次、口径或者测试对象这些会改变判断的条件。"
+        },
+        {
+          "id": "b10",
+          "text": "使用这一本笔记本就能抵消任意人的全年排放。这类对每个人、全年表现或者投资回报的保证需要远多于现有材料的支持。当前资料不足时应删除，而不是加入一个模糊副词后继续传播。文章仍可通过解释读者真正需要比较的条件，提供具体而克制的信息价值。"
+        }
+      ]
+    },
+    {
+      "id": "brand-04",
+      "category": "BRAND",
+      "title": "石桥水杯的容量误差",
+      "thesisCandidate": "批次检测与售后更正",
+      "path": "tests/fixtures/representative-v1/articles/brand-04.md",
+      "sha256": "c2d9e0959b27e33fed5c390f788b7c35269e34c3750bf20eb91d2311a7991db8",
+      "codepointCount": 1327,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "brand-04-c01",
+        "brand-04-c02",
+        "brand-04-c03",
+        "brand-04-c04",
+        "brand-04-c05",
+        "brand-04-c06",
+        "brand-04-c07",
+        "brand-04-c08",
+        "brand-04-c09",
+        "brand-04-c10"
+      ],
+      "sources": [
+        {
+          "id": "brand-04-primary",
+          "path": "tests/fixtures/representative-v1/sources/brand-04-primary.md",
+          "sha256": "18ba5f67ac929655d458e949132720739aaf19ec0fbc7dbbc1724e4364ce362a",
+          "role": "PRIMARY",
+          "independenceGroup": "brand-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-04-reprint",
+          "path": "tests/fixtures/representative-v1/sources/brand-04-reprint.md",
+          "sha256": "36c0b9e0d9f50f2ade3eb78cb95f06e9bb627cead24c97c76937493d50095935",
+          "role": "REPRINT",
+          "independenceGroup": "brand-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "brand-04-correction",
+          "path": "tests/fixtures/representative-v1/sources/brand-04-correction.md",
+          "sha256": "5cba261bcf191c3ab123291797304410239f0213a832c706d7e41302ad701bcb",
+          "role": "CORRECTION",
+          "independenceGroup": "brand-04-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "旧详情页标称容量为五百毫升。产品文章首先区分可观察规格与效果主张。包装或官网可以证明品牌曾这样介绍产品，却不能自动证明使用效果适用于所有人。把规格、宣传和独立测试分开呈现，可以让读者理解不同材料的来源及其各自能够支持的命题。"
+        },
+        {
+          "id": "b02",
+          "text": "售后说明称五百毫升采用满口测量口径。比较需要一致的测量口径。容量、亮度、功率和材料比例看似都是清楚的数字，但测试对象或条件不同，直接相除就可能失真。文章保留原始单位和测量方式，避免为了一个整齐的标题制造实际不存在的对比。"
+        },
+        {
+          "id": "b03",
+          "text": "样杯到推荐使用线的测量值为四百六十毫升。广告常突出最有利的条件，完整说明则可能列出限制。两者需要同时检查，不能只截取最醒目的词。编辑把限制放回正文，并不是替品牌辩护或指控品牌，而是让读者知道宣传数值是在何种范围内被提出。"
+        },
+        {
+          "id": "b04",
+          "text": "本次实测只有一个样杯。第三方测量同样有边界。样机数量、送样方式、批次以及测量程序，都影响结果可以推广到哪些产品。即便数据与宣传不同，也不能仅凭一次观察推断所有批次的表现，或将技术差异直接写成未经认定的违法结论。"
+        },
+        {
+          "id": "b05",
+          "text": "样杯批次码为模拟批次B7。证书的主体和适用对象必须逐项核对。一个材料、部件或工厂拥有某项说明，不等于最终产品的每个部分都具有相同属性。文章应让证书对应到正确对象，同时保留原始链接，避免依靠标志外观替代实质证据。"
+        },
+        {
+          "id": "b06",
+          "text": "售后公告在2030年5月6日发布。评测内容可能存在送样、赞助或推广关系。这些关系应被披露，但不能简单代替对具体证据的审查。读者需要看到的是数据从哪里来、方法能否复查，以及作者是否把商业来源的自述清楚标注为自述。"
+        },
+        {
+          "id": "b07",
+          "text": "公告建议热饮不要超过使用线。版本变动会改变素材含义。旧详情页、售后更正和新的说明书应分别保存，不能覆盖成一个看不出时间顺序的页面。尤其是文章准备再次导出时，需要确认引用的规格、批次和授权资料仍然适用于本次写作对象。"
+        },
+        {
+          "id": "b08",
+          "text": "旧宣传截图没有包含后补的口径说明。转载品牌素材的多个页面不会自动形成独立检验。它们可以证明传播范围，却不能增加测试样本。图片同样需要确认来源、授权和实际产品关系；漂亮的示意图不能替代检测，也不应制造品牌或人物认可某结论的印象。"
+        },
+        {
+          "id": "b09",
+          "text": "所有批次的每一个水杯都已经被测得只有四百六十毫升。这一句初稿把有限信息扩大或改写成了与证据冲突的事实，应明确更正。品牌报道可以保留批评，但批评必须建立在可定位的资料上。不能为了语气强烈而跳过批次、口径或者测试对象这些会改变判断的条件。"
+        },
+        {
+          "id": "b10",
+          "text": "一个样杯的结果足以证明品牌全部产品都是假货。这类对每个人、全年表现或者投资回报的保证需要远多于现有材料的支持。当前资料不足时应删除，而不是加入一个模糊副词后继续传播。文章仍可通过解释读者真正需要比较的条件，提供具体而克制的信息价值。"
+        }
+      ]
+    },
+    {
+      "id": "narrative-01",
+      "category": "NARRATIVE",
+      "title": "雨夜的旧书摊",
+      "thesisCandidate": "记忆、票据与引语",
+      "path": "tests/fixtures/representative-v1/articles/narrative-01.md",
+      "sha256": "1faa0fd2c9d45761977c1d80e8e6194e7209135103f87b9a75f966cdae67aa3a",
+      "codepointCount": 1325,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "narrative-01-c01",
+        "narrative-01-c02",
+        "narrative-01-c03",
+        "narrative-01-c04",
+        "narrative-01-c05",
+        "narrative-01-c06",
+        "narrative-01-c07",
+        "narrative-01-c08",
+        "narrative-01-c09",
+        "narrative-01-c10"
+      ],
+      "sources": [
+        {
+          "id": "narrative-01-primary",
+          "path": "tests/fixtures/representative-v1/sources/narrative-01-primary.md",
+          "sha256": "fc7fa2d65bdc65f4c573a4e732a7b0639bdfae2ea0d56198309a80e997b2ac43",
+          "role": "PRIMARY",
+          "independenceGroup": "narrative-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-01-reprint",
+          "path": "tests/fixtures/representative-v1/sources/narrative-01-reprint.md",
+          "sha256": "30b0e193f33ed5ec119f1cf12ce2ca63d75fb0ff0be61035c19dd4d37b70cc45",
+          "role": "REPRINT",
+          "independenceGroup": "narrative-01-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-01-correction",
+          "path": "tests/fixtures/representative-v1/sources/narrative-01-correction.md",
+          "sha256": "26ee386035952d0b4f3d527ac3f0650069cec492ab2cea6f2c13bc9a963e9b34",
+          "role": "CORRECTION",
+          "independenceGroup": "narrative-01-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "阿岑的购买票据时间为晚上九点二十分。故事中的人物和地点均为本任务创作的虚构设定。叙述可以贴近一个人的感受，却仍需分清记忆、亲眼所见与能够核对的材料。开头先保留人物面对的具体问题，让后面的记录服务于故事，而不是让数字取代人物本身。"
+        },
+        {
+          "id": "b02",
+          "text": "摊主日记写在九点半开始收摊。时间线是叙事的骨架，但回忆中的时间常带有主观伸缩。票据、日记和图像时间戳能够帮助核对，也各有误差与用途。文章遇到不一致时应如实交代，而不为了顺滑地衔接场景，擅自选择一个更有戏剧性的钟点。"
+        },
+        {
+          "id": "b03",
+          "text": "阿岑在采访中说自己记不清离开的确切时间。一个人没有亲自在场，仍然可以讲述自己听到什么，但应保留转述身份。删去“听说”或“我记得”可能会改变命题性质。写作者需要留意这一层变化，尤其是在标题、引语和场景描写之间重新组织素材的时候。"
+        },
+        {
+          "id": "b04",
+          "text": "邻居没有亲自在当晚到过书摊。可查的记录通常覆盖有限范围。清点单、活动日志或种植笔记不能回答所有旁观者经历了什么。把这些记录放进故事时，应保留对象和范围，避免让局部细节承担一个关于全部家庭、所有队员或每种植物的结论。"
+        },
+        {
+          "id": "b05",
+          "text": "第二天清点单记载受潮旧书十七本。人物的愿望不必被加工成客观保证。愿意相信某件事，与已经证明某种原因，是两种可以同时存在的表达。故事可以呈现这样的张力，让读者理解人物为什么这样想，同时明确作者没有找到支持普遍结论的证据。"
+        },
+        {
+          "id": "b06",
+          "text": "清点单没有记录书摊全部库存数量。物件和照片为叙事增加触感，也可能引入新的事实命题。拍摄地点、时间、物品出处与文字标签都需要对应材料。若资料不足，可以保留来历未明这一点，不能让读者因为看见一张图就误以为故事中的身份已经证实。"
+        },
+        {
+          "id": "b07",
+          "text": "采访原话是“那一刻，我以为书全毁了”。引语应保持说话者原来的限定条件。将“我以为”删去，可能把瞬间感受变成对现实的断言。文章既要让语言可读，也要避免替人物说出未曾说过的话；必要删节应保留原意，并让内部证据能够回到录音或原始记录。"
+        },
+        {
+          "id": "b08",
+          "text": "阿岑同意公开笔名，没有同意公开家庭住址。公开故事不意味着公开所有个人资料。即使是获得采访同意，也应分别确认姓名、联系方式和图片的使用范围。本测试用虚构资料呈现这一边界，提醒编辑在整理叙事时把内容授权与事实真伪作为不同问题处理。"
+        },
+        {
+          "id": "b09",
+          "text": "摊主当晚到午夜仍持续营业。初稿在这里出现了与已给材料不一致的断言，应保留更正痕迹。修正事实不必毁掉叙事节奏；有时把记忆的不确定性写出来，反而更接近人物的处境。关键是不能用感染力为错误的时间、参与关系或条件比较辩护。"
+        },
+        {
+          "id": "b10",
+          "text": "附近所有住户都因这场雨失去了全部藏书。这一句把个人经历推向了所有人的效果或未来保证，目前没有证据支持。结尾应回到这个人物已经经历的事情，或者明确留下尚未回答的问题。生活故事可以令人产生联想，但联想不应被写成未经核实的普遍事实。"
+        }
+      ]
+    },
+    {
+      "id": "narrative-02",
+      "category": "NARRATIVE",
+      "title": "写生路上的迟到者",
+      "thesisCandidate": "叙事顺序和实际时间线",
+      "path": "tests/fixtures/representative-v1/articles/narrative-02.md",
+      "sha256": "4a50f967148cd766936bbbdfa00326d63a67165cc44a764b92e3665c117cda07",
+      "codepointCount": 1326,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "narrative-02-c01",
+        "narrative-02-c02",
+        "narrative-02-c03",
+        "narrative-02-c04",
+        "narrative-02-c05",
+        "narrative-02-c06",
+        "narrative-02-c07",
+        "narrative-02-c08",
+        "narrative-02-c09",
+        "narrative-02-c10"
+      ],
+      "sources": [
+        {
+          "id": "narrative-02-primary",
+          "path": "tests/fixtures/representative-v1/sources/narrative-02-primary.md",
+          "sha256": "8a8d42b0a66a417d8409c2cfaf6bb094ff2916cd588ae56439fee9dd605c85ab",
+          "role": "PRIMARY",
+          "independenceGroup": "narrative-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-02-reprint",
+          "path": "tests/fixtures/representative-v1/sources/narrative-02-reprint.md",
+          "sha256": "5397bb60e7980da741b3e075552ce6d901aefbd9d8b741ff4ba9b66266d9d327",
+          "role": "REPRINT",
+          "independenceGroup": "narrative-02-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-02-correction",
+          "path": "tests/fixtures/representative-v1/sources/narrative-02-correction.md",
+          "sha256": "f31fd69403a901b2737b08e92ff96e24266b86f16a657b101fe81913dfa37ac2",
+          "role": "CORRECTION",
+          "independenceGroup": "narrative-02-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "合照文件记录的时间是上午十点四十分。故事中的人物和地点均为本任务创作的虚构设定。叙述可以贴近一个人的感受，却仍需分清记忆、亲眼所见与能够核对的材料。开头先保留人物面对的具体问题，让后面的记录服务于故事，而不是让数字取代人物本身。"
+        },
+        {
+          "id": "b02",
+          "text": "照片拍摄地点是半山休息亭。时间线是叙事的骨架，但回忆中的时间常带有主观伸缩。票据、日记和图像时间戳能够帮助核对，也各有误差与用途。文章遇到不一致时应如实交代，而不为了顺滑地衔接场景，擅自选择一个更有戏剧性的钟点。"
+        },
+        {
+          "id": "b03",
+          "text": "领队日志记载中午十二点在山脚用餐。一个人没有亲自在场，仍然可以讲述自己听到什么，但应保留转述身份。删去“听说”或“我记得”可能会改变命题性质。写作者需要留意这一层变化，尤其是在标题、引语和场景描写之间重新组织素材的时候。"
+        },
+        {
+          "id": "b04",
+          "text": "迟到队员在下午一点才与队伍会合。可查的记录通常覆盖有限范围。清点单、活动日志或种植笔记不能回答所有旁观者经历了什么。把这些记录放进故事时，应保留对象和范围，避免让局部细节承担一个关于全部家庭、所有队员或每种植物的结论。"
+        },
+        {
+          "id": "b05",
+          "text": "团队没有在本次活动中登顶。人物的愿望不必被加工成客观保证。愿意相信某件事，与已经证明某种原因，是两种可以同时存在的表达。故事可以呈现这样的张力，让读者理解人物为什么这样想，同时明确作者没有找到支持普遍结论的证据。"
+        },
+        {
+          "id": "b06",
+          "text": "队员的语音说“下次再去山顶画画”。物件和照片为叙事增加触感，也可能引入新的事实命题。拍摄地点、时间、物品出处与文字标签都需要对应材料。若资料不足，可以保留来历未明这一点，不能让读者因为看见一张图就误以为故事中的身份已经证实。"
+        },
+        {
+          "id": "b07",
+          "text": "天气记录只覆盖活动当日上午。引语应保持说话者原来的限定条件。将“我以为”删去，可能把瞬间感受变成对现实的断言。文章既要让语言可读，也要避免替人物说出未曾说过的话；必要删节应保留原意，并让内部证据能够回到录音或原始记录。"
+        },
+        {
+          "id": "b08",
+          "text": "迟到队员同意公开采访内容但要求隐去真实姓名。公开故事不意味着公开所有个人资料。即使是获得采访同意，也应分别确认姓名、联系方式和图片的使用范围。本测试用虚构资料呈现这一边界，提醒编辑在整理叙事时把内容授权与事实真伪作为不同问题处理。"
+        },
+        {
+          "id": "b09",
+          "text": "迟到队员出现在上午十点四十分的团队合照里。初稿在这里出现了与已给材料不一致的断言，应保留更正痕迹。修正事实不必毁掉叙事节奏；有时把记忆的不确定性写出来，反而更接近人物的处境。关键是不能用感染力为错误的时间、参与关系或条件比较辩护。"
+        },
+        {
+          "id": "b10",
+          "text": "这次短途活动永久治愈了所有队员的焦虑。这一句把个人经历推向了所有人的效果或未来保证，目前没有证据支持。结尾应回到这个人物已经经历的事情，或者明确留下尚未回答的问题。生活故事可以令人产生联想，但联想不应被写成未经核实的普遍事实。"
+        }
+      ]
+    },
+    {
+      "id": "narrative-03",
+      "category": "NARRATIVE",
+      "title": "交换集市的一只木盒",
+      "thesisCandidate": "听来的故事与物品来源",
+      "path": "tests/fixtures/representative-v1/articles/narrative-03.md",
+      "sha256": "8b5ae57f504764d1b011a4193fb8388ca80b2bb68bda929b2fa46e039edd4047",
+      "codepointCount": 1350,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "narrative-03-c01",
+        "narrative-03-c02",
+        "narrative-03-c03",
+        "narrative-03-c04",
+        "narrative-03-c05",
+        "narrative-03-c06",
+        "narrative-03-c07",
+        "narrative-03-c08",
+        "narrative-03-c09",
+        "narrative-03-c10"
+      ],
+      "sources": [
+        {
+          "id": "narrative-03-primary",
+          "path": "tests/fixtures/representative-v1/sources/narrative-03-primary.md",
+          "sha256": "f491ee92b7c9fc3fb3797f42b56ee9064e079f986abc7e2fdfbc18361a1f5265",
+          "role": "PRIMARY",
+          "independenceGroup": "narrative-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-03-reprint",
+          "path": "tests/fixtures/representative-v1/sources/narrative-03-reprint.md",
+          "sha256": "205becf0ac465f50563627b3c4440529142c9edd86e0174d233036d621c87b44",
+          "role": "REPRINT",
+          "independenceGroup": "narrative-03-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-03-correction",
+          "path": "tests/fixtures/representative-v1/sources/narrative-03-correction.md",
+          "sha256": "e054041a66ab7f59f36bbb372a1394bcec92ab9da7cfa07c467cce1cfbb35201",
+          "role": "CORRECTION",
+          "independenceGroup": "narrative-03-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "集市登记显示木盒以交换方式转手。故事中的人物和地点均为本任务创作的虚构设定。叙述可以贴近一个人的感受，却仍需分清记忆、亲眼所见与能够核对的材料。开头先保留人物面对的具体问题，让后面的记录服务于故事，而不是让数字取代人物本身。"
+        },
+        {
+          "id": "b02",
+          "text": "卖主称自己三年前在旧货店购得木盒。时间线是叙事的骨架，但回忆中的时间常带有主观伸缩。票据、日记和图像时间戳能够帮助核对，也各有误差与用途。文章遇到不一致时应如实交代，而不为了顺滑地衔接场景，擅自选择一个更有戏剧性的钟点。"
+        },
+        {
+          "id": "b03",
+          "text": "盒底标签印有模拟工厂林叶制造的字样。一个人没有亲自在场，仍然可以讲述自己听到什么，但应保留转述身份。删去“听说”或“我记得”可能会改变命题性质。写作者需要留意这一层变化，尤其是在标题、引语和场景描写之间重新组织素材的时候。"
+        },
+        {
+          "id": "b04",
+          "text": "工厂样本册中有外观相同的量产型号。可查的记录通常覆盖有限范围。清点单、活动日志或种植笔记不能回答所有旁观者经历了什么。把这些记录放进故事时，应保留对象和范围，避免让局部细节承担一个关于全部家庭、所有队员或每种植物的结论。"
+        },
+        {
+          "id": "b05",
+          "text": "样本册的发行日期晚于传说中的航海年代。人物的愿望不必被加工成客观保证。愿意相信某件事，与已经证明某种原因，是两种可以同时存在的表达。故事可以呈现这样的张力，让读者理解人物为什么这样想，同时明确作者没有找到支持普遍结论的证据。"
+        },
+        {
+          "id": "b06",
+          "text": "现场录音里的船长故事由一位围观者讲述。物件和照片为叙事增加触感，也可能引入新的事实命题。拍摄地点、时间、物品出处与文字标签都需要对应材料。若资料不足，可以保留来历未明这一点，不能让读者因为看见一张图就误以为故事中的身份已经证实。"
+        },
+        {
+          "id": "b07",
+          "text": "这位围观者没有提供购买凭据或家族档案。引语应保持说话者原来的限定条件。将“我以为”删去，可能把瞬间感受变成对现实的断言。文章既要让语言可读，也要避免替人物说出未曾说过的话；必要删节应保留原意，并让内部证据能够回到录音或原始记录。"
+        },
+        {
+          "id": "b08",
+          "text": "新主人只同意使用木盒照片，不同意展示联系方式。公开故事不意味着公开所有个人资料。即使是获得采访同意，也应分别确认姓名、联系方式和图片的使用范围。本测试用虚构资料呈现这一边界，提醒编辑在整理叙事时把内容授权与事实真伪作为不同问题处理。"
+        },
+        {
+          "id": "b09",
+          "text": "现有档案已经证明木盒属于传说中的船长。初稿在这里出现了与已给材料不一致的断言，应保留更正痕迹。修正事实不必毁掉叙事节奏；有时把记忆的不确定性写出来，反而更接近人物的处境。关键是不能用感染力为错误的时间、参与关系或条件比较辩护。"
+        },
+        {
+          "id": "b10",
+          "text": "木盒的收藏价值必然在一年内上涨十倍。这一句把个人经历推向了所有人的效果或未来保证，目前没有证据支持。结尾应回到这个人物已经经历的事情，或者明确留下尚未回答的问题。生活故事可以令人产生联想，但联想不应被写成未经核实的普遍事实。"
+        }
+      ]
+    },
+    {
+      "id": "narrative-04",
+      "category": "NARRATIVE",
+      "title": "小院里的番茄",
+      "thesisCandidate": "一个家庭的观察不等于普遍规律",
+      "path": "tests/fixtures/representative-v1/articles/narrative-04.md",
+      "sha256": "5e40044ee70bbdf1f7ecc6504f102138c73ecc005c9a9176bf048c52281eaad5",
+      "codepointCount": 1337,
+      "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+      "status": "UNREVIEWED",
+      "claims": [
+        "narrative-04-c01",
+        "narrative-04-c02",
+        "narrative-04-c03",
+        "narrative-04-c04",
+        "narrative-04-c05",
+        "narrative-04-c06",
+        "narrative-04-c07",
+        "narrative-04-c08",
+        "narrative-04-c09",
+        "narrative-04-c10"
+      ],
+      "sources": [
+        {
+          "id": "narrative-04-primary",
+          "path": "tests/fixtures/representative-v1/sources/narrative-04-primary.md",
+          "sha256": "347ee500c3179c52d3396fe1495adbe08e043ec9e39e5c1784363945366b8730",
+          "role": "PRIMARY",
+          "independenceGroup": "narrative-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-04-reprint",
+          "path": "tests/fixtures/representative-v1/sources/narrative-04-reprint.md",
+          "sha256": "7a8e43cef846e77171ab0be74f013470d85c306fe667bca6760bfadf38c9bb48",
+          "role": "REPRINT",
+          "independenceGroup": "narrative-04-origin",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        },
+        {
+          "id": "narrative-04-correction",
+          "path": "tests/fixtures/representative-v1/sources/narrative-04-correction.md",
+          "sha256": "dfaed76c5b35b186a24bf3c26d8bae8bb1ba53b3468d330209f4e78b4a3375a2",
+          "role": "CORRECTION",
+          "independenceGroup": "narrative-04-correction",
+          "captureMode": "FULL_ALLOWED_SYNTHETIC",
+          "rightsBasis": "TASK_AUTHORED_SYNTHETIC",
+          "externalUrl": null,
+          "realWorldAuthority": false
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b01",
+          "text": "种植日志记载同一天移栽两株番茄。故事中的人物和地点均为本任务创作的虚构设定。叙述可以贴近一个人的感受，却仍需分清记忆、亲眼所见与能够核对的材料。开头先保留人物面对的具体问题，让后面的记录服务于故事，而不是让数字取代人物本身。"
+        },
+        {
+          "id": "b02",
+          "text": "靠墙花盆下午会被屋檐遮阴。时间线是叙事的骨架，但回忆中的时间常带有主观伸缩。票据、日记和图像时间戳能够帮助核对，也各有误差与用途。文章遇到不一致时应如实交代，而不为了顺滑地衔接场景，擅自选择一个更有戏剧性的钟点。"
+        },
+        {
+          "id": "b03",
+          "text": "门边花盆的日照时间没有连续测量。一个人没有亲自在场，仍然可以讲述自己听到什么，但应保留转述身份。删去“听说”或“我记得”可能会改变命题性质。写作者需要留意这一层变化，尤其是在标题、引语和场景描写之间重新组织素材的时候。"
+        },
+        {
+          "id": "b04",
+          "text": "浇水记录显示两盆在三天中用水量不同。可查的记录通常覆盖有限范围。清点单、活动日志或种植笔记不能回答所有旁观者经历了什么。把这些记录放进故事时，应保留对象和范围，避免让局部细节承担一个关于全部家庭、所有队员或每种植物的结论。"
+        },
+        {
+          "id": "b05",
+          "text": "靠墙一株在6月8日出现第一个成熟果。人物的愿望不必被加工成客观保证。愿意相信某件事，与已经证明某种原因，是两种可以同时存在的表达。故事可以呈现这样的张力，让读者理解人物为什么这样想，同时明确作者没有找到支持普遍结论的证据。"
+        },
+        {
+          "id": "b06",
+          "text": "门边一株在6月12日出现第一个成熟果。物件和照片为叙事增加触感，也可能引入新的事实命题。拍摄地点、时间、物品出处与文字标签都需要对应材料。若资料不足，可以保留来历未明这一点，不能让读者因为看见一张图就误以为故事中的身份已经证实。"
+        },
+        {
+          "id": "b07",
+          "text": "小满说“我愿意相信它喜欢这首歌”。引语应保持说话者原来的限定条件。将“我以为”删去，可能把瞬间感受变成对现实的断言。文章既要让语言可读，也要避免替人物说出未曾说过的话；必要删节应保留原意，并让内部证据能够回到录音或原始记录。"
+        },
+        {
+          "id": "b08",
+          "text": "整个观察只有两株植物，没有随机分组。公开故事不意味着公开所有个人资料。即使是获得采访同意，也应分别确认姓名、联系方式和图片的使用范围。本测试用虚构资料呈现这一边界，提醒编辑在整理叙事时把内容授权与事实真伪作为不同问题处理。"
+        },
+        {
+          "id": "b09",
+          "text": "两盆在全部光照和浇水条件上完全相同。初稿在这里出现了与已给材料不一致的断言，应保留更正痕迹。修正事实不必毁掉叙事节奏；有时把记忆的不确定性写出来，反而更接近人物的处境。关键是不能用感染力为错误的时间、参与关系或条件比较辩护。"
+        },
+        {
+          "id": "b10",
+          "text": "播放这首歌能让任何地方的番茄提前四天成熟。这一句把个人经历推向了所有人的效果或未来保证，目前没有证据支持。结尾应回到这个人物已经经历的事情，或者明确留下尚未回答的问题。生活故事可以令人产生联想，但联想不应被写成未经核实的普遍事实。"
+        }
+      ]
+    }
+  ],
+  "claimCount": 200,
+  "freezeHash": "43f4fc065dd813c65cdfa4bee8dc58f7b34b8761aa6c82dfd31d5a993d4b58b0"
+}

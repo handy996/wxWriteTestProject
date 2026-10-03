@@ -1,0 +1,767 @@
+[
+  {
+    "method": "POST",
+    "path": "/auth/login",
+    "operationId": "postAuthLogin",
+    "request": "LoginRequest",
+    "response": "CurrentUser",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/auth/logout",
+    "operationId": "postAuthLogout",
+    "request": null,
+    "response": "DispositionResult",
+    "status": 204,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/me",
+    "operationId": "getMe",
+    "request": null,
+    "response": "CurrentUser",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/dashboard",
+    "operationId": "getDashboard",
+    "request": null,
+    "response": "Dashboard",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles",
+    "operationId": "postArticles",
+    "request": "CreateArticleRequest",
+    "response": "ArticleArtifact",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles",
+    "operationId": "getArticles",
+    "request": null,
+    "response": "ArticleSummaryPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}",
+    "operationId": "getArticlesId",
+    "request": null,
+    "response": "ArticleArtifact",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "PATCH",
+    "path": "/articles/{id}",
+    "operationId": "patchArticlesId",
+    "request": "PatchArticleRequest",
+    "response": "ArticleArtifact",
+    "status": 200,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/clone",
+    "operationId": "postArticlesIdClone",
+    "request": "CloneRequest",
+    "response": "ArticleArtifact",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/workflow/start",
+    "operationId": "postArticlesIdWorkflowStart",
+    "request": "StartRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/analyze",
+    "operationId": "postArticlesIdAnalyze",
+    "request": "BaseVersionRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/fact-check",
+    "operationId": "postArticlesIdFactCheck",
+    "request": "FactCheckRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/generate",
+    "operationId": "postArticlesIdGenerate",
+    "request": "GenerateRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/review",
+    "operationId": "postArticlesIdReview",
+    "request": "VersionRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/revise",
+    "operationId": "postArticlesIdRevise",
+    "request": "ReviseRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": true
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/analyses",
+    "operationId": "getArticlesIdAnalyses",
+    "request": null,
+    "response": "AnalysisResultPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/reviews",
+    "operationId": "getArticlesIdReviews",
+    "request": null,
+    "response": "ReviewReportPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "PATCH",
+    "path": "/review-items/{id}",
+    "operationId": "patchReviewItemsId",
+    "request": "ReviewDispositionRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/versions",
+    "operationId": "getArticlesIdVersions",
+    "request": null,
+    "response": "ArticleVersionPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/versions/{versionId}",
+    "operationId": "getArticlesIdVersionsVersionid",
+    "request": null,
+    "response": "ArticleVersion",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/versions",
+    "operationId": "postArticlesIdVersions",
+    "request": "SaveVersionRequest",
+    "response": "ArticleVersion",
+    "status": 201,
+    "ifMatch": true
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/diff",
+    "operationId": "getArticlesIdDiff",
+    "request": null,
+    "response": "Diff",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/restore",
+    "operationId": "postArticlesIdRestore",
+    "request": "RestoreRequest",
+    "response": "ArticleVersion",
+    "status": 201,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/regenerate-section",
+    "operationId": "postArticlesIdRegenerateSection",
+    "request": "RegenerateRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/proposals",
+    "operationId": "getArticlesIdProposals",
+    "request": null,
+    "response": "ProposalPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/proposals/{id}/accept",
+    "operationId": "postProposalsIdAccept",
+    "request": "BaseVersionRequest",
+    "response": "ArticleVersion",
+    "status": 201,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/proposals/{id}/reject",
+    "operationId": "postProposalsIdReject",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/claims",
+    "operationId": "getArticlesIdClaims",
+    "request": null,
+    "response": "ClaimPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/claims/{id}",
+    "operationId": "getClaimsId",
+    "request": null,
+    "response": "ClaimDetail",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/claims/{id}/verify",
+    "operationId": "postClaimsIdVerify",
+    "request": "VerifyRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/claims/{id}/human-verifications",
+    "operationId": "postClaimsIdHumanVerifications",
+    "request": "HumanFactRequest",
+    "response": "FactVerification",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/sources",
+    "operationId": "getArticlesIdSources",
+    "request": null,
+    "response": "SourcePage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/sources",
+    "operationId": "postArticlesIdSources",
+    "request": "AddSourceRequest",
+    "response": "Source",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/sources/{id}",
+    "operationId": "getSourcesId",
+    "request": null,
+    "response": "SourceDetail",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/sources/{id}/refresh",
+    "operationId": "postSourcesIdRefresh",
+    "request": null,
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/images/plan",
+    "operationId": "postArticlesIdImagesPlan",
+    "request": "VersionRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/image-slots",
+    "operationId": "getArticlesIdImageSlots",
+    "request": null,
+    "response": "ImageSlotPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "PATCH",
+    "path": "/image-slots/{id}",
+    "operationId": "patchImageSlotsId",
+    "request": "PatchSlotRequest",
+    "response": "ImageSlot",
+    "status": 200,
+    "ifMatch": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/image-slots/{id}",
+    "operationId": "deleteImageSlotsId",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 204,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/image-slots/{id}/search",
+    "operationId": "postImageSlotsIdSearch",
+    "request": "SearchRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/image-slots/{id}/candidates",
+    "operationId": "getImageSlotsIdCandidates",
+    "request": null,
+    "response": "ImageCandidatePage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/image-slots/{id}/generate",
+    "operationId": "postImageSlotsIdGenerate",
+    "request": "GenerateImageRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "PUT",
+    "path": "/image-slots/{id}/selection",
+    "operationId": "putImageSlotsIdSelection",
+    "request": "SelectImageRequest",
+    "response": "ImageSelection",
+    "status": 200,
+    "ifMatch": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/image-slots/{id}/selection",
+    "operationId": "deleteImageSlotsIdSelection",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 204,
+    "ifMatch": true
+  },
+  {
+    "method": "GET",
+    "path": "/images/{id}",
+    "operationId": "getImagesId",
+    "request": null,
+    "response": "ImageAsset",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/images/{id}/variants",
+    "operationId": "postImagesIdVariants",
+    "request": "VariantRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/images/{id}/license",
+    "operationId": "getImagesIdLicense",
+    "request": null,
+    "response": "LicenseMetadata",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/images/{id}/license-verifications",
+    "operationId": "postImagesIdLicenseVerifications",
+    "request": "HumanLicenseRequest",
+    "response": "LicenseMetadata",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/licenses",
+    "operationId": "getArticlesIdLicenses",
+    "request": null,
+    "response": "LicenseView",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/qa",
+    "operationId": "postArticlesIdQa",
+    "request": "VersionRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/qa-reports",
+    "operationId": "getArticlesIdQaReports",
+    "request": null,
+    "response": "QaReportPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/qa-reports/{id}/acknowledgements",
+    "operationId": "postQaReportsIdAcknowledgements",
+    "request": "AcknowledgeRequest",
+    "response": "DispositionResult",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/human-review",
+    "operationId": "postArticlesIdHumanReview",
+    "request": "BeginReviewRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/approve",
+    "operationId": "postArticlesIdApprove",
+    "request": "ApproveRequest",
+    "response": "Approval",
+    "status": 201,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/reject",
+    "operationId": "postArticlesIdReject",
+    "request": "RejectRequest",
+    "response": "Approval",
+    "status": 201,
+    "ifMatch": true
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/reopen",
+    "operationId": "postArticlesIdReopen",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": true
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/human-reviews",
+    "operationId": "getArticlesIdHumanReviews",
+    "request": null,
+    "response": "ApprovalPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/exports",
+    "operationId": "postArticlesIdExports",
+    "request": "ExportRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/previews",
+    "operationId": "postArticlesIdPreviews",
+    "request": "PreviewRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/exports/{id}",
+    "operationId": "getExportsId",
+    "request": null,
+    "response": "ExportArtifact",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/workflow",
+    "operationId": "getArticlesIdWorkflow",
+    "request": null,
+    "response": "WorkflowView",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/workflows/{id}/pause",
+    "operationId": "postWorkflowsIdPause",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/workflows/{id}/resume",
+    "operationId": "postWorkflowsIdResume",
+    "request": null,
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/workflows/{id}/cancel",
+    "operationId": "postWorkflowsIdCancel",
+    "request": "ReasonRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/workflow-steps/{id}/retry",
+    "operationId": "postWorkflowStepsIdRetry",
+    "request": "ReasonRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/manual-tasks",
+    "operationId": "getArticlesIdManualTasks",
+    "request": null,
+    "response": "ManualTaskPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/manual-tasks/{id}/resolve",
+    "operationId": "postManualTasksIdResolve",
+    "request": "ResolveTaskRequest",
+    "response": "DispositionResult",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/operations/{id}",
+    "operationId": "getOperationsId",
+    "request": null,
+    "response": "Operation",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/events",
+    "operationId": "getArticlesIdEvents",
+    "request": null,
+    "response": "DependencyEvent",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/executions",
+    "operationId": "getArticlesIdExecutions",
+    "request": null,
+    "response": "ArtifactRefPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/executions/{id}",
+    "operationId": "getExecutionsId",
+    "request": null,
+    "response": "ExecutionDetail",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/audit-logs",
+    "operationId": "getArticlesIdAuditLogs",
+    "request": null,
+    "response": "AuditRecordPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/skills",
+    "operationId": "getSkills",
+    "request": null,
+    "response": "SkillIdentityPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/skills",
+    "operationId": "postSkills",
+    "request": "CreateSkillRequest",
+    "response": "SkillIdentity",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/skills/{id}/versions",
+    "operationId": "getSkillsIdVersions",
+    "request": null,
+    "response": "SkillSnapshotPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/skills/{id}/versions",
+    "operationId": "postSkillsIdVersions",
+    "request": "CreateSkillVersionRequest",
+    "response": "SkillSnapshot",
+    "status": 201,
+    "ifMatch": false
+  },
+  {
+    "method": "PUT",
+    "path": "/skill-versions/{id}",
+    "operationId": "putSkillVersionsId",
+    "request": "EditSkillVersionRequest",
+    "response": "SkillSnapshot",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/skill-versions/{id}/publish",
+    "operationId": "postSkillVersionsIdPublish",
+    "request": "PublishSkillRequest",
+    "response": "SkillSnapshot",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/skill-versions/{id}/retire",
+    "operationId": "postSkillVersionsIdRetire",
+    "request": "ReasonRequest",
+    "response": "SkillSnapshot",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/settings/providers",
+    "operationId": "getSettingsProviders",
+    "request": null,
+    "response": "ProviderConfigPage",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "PUT",
+    "path": "/settings/providers/{provider}",
+    "operationId": "putSettingsProvidersProvider",
+    "request": "SetProviderRequest",
+    "response": "ProviderConfig",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/settings/providers/{provider}/test",
+    "operationId": "postSettingsProvidersProviderTest",
+    "request": "ProbeRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/usage",
+    "operationId": "getUsage",
+    "request": null,
+    "response": "UsageSummary",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "GET",
+    "path": "/articles/{id}/deletion-impact",
+    "operationId": "getArticlesIdDeletionImpact",
+    "request": null,
+    "response": "DeletionImpact",
+    "status": 200,
+    "ifMatch": false
+  },
+  {
+    "method": "POST",
+    "path": "/articles/{id}/deletion",
+    "operationId": "postArticlesIdDeletion",
+    "request": "DeleteArticleRequest",
+    "response": "CommandAccepted",
+    "status": 202,
+    "ifMatch": true
+  }
+]

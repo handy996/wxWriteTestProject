@@ -1,0 +1,90 @@
+{
+  "version": "1.0.0-rc.1",
+  "status": "REVIEW_CANDIDATE_NOT_APPROVED",
+  "files": [
+    {
+      "path": "docs/adr/ADR-001-architecture.md",
+      "sha256": "d36c8200ef58ddbfe94786d5d5e41f24e8dfec23be05d953c29ce7b9008e9f3d"
+    },
+    {
+      "path": "docs/adr/ADR-002-fact-policy.md",
+      "sha256": "b67c573e4f487d71227b51d7ef52d82d061c922afc3da9e0f098830160b3c847"
+    },
+    {
+      "path": "docs/adr/ADR-003-image-policy.md",
+      "sha256": "bea4b92aaf884fdea659515c8fe22aa2e17ce3a7f8cef31e03fdc07ec6fa66a6"
+    },
+    {
+      "path": "docs/adr/ADR-004-storage-deletion-and-database.md",
+      "sha256": "0e440153716bed9e6b6ab09249e29cefb652e0a8e01b96388d2e36ca3acf50fd"
+    },
+    {
+      "path": "docs/api/openapi.yaml",
+      "sha256": "39d052ea347e450fffeaa1f2e6b4fb9210c19967af0eadf81166d3eafff77440"
+    },
+    {
+      "path": "docs/schemas/editorial.schema.json",
+      "sha256": "3b35e564e36d199cd541e5ac9a9982ec4e6e27db1d7d1ad69de8afe19fcdcff9"
+    },
+    {
+      "path": "docs/execution/contracts/api-inventory.json",
+      "sha256": "3ee6b99d1546c53afa80ffce3073a31ab13d164741a204149c9aa2ac6dd9b050"
+    },
+    {
+      "path": "docs/execution/contracts/baseline.json",
+      "sha256": "f09a19de66618f14da2df9006534d359ee5046337c52d78a6597d4e7925f856c"
+    },
+    {
+      "path": "docs/execution/contracts/build_contract.py",
+      "sha256": "cb956abb2481d23aeb4db2559e981109b6f1e5424d6fe7509d19bf418935904a"
+    },
+    {
+      "path": "docs/execution/contracts/build_registry.py",
+      "sha256": "e7d1fe38159c63231d0006de24dabf61e92fd77ce6882d1b99a47108962a8a4c"
+    },
+    {
+      "path": "docs/execution/contracts/change-requests.md",
+      "sha256": "7f816e93075d236381037abfb04e8d3a93585d639ca7455a05ca1e0c62b6359b"
+    },
+    {
+      "path": "docs/execution/contracts/invalidation.json",
+      "sha256": "b6b979f67b4a015c21f419fc71a3ad6a0b364ea32c214a8ca18e18ab92fcfa1a"
+    },
+    {
+      "path": "docs/execution/contracts/migration-draft.sql",
+      "sha256": "6f9b3ff71294d0274b4240703804fba263cd9be54db3c49a88ddb511bc9ccb29"
+    },
+    {
+      "path": "docs/execution/contracts/module-dependencies.json",
+      "sha256": "4e621f27a0c19ef145ae5bef381671c6780bcffa1ae77a8373098a6ca2b97b3c"
+    },
+    {
+      "path": "docs/execution/contracts/open-questions.json",
+      "sha256": "c8a44adba3e46ec2ff05d4bba4fbf648eefa268712de36b03181eea207dd936a"
+    },
+    {
+      "path": "docs/execution/contracts/ownership-and-fk.md",
+      "sha256": "814c50ea3376de7659da3cadb1bc6b16d147d30cb7481df0273fd3a0af0c0cdf"
+    },
+    {
+      "path": "docs/execution/contracts/ports.json",
+      "sha256": "be63acec338ea58f1aa3cc7a21a073e0be4b0e9421d88f1730f736c26fd1db3a"
+    },
+    {
+      "path": "docs/execution/contracts/README.md",
+      "sha256": "f0c1290c9d7527a7f3e24978aad24ff2d3344808ff7e7752f75c5555c107f96a"
+    },
+    {
+      "path": "docs/execution/contracts/reference.py",
+      "sha256": "952b534fa19e7242b75ced8d86a6d7449ad3cf8452c264cef670f2ae9bcdcaac"
+    },
+    {
+      "path": "docs/execution/contracts/state-guards.json",
+      "sha256": "9890b5a8e42760f95f4aa21d89adfdb28b67ca5138d3b9d8978724b57e5be5f7"
+    },
+    {
+      "path": "docs/execution/contracts/tables.json",
+      "sha256": "6ece209cbb632ce5b37c4adff2161f28cf4608200ad09672c5a6c0c11ab52590"
+    }
+  ]
+}

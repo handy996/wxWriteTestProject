@@ -1,0 +1,507 @@
+{
+  "tables": [
+    {
+      "name": "app_user",
+      "owner": "T03",
+      "fieldsFromSrs": "loginName、passwordHash、displayName、status",
+      "constraintsFromSrs": "UQ loginName；ACTIVE/DISABLED；MVP 单 Owner",
+      "prerequisites": [],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "editorial_skill",
+      "owner": "T05",
+      "fieldsFromSrs": "code、name、ownerId、activeVersionId",
+      "constraintsFromSrs": "UQ code；一个 Skill 多版本",
+      "prerequisites": [
+        "app_user"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "editorial_skill_version",
+      "owner": "T05",
+      "fieldsFromSrs": "skillId、version、config JSONB、rulesHash、status、publishedBy",
+      "constraintsFromSrs": "UQ(skillId,version)；DRAFT/PUBLISHED/RETIRED",
+      "prerequisites": [
+        "editorial_skill",
+        "policy_version",
+        "prompt_version"
+      ],
+      "runtimeMutation": "DRAFT content editable; published content immutable; retire status only",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "policy_version",
+      "owner": "T05",
+      "fieldsFromSrs": "policyType、version、rules JSONB、hash、status",
+      "constraintsFromSrs": "FACT/LICENSE/QA/WATERMARK/COST；UQ(type,version)",
+      "prerequisites": [],
+      "runtimeMutation": "DRAFT editable; published rules immutable; retire status only",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "prompt_version",
+      "owner": "T05",
+      "fieldsFromSrs": "agentName、version、systemTemplate、userTemplate、schema JSONB、hash",
+      "constraintsFromSrs": "UQ(agentName,version)；不可变已发布版本",
+      "prerequisites": [],
+      "runtimeMutation": "DRAFT editable; published templates immutable",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "article_job",
+      "owner": "T06",
+      "fieldsFromSrs": "第 26.1 节字段",
+      "constraintsFromSrs": "IDX(ownerId,status,updatedAt DESC)，lock_version",
+      "prerequisites": [
+        "app_user",
+        "editorial_skill_version"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "article_version",
+      "owner": "T06",
+      "fieldsFromSrs": "第 16 节字段、contentAst JSONB",
+      "constraintsFromSrs": "UQ(articleId,versionNo)；IDX(articleId,createdAt)；parent FK",
+      "prerequisites": [
+        "article_job",
+        "app_user"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "analysis_result",
+      "owner": "T12",
+      "fieldsFromSrs": "versionId、skillVersionId、result JSONB、inputHash、executionId",
+      "constraintsFromSrs": "IDX(articleId,versionId)；结构结果不可变",
+      "prerequisites": [
+        "article_version",
+        "editorial_skill_version",
+        "agent_execution"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "rewrite_plan",
+      "owner": "T13",
+      "fieldsFromSrs": "versionId、analysisId、factSetHash、plan JSONB、executionId",
+      "constraintsFromSrs": "IDX(articleId,createdAt)；不可变",
+      "prerequisites": [
+        "article_version",
+        "analysis_result",
+        "agent_execution"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "fact_claim",
+      "owner": "T16",
+      "fieldsFromSrs": "versionId、scopeType、scopeId、logicalClaimId、claimHash、claimText、type、importance、spans JSONB",
+      "constraintsFromSrs": "UQ(versionId,scopeType,scopeId,claimHash)；IDX(versionId,importance)",
+      "prerequisites": [
+        "article_version"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "fact_verification",
+      "owner": "T17",
+      "fieldsFromSrs": "claimId、status、confidence、disposition、reason、policyVersionId、contextHash、validUntil",
+      "constraintsFromSrs": "多次核验追加；IDX(claimId,createdAt DESC)，IDX(status,validUntil)",
+      "prerequisites": [
+        "fact_claim",
+        "policy_version"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "source",
+      "owner": "T15",
+      "fieldsFromSrs": "articleId、canonicalUrl、urlHash、publisher、author、authorityLevel、sourceType",
+      "constraintsFromSrs": "UQ(articleId,urlHash)；IDX(domain)",
+      "prerequisites": [
+        "article_job"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "source_snapshot",
+      "owner": "T15",
+      "fieldsFromSrs": "sourceId、retrievedAt、contentHash、excerpt、objectKey、accessStatus、rightsBasis",
+      "constraintsFromSrs": "UQ(sourceId,contentHash,retrievedAt)；IDX(sourceId,retrievedAt DESC)",
+      "prerequisites": [
+        "source"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "claim_source",
+      "owner": "T17",
+      "fieldsFromSrs": "verificationId、sourceSnapshotId、relation、quote、locator、qualifierMatch JSONB",
+      "constraintsFromSrs": "UQ(verificationId,sourceSnapshotId,relation)；SUPPORTS/CONTRADICTS/CONTEXT",
+      "prerequisites": [
+        "fact_verification",
+        "source_snapshot"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "review_report",
+      "owner": "T14",
+      "fieldsFromSrs": "versionId、summary、scores JSONB、decision、executionId",
+      "constraintsFromSrs": "IDX(articleId,versionId)；审稿基线不可变",
+      "prerequisites": [
+        "article_version",
+        "agent_execution"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "review_item",
+      "owner": "T14",
+      "fieldsFromSrs": "reportId、blockId、type、severity、reason、suggestions JSONB、status、resolvedInVersionId",
+      "constraintsFromSrs": "IDX(reportId,status,severity)；处置可变并审计",
+      "prerequisites": [
+        "review_report",
+        "article_version"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "change_proposal",
+      "owner": "T07",
+      "fieldsFromSrs": "baseVersionId、scopeBlockIds JSONB、proposedVersionId、status、acceptedVersionId",
+      "constraintsFromSrs": "PENDING/ACCEPTED/REJECTED/STALE；IDX(articleId,status)",
+      "prerequisites": [
+        "article_version"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_slot",
+      "owner": "T19",
+      "fieldsFromSrs": "articleId、versionId、anchorBlockId、purpose、mustBeReal、aiAllowed、status、spec JSONB",
+      "constraintsFromSrs": "IDX(versionId,status)；锁；输入更新生成新计划版本",
+      "prerequisites": [
+        "article_version"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_candidate",
+      "owner": "T24",
+      "fieldsFromSrs": "slotId、searchRunId、provider、externalId、licenseId、scores JSONB、eligibility",
+      "constraintsFromSrs": "UQ(searchRunId,provider,externalId)；IDX(slotId,eligibility,overallScore DESC)",
+      "prerequisites": [
+        "image_slot"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_asset",
+      "owner": "T23",
+      "fieldsFromSrs": "articleId、provider、externalId、generated、mime、width、height、originalHash、status",
+      "constraintsFromSrs": "READY/QUARANTINED/FAILED；IDX(articleId,originalHash)",
+      "prerequisites": [
+        "article_job"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_variant",
+      "owner": "T23",
+      "fieldsFromSrs": "assetId、objectKey、hash、transform JSONB、watermarkStatus、watermarkVersion",
+      "constraintsFromSrs": "UQ(assetId,transformHash)；IDX(hash)；只存可解码安全格式",
+      "prerequisites": [
+        "image_asset"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_generation",
+      "owner": "T25",
+      "fieldsFromSrs": "slotId、assetId、agentExecutionId、prompt、effectivePrompt、model、providerRequestId、status",
+      "constraintsFromSrs": "IDX(slotId,createdAt)；OUTCOME_UNKNOWN 可对账",
+      "prerequisites": [
+        "image_slot",
+        "image_asset",
+        "agent_execution"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "license_metadata",
+      "owner": "T22",
+      "fieldsFromSrs": "candidateId、assetId、revision、rightsBasis、许可字段、evidenceHash、rawMetadata JSONB、verificationStatus",
+      "constraintsFromSrs": "IDX(assetId,revision DESC)；UQ(assetId,revision)（assetId 可空）",
+      "prerequisites": [
+        "image_candidate",
+        "image_asset"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "image_selection",
+      "owner": "T24",
+      "fieldsFromSrs": "slotId、assetId、variantId、licenseMetadataId、caption、selectedBy、selectedAt、active",
+      "constraintsFromSrs": "部分 UQ(slotId) WHERE active；旧选择不覆盖",
+      "prerequisites": [
+        "image_slot",
+        "image_asset",
+        "image_variant",
+        "license_metadata",
+        "app_user"
+      ],
+      "runtimeMutation": "Only active may UPDATE; new caption/variant/license -> new row",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "license_manifest",
+      "owner": "T26",
+      "fieldsFromSrs": "articleId、versionId、items JSONB、noticeCompact、noticeFull、hash、policyVersionId",
+      "constraintsFromSrs": "不可变快照；IDX(articleId,createdAt)",
+      "prerequisites": [
+        "article_version",
+        "policy_version"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "release_candidate",
+      "owner": "T27",
+      "fieldsFromSrs": "articleId、versionId、manifestId、factSet JSONB、skillId、policyRefs JSONB、releaseHash",
+      "constraintsFromSrs": "UQ(articleId,releaseHash)；冻结审批输入",
+      "prerequisites": [
+        "article_version",
+        "license_manifest",
+        "editorial_skill_version"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "qa_report",
+      "owner": "T27",
+      "fieldsFromSrs": "candidateId、checks JSONB、blockerCount、warningCount、status、validUntil",
+      "constraintsFromSrs": "PASS/FAIL；IDX(candidateId,createdAt DESC)",
+      "prerequisites": [
+        "release_candidate"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "human_review",
+      "owner": "T28",
+      "fieldsFromSrs": "articleId、candidateId、qaReportId、releaseHash、reviewerId、decision、comment",
+      "constraintsFromSrs": "APPROVED/REJECTED；追加；IDX(articleId,decidedAt)",
+      "prerequisites": [
+        "release_candidate",
+        "qa_report",
+        "app_user"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "manual_task",
+      "owner": "T11",
+      "fieldsFromSrs": "articleId、workflowId、type、entityId、required、status、resolution JSONB",
+      "constraintsFromSrs": "OPEN/RESOLVED/CANCELLED；IDX(articleId,status)",
+      "prerequisites": [
+        "article_job",
+        "workflow_execution"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "workflow_execution",
+      "owner": "T10",
+      "fieldsFromSrs": "articleId、generation、definitionVersion、snapshot JSONB、status、startedAt、finishedAt",
+      "constraintsFromSrs": "UQ(articleId,generation)；每篇至多一个活动运行",
+      "prerequisites": [
+        "article_job"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "workflow_step_execution",
+      "owner": "T10",
+      "fieldsFromSrs": "workflowId、stepCode、scopeId、logicalKey、attempt、inputHash、status、leaseUntil、fencingToken、nextRunAt、error JSONB、resultRefs JSONB",
+      "constraintsFromSrs": "UQ(logicalKey,attempt)；部分 IDX(status,nextRunAt)；IDX(leaseUntil)",
+      "prerequisites": [
+        "workflow_execution"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "agent_execution",
+      "owner": "T09",
+      "fieldsFromSrs": "stepId、agentName、model、promptVersionId、inputRef、outputRef、usage JSONB、latencyMs、cost、status、error",
+      "constraintsFromSrs": "IDX(articleId,createdAt)、IDX(model,status,createdAt)",
+      "prerequisites": [
+        "workflow_step_execution",
+        "prompt_version"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "tool_execution",
+      "owner": "T09",
+      "fieldsFromSrs": "agentExecutionId、stepId、toolName、argumentsRef、resultRef、providerRequestId、latencyMs、cost、status",
+      "constraintsFromSrs": "IDX(stepId,createdAt)；调用顺序 ordinal 唯一于父执行",
+      "prerequisites": [
+        "agent_execution",
+        "workflow_step_execution"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "cost_ledger",
+      "owner": "T08",
+      "fieldsFromSrs": "articleId、executionId、reservationId、kind、amount、currency、pricingVersion、status",
+      "constraintsFromSrs": "RESERVED/SETTLED/RELEASED/UNKNOWN；UQ(idempotencyKey)",
+      "prerequisites": [
+        "article_job"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "idempotency_record",
+      "owner": "T03",
+      "fieldsFromSrs": "ownerId、route、key、requestHash、operationId、responseCode、responseBody、expiresAt",
+      "constraintsFromSrs": "UQ(ownerId,route,key)；相同 key 不同请求返回 409",
+      "prerequisites": [
+        "app_user"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "export_artifact",
+      "owner": "T29",
+      "fieldsFromSrs": "articleId、candidateId、approvalId、objectKey、hash、status、expiresAt",
+      "constraintsFromSrs": "QUEUED/RUNNING/READY/FAILED/REVOKED；IDX(articleId,createdAt)",
+      "prerequisites": [
+        "release_candidate",
+        "human_review"
+      ],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "audit_log",
+      "owner": "T03",
+      "fieldsFromSrs": "actorId、actorType、action、articleId、entityType、entityId、beforeHash、afterHash、detail JSONB、traceId、createdAt",
+      "constraintsFromSrs": "追加；IDX(articleId,createdAt)、IDX(actorId,createdAt)",
+      "prerequisites": [
+        "app_user"
+      ],
+      "runtimeMutation": "INSERT_ONLY",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    },
+    {
+      "name": "provider_config",
+      "owner": "T09",
+      "fieldsFromSrs": "provider、enabled、secretRef、capabilities JSONB、limits JSONB、configVersion",
+      "constraintsFromSrs": "UQ(provider)；只存密钥引用和非敏感配置",
+      "prerequisites": [],
+      "runtimeMutation": "OPTIMISTIC_LOCK_AND_AUDIT",
+      "deleteRole": "retention_worker via approved deletion command; never generic application DELETE"
+    }
+  ],
+  "deferredForeignKeys": [
+    {
+      "from": "article_job",
+      "to": "article_version",
+      "fields": "originalVersionId,currentVersionId"
+    },
+    {
+      "from": "article_job",
+      "to": "workflow_execution",
+      "fields": "activeWorkflowId"
+    },
+    {
+      "from": "article_job",
+      "to": "analysis_result",
+      "fields": "latestAnalysisId"
+    },
+    {
+      "from": "article_job",
+      "to": "review_report",
+      "fields": "latestReviewId"
+    },
+    {
+      "from": "article_job",
+      "to": "qa_report",
+      "fields": "latestQaId"
+    },
+    {
+      "from": "article_job",
+      "to": "release_candidate",
+      "fields": "activeCandidateId,approvedCandidateId"
+    },
+    {
+      "from": "article_version",
+      "to": "article_version",
+      "fields": "parentVersionId,restoredFromVersionId"
+    },
+    {
+      "from": "article_version",
+      "to": "agent_execution",
+      "fields": "executionId"
+    },
+    {
+      "from": "editorial_skill",
+      "to": "editorial_skill_version",
+      "fields": "activeVersionId"
+    },
+    {
+      "from": "editorial_skill_version",
+      "to": "editorial_skill_version",
+      "fields": "parentVersionId"
+    },
+    {
+      "from": "image_candidate",
+      "to": "license_metadata",
+      "fields": "licenseId"
+    }
+  ],
+  "polymorphicReferences": {
+    "fact_claim.scopeId": "ARTICLE_VERSION -> same version; IMAGE_SELECTION -> same article immutable selection; constraint trigger",
+    "cost_ledger.executionId": "agent/tool execution resolved by type with ownership check",
+    "idempotency_record.operationId": "workflow/step/export registry; no operations table",
+    "manual_task.entityId": "type-specific same-article resolver",
+    "audit_log.entityId": "retained metadata reference; no cascading FK"
+  },
+  "jsonReferences": "Prompt bindings, policy refs, manifest items, result refs, fact sets: same-article/service validation plus retention references in the business transaction."
+}
