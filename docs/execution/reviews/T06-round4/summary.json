@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "scope": "T06 reviewed working-tree delivery; not integrated CI or production approval",
+  "open": [],
+  "closed": [
+    "T06-R01",
+    "T06-R02"
+  ],
+  "changedInputOrPriorReviewFiles": [],
+  "suites": [
+    {
+      "name": "com.example.editorial.article.ast.ArticleAstTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewArticleAstTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewEmphasisPunctuationTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewNestedClosureTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.job.DeletionHandoffTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.job.T06PostgresTest",
+      "tests": "19",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.shared.CanonicalRequestTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "secretScanExitCode": 1,
+  "findingsByFile": {
+    "tests/engineering/T02/evidence/r01-integrity.json": 6
+  },
+  "databaseStopped": true
+}

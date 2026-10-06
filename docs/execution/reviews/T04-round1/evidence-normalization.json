@@ -1,0 +1,20 @@
+[
+  {
+    "path": "verification.json",
+    "originalSha256": "a6200039ff1e65ceee77742ae0a4f6db70a04598e777d79f1f120d7628c8ec8d",
+    "normalizedSha256": "fcc306af743d9b4aedecda1520b4139ebd183f84fb15d3fcad46189bc2cfe42c",
+    "replacements": 2
+  },
+  {
+    "path": "test-results/TEST-com.example.editorial.storage.ReviewCounterexamplesTest.xml",
+    "originalSha256": "0c84f75c9ccbba214cc25f1757c6402013cd7f1d1f42b9eb8ce6c0a2dcf459f8",
+    "normalizedSha256": "42b4fd98c05bfb2352ac2ccce9d8425bd0d36f24e13fab423b35bbdc55d6462c",
+    "replacements": 1
+  },
+  {
+    "path": "test-results/TEST-com.example.editorial.storage.T04PostgresTest.xml",
+    "originalSha256": "310fdaf6354453820639b13fc9e04507a5edd4e1c0ee77abbdee4efb3a4ecdcb",
+    "normalizedSha256": "36399069b505524ac65a7a8f7222f0ddfc999af5d7a75bc7b77c39b177733f81",
+    "replacements": 1
+  }
+]

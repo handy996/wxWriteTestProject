@@ -1,0 +1,105 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.job.T06PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 6.935 s <<< FAILURE! -- in com.example.editorial.article.job.T06PostgresTest
+com.example.editorial.article.job.T06PostgresTest.cursorAndCrossOwnerConcealment -- Time elapsed: 0.632 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"3e37134d-31bd-4518-994f-c8a6f204a386","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.create(T06PostgresTest.java:70)
+	at com.example.editorial.article.job.T06PostgresTest.cursorAndCrossOwnerConcealment(T06PostgresTest.java:143)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.auditIdempotencyAndObjectCommitFailureRollBack -- Time elapsed: 0.192 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"3f9dcc86-9344-4ab5-a1f3-7fd52fe2a6eb","details":[],"retryable":false} ==> expected: <503> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.auditIdempotencyAndObjectCommitFailureRollBack(T06PostgresTest.java:157)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.etagReplayArchiveBudgetAndClone -- Time elapsed: 0.118 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"84181db6-bcef-471d-b5e8-8bcf40e7bc37","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.create(T06PostgresTest.java:70)
+	at com.example.editorial.article.job.T06PostgresTest.etagReplayArchiveBudgetAndClone(T06PostgresTest.java:110)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.unreadyGenerationRightsAndDeletionNeverSucceed -- Time elapsed: 0.123 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"e9268e67-d001-4b46-95d7-6c41dbc04165","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.create(T06PostgresTest.java:70)
+	at com.example.editorial.article.job.T06PostgresTest.unreadyGenerationRightsAndDeletionNeverSucceed(T06PostgresTest.java:125)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.atomicCreateAndConcurrentReplay -- Time elapsed: 0.142 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"9e8ab7ab-b0c3-4392-bdfe-e1010d85e2e4","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.atomicCreateAndConcurrentReplay(T06PostgresTest.java:78)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.databaseConstraintsAndOriginalPrivileges -- Time elapsed: 0.123 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"96e431c6-6ced-41f3-8068-aeb2e4e9468b","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.create(T06PostgresTest.java:70)
+	at com.example.editorial.article.job.T06PostgresTest.databaseConstraintsAndOriginalPrivileges(T06PostgresTest.java:134)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.schemaSkillOwnershipAndSnapshotImmutability -- Time elapsed: 0.132 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.article.job.T06PostgresTest.schemaSkillOwnershipAndSnapshotImmutability(T06PostgresTest.java:100)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.fourRightsAndInputValidation -- Time elapsed: 0.133 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"VALIDATION_FAILED","message":"Request is invalid","traceId":"921c801f-8432-4e1c-8f33-384071137cc2","details":[],"retryable":false} ==> expected: <201> but was: <422>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.fourRightsAndInputValidation(T06PostgresTest.java:92)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

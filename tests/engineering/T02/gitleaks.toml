@@ -8,3 +8,10 @@ condition = "AND"
 paths = ['''docs[/\\]AI-Editorial-Agent-SRS-v1\.0\.md$''']
 regexTarget = "match"
 regexes = ['''Idempotency-Key: 397c4e7a-d8f0-4d83-b885-342f8248d8e2''']
+
+[[allowlists]]
+description = "T04-R07: preserve original integration evidence; this exact UUID identifies a deleted test object, not a credential"
+condition = "AND"
+paths = ['''tests[/\\]engineering[/\\]T04[/\\]evidence[/\\]integration\.json$''']
+regexTarget = "match"
+regexes = ['''key=55565d49-a894-42ec-8a42-df7e2dc50a86''']

@@ -1,0 +1,195 @@
+[
+  {
+    "name": "com.example.editorial.editorial.skill.BaselineResourcesTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "cases": [
+      {
+        "name": "skillManifestBindsAllFourAgentsAndSatisfiesInvariants",
+        "failure": null
+      },
+      {
+        "name": "fivePoliciesAllKindsAndRecomputableHashes",
+        "failure": null
+      },
+      {
+        "name": "fourPromptsAllAgentsAndRecomputableHashes",
+        "failure": null
+      }
+    ]
+  },
+  {
+    "name": "com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "cases": [
+      {
+        "name": "acceptsValidConfig",
+        "failure": null
+      },
+      {
+        "name": "rejectsMissingRequiredAndEmptyBindings",
+        "failure": null
+      },
+      {
+        "name": "rejectsWrongType",
+        "failure": null
+      },
+      {
+        "name": "rejectsIllegalEnum",
+        "failure": null
+      },
+      {
+        "name": "rejectsBadUuidAndClientDeclaredFields",
+        "failure": null
+      },
+      {
+        "name": "rejectsUnknownField",
+        "failure": null
+      }
+    ]
+  },
+  {
+    "name": "com.example.editorial.editorial.skill.SemVerTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "cases": [
+      {
+        "name": "parsesAndOrders",
+        "failure": null
+      },
+      {
+        "name": "rejectsMalformed",
+        "failure": null
+      },
+      {
+        "name": "nextPatchNeverReuses",
+        "failure": null
+      }
+    ]
+  },
+  {
+    "name": "com.example.editorial.editorial.skill.T05PostgresTest",
+    "tests": "23",
+    "failures": "6",
+    "errors": "0",
+    "skipped": "0",
+    "cases": [
+      {
+        "name": "emptyInitBaselineAndFourTables",
+        "failure": null
+      },
+      {
+        "name": "codeUnique",
+        "failure": null
+      },
+      {
+        "name": "firstVersionIs100AndCopySameSkill",
+        "failure": null
+      },
+      {
+        "name": "crossSkillCopyRejected",
+        "failure": null
+      },
+      {
+        "name": "concurrentFirstVersionOnlyOneSucceeds",
+        "failure": null
+      },
+      {
+        "name": "versionNumberNeverReusedAcrossPublishAndRetire",
+        "failure": null
+      },
+      {
+        "name": "publishedCannotBeEdited",
+        "failure": null
+      },
+      {
+        "name": "invalidConfigRejected",
+        "failure": null
+      },
+      {
+        "name": "hashRecomputableAndBindingsCorrect",
+        "failure": null
+      },
+      {
+        "name": "replayDoesNotDuplicateBusinessResult",
+        "failure": null
+      },
+      {
+        "name": "ownerIsolation",
+        "failure": null
+      },
+      {
+        "name": "anonymousAndForgedRejected",
+        "failure": null
+      },
+      {
+        "name": "auditAppendOnlyAndSanitized",
+        "failure": null
+      },
+      {
+        "name": "snapshotPreservedAfterPublishAndRetire",
+        "failure": null
+      },
+      {
+        "name": "draftSnapshotIsNotPublishedAndPortErrors",
+        "failure": null
+      },
+      {
+        "name": "eventIdempotencyKeyIsStable",
+        "failure": null
+      },
+      {
+        "name": "runtimeRoleHasNoDeleteAndPublishedImmutableInDb",
+        "failure": null
+      },
+      {
+        "name": "reviewWriterSchemaMustResolveAgainstApprovedDefinitions",
+        "failure": "Published Writer has unresolved schema reference: #/$defs/WriterV1Output ==> expected: <true> but was: <false>"
+      },
+      {
+        "name": "reviewUnknownOutputSchemaBindingMustBeRejected",
+        "failure": "Unknown output schema created with 201 and published: {\"id\":\"4923e765-d562-4cc6-bc0a-a3dda9557f0e\",\"skillId\":\"ef0309cc-2306-46db-a2a9-c8643413f75d\",\"version\":\"1.0.0\",\"rulesHash\":\"063f8ff70b36da3b1edc16f5d0e7b7ffc00920641a7a250cbcd741a77f29c106\",\"schemaVersion\":\"1.0.0-rc.3\",\"config\":{\"name\":\"CustomSkill\",\"tone\":[\"真实\"],\"locale\":\"zh-CN\",\"channel\":\"WECHAT\",\"audience\":[\"普通读者\"],\"examples\":[\"示例\"],\"imageRules\":{\"maxBodyImages\":5,\"optionalCover\":true},\"titleRules\":[\"5 个候选\"],\"description\":\"测试技能配置\",\"antiExamples\":[\"反例\"],\"headingRules\":[\"信息差小标题\"],\"openingRules\":{\"problemWithinChars\":300},\"factPolicyRef\":\"dabf0be6-6feb-4e02-aecf-678cbcc09735\",\"promptBindings\":[{\"hash\":\"640cc0bb3d3e203690e763ae3bee7e4e9e4eca3cb3d1190981948ef714b89f54\",\"agentName\":\"Analyzer\",\"outputSchema\":\"NonexistentOutputSchema\",\"promptVersionId\":\"cba0f8c5-f309-448e-93df-49e89a0b92b8\"},{\"hash\":\"ff753f9465eeb8a2d721028e7f1501cfaeb959f248cf35aee494960d53e1257f\",\"agentName\":\"Writer\",\"outputSchema\":\"AnalysisOutput\",\"promptVersionId\":\"b8276dd4-7ef6-4da9-8c78-d63aeb664859\"},{\"hash\":\"6b3f4936f81e1566956650248a0c83369c250b433db171d696ed507c82b7762b\",\"agentName\":\"EditorialReviewer\",\"outputSchema\":\"AnalysisOutput\",\"promptVersionId\":\"e1fa3775-8f0e-490f-80e3-2affc498e6b5\"},{\"hash\":\"1e329d9398182bd71ea19ab690eb8cf582b83a01719167d467e5fef80dd471d0\",\"agentName\":\"WriterRevision\",\"outputSchema\":\"AnalysisOutput\",\"promptVersionId\":\"15878c05-c89d-4c51-9eff-90cc4ab28fa5\"}],\"structureRules\":[\"场景→问题\"],\"evaluationRubric\":[\"主题保真\"],\"licensePolicyRef\":\"fb8c1c99-edec-4921-9c6e-b8538d5da3ec\",\"readabilityRules\":{\"recommendedMax\":160,\"recommendedMin\":40,\"shortParagraphMax\":29,\"shortParagraphRun\":5,\"veryLongParagraph\":320,\"longParagraphWarning\":220}},\"policySnapshots\":[{\"id\":\"dabf0be6-6feb-4e02-aecf-678cbcc09735\",\"type\":\"FACT\",\"version\":\"1.0.0\",\"hash\":\"a2afc23f7bfcdcd27fd67d44c46a359232d01c752fe89e07ae0cc40641a2be03\",\"rules\":{\"key\":\"policy-rules/FACT/1.0.0\",\"hash\":\"a2afc23f7bfcdcd27fd67d44c46a359232d01c752fe89e07ae0cc40641a2be03\",\"size\":609,\"mime\":\"application/json\",\"encrypted\":false}},{\"id\":\"fb8c1c99-edec-4921-9c6e-b8538d5da3ec\",\"type\":\"LICENSE\",\"version\":\"1.0.0\",\"hash\":\"5615b7b3423210953b2a7f34ba1497e36248929fd1b9efd53123c4276773b677\",\"rules\":{\"key\":\"policy-rules/LICENSE/1.0.0\",\"hash\":\"5615b7b3423210953b2a7f34ba1497e36248929fd1b9efd53123c4276773b677\",\"size\":367,\"mime\":\"application/json\",\"encrypted\":false}}],\"status\":\"PUBLISHED\"} ==> expected: <422> but was: <200>"
+      },
+      {
+        "name": "reviewDraftStatusFilterMustReturnDraftSkill",
+        "failure": "DRAFT skill absent from DRAFT listing: {\"items\":[],\"nextCursor\":null} ==> expected: <true> but was: <false>"
+      },
+      {
+        "name": "reviewCursorMustBindStatusFilter",
+        "failure": "Server's own cursor fails unchanged query: {\"code\":\"INVALID_CURSOR\",\"message\":\"Request is invalid\",\"traceId\":\"c9bd8aeb-ba07-43c6-aad6-6b2700f3f630\",\"details\":[],\"retryable\":false} ==> expected: <200> but was: <422>"
+      },
+      {
+        "name": "reviewPublishedPrimaryKeysMustBeImmutable",
+        "failure": "[editorial_skill_version: runtime changed published id, policy_version: runtime changed published id, prompt_version: runtime changed published id] ==> expected: <true> but was: <false>"
+      },
+      {
+        "name": "reviewPromptLatestUsesSemanticVersion",
+        "failure": "Multiple Failures (2 failures)\n org.opentest4j.AssertionFailedError: Prompt semver ==> expected: <1.0.10> but was: <1.0.9>\n org.opentest4j.AssertionFailedError: Policy semver ==> expected: <1.0.10> but was: <1.0.9>"
+      }
+    ]
+  },
+  {
+    "name": "com.example.editorial.settings.policy.HashingTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "cases": [
+      {
+        "name": "contentHashIsDeterministicAndHex",
+        "failure": null
+      },
+      {
+        "name": "promptHashCoversTemplatesAndSchema",
+        "failure": null
+      }
+    ]
+  }
+]

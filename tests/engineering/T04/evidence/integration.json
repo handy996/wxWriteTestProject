@@ -1,0 +1,102 @@
+{
+  "mode": "REAL_POSTGRES_OBJECT_STORE",
+  "paidCalls": 0,
+  "commands": [
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\15bd240637954759b1a9e5c800edfd14\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\15bd240637954759b1a9e5c800edfd14\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "���ڴ����ݿ�ϵͳ���ļ�����Ϊ�û� \"eie04\".\n���û�Ҳ����Ϊ���������̵�����.\n\n���ݿ⼯�ؽ������򻷾����� \"C\" ���г�ʼ��.\nĬ�ϵ��ı��������ý�����Ϊ \"english\".\n\n��ֹΪ����ҳ����У���.\n\n���ڴ���Ŀ¼ E:/project/codex/wxAgent/tests/engineering/T04/.work/15bd240637954759b1a9e5c800edfd14/data ... �ɹ�\n���ڴ�����Ŀ¼ ... �ɹ�\n����ѡ��̬�����ڴ�ʵ�� ... windows\n����ѡ��Ĭ����������� (max_connections) ... 100\n����ѡ��Ĭ�Ϲ��������� (shared_buffers) ... 128MB\n����ѡ��Ĭ��ʱ�� ... Asia/Shanghai\n���ڴ��������ļ� ... �ɹ�\n�������������ű� ... �ɹ�\n����ִ�������ű�������ʼ�� ... �ɹ�\n����ͬ�����ݵ����� ... �ɹ�\n\n�ɹ��������ڿ������������������ݿ������:\n\n    ^\"^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\T04^\\^.work^\\15bd240637954759b1a9e5c800edfd14^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\15bd240637954759b1a9e5c800edfd14\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\15bd240637954759b1a9e5c800edfd14\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 11231",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "�ȴ��������������� .... ���\n�����������Ѿ�����\n"
+    },
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        ".tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "backend/pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "test",
+        "-Dtest=T04PostgresTest"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 5 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.storage.T04PostgresTest\n22:39:57.883 [main] INFO com.zaxxer.hikari.HikariDataSource -- HikariPool-1 - Starting...\n22:39:58.029 [main] INFO com.zaxxer.hikari.pool.HikariPool -- HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5ddf0d24\n22:39:58.030 [main] INFO com.zaxxer.hikari.HikariDataSource -- HikariPool-1 - Start completed.\n22:39:58.758 [main] INFO com.example.editorial.storage.DefaultObjectStore -- purged orphan object key=55565d49-a894-42ec-8a42-df7e2dc50a86 size=6\n[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.244 s -- in com.example.editorial.storage.T04PostgresTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  3.326 s\n[INFO] Finished at: 2026-10-03T22:39:58+08:00\n[INFO] ------------------------------------------------------------------------\n"
+    },
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\15bd240637954759b1a9e5c800edfd14\\data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "�ȴ����������̹ر� .... ���\n�����������Ѿ��ر�\n"
+    },
+    {
+      "argv": [
+        ".tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    }
+  ],
+  "exitCode": 0,
+  "utc": "2026-10-03T14:39:59.961073+00:00",
+  "postgresql": "postgres (PostgreSQL) 17.11"
+}

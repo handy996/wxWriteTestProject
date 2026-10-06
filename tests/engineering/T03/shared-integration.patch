@@ -1,0 +1,23 @@
+diff --git a/backend/src/main/java/com/example/editorial/bootstrap/SkeletonConfiguration.java b/backend/src/main/java/com/example/editorial/bootstrap/SkeletonConfiguration.java
+--- a/backend/src/main/java/com/example/editorial/bootstrap/SkeletonConfiguration.java
++++ b/backend/src/main/java/com/example/editorial/bootstrap/SkeletonConfiguration.java
+@@ -25,9 +25,0 @@
+-    /** Temporary deny-by-default shell; T03 owns authentication and replaces this bean. */
+-    @Bean SecurityFilterChain skeletonSecurity(HttpSecurity http) throws Exception {
+-        return http.authorizeHttpRequests(auth -> auth
+-                .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
+-                .anyRequest().denyAll()).build();
+-    }
+diff --git a/backend/src/main/resources/application.yml b/backend/src/main/resources/application.yml
+--- a/backend/src/main/resources/application.yml
++++ b/backend/src/main/resources/application.yml
+@@ -34,0 +35,1 @@
++  forward-headers-strategy: none
+@@ -59,0 +61,7 @@
++  identity:
++    enabled: true
++    origin: ${APP_ORIGIN:}
++    owner-username: ${INITIAL_OWNER_USERNAME:}
++    owner-display-name: ${INITIAL_OWNER_DISPLAY_NAME:Owner}
++    owner-password: ${INITIAL_OWNER_PASSWORD:}
++    cursor-key: ${AUDIT_CURSOR_KEY:}

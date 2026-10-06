@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-03T13:40:43.063284+00:00",
+  "command": [
+    ".tools/t02/apache-maven-3.9.11/bin/mvn.cmd",
+    "-o",
+    "-B",
+    "-ntp",
+    "-Dmaven.repo.local=E:/project/codex/wxAgent/.tools/t02/m2",
+    "-f",
+    "backend/pom.xml",
+    "clean",
+    "verify"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "'.tools' is not recognized as an internal or external command,\noperable program or batch file.\n"
+}

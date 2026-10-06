@@ -1,0 +1,65 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.editorial.skill.T05PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 23, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 11.93 s <<< FAILURE! -- in com.example.editorial.editorial.skill.T05PostgresTest
+com.example.editorial.editorial.skill.T05PostgresTest.reviewWriterSchemaMustResolveAgainstApprovedDefinitions -- Time elapsed: 0.044 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Published Writer has unresolved schema reference: #/$defs/WriterV1Output ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.example.editorial.editorial.skill.T05PostgresTest.reviewWriterSchemaMustResolveAgainstApprovedDefinitions(T05PostgresTest.java:398)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.editorial.skill.T05PostgresTest.reviewUnknownOutputSchemaBindingMustBeRejected -- Time elapsed: 0.270 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unknown output schema accepted: {"id":"1bdafea9-3e3b-4937-a78d-971db6bb2089","skillId":"1b42069e-c4cf-4e2b-abd9-7bca13a26f19","version":"1.0.0","rulesHash":"945588a1986c4abe3fea2a71139cfae015d4bb247d79f5a9f39e65304e1e45d6","schemaVersion":"1.0.0-rc.3","config":{"name":"CustomSkill","tone":["真实"],"locale":"zh-CN","channel":"WECHAT","audience":["普通读者"],"examples":["示例"],"imageRules":{"maxBodyImages":5,"optionalCover":true},"titleRules":["5 个候选"],"description":"测试技能配置","antiExamples":["反例"],"headingRules":["信息差小标题"],"openingRules":{"problemWithinChars":300},"factPolicyRef":"ebf1076e-01b9-442b-9d5c-cba44c554a27","promptBindings":[{"hash":"640cc0bb3d3e203690e763ae3bee7e4e9e4eca3cb3d1190981948ef714b89f54","agentName":"Analyzer","outputSchema":"NonexistentOutputSchema","promptVersionId":"50a713ef-3373-47ce-9bd8-3f3127b35894"},{"hash":"ff753f9465eeb8a2d721028e7f1501cfaeb959f248cf35aee494960d53e1257f","agentName":"Writer","outputSchema":"AnalysisOutput","promptVersionId":"255f05db-abc2-4b44-80e8-6cdb4577824d"},{"hash":"6b3f4936f81e1566956650248a0c83369c250b433db171d696ed507c82b7762b","agentName":"EditorialReviewer","outputSchema":"AnalysisOutput","promptVersionId":"2e218079-0529-4082-a9cf-9d56ea364cf4"},{"hash":"1e329d9398182bd71ea19ab690eb8cf582b83a01719167d467e5fef80dd471d0","agentName":"WriterRevision","outputSchema":"AnalysisOutput","promptVersionId":"4b3c00e5-75a5-4fd3-9786-57a04aa1dd38"}],"structureRules":["场景→问题"],"evaluationRubric":["主题保真"],"licensePolicyRef":"e1b6af22-e234-42b2-8d10-466576522085","readabilityRules":{"recommendedMax":160,"recommendedMin":40,"shortParagraphMax":29,"shortParagraphRun":5,"veryLongParagraph":320,"longParagraphWarning":220}},"policySnapshots":[{"id":"ebf1076e-01b9-442b-9d5c-cba44c554a27","type":"FACT","version":"1.0.0","hash":"a2afc23f7bfcdcd27fd67d44c46a359232d01c752fe89e07ae0cc40641a2be03","rules":{"key":"policy-rules/FACT/1.0.0","hash":"a2afc23f7bfcdcd27fd67d44c46a359232d01c752fe89e07ae0cc40641a2be03","size":609,"mime":"application/json","encrypted":false}},{"id":"e1b6af22-e234-42b2-8d10-466576522085","type":"LICENSE","version":"1.0.0","hash":"5615b7b3423210953b2a7f34ba1497e36248929fd1b9efd53123c4276773b677","rules":{"key":"policy-rules/LICENSE/1.0.0","hash":"5615b7b3423210953b2a7f34ba1497e36248929fd1b9efd53123c4276773b677","size":367,"mime":"application/json","encrypted":false}}],"status":"DRAFT"} ==> expected: <422> but was: <201>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.editorial.skill.T05PostgresTest.reviewUnknownOutputSchemaBindingMustBeRejected(T05PostgresTest.java:407)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.editorial.skill.T05PostgresTest.reviewDraftStatusFilterMustReturnDraftSkill -- Time elapsed: 0.164 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: DRAFT skill absent from DRAFT listing: {"items":[],"nextCursor":null} ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.example.editorial.editorial.skill.T05PostgresTest.reviewDraftStatusFilterMustReturnDraftSkill(T05PostgresTest.java:418)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.editorial.skill.T05PostgresTest.reviewPublishedPrimaryKeysMustBeImmutable -- Time elapsed: 0.229 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: [editorial_skill_version: runtime changed published id, policy_version: runtime changed published id, prompt_version: runtime changed published id] ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at com.example.editorial.editorial.skill.T05PostgresTest.reviewPublishedPrimaryKeysMustBeImmutable(T05PostgresTest.java:448)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.editorial.skill.T05PostgresTest.reviewPromptLatestUsesSemanticVersion -- Time elapsed: 0.056 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1.0.10> but was: <1.0.9>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at com.example.editorial.editorial.skill.T05PostgresTest.reviewPromptLatestUsesSemanticVersion(T05PostgresTest.java:456)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

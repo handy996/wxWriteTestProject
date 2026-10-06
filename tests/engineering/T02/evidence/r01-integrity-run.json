@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-03T13:37:27.045243+00:00",
+  "command": [
+    "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "tests/engineering/T02/revision_integrity.py"
+  ],
+  "cwd": "E:\\project\\codex\\wxAgent",
+  "exitCode": 0,
+  "output": "117 delivery fingerprints; original migration unchanged; packaged SQL matches; test V1 absent\n",
+  "paidCalls": 0
+}

@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+    "-o",
+    "-B",
+    "-ntp",
+    "-f",
+    "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\912937662bb04e418978a5dc5daf8aea\\backend\\pom.xml",
+    "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+    "test",
+    "-Dtest=ReviewArticleAstTest,ReviewNestedClosureTest"
+  ],
+  "exitCode": 0,
+  "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 16 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\912937662bb04e418978a5dc5daf8aea\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 27 source files with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.article.ast.ReviewArticleAstTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.237 s -- in com.example.editorial.article.ast.ReviewArticleAstTest\n[INFO] Running com.example.editorial.article.ast.ReviewNestedClosureTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in com.example.editorial.article.ast.ReviewNestedClosureTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  21.080 s\n[INFO] Finished at: 2026-10-05T16:43:26+08:00\n[INFO] ------------------------------------------------------------------------\n"
+}

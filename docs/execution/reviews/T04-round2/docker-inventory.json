@@ -1,0 +1,12 @@
+[
+  {
+    "exitCode": 1,
+    "command": "docker version",
+    "output": "Client:\n Version:           29.8.1\n API version:       1.56\n Go version:        go1.26.8\n Git commit:        4a63305\n Built:             Tue Sep 15 16:28:39 2026\n OS/Arch:           windows/amd64\n Context:           desktop-linux\nfailed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+  },
+  {
+    "exitCode": 1,
+    "command": "docker image ls",
+    "output": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+  }
+]

@@ -1,0 +1,391 @@
+{
+  "head": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "checks": [
+    {
+      "scope": "baseline",
+      "count": 820,
+      "changed": []
+    },
+    {
+      "scope": "revision",
+      "count": 6,
+      "changed": []
+    },
+    {
+      "scope": "delivery",
+      "count": 19,
+      "changed": []
+    }
+  ],
+  "changesSinceRound2": [
+    "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+    "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+    "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+    "tests/engineering/T06/integration.py",
+    "tests/engineering/T06/verify_delivery.py"
+  ],
+  "priorReviewFiles": [
+    {
+      "path": "docs/execution/reviews/T06-round1/.gitignore",
+      "sha256": "035be897b00b2e4df85234618e91ae2c91213ba53b2bf492fc890efec505f2ae"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/checks.json",
+      "sha256": "42e18d66e2f08a96102a66ddfa6722e002e381ad9c437b74e8e0ad034aa78275"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/ExecutedT06PostgresTest.java",
+      "sha256": "d18ae02f6950b6d04a8cf6e9e090c4f38cf3ef29342967e3e913779c14a04aa3"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/gitleaks-findings.json",
+      "sha256": "68654fad81efd5d796c85924f2a40bf4cc5eabeadc731a843afd9681a928af07"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/input-comparison.json",
+      "sha256": "6260a7fbab0a77461cf1514ea445838ffae579cf1c12d735d87d3310ab2edcea"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/ReviewArticleAstTest.java",
+      "sha256": "2ded9647ac318b3b55342e00478ef0021fa46f2ce9618963b72d2959c0c1b085"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/reviewed-files.json",
+      "sha256": "3a163ffc04bdf6aebe370f7d6a235410b09c12bcb4e6655f5ae85154841c24f9"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/run_review.py",
+      "sha256": "8c6f93014c30c70c52b826b8a7fbae1b634616702197d6e4644494a0ee7b0755"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/schema-check.json",
+      "sha256": "4481b35fa17057380404fdfcc61f3129478a035f4be47f4bf0e06e578edb5d39"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/verify.py",
+      "sha256": "f6721ebd25e526bf67deecb31505e7b9580e98ec6244675658fbc976ca45e862"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/article-artifact-sample.json",
+      "sha256": "3b006a09ff7a93eedd9dd5cbf1c87c3bee24f444c2aac6504900d217f699f02c"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/article-version-sample.json",
+      "sha256": "451f6f487c8e460e7ce7546037adc72e285f37ec82adc3448644f45742d13929"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host.json",
+      "sha256": "bfa46909d155cce51b9bd34405afca0d41970b33e2041584d8b9fa7d62c8a3f7"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests.json",
+      "sha256": "54e4fcbab63056c2f65e10c8199b9c3f371f8e0316a06fafc4e92adb6b4ff87a"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/com.example.editorial.article.ast.ReviewArticleAstTest.txt",
+      "sha256": "a394844d2cdb19338bf18c2ed91482b619f59250ab8201deef7a12a74ade9eae"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/TEST-com.example.editorial.article.ast.ReviewArticleAstTest.xml",
+      "sha256": "a7c3c83fe8ba70f1abe2bd997b781c72acd92b72ea4e8c1ea60efc2fd595c550"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/upgrade-host.json",
+      "sha256": "bb7f309563564e5611a672f03c6c525590b3e2f9b74b9906daf1bfaffdd4fee4"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/2026-10-05T16-09-07_861.dumpstream",
+      "sha256": "866535357858b9f96503bfc00225192f9b1465d30745ef557dee6f00f20da74c"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/com.example.editorial.article.ast.ArticleAstTest.txt",
+      "sha256": "94e5dbfdca917745da959ea95dab0508d874535548a2d179d73d142c4e9c01b6"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/com.example.editorial.article.job.DeletionHandoffTest.txt",
+      "sha256": "f07ad79e2c2d40345b16280b6c8d3b96875332276918c46c1507210c41e7864f"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/com.example.editorial.article.job.T06PostgresTest.txt",
+      "sha256": "c547eb61ec7a5fbf31f3a5224abfaaa381626ba1a66dff0a541f1b3859ac7ca1"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/com.example.editorial.shared.CanonicalRequestTest.txt",
+      "sha256": "08e28042454f1827af14cd7da197395789378f3eaedc749c6eef689c3c194685"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/TEST-com.example.editorial.article.ast.ArticleAstTest.xml",
+      "sha256": "1054ed2378bbb48d4c836869761b78af6c255e506a9d999d9786d18e783a031f"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/TEST-com.example.editorial.article.job.DeletionHandoffTest.xml",
+      "sha256": "aef9cee22a61509f758093936fa6dd482fc42452c726df54b70e2dcb7779fe20"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/TEST-com.example.editorial.article.job.T06PostgresTest.xml",
+      "sha256": "6f38f5071f2da0b3e922ff1ba670ab04210cd168f9fd598df7a2556fdfa17dbf"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/author-tests-host-test-results/TEST-com.example.editorial.shared.CanonicalRequestTest.xml",
+      "sha256": "7494abfa30ee5f6b79acaf46d7e887890b392a706016584562bfa0c288f61427"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/upgrade-host-test-results/2026-10-05T16-09-33_139.dumpstream",
+      "sha256": "cb605c3c0aaeb73eed37da507e4863c9d3ad0cdc994e23cff892bc2902c2aae2"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/upgrade-host-test-results/com.example.editorial.article.job.T06MigrationUpgradeTest.txt",
+      "sha256": "e6504db6da7286ecf14434190d6421d77ca209d59a8042e157cd4ccd1d47356f"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round1/evidence/upgrade-host-test-results/TEST-com.example.editorial.article.job.T06MigrationUpgradeTest.xml",
+      "sha256": "15627c2856274c315d984716368d494b74322e30c6d4a1207578b7aa0de7ff2b"
+    },
+    {
+      "path": "docs/execution/reviews/T06-Review-v1.0.md",
+      "sha256": "19b34a86657b2c6ece9c01d6796d6dcbc91b7fe16f86763908d5b3f2836011d8"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/.gitignore",
+      "sha256": "035be897b00b2e4df85234618e91ae2c91213ba53b2bf492fc890efec505f2ae"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/capture.py",
+      "sha256": "bf1a71d2ef8f4da7e13c0e0f375dc29ced274a0f6a1953ebf5b7e638549680f9"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/checks.json",
+      "sha256": "5b8c744ac0c6a40db5c6225387a23c4a9f1e0d675a1abc28cc928fc0ebf7180d"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/ExecutedT06PostgresTest.java",
+      "sha256": "8022a81041c5943333889a1458e78b4cc1beb1989dd16615d2147031a90f20a2"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/finish.py",
+      "sha256": "edfd2898811d20499a3db29497ffeb9f92a0cc2c9bd4cef51569396c3ceb3e01"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/gitleaks-findings.json",
+      "sha256": "775076dc85f8eb68f186ad32310bb03cc5b1dda6c57c1fc468aa22f4f31d5989"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/input-comparison.json",
+      "sha256": "21f9db5d8658bb4b50c3e1d0fde9bbdab5948bfc6a79358d120386e4ac755095"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/input-snapshot.json",
+      "sha256": "6081bb03418eecd79649cd9582984fcbbcc4a7766a4de4338aaaba625f906c59"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/reviewed-files.json",
+      "sha256": "23ba07295a86e1529ff55b3f732c6c80e8403200f7e39e05b1c59bd807a14d16"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/ReviewNestedClosureTest.java",
+      "sha256": "306bfcd9fec1152fd76ca808b8823e81c3cd1ad2cde8672d620163746488bee5"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/run_review.py",
+      "sha256": "3db815580eda24f289d763ff695b0b9563c80bbfba9ab2319a3e38c91cf72ea1"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/schema-check.json",
+      "sha256": "4481b35fa17057380404fdfcc61f3129478a035f4be47f4bf0e06e578edb5d39"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/summary.json",
+      "sha256": "2873ddfcc94c71dd88ab27c0d9bf7009dbc2bfb4e94b1c31b459892047f70a18"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/verify.py",
+      "sha256": "dfbe564890764757c8a5ee4a35070d9ffd6a700ec04cbd127829ad67632768c0"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/article-artifact-sample.json",
+      "sha256": "fcd7823970e4c3ca3c6235bd16ae569a775b3f28b944e0d571dce1de7aeb97ef"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/article-version-sample.json",
+      "sha256": "c6e8f39caa2df9bcfcbb0e02f43a6226955c4dabf1da90934277fd35c4992afe"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/com.example.editorial.article.ast.ReviewNestedClosureTest.txt",
+      "sha256": "73e1c85d619fcd446a0bca780cd4c31a8743ac77b5ad5ccf198b85bf6e847771"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host.json",
+      "sha256": "d2a95da7bae5b182d5fa05421ea35a02a7084025ce52e4924e1377d992ddeae9"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/TEST-com.example.editorial.article.ast.ReviewNestedClosureTest.xml",
+      "sha256": "0381294fa3ae66254d332e633dc146f64752326ec228801f315576adf1ae842d"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/upgrade-host.json",
+      "sha256": "d9d52a12c283853877ae72d1cc1d82f9dccdd1ba2b844dab448e73d126c72b49"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/2026-10-05T16-31-28_122.dumpstream",
+      "sha256": "a6c8cc4a1256f0aed44c097c4966fe2615e76aaebec382b379426676db310d8f"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/com.example.editorial.article.ast.ArticleAstTest.txt",
+      "sha256": "b3f9a80084408970fd0f8c8d7e414259e4f847352de3c1ff3dd936103e97da73"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/com.example.editorial.article.ast.ReviewArticleAstTest.txt",
+      "sha256": "e984ae3d390471505149d1cb668df56a2b6f5fd607efc0cb895e620e410f4aa3"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/com.example.editorial.article.job.DeletionHandoffTest.txt",
+      "sha256": "f41429525cfee77a63e511ac3e7b1160fb5c97de895e0b382577e40fc8670951"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/com.example.editorial.article.job.T06PostgresTest.txt",
+      "sha256": "901dfe34845b24de98afc96503bbd7d618019a39f3904e1ebd45f5bdecb0646f"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/com.example.editorial.shared.CanonicalRequestTest.txt",
+      "sha256": "3b24cd60f62d10b1dce3fd304e06c4846cec70d5ce3c7fcf9e38692711a6adc4"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/TEST-com.example.editorial.article.ast.ArticleAstTest.xml",
+      "sha256": "45d74c8a9a8b05e087234a2bee54c58fc2e0a517334113bd06a3ed471bd8ce52"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/TEST-com.example.editorial.article.ast.ReviewArticleAstTest.xml",
+      "sha256": "b2ffd067af5f309abf478a0b97c8fe02af57ff6b82370ee0c98e078ef60ab5c5"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/TEST-com.example.editorial.article.job.DeletionHandoffTest.xml",
+      "sha256": "4dc0f29993afe9a45efb48896214c6e5f27c9a53a61599227d0e608c055a843e"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/TEST-com.example.editorial.article.job.T06PostgresTest.xml",
+      "sha256": "dc44a65275afcdfdb887307c04e1163d895498d64990829d01d80e71849a3b43"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/current-host-test-results/TEST-com.example.editorial.shared.CanonicalRequestTest.xml",
+      "sha256": "ba685c4fa553c3fd00e3033a905b701c3e0fb3a3002836051115452c69830905"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/upgrade-host-test-results/2026-10-05T16-32-34_824.dumpstream",
+      "sha256": "7cef1bf3c509c7e168490715204e404d5c10fd65fdf87a36ab5d37b51eae7dfc"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/upgrade-host-test-results/com.example.editorial.article.job.T06MigrationUpgradeTest.txt",
+      "sha256": "ca29d88bbc7d84f380ca5b3836f0eee1795175632fb7fab6ae78d3d4210946d6"
+    },
+    {
+      "path": "docs/execution/reviews/T06-round2/evidence/upgrade-host-test-results/TEST-com.example.editorial.article.job.T06MigrationUpgradeTest.xml",
+      "sha256": "235092df5faf7f08c06d54b0ffd36ed7ce18e3655c72f7410b8408b9e6cd41c8"
+    },
+    {
+      "path": "docs/execution/reviews/T06-Review-v2.0.md",
+      "sha256": "027a1a57dcedd2961273e118500af4d1ed403e39b2a2a4e980f52a23b2abb561"
+    }
+  ],
+  "reviewedFiles": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+      "sha256": "07dc8e9c07b30b773d8d5caf1656e56c8a2368118993410e5e608e3e1cddf896"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticleController.java",
+      "sha256": "33af7c6d534586572e2117d9609427a2be86e64477387bfd2739141879b1d322"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticlePorts.java",
+      "sha256": "45f54655ca9715a762a2ff8d1ba61825fc227dde8345b4b7f40f0652ff183dcf"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticleService.java",
+      "sha256": "ce89bb9e5fc84a5ee2e8bf9be911d573ac4bb2324d225d07dcc45c68d6f75a3a"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/DeletionHandoff.java",
+      "sha256": "75a411b07723cfcc6279b1cf97160f4fffa90318985d794961531c6d9d7119a1"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+      "sha256": "9075bb95a4d4b3da00206fb91d9e88f21c09c3800de99a31f22b8d63953e2b53"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/DeletionHandoffTest.java",
+      "sha256": "7bfc940bfae97a651e90f7c9e4b480aba2258442526a6efd9d4c2ccc5c62fd35"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06MigrationUpgradeTest.java",
+      "sha256": "164ea2fc8192acab35a5b07862086307e7d0c27ccc739185b7b5f14dc1ce1363"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+      "sha256": "524797cda739cbe5eb5a210243cd0a73d4dcb41bee79d618c7f1a0c73303e6af"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v1.0.md",
+      "sha256": "ce70813e97bb446e7588d064186ae0dc8ab88fea55d9e52d84a4bab60457e237"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v2.0.md",
+      "sha256": "d577ca0136f3558deb50d243361357ec78e7dff64f52b03ee8f9acf15e18c10c"
+    },
+    {
+      "path": "docs/execution/reports/T06.md",
+      "sha256": "b3b3edc6374cf6e56665f83fa43315fae6b2d84351e25c86570a843116b38a2a"
+    },
+    {
+      "path": "tests/engineering/T06/.gitignore",
+      "sha256": "6d3b4a90506d395b4f2cc556f32fdbfaa0d6fba853d1649a68bdbd058a434c78"
+    },
+    {
+      "path": "tests/engineering/T06/ArticleIntegration.java",
+      "sha256": "9e7f10ca17f140c791e8c8f155d24293943ea877c3214bd0da23dba8c91e13ba"
+    },
+    {
+      "path": "tests/engineering/T06/integration.py",
+      "sha256": "d0e411521254d321e37a787e72a3fd390c1f3e7918201c7df6d5e6f6d8febecd"
+    },
+    {
+      "path": "tests/engineering/T06/migration-draft.sql",
+      "sha256": "1893ad02483385ef5e6b8a68781a3a27a8d407c6dd3166b8569828298695bebc"
+    },
+    {
+      "path": "tests/engineering/T06/prepare_delivery.py",
+      "sha256": "ae02043c77b4a699ff24d8f01e753c7f5c18398ea4fc6fff9b068a5857d2849b"
+    },
+    {
+      "path": "tests/engineering/T06/shared-integration.patch",
+      "sha256": "84a7ccb49452e3de93be883ae97fff1be0a5ebddb0bfaebff7f8a48e7288b71d"
+    },
+    {
+      "path": "tests/engineering/T06/verify_delivery.py",
+      "sha256": "99cce636cdeb7911c1d253f1627bb9b060ba3c4ebeb6458c71405a089ae6bea7"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+      "sha256": "07dc8e9c07b30b773d8d5caf1656e56c8a2368118993410e5e608e3e1cddf896"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+      "sha256": "9075bb95a4d4b3da00206fb91d9e88f21c09c3800de99a31f22b8d63953e2b53"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+      "sha256": "524797cda739cbe5eb5a210243cd0a73d4dcb41bee79d618c7f1a0c73303e6af"
+    },
+    {
+      "path": "tests/engineering/T06/integration.py",
+      "sha256": "d0e411521254d321e37a787e72a3fd390c1f3e7918201c7df6d5e6f6d8febecd"
+    },
+    {
+      "path": "tests/engineering/T06/verify_delivery.py",
+      "sha256": "99cce636cdeb7911c1d253f1627bb9b060ba3c4ebeb6458c71405a089ae6bea7"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v2.0.md",
+      "sha256": "d577ca0136f3558deb50d243361357ec78e7dff64f52b03ee8f9acf15e18c10c"
+    }
+  ]
+}

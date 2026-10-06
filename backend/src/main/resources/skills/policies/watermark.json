@@ -1,0 +1,13 @@
+{
+  "policyType": "WATERMARK",
+  "version": "1.0.0",
+  "rules": {
+    "hardGates": {
+      "aiGeneratedImageMustBeWatermarked": true,
+      "watermarkFailureMustBlock": true,
+      "missingFontMustBlock": true,
+      "unmarkedOriginalNeverExported": true
+    },
+    "coverage": "visible AI-generated mark plus inner mark surviving 10% edge crop"
+  }
+}

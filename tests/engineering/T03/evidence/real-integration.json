@@ -1,0 +1,46 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "domainSubstitutes": [
+    "article metadata resolver only"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "--directory=tests/engineering/T03/.work/1141d282874843d29cd553826d53a337",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T03\\shared-integration.patch"
+      ],
+      "exitCode": 128,
+      "output": "error: corrupt patch at line 11\n"
+    }
+  ],
+  "paidCalls": 0,
+  "failure": "RuntimeError: Recorded command failed",
+  "exitCode": 1
+}

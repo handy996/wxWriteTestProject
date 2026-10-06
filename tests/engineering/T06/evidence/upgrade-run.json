@@ -1,0 +1,130 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "paidCalls": 0,
+  "domainSubstitutes": [
+    "T10/T11 not installed: production Changes and Deletion fail closed; transaction test participant marked explicitly"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/T06/.work/3ff1a1dc91764b888fbcf26d3233d794/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\T06^\\^.work^\\3ff1a1dc91764b888fbcf26d3233d794^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 13496",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\backend\\pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "clean",
+        "test",
+        "-Dtest=T06MigrationUpgradeTest",
+        "-Dt06.root=E:\\project\\codex\\wxAgent"
+      ],
+      "exitCode": 1,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- clean:3.4.1:clean (default-clean) @ editorial ---\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 16 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 74 source files with javac [debug parameters release 21] to target\\classes\n[INFO] /E:/project/codex/wxAgent/tests/engineering/T06/.work/3ff1a1dc91764b888fbcf26d3233d794/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��\n[INFO] /E:/project/codex/wxAgent/tests/engineering/T06/.work/3ff1a1dc91764b888fbcf26d3233d794/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 25 source files with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.article.job.T06MigrationUpgradeTest\n11:01:09.088 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:13496/editorial (PostgreSQL 17.11)\n11:01:09.161 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table \"editorial_migrations\".\"flyway_schema_history\" does not exist yet\n11:01:09.164 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.052s)\n11:01:09.176 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table \"editorial_migrations\".\"flyway_schema_history\" ...\n11:01:09.276 [main] INFO org.flywaydb.core.internal.callback.SqlScriptCallbackFactory -- Executing SQL callback: beforeMigrate - t02 function defaults\n11:01:09.301 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema \"editorial_migrations\": << Empty Schema >>\n11:01:09.313 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" to version \"1 - t03 isolated test\"\n11:01:09.358 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" to version \"2 - t05 skill policy prompt\"\n11:01:09.386 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" with repeatable migration \"t02 function permissions\"\n11:01:09.399 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" with repeatable migration \"t02 schema permissions\"\n11:01:09.408 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 4 migrations to schema \"editorial_migrations\", now at version v2 (execution time 00:00.054s)\n[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.940 s <<< FAILURE! -- in com.example.editorial.article.job.T06MigrationUpgradeTest\n[ERROR] com.example.editorial.article.job.T06MigrationUpgradeTest.upgradesPopulatedT03T05DraftWithoutChangingRowsOrHistory -- Time elapsed: 0.922 s <<< ERROR!\norg.postgresql.util.PSQLException: \nERROR: new row for relation \"app_user\" violates check constraint \"app_user_check\"\n  ��ϸ��Failing row contains (9eee3543-005e-4704-805f-6b1387066dee, upgrade-actor, Existing owner, OWNER, null, t, null, 2026-10-05 11:01:09.444075+08).\n\tat org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)\n\tat org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)\n\tat org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)\n\tat org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)\n\tat org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)\n\tat org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:371)\n\tat org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:356)\n\tat org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:332)\n\tat org.postgresql.jdbc.PgStatement.execute(PgStatement.java:327)\n\tat com.example.editorial.article.job.T06MigrationUpgradeTest.upgradesPopulatedT03T05DraftWithoutChangingRowsOrHistory(T06MigrationUpgradeTest.java:24)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\n[INFO] \n[INFO] Results:\n[INFO] \n[ERROR] Errors: \n[ERROR]   T06MigrationUpgradeTest.upgradesPopulatedT03T05DraftWithoutChangingRowsOrHistory:24 ? PSQL ERROR: new row for relation \"app_user\" violates check constraint \"app_user_check\"\n  ��ϸ��Failing row contains (9eee3543-005e-4704-805f-6b1387066dee, upgrade-actor, Existing owner, OWNER, null, t, null, 2026-10-05 11:01:09.444075+08).\n[INFO] \n[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  20.014 s\n[INFO] Finished at: 2026-10-05T11:01:09+08:00\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project editorial: \n[ERROR] \n[ERROR] See E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\backend\\target\\surefire-reports for the individual test results.\n[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794\\data",
+        "-m",
+        "immediate",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down.... done\nserver stopped\n"
+    }
+  ],
+  "t03Patch": {
+    "status": "CORRUPT_PATCH_WORKED_AROUND",
+    "detail": "git apply rejected shared-integration.patch as corrupt; equivalent wiring applied directly"
+  },
+  "failure": "RuntimeError: Recorded command failed",
+  "testResults": "tests\\engineering\\T06\\evidence\\upgrade-run-test-results",
+  "isolatedWork": "tests\\engineering\\T06\\.work\\3ff1a1dc91764b888fbcf26d3233d794",
+  "exitCode": 1
+}

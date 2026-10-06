@@ -1,0 +1,43 @@
+[
+  {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+      "-D",
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\64f7940c84f945468bc4429297430095\\data",
+      "status"
+    ],
+    "exitCode": 3,
+    "output": "pg_ctl: no server running\n",
+    "removedOnlyOwnedDirectory": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\64f7940c84f945468bc4429297430095"
+  },
+  {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+      "-D",
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\c806284201024e218a9e457c24b0d9a1\\data",
+      "status"
+    ],
+    "exitCode": 3,
+    "output": "pg_ctl: no server running\n",
+    "removedOnlyOwnedDirectory": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\c806284201024e218a9e457c24b0d9a1"
+  },
+  {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+      "-D",
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\015005125cce40fa8e95bf0f673907cc\\data",
+      "status"
+    ],
+    "exitCode": 3,
+    "output": "pg_ctl: no server running\n",
+    "removedOnlyOwnedDirectory": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round1\\.work\\015005125cce40fa8e95bf0f673907cc"
+  },
+  {
+    "port": 3884,
+    "canBindAfterStop": true
+  },
+  {
+    "port": 10425,
+    "canBindAfterStop": true
+  }
+]

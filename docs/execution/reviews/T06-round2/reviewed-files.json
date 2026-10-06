@@ -1,0 +1,77 @@
+{
+  "head": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "files": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+      "sha256": "513be6313467141345f92285a7ff09ae47371cf18850b9f7e41d340340bfb990"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticleController.java",
+      "sha256": "33af7c6d534586572e2117d9609427a2be86e64477387bfd2739141879b1d322"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticlePorts.java",
+      "sha256": "45f54655ca9715a762a2ff8d1ba61825fc227dde8345b4b7f40f0652ff183dcf"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/ArticleService.java",
+      "sha256": "ce89bb9e5fc84a5ee2e8bf9be911d573ac4bb2324d225d07dcc45c68d6f75a3a"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/job/DeletionHandoff.java",
+      "sha256": "75a411b07723cfcc6279b1cf97160f4fffa90318985d794961531c6d9d7119a1"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+      "sha256": "119133f3a2dfd5e656606b1f1fe802f4882ba3cde4c8fee4be202954a55cd3e7"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/DeletionHandoffTest.java",
+      "sha256": "7bfc940bfae97a651e90f7c9e4b480aba2258442526a6efd9d4c2ccc5c62fd35"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06MigrationUpgradeTest.java",
+      "sha256": "164ea2fc8192acab35a5b07862086307e7d0c27ccc739185b7b5f14dc1ce1363"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+      "sha256": "ad3e9f1455cf8f0c48e63e07cd74a41b27672b168cb1978de99c66b9ad966a3c"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v1.0.md",
+      "sha256": "ce70813e97bb446e7588d064186ae0dc8ab88fea55d9e52d84a4bab60457e237"
+    },
+    {
+      "path": "docs/execution/reports/T06.md",
+      "sha256": "b3b3edc6374cf6e56665f83fa43315fae6b2d84351e25c86570a843116b38a2a"
+    },
+    {
+      "path": "tests/engineering/T06/.gitignore",
+      "sha256": "6d3b4a90506d395b4f2cc556f32fdbfaa0d6fba853d1649a68bdbd058a434c78"
+    },
+    {
+      "path": "tests/engineering/T06/ArticleIntegration.java",
+      "sha256": "9e7f10ca17f140c791e8c8f155d24293943ea877c3214bd0da23dba8c91e13ba"
+    },
+    {
+      "path": "tests/engineering/T06/integration.py",
+      "sha256": "7586ac415da5381bc66d2a5ae4cf5ed7dd80d7a927e612bae50fe39e2f3162a3"
+    },
+    {
+      "path": "tests/engineering/T06/migration-draft.sql",
+      "sha256": "1893ad02483385ef5e6b8a68781a3a27a8d407c6dd3166b8569828298695bebc"
+    },
+    {
+      "path": "tests/engineering/T06/prepare_delivery.py",
+      "sha256": "ae02043c77b4a699ff24d8f01e753c7f5c18398ea4fc6fff9b068a5857d2849b"
+    },
+    {
+      "path": "tests/engineering/T06/shared-integration.patch",
+      "sha256": "84a7ccb49452e3de93be883ae97fff1be0a5ebddb0bfaebff7f8a48e7288b71d"
+    },
+    {
+      "path": "tests/engineering/T06/verify_delivery.py",
+      "sha256": "260948611943369471e605ae699ccdc6d38b50be15d3acea7a83510f88c75a99"
+    }
+  ]
+}

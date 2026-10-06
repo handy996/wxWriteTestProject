@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.storage.EndpointAuthorityTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.428 s <<< FAILURE! -- in com.example.editorial.storage.EndpointAuthorityTest
+com.example.editorial.storage.EndpointAuthorityTest.explicitDefaultPortUsesSameHostForSigningAndTransmission -- Time elapsed: 0.409 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Request signature must bind the Host actually sent by HttpClient ==> expected: <AWS4-HMAC-SHA256 Credential=review-id/20261004/us-east-1/s3/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-meta-committed-at;x-amz-meta-created-at;x-amz-meta-encrypted;x-amz-meta-hash;x-amz-meta-key;x-amz-meta-mime;x-amz-meta-schema-version;x-amz-meta-size;x-amz-meta-status, Signature=eff5cdb9576791c010e0fc4c9927fbf3200d879f5167c25a9068599452aa36df> but was: <AWS4-HMAC-SHA256 Credential=review-id/20261004/us-east-1/s3/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-meta-committed-at;x-amz-meta-created-at;x-amz-meta-encrypted;x-amz-meta-hash;x-amz-meta-key;x-amz-meta-mime;x-amz-meta-schema-version;x-amz-meta-size;x-amz-meta-status, Signature=b656c8650cb428b7a922fb408a75a644d9332a846bbbb953ab23c9b026271fb9>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1156)
+	at com.example.editorial.storage.EndpointAuthorityTest.explicitDefaultPortUsesSameHostForSigningAndTransmission(EndpointAuthorityTest.java:37)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

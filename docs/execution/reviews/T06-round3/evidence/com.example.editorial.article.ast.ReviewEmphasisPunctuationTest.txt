@@ -1,0 +1,48 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.ast.ReviewEmphasisPunctuationTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 8.211 s <<< FAILURE! -- in com.example.editorial.article.ast.ReviewEmphasisPunctuationTest
+com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.tripleEmphasisMayEndBeforeChinesePunctuation -- Time elapsed: 8.172 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception thrown: com.example.editorial.shared.PublicFailure: UNSUPPORTED_MARKDOWN
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:75)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:58)
+	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3259)
+	at com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.tripleEmphasisMayEndBeforeChinesePunctuation(ReviewEmphasisPunctuationTest.java:8)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: com.example.editorial.shared.PublicFailure: UNSUPPORTED_MARKDOWN
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:216)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:107)
+	at com.example.editorial.article.ast.ArticleAst.tripleEmphasis(ArticleAst.java:133)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:102)
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:76)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:67)
+	at com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.lambda$tripleEmphasisMayEndBeforeChinesePunctuation$0(ReviewEmphasisPunctuationTest.java:8)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:71)
+	... 6 more
+
+com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.nestedSharedCloserMayEndBeforeComma -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception thrown: com.example.editorial.shared.PublicFailure: UNSUPPORTED_MARKDOWN
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:75)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:58)
+	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3259)
+	at com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.nestedSharedCloserMayEndBeforeComma(ReviewEmphasisPunctuationTest.java:15)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: com.example.editorial.shared.PublicFailure: UNSUPPORTED_MARKDOWN
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:216)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:107)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:109)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:109)
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:76)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:67)
+	at com.example.editorial.article.ast.ReviewEmphasisPunctuationTest.lambda$nestedSharedCloserMayEndBeforeComma$1(ReviewEmphasisPunctuationTest.java:15)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:71)
+	... 6 more
+

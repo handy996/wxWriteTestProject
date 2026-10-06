@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.version.ReviewVersionBoundaryTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 7.283 s <<< FAILURE! -- in com.example.editorial.article.version.ReviewVersionBoundaryTest
+com.example.editorial.article.version.ReviewVersionBoundaryTest.reviewRetainedVersionMustBeStaleForNewCommit -- Time elapsed: 0.834 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.article.version.ReviewVersionBoundaryTest.reviewRetainedVersionMustBeStaleForNewCommit(ReviewVersionBoundaryTest.java:21)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.version.ReviewVersionBoundaryTest.reviewUsedClaimMustBeRecheckedAfterStaging -- Time elapsed: 0.225 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.article.version.ReviewVersionBoundaryTest.reviewUsedClaimMustBeRecheckedAfterStaging(ReviewVersionBoundaryTest.java:41)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

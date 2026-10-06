@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.ast.ArticleAstTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 2, Errors: 2, Skipped: 0, Time elapsed: 0.325 s <<< FAILURE! -- in com.example.editorial.article.ast.ArticleAstTest
+com.example.editorial.article.ast.ArticleAstTest.cloneAllocatesNewIdsAndClearsDomainReferences -- Time elapsed: 0.193 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "String.length()" because "delimiter" is null
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:82)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:66)
+	at com.example.editorial.article.ast.ArticleAstTest.cloneAllocatesNewIdsAndClearsDomainReferences(ArticleAstTest.java:61)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.ast.ArticleAstTest.maliciousInputsAndReferences -- Time elapsed: 0 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <com.example.editorial.shared.PublicFailure> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.article.ast.ArticleAstTest.maliciousInputsAndReferences(ArticleAstTest.java:37)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "String.length()" because "delimiter" is null
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:82)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:66)
+	at com.example.editorial.article.ast.ArticleAstTest.lambda$maliciousInputsAndReferences$9(ArticleAstTest.java:37)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.example.editorial.article.ast.ArticleAstTest.readableCodePointBoundaries -- Time elapsed: 0.062 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception thrown: java.lang.NullPointerException: Cannot invoke "String.length()" because "delimiter" is null
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:75)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:58)
+	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3259)
+	at com.example.editorial.article.ast.ArticleAstTest.readableCodePointBoundaries(ArticleAstTest.java:17)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "String.length()" because "delimiter" is null
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:82)
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:83)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:66)
+	at com.example.editorial.article.ast.ArticleAstTest.lambda$readableCodePointBoundaries$3(ArticleAstTest.java:17)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:71)
+	... 6 more
+
+com.example.editorial.article.ast.ArticleAstTest.markdownMarksAndLists -- Time elapsed: 0.007 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "String.length()" because "delimiter" is null
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:82)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:66)
+	at com.example.editorial.article.ast.ArticleAstTest.markdownMarksAndLists(ArticleAstTest.java:28)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

@@ -1,0 +1,29 @@
+{
+  "gitHead": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "files": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+      "sha256": "513be6313467141345f92285a7ff09ae47371cf18850b9f7e41d340340bfb990"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+      "sha256": "119133f3a2dfd5e656606b1f1fe802f4882ba3cde4c8fee4be202954a55cd3e7"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+      "sha256": "ad3e9f1455cf8f0c48e63e07cd74a41b27672b168cb1978de99c66b9ad966a3c"
+    },
+    {
+      "path": "tests/engineering/T06/verify_delivery.py",
+      "sha256": "260948611943369471e605ae699ccdc6d38b50be15d3acea7a83510f88c75a99"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "sha256": "085fa7895a1b9a663abef98ff61c885ed2b4f3027374e582de85a521050a6306"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v1.0.md",
+      "sha256": "ce70813e97bb446e7588d064186ae0dc8ab88fea55d9e52d84a4bab60457e237"
+    }
+  ]
+}

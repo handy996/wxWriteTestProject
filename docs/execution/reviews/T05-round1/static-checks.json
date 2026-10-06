@@ -1,0 +1,177 @@
+{
+  "prompts": [
+    {
+      "path": "backend\\src\\main\\resources\\prompts\\analyzer.json",
+      "schema": "AnalysisOutput",
+      "existsInApprovedDefinitions": true,
+      "required": [
+        "coreThesis",
+        "targetReader",
+        "articleType",
+        "outline",
+        "strongSections",
+        "weakSections",
+        "repeatedArguments",
+        "sectionsToDelete",
+        "sectionsToCompress",
+        "sectionsToExpand",
+        "logicProblems",
+        "factClaims",
+        "recommendedStructure",
+        "recommendedTitles",
+        "recommendedHeadings",
+        "imageOpportunities",
+        "risks",
+        "uncertainties"
+      ],
+      "userTemplate": "原始版本（不可变正文 AST）与 Skill 快照：{{skillSnapshot}}\n目标长度：{{targetLength}}；读者描述：{{readerDescription}}\n正文内容：{{originalVersion}}\n\n请输出 AnalysisOutput，字段覆盖：coreThesis（单一核心论点 1–300 字）、targetReader、articleType、outline、strongSections/weakSections、repeatedArguments、sectionsToDelete/Compress/Expand、logicProblems、factClaims（原子事实草案，localKey 临时引用）、recommendedStructure、recommendedTitles（含 supportedClaimLocalKeys）、recommendedHeadings、imageOpportunities、risks、uncertainties。所有 span 必须匹配输入文本（blockId/start/end/quote/blockHash），sectionId 必须存在。信息缺失时在 uncertainties 中如实标注，不得伪填。"
+    },
+    {
+      "path": "backend\\src\\main\\resources\\prompts\\editorial-reviewer.json",
+      "schema": "ReviewReport",
+      "existsInApprovedDefinitions": true,
+      "required": [
+        "meta",
+        "skillVersionId",
+        "report",
+        "items"
+      ],
+      "userTemplate": "待审版本：{{version}}\nSkill 快照：{{skillSnapshot}}\n\n请输出 ReviewReport：summary、scores（各维度 1–5 分）、items（逐项 problemType：REPETITION/LOW_INFORMATION_DENSITY/TOO_LONG/TOO_SHORT/WEAK_HEADING/CLICKBAIT/LOGIC_JUMP/FACT_RISK/BAD_TRANSITION/MOBILE_READABILITY/AI_TONE/OTHER）、overallDecision、inputHash。每项须含 sectionId/blockId/span/reason/recommendedAction 及相关 claim 引用。suggestedReduction 是建议删减字符数及保留重点，不以压缩越多越好为目标。"
+    },
+    {
+      "path": "backend\\src\\main\\resources\\prompts\\writer-revision-v2.json",
+      "schema": "RevisionOutput",
+      "existsInApprovedDefinitions": true,
+      "required": [
+        "writer",
+        "itemDecisions"
+      ],
+      "userTemplate": "当前版本：{{version}}\nSkill 快照：{{skillSnapshot}}\n审稿报告：{{report}}\n意见处置（用户已接受的处置方式）：{{itemDecisions}}\n\n请输出 RevisionOutput：新 ArticleVersion（V2 AST）、perItemDispositions（逐项 ACCEPTED/ALTERNATIVE/NOT_APPLIED 及理由，引用对应 reviewItemId）、changeSummary、usedClaimIds、newClaimCandidates。意见处置必须与审稿报告逐项对应，不得引用其他版本的报告。"
+    },
+    {
+      "path": "backend\\src\\main\\resources\\prompts\\writer-v1.json",
+      "schema": "WriterV1Output",
+      "existsInApprovedDefinitions": false,
+      "required": null,
+      "userTemplate": "原始版本：{{originalVersion}}\nSkill 快照：{{skillSnapshot}}\n分析结果：{{analysis}}\n已核验事实集：{{verifiedFactSet}}\n改写计划（目标字数、结构、每节引用 Claim、删除清单、待补材料、禁止新增事实、语气约束、预期图片机会）：{{rewritePlan}}\n\n请输出 WriterV1Output：ArticleVersion（正文为结构化 AST，heading/paragraph/list/quote/imagePlaceholder）、changeSummary、usedClaimIds、newClaimCandidates、requiresReviewItems。默认目标字数 {{targetLength}}，相对偏差 >20% 需在 changeSummary 中说明。所有输出必须通过 Schema 与引用校验；你不得直接覆盖当前人工版本。"
+    }
+  ],
+  "lines": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/CursorCodec.java",
+      "line": 19,
+      "text": "        return b64(payload) + \".\" + b64(sign(payload));"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/CursorCodec.java",
+      "line": 27,
+      "text": "            if (parts.length != 2 || !MessageDigest.isEqual(sign(parts[0]), Base64.getUrlDecoder().decode(parts[1])))"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+      "line": 138,
+      "text": "        String statusJoin = \"\";"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+      "line": 142,
+      "text": "            statusJoin = \" LEFT JOIN editorial.editorial_skill_version av ON av.id = s.active_version_id\";"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+      "line": 143,
+      "text": "            where += \" AND av.status = ?\"; args.add(status);"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+      "line": 36,
+      "text": "        validateBindings(config.promptBindings());"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+      "line": 51,
+      "text": "    private void validateBindings(List<PromptBinding> bindings) {"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+      "line": 63,
+      "text": "            if (!prompt.hash().equals(binding.hash()))"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptService.java",
+      "line": 59,
+      "text": "            \"SELECT id, agent_name, version, system_template, user_template, output_schema::text, hash, status, created_by, created_at, lock_version FROM editorial.prompt_version WHERE agent_name=? AND status='PUBLISHED' ORDER BY version DESC\","
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyService.java",
+      "line": 45,
+      "text": "            \"SELECT id, policy_type, version, rules::text, hash, status, created_by, published_by, published_at, created_at, lock_version FROM editorial.policy_version WHERE policy_type=? AND status='PUBLISHED' ORDER BY version DESC\","
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "line": 84,
+      "text": "CREATE FUNCTION editorial.t05_skill_version_guard() RETURNS trigger AS $$"
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "line": 109,
+      "text": "CREATE FUNCTION editorial.t05_policy_version_guard() RETURNS trigger AS $$"
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "line": 131,
+      "text": "CREATE FUNCTION editorial.t05_prompt_version_guard() RETURNS trigger AS $$"
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "line": 154,
+      "text": "GRANT SELECT, INSERT, UPDATE ON editorial.policy_version,"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 20,
+      "text": "## 2. 修改路径"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 113,
+      "text": "16. `eventIdempotencyKeyIsStable`：发布产生一次配置变更事件，幂等键稳定可被 T11 幂等消费。"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 122,
+      "text": "| AC-02 / FR-02（应用 Skill：精确版本、规则 hash、Prompt 绑定快照） | 已创建任务钉住具体 `skillVersionId` 快照；发布新版本不回溯；未发布版本不可选（`SKILL_NOT_PUBLISHED`）；主动切换产生配置变更事件供 T11 新建运行并失效下游 | §3、§6.2 #10/#14/#16 |"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 123,
+      "text": "| FR-01（必选已发布 Skill） | `SkillSnapshot.read` 仅返回 PUBLISHED/RETIRED；`article_job.skillVersionId` 引用由 T06 用本端口消费 | §3.3、`SkillSnapshotPort` |"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 130,
+      "text": "- **T06**：消费 `SkillSnapshotPort.read(ActorContext, skillVersionId)` 钉住创建任务时的 Skill 快照；`StyleSnapshot` 由 T06 组装（本任务只提供其输入 SkillSnapshot/PolicySnapshot）。"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 132,
+      "text": "- **T11**：消费 `ConfigChangeEvent`（`eventId/skillId/skillVersionId/reason/occurredAt/idempotencyKey`）。幂等键 `skill-config|{versionId}|{reason}`；事件在发布/退休同一事务内经 `ConfigChangeSink` 发出，每个已提交转换至多一次。T11 按 `idempotencyKey` 幂等消费并新建 generation、失效下游。**仅增加预算不触发本事件**（T05 无预算概念，预算归 T06/T08/T11 边界）。"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 136,
+      "text": "- **T06/T09/T11/T12/T14/T22/T27 集成**：由主 agent 装配；本任务只提供端口实现与事件契约。"
+    },
+    {
+      "path": "docs/execution/reports/T05.md",
+      "line": 143,
+      "text": "- **未完成集成**：`ConfigChangeSink` 生产实现为进程内 `InMemory`，T11 接入时注册其实事务化实现；`StyleSnapshot` 组装归 T06；主 agent 分配全局 Flyway 版本号后正式合入迁移。"
+    }
+  ],
+  "diffSearch": {
+    "files": 34,
+    "matches": []
+  },
+  "schemaCopyByteIdentical": true,
+  "agentFiles": []
+}

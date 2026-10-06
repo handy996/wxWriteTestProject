@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.ast.ArticleAstTest
+-------------------------------------------------------------------------------
+Tests run: 13, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.326 s <<< FAILURE! -- in com.example.editorial.article.ast.ArticleAstTest
+com.example.editorial.article.ast.ArticleAstTest.tripleEmphasisUsesReadableTextForBothBoundaries -- Time elapsed: 0.026 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: UNSUPPORTED_MARKDOWN
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:216)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:97)
+	at com.example.editorial.article.ast.ArticleAst.tripleEmphasis(ArticleAst.java:136)
+	at com.example.editorial.article.ast.ArticleAst.inlineSegment(ArticleAst.java:102)
+	at com.example.editorial.article.ast.ArticleAst.inline(ArticleAst.java:76)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:67)
+	at com.example.editorial.article.ast.ArticleAstTest.tripleEmphasisUsesReadableTextForBothBoundaries(ArticleAstTest.java:54)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.ast.ArticleAstTest.adjacentNestedClosersConsumeOnlyTheirOwnDelimiters -- Time elapsed: 0.019 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: BLOCK_TOO_LARGE
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:216)
+	at com.example.editorial.article.ast.ArticleAst.validate(ArticleAst.java:166)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:72)
+	at com.example.editorial.article.ast.ArticleAstTest.adjacentNestedClosersConsumeOnlyTheirOwnDelimiters(ArticleAstTest.java:76)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

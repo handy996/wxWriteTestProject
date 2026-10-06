@@ -1,0 +1,23 @@
+{
+  "head": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "branch": "appmod/java-upgrade-20261003114404",
+  "contractVersion": "1.0.0-rc.3",
+  "contractApproval": "docs/execution/reviews/T00-rc3-approval.json (PASS / G0_ENGINEERING_CONTRACT_PASS)",
+  "frozenSchemaSha256": "7b5872e129817bbcbb32e8b841e430eb69f35d4ca18bac21bc24a708cfcbe2aa",
+  "t02State": "CHANGES_REQUIRED (pending CI scan remediation)",
+  "t03State": "code present in workspace, not committed; migration delivered as draft; shared-integration.patch CORRUPT",
+  "t04State": "report submitted, awaiting main agent review",
+  "isolation": "non-overlapping owned directories; no branch switch; no overwrite of other agents' changes",
+  "tools": {
+    "java": "Temurin JDK 21.0.12.1+1 (.tools/t02/jdk-21.0.12.1+1)",
+    "maven": "Apache Maven 3.9.11 (.tools/t02/apache-maven-3.9.11)",
+    "postgres": "PostgreSQL 17.11 (.tools/t02/postgresql-full, real not H2)",
+    "python": "3.14.2 (codex runtime)",
+    "git": "2.47.1.windows.1"
+  },
+  "notes": [
+    "T05 owns editorial_skill, editorial_skill_version, policy_version, prompt_version (tables.json).",
+    "T05 migration delivered as a draft; main agent allocates the global Flyway version.",
+    "No paid provider calls performed; paidCalls=0."
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "evidence": "revision-v1",
+    "path": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T05\\.work\\846e4d2d60bf43839a7f48a8730e8b3e",
+    "pgStatusExitCode": 3,
+    "pgStatus": "pg_ctl: no server running",
+    "removed": true
+  },
+  {
+    "evidence": "revision-v1-host",
+    "path": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T05\\.work\\7ecc8bda7ccc40ee8a932fc6d867bbd7",
+    "pgStatusExitCode": 3,
+    "pgStatus": "pg_ctl: no server running",
+    "removed": true
+  },
+  {
+    "evidence": "revision-v1-final",
+    "path": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T05\\.work\\ef58426d217649a3ab33db40120317c8",
+    "pgStatusExitCode": 3,
+    "pgStatus": "pg_ctl: no server running",
+    "removed": true
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "conclusion": "PASS_FOR_REVIEWED_REMEDIATION",
+  "closedFindings": [
+    "T07-R01",
+    "T07-R02"
+  ],
+  "openCodeFindings": [],
+  "openContractGap": "CR-T07-01",
+  "fullT07AcceptanceApproved": false,
+  "totals": {
+    "tests": 73,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "com.example.editorial.article.ast.ArticleAstTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewArticleAstTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewEmphasisPunctuationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewNestedClosureTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.job.DeletionHandoffTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.job.T06PostgresTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.ReviewVersionBoundaryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07PostgresTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07RevisionBoundaryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07UnavailableTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.VersionDiffTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.shared.CanonicalRequestTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "baselineCount": 1437,
+  "allowedBaselineChanges": [
+    "backend/src/main/java/com/example/editorial/article/version/VersionService.java",
+    "tests/engineering/T07/extend_t06.py",
+    "tests/engineering/T07/integration.py",
+    "tests/engineering/T07/t06-extension.patch"
+  ],
+  "unexpectedBaselineChanges": [],
+  "changedReviewedFiles": [],
+  "changedT06Files": [],
+  "originalReviewTestByteIdentical": true,
+  "patchMatchesGeneratorAndExecutedSource": true,
+  "databaseStopped": true,
+  "checks": "docs\\execution\\reviews\\T07-round2\\evidence\\checks.json",
+  "upgradeEvidenceReused": "docs/execution/reviews/T07-round1/evidence/upgrade.json",
+  "upgradeExecutedThisRound": false
+}

@@ -1,0 +1,188 @@
+{
+  "head": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "branch": "appmod/java-upgrade-20261003114404",
+  "t02State": "CHANGES_REQUIRED",
+  "isolation": "non-overlapping owned directories; no branch switch",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "b454c81c64948868a5a1038b9593d3dc5b3c9b054285a4e5d24176714d25cc92"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8b722bd0d0e677fcc063d5f63832b509be8a99997d559b4ab5cba0cbfce76b00"
+    },
+    {
+      "path": "backend/scripts/dev.py",
+      "sha256": "0b5ba59a4e504ade0de792e3c57ba7a61663b2eb7764902be832ee9ae5f484e4"
+    },
+    {
+      "path": "backend/src/main/resources/db/README.md",
+      "sha256": "3f3d951e7ae61abb17100ecafbf64b34df73204bf312d3109a4141080268edf2"
+    },
+    {
+      "path": "docs/execution/reports/T02.md",
+      "sha256": "54f73b408fd749fc57398168be8588e277ca515a16a8e76841c59f574430c56d"
+    },
+    {
+      "path": "tests/engineering/T02/compose_smoke.py",
+      "sha256": "03ae89da39371a5e05731d29b100367a504d9b605cf15b0bc11394d4d3978077"
+    },
+    {
+      "path": "tests/engineering/T02/integration.py",
+      "sha256": "e13f7555e0f88c4dc742fecc896293428b311980b9c34d45e918a2a2b1348197"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/R__t02_function_permissions.sql",
+      "sha256": "1c6cc53da1e8b6c499a318056f7592f85bfe625dab474b539dbbac0de9723f26"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/beforeMigrate__t02_function_defaults.sql",
+      "sha256": "57d17a44dabefc4d0ad87b5ccd88118a84ce3a5baeceaac423ee2e570093f502"
+    },
+    {
+      "path": "docs/execution/reviews/T02-Review-v2.0.md",
+      "sha256": "4fca1d46940147e0f66ce37ccd9aad292e13a3171b1311f88eb60946330eaaad"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/backend-build-final.json",
+      "sha256": "54638770ef955cb2cd69422e94cd59e4e68411d77095e9dc3dc94822a6128e06"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/backend-build.json",
+      "sha256": "589b5a62595eaf71ffd1d7881a4f54f371cfe80526ad456b0e6fb08d07e798c6"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/compose.json",
+      "sha256": "4bd3b8ff7b857e2ddab4fb00617c63786313047c7e70c02aabff88774b9baa48"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/entrypoint.json",
+      "sha256": "01e3fdc13ba70c7fe47b24ab118c202ebe4a8fa7580b46add110d32e8b448978"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/gitleaks-findings.json",
+      "sha256": "624b6fe964c6f63b232106491d7ff1ec46b3bf768f668e47739e4794c93909c7"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/gitleaks-run.json",
+      "sha256": "f39bfc0adb60a7281e33e1fb85f98cf1426089237db2e4c611de292baa3aa037"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/review-state.json",
+      "sha256": "62c08470a6634f3a110c44e732100d9492d4ab02d12565881fb970cd0da3dc96"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/run_check.py",
+      "sha256": "cc467fd6fe707988f81cfd8d12f8c5061c5be45e00e7787ea51dbe1800854e05"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/run_gitleaks.py",
+      "sha256": "a858844022418cc242292a138787345ede01b7dead6b68040af7c684b2664254"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/run_integration.py",
+      "sha256": "a9ac31b24393bf572dbf4749079983f9578578d7cb8e29bce040af1e145c89f8"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/secret-patterns.json",
+      "sha256": "3c9d5b110c3ee74eed7a8428a8d36e5ae0292f7aca757762dc878efccabd7749"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/upgrade-integration.json",
+      "sha256": "05ed1ae498a9fe61d1e0d32a95269b24a0649d7140d5d3b7d7f1be0cc5a2da85"
+    },
+    {
+      "path": "docs/execution/reviews/T02-round2/upgrade-run.json",
+      "sha256": "b8fc5cea98dae3e4163824e57d4cf39915740aa90f93856eacaf65c3f2ddfda8"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-backend-build.json",
+      "sha256": "ca7e7e5ae0b545d60d57e979ea32202bdbf8511b3db7d460ac80b3a1ca382b08"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-final.json",
+      "sha256": "795c01179ea6e5360eb8cddafaa764fd5a6226a87d7db91590bc6faa4b2181a3"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-fixed.json",
+      "sha256": "7e132c7a482fec784f30c1b4b147ec7bb0e387415e19fdfc4c965cf2471b517d"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-real.json",
+      "sha256": "5493f89e8b562af2e3f5cc2760dc6322b4a561bc8e8690742c41fd54f110ab6c"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-smoke.json",
+      "sha256": "b15c0e61cab9dacb0904fb6e269f2f6d12415e845506319c1d9333f9602675e6"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-contract-fingerprints.json",
+      "sha256": "5088664483a7da3088b7d007c2ad0deebc38565d269140a676acb41d64017a54"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-diff-check-final.json",
+      "sha256": "97f685fc0dafb58941b19bf5c681b772e9c6b61292f3ac932efaf6e27b4c58db"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-diff-check.json",
+      "sha256": "b65821bb12cc4b48e8f81d62cd438a552e18c24167f11b76f6481066c13337ae"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-docker-availability.json",
+      "sha256": "4bdf3c4e2950bb48cac5b96c203e73d9875527073a67e7b8eb156a7617f58c33"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-empty-integration.json",
+      "sha256": "ae34561c825a9b0ff72a267eb5e3363754326801e9c7c7adc8c794cba5f69bf9"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-empty-run.json",
+      "sha256": "8e96181e878b308d6bbd566c2325486f6b5847ea61e43dbd5197f7c51407f455"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-entrypoint-final.json",
+      "sha256": "a140a76d7d9db9419fb3c8e64332a527a64b9e99b040464db1b36f4d2e40f291"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-entrypoint.json",
+      "sha256": "38fbe3fd1efdcad0d33169dba11d1e4d456f17b20577713fb66d7b9311989eff"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity-run.json",
+      "sha256": "18be0c34fbc16ad1f018324e51fc339bf8ca3293d733d41ffe5e9c5bc4e78f27"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "sha256": "1d18eef28322218a27a1a666198509050f1cbe4a86728a7f08a98b194221dd14"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-legacy-build.json",
+      "sha256": "5ad4f9a9901b2d51bc35389b0a258129712927bff01e87ca65dc618087379968"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-secret-scan-final.json",
+      "sha256": "ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-secret-scan.json",
+      "sha256": "ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-upgrade-integration.json",
+      "sha256": "cfbf0df28c32cec3b00748ff7491d3a8c0ae524543645aa87bcf00ad73eed017"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-upgrade-run.json",
+      "sha256": "88afe2bf02cbccb538d327d85c10557306cb3cc733c5ddc94f875396880cbf3e"
+    },
+    {
+      "path": "tests/engineering/T02/fixtures/function-order/V1__t02_function_order_probe.sql",
+      "sha256": "0aa4258b88e85db03224db3f2425fbecdf6fd2c3aa5e868549d69d1899e3e1e2"
+    },
+    {
+      "path": "tests/engineering/T02/revision_integrity.py",
+      "sha256": "2f8d12244379f0cea6f3bae4036b0da0fbcfa68c2f1e88926ff4fdb0702335c5"
+    }
+  ]
+}

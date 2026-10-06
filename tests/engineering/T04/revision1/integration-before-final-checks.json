@@ -1,0 +1,103 @@
+{
+  "mode": "REAL_POSTGRES_OBJECT_STORE",
+  "paidCalls": 0,
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/T04/.work/a3a0738f7ad246d6ab18e11fc776db1a/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\T04^\\^.work^\\a3a0738f7ad246d6ab18e11fc776db1a^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 10430",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "backend/pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "test",
+        "-Dtest=com.example.editorial.storage.*Test",
+        "-DargLine=-Djava.io.tmpdir=E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\java-tmp"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 16 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Nothing to compile - all classes are up to date.\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.storage.LocalDownloadHttpTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.348 s -- in com.example.editorial.storage.LocalDownloadHttpTest\n[INFO] Running com.example.editorial.storage.LocalStorageBackendTest\n[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in com.example.editorial.storage.LocalStorageBackendTest\n[INFO] Running com.example.editorial.storage.ObjectKeysTest\n[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.example.editorial.storage.ObjectKeysTest\n[INFO] Running com.example.editorial.storage.S3ProtocolRegressionTest\n[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 s -- in com.example.editorial.storage.S3ProtocolRegressionTest\n[INFO] Running com.example.editorial.storage.S3StorageBackendTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.example.editorial.storage.S3StorageBackendTest\n[INFO] Running com.example.editorial.storage.SignedUrlTest\n[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.example.editorial.storage.SignedUrlTest\n[INFO] Running com.example.editorial.storage.SigV4Test\n[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.editorial.storage.SigV4Test\n[INFO] Running com.example.editorial.storage.T04PostgresTest\n[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.907 s -- in com.example.editorial.storage.T04PostgresTest\n[INFO] Running com.example.editorial.storage.T04RevisionPostgresTest\n[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.287 s -- in com.example.editorial.storage.T04RevisionPostgresTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 53, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  19.322 s\n[INFO] Finished at: 2026-10-04T17:47:25+08:00\n[INFO] ------------------------------------------------------------------------\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T04\\.work\\a3a0738f7ad246d6ab18e11fc776db1a\\data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down..... done\nserver stopped\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    }
+  ],
+  "exitCode": 0,
+  "utc": "2026-10-04T09:47:27.117663+00:00",
+  "postgresql": "postgres (PostgreSQL) 17.11"
+}

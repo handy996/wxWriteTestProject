@@ -1,0 +1,19 @@
+{
+  "old": {
+    "exitCode": 1,
+    "tests": 24,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0,
+    "javaTemporaryChildren": []
+  },
+  "current": {
+    "exitCode": 0,
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "javaTemporaryChildren": []
+  },
+  "reviewHttpPort80Released": true
+}

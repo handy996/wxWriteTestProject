@@ -1,0 +1,74 @@
+{
+  "conclusion": "CHANGES_REQUIRED",
+  "openFindings": [
+    "T07-R01",
+    "T07-R02"
+  ],
+  "contractGap": "CR-T07-01",
+  "integrity": [
+    {
+      "scope": "baseline",
+      "count": 1151,
+      "changed": []
+    },
+    {
+      "scope": "t06",
+      "count": 26,
+      "changed": []
+    },
+    {
+      "scope": "reviewedFiles",
+      "count": 21,
+      "changed": []
+    }
+  ],
+  "runs": [
+    {
+      "name": "author-tests",
+      "exitCode": 0,
+      "totals": {
+        "tests": 67,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failedCases": [],
+      "databaseStopped": true
+    },
+    {
+      "name": "review-regressions",
+      "exitCode": 1,
+      "totals": {
+        "tests": 2,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failedCases": [
+        {
+          "name": "reviewRetainedVersionMustBeStaleForNewCommit",
+          "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+        },
+        {
+          "name": "reviewUsedClaimMustBeRecheckedAfterStaging",
+          "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+        }
+      ],
+      "databaseStopped": true
+    },
+    {
+      "name": "upgrade",
+      "exitCode": 0,
+      "totals": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failedCases": [],
+      "databaseStopped": true
+    }
+  ],
+  "basicCheckFailures": [],
+  "newSecretFindings": []
+}

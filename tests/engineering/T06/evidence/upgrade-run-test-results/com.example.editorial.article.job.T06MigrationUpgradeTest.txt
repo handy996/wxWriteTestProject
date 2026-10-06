@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.job.T06MigrationUpgradeTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.940 s <<< FAILURE! -- in com.example.editorial.article.job.T06MigrationUpgradeTest
+com.example.editorial.article.job.T06MigrationUpgradeTest.upgradesPopulatedT03T05DraftWithoutChangingRowsOrHistory -- Time elapsed: 0.922 s <<< ERROR!
+org.postgresql.util.PSQLException: 
+ERROR: new row for relation "app_user" violates check constraint "app_user_check"
+  详细：Failing row contains (9eee3543-005e-4704-805f-6b1387066dee, upgrade-actor, Existing owner, OWNER, null, t, null, 2026-10-05 11:01:09.444075+08).
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:371)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:356)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:332)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:327)
+	at com.example.editorial.article.job.T06MigrationUpgradeTest.upgradesPopulatedT03T05DraftWithoutChangingRowsOrHistory(T06MigrationUpgradeTest.java:24)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

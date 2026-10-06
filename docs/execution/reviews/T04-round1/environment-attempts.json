@@ -1,0 +1,30 @@
+{
+  "note": "Transcribed from this review's exec tool outputs; no business S3 credentials were used.",
+  "attempts": [
+    {
+      "command": "docker version (sandbox PATH)",
+      "result": "Command not found. Not treated as host absence."
+    },
+    {
+      "command": "docker version (host permission retry)",
+      "exitCode": 0,
+      "path": "C:/Users/eie04/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe",
+      "clientVersion": "29.8.1",
+      "serverVersion": "29.8.1",
+      "desktopVersion": "4.93.0",
+      "context": "desktop-linux"
+    },
+    {
+      "command": "docker pull quay.io/minio/minio:latest (host)",
+      "exitCode": 1,
+      "output": "Error response from daemon: unknown: failed to resolve reference quay.io/minio/minio:latest: unexpected status from HEAD request to https://quay.io/v2/minio/minio/manifests/latest: 401 UNAUTHORIZED"
+    },
+    {
+      "command": "docker pull minio/minio:latest (host)",
+      "exitCode": 1,
+      "output": "Error response from daemon: pull access denied for minio/minio, repository does not exist or may require docker login"
+    }
+  ],
+  "containersCreated": [],
+  "paidCalls": 0
+}

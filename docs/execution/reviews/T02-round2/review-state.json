@@ -1,0 +1,612 @@
+{
+  "baseCommit": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "branch": "appmod/java-upgrade-20261003114404",
+  "reviewTarget": "uncommitted working tree plus base commit",
+  "status": "CHANGES_REQUIRED",
+  "closed": [
+    "R01",
+    "B01"
+  ],
+  "open": [
+    "R02"
+  ],
+  "backendTestsPassed": 20,
+  "upgradeChecksPassed": 28,
+  "directComposeExitCode": 0,
+  "entrypointExitCode": 0,
+  "gitleaksExitCode": 1,
+  "gitleaksFindings": 6,
+  "gitleaksClassification": "verified file SHA-256 false positives; CI still fails",
+  "originalMigrationUnchanged": true,
+  "packagedSqlMatches": true,
+  "testV1NotPackaged": true,
+  "jarSha256": "e6c513804f1c69e9f8bf7bb22dfdb8fbcabd1586763e30b80854d4b31ae4d23a",
+  "authorManifestSha256": "1d18eef28322218a27a1a666198509050f1cbe4a86728a7f08a98b194221dd14",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "b454c81c64948868a5a1038b9593d3dc5b3c9b054285a4e5d24176714d25cc92",
+      "matchesAuthor": true
+    },
+    {
+      "path": "README.md",
+      "sha256": "8b722bd0d0e677fcc063d5f63832b509be8a99997d559b4ab5cba0cbfce76b00",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/.dockerignore",
+      "sha256": "0efaf1e41580a0ef34c953b3fcb4fab9673d7b2b80ee873e3637622490a5c0cc",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/DEPENDENCIES.md",
+      "sha256": "083e8fb3d233b634751aaba7cbaccfa1390f2d0b1e1ec4bc1139be15718d4c59",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/Dockerfile",
+      "sha256": "4e96558b0aeb1a75cade5328e1cf0b3f80457f747f25b8085707b4c47372ab05",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/docker/bootstrap.sql",
+      "sha256": "ef70f7a175f2216f66236efaf23d5d1db56b00520af810d4ad8dbb9a34b0d949",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/docker/init-db.sh",
+      "sha256": "de7b58e7929f9f905a3a0fa389f03039b528636164f314bd7c34b47a3ab04286",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/pom.xml",
+      "sha256": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/scripts/dev.py",
+      "sha256": "0b5ba59a4e504ade0de792e3c57ba7a61663b2eb7764902be832ee9ae5f484e4",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/EditorialApplication.java",
+      "sha256": "b399f57e9293c9ba405d1b399236ea34b38a90c36773a07e8da3b0e7d15dc0f1",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/bootstrap/DatabaseRolePolicy.java",
+      "sha256": "d8350b268ba40a8e865f3e6d200e25b5c3992ab69159e2db1936ec131f78cb62",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/bootstrap/SkeletonConfiguration.java",
+      "sha256": "bcf6c9a3de7a0e262c9237cb6f20642597c1129c8b0d4378a0b28769cc83981f",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/bootstrap/StartupPolicy.java",
+      "sha256": "13d3367bb247ba895c08af7f21f4bfd519c345adc88865ae7619a5652419f569",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/META-INF/spring.factories",
+      "sha256": "6b8ed3775fa045551811799b6a9acb831c352f84bda7cee0b81d81bc8d79f70c",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/application-dev.yml",
+      "sha256": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/application-mock.yml",
+      "sha256": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/application-prod.yml",
+      "sha256": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/application.yml",
+      "sha256": "10abd773ab43a7e558bc1c76ae699405550086613efaf20cd22203464c93b53d",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/db/README.md",
+      "sha256": "3f3d951e7ae61abb17100ecafbf64b34df73204bf312d3109a4141080268edf2",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/R__t02_function_permissions.sql",
+      "sha256": "1c6cc53da1e8b6c499a318056f7592f85bfe625dab474b539dbbac0de9723f26",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/R__t02_schema_permissions.sql",
+      "sha256": "6b5e594baba3d3dcb035a1f5ff19cb9859bad83bf90298b3999163b2c787d852",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/beforeMigrate__t02_function_defaults.sql",
+      "sha256": "57d17a44dabefc4d0ad87b5ccd88118a84ce3a5baeceaac423ee2e570093f502",
+      "matchesAuthor": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/bootstrap/StartupPolicyTest.java",
+      "sha256": "c8ac0f7fa4f77cdd678e90ea443b2658d346e00b6a1a9e521ed9045149dad900",
+      "matchesAuthor": true
+    },
+    {
+      "path": "docs/execution/reports/T02.md",
+      "sha256": "54f73b408fd749fc57398168be8588e277ca515a16a8e76841c59f574430c56d",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/.dockerignore",
+      "sha256": "55b7729bcbb88fb990f54013175d41bf69ac0769aedc0b802bd9501fd2ffeeae",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/.npmrc",
+      "sha256": "640e82522b7d0ac78abe638d548cd60cef19493bc05e709c0aafe2547bd8ab01",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "sha256": "fed7e32a5c8af82dc6ec1f6dc52e86f5cbb370fa0d6906a366631e312a8c38f5",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/index.html",
+      "sha256": "e0972db0529ee8185eb8e8d0427e114da19ff1289c4a47f2ac3f98baeb693c18",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/nginx.conf",
+      "sha256": "2eddc31576d922cc5b79ecdb2016d7605db01ad5c36f9fba2e079549f78690e9",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "d9ab85cfda6bc5169a466277a680612efe1ce179d56e35077209b3a2b28ca209",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "43044e3ce52f2aeca6fe6a33b9a58aaab9e17e2ec12c3d9bcfaac588d49eab68",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/public/favicon.svg",
+      "sha256": "9892971e50786d772ae3537b888111d1e0425d8d9e6fe6bb5dbbd97a2b3eaabf",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/src/App.vue",
+      "sha256": "3983a60ecbc4e35342e847acf973ebfe343ba638018ff70b0caa2dd389b9a621",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/src/main.ts",
+      "sha256": "b8cb4214c36794b4c737c16849616c71bb989802d78c60fe7481b8cd253cd6eb",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "sha256": "8f7816b242f4324ed958059b421035129470f8f61823a812923e557e48a653d8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "sha256": "80e46179f6204b185e765e96bfab3e378c41f87ded6b6013c27ab81f336254d3",
+      "matchesAuthor": true
+    },
+    {
+      "path": "infra/compose.yml",
+      "sha256": "586145482defba8c2d2cf53829371e6b0f361189fc8d8cd72567438094c24a6f",
+      "matchesAuthor": true
+    },
+    {
+      "path": "infra/env.example",
+      "sha256": "a807c1019d0ae01e9606ccbee138edaaf5d63e30287cacde003d1349a7b3a7bf",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/check_contracts.py",
+      "sha256": "8bdebe4fa55bf1ef2afa9d06a9b4acdc0ad9ae18f3ce1ab353985a46956ef49e",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/compose_smoke.py",
+      "sha256": "03ae89da39371a5e05731d29b100367a504d9b605cf15b0bc11394d4d3978077",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/dependency_scan.py",
+      "sha256": "5e694336765fb8af39d0a250be8276c1e5f86ddc3aa82325961bbaeb2957ba8f",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/advisory-review.json",
+      "sha256": "67a57d007f9696af22341d5a57fbb0fe1e2dce4826b94e87e538e3061586540d",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/approved-contracts.json",
+      "sha256": "586db65c16f3e038cea707777ff410e89233aa3dbf2ed350620e181f98238f48",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-delivery-build.json",
+      "sha256": "1f5f710c39a4e0b22b2948d89b98c7bf37a4cd12b742ac4cbc160d50d222f4c8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-delivery-online.json",
+      "sha256": "8dc8a083c365a77e580358cfc045c1b269f3b6e5f370905ee25002b6f5c11f67",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-delivery-sbom.json",
+      "sha256": "1cf4444d7481d60f6850865e0c6c4bb1d9de4f2935af4d83818ad5a364e46b7f",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-security-patches.json",
+      "sha256": "6d63cfbf6301034195f6e6a34a249742576d30a8cb276eb89e78000050ad1ae2",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-verify-final.json",
+      "sha256": "4c111b4e8372f125e19162954561ec67077033808ec3f633400d9787faad3509",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/backend-verify.json",
+      "sha256": "ed838f0bcd7583c37b84db9965c4fc1f3d09802c1fa154751e9474d3cb37690b",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-live-console.json",
+      "sha256": "06a1d14de953722684fd49db993e8d23eb775d3b4a9d9dee6bc92a8a3f1bce05",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-live-open.json",
+      "sha256": "871e25f347bd8b2070fc5acf3ab815c12f24a0718cd4be5f1b55e947e5b1765c",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-live-refresh.json",
+      "sha256": "68c5a092e02de6806534c32df9d146cbeb093fa74c981ea423851f66ca27a48a",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-live-screenshot.json",
+      "sha256": "a847c0cd1b6b1923424dd3ad84e8cc190861c7a69c73a88a58b117c042d364f8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-live-snapshot.json",
+      "sha256": "23ced3400c038903e46ce88c2ddf69c82b19a2dd08e28bba0053dc13066669a7",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-offline.json",
+      "sha256": "251064dd7c4a826f0b0962ff01e25cd10da79412c126734261193a8d5ee4ddd5",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-refresh-fixed.json",
+      "sha256": "1764921940dad35446d521e6360f1011d3d80b17acfd088286cc296c6f039fa3",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/browser-refresh.json",
+      "sha256": "06c75d2aadc198840aa8f5f86cbe274fee68fbfb92a20fa54dcd9151dd2e001b",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/compose-config.json",
+      "sha256": "916be5a180a7995f32b7d3f59cd41faa36334cc46daf9ce53e11930681044014",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/compose-missing-password.json",
+      "sha256": "775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/contract-tests-final.json",
+      "sha256": "d0b09e6f996ed9d70ae51084104f6a6294b2ec08e6b0e30e0ec11fcec52d0e97",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/contract-tests.json",
+      "sha256": "dbcea9035421343f01c23ad6757c47f247b16f29c70d9ad7cc3955404eaa1fff",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/database-smoke-complete.json",
+      "sha256": "4bf3adc44f2b04c922af5e27cba6e178352f32ef5edae14d70bc0623f03e1e3b",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/database-smoke-fixed.json",
+      "sha256": "0da2bcc71c6165e6e7543fb77b191df3c9fbef97613a5095391374fe3328a57e",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/database-smoke.json",
+      "sha256": "6ccd88bac9f6907bccf195381eadbb9cfa79e5f6efe8789ad90c75a4fc3eafc5",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/delivery-integrity.json",
+      "sha256": "2b36a3971c38270db4c1d01e9d07bb4d5e9a629acd3f4fea5a4c402960fae9e0",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/docker-availability.json",
+      "sha256": "330abcae9523625bf4858ac5380d888952a939c47b0dcb64ee21dabe0001f576",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/entrypoint-no-docker.json",
+      "sha256": "94ba0fb26149c9625154d8f8c73f54f245bfd6061d2bd81ec76e9b83218335a1",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-audit-final.json",
+      "sha256": "19da3c085039c8947ed555b3b33e53353bc3102bfe5c4241e900f6d092f0d8c0",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-audit.json",
+      "sha256": "5349ae68787bf25ea57a9a59941807d1a3542c2683b4ff4af4a543efe65f22b8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-build-final.json",
+      "sha256": "4c648a58063a7b06377437985a9d0ef0bddb7a8f36d3c177ae273e0688c393bc",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-build-verified.json",
+      "sha256": "484a35f79913e0a634e7ecc17b37b91e6b0af6fb09d230bb2d2c91b99a4e0082",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-build.json",
+      "sha256": "829a4d2f6279750faeedea90fc7e76c2db135075ce6216995045cdffe8275038",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-clean-install.json",
+      "sha256": "ed71b3262c627b8eb9aa77652e0f6e8e094ece68e72a74ae7b1100c63b0f4020",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/frontend-final-build.json",
+      "sha256": "ad56c46b596b07c22f892150268fde27b97234238f139fe8ef88aee3b2e282c9",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks-delivery.json",
+      "sha256": "017e3b9e4620008dc5cdd8e24b9c797841cb00bdfcc139bb45b2556c82d70f04",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks-final.json",
+      "sha256": "a16941df68a60d47c0d55196e4f16c7e5904babc0a2e80255f3d90b870f57269",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks-findings.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks-reviewed.json",
+      "sha256": "3654dbca9486651295d16b30c7eeee52d3b33c204b7d56a73ae786bf89f5b06c",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks.json",
+      "sha256": "e714eca5aa2ad70826afc8b3764307ba23fa428087f2fad8e893ac98db5b34f4",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/hash-vectors.json",
+      "sha256": "286380747cc40311673016c6dfb042e8826178efeaadc92594d86e376c0caac3",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/integration.json",
+      "sha256": "482e81ae6442a0876e12f80205c1b4b1ed330eab3d4efe06592db84878c74827",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/maven-dependency-scan-delivery.json",
+      "sha256": "0cbe40157e3c7884026efe6a355c42625792d0b3dce1ff008c9bff3796c787bc",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/maven-dependency-scan-final.json",
+      "sha256": "6acfae6501ee8e103158e0d209a359b04233bc374b877e14ebccae29ddc61cd0",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/maven-dependency-scan-fixed.json",
+      "sha256": "421aab87e99b69afb70366a18acbb222081ffd2ddc779dae372dccdc80d3803b",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/maven-dependency-scan-sbom.json",
+      "sha256": "4900622503de95043fe2a1f1298db2cc85b37717ec16a3e695111e0fc2510e86",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/maven-dependency-scan.json",
+      "sha256": "8499020bd1568af8b00a25f774bcdcaaef203d827394b08a43379138f9a72139",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/protected-baseline-final.json",
+      "sha256": "2c27fb9a57015004b549cebd135810080740cc30e2376eb9bc0a9ad2889e6192",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-backend-build.json",
+      "sha256": "ca7e7e5ae0b545d60d57e979ea32202bdbf8511b3db7d460ac80b3a1ca382b08",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-final.json",
+      "sha256": "795c01179ea6e5360eb8cddafaa764fd5a6226a87d7db91590bc6faa4b2181a3",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-fixed.json",
+      "sha256": "7e132c7a482fec784f30c1b4b147ec7bb0e387415e19fdfc4c965cf2471b517d",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-real.json",
+      "sha256": "5493f89e8b562af2e3f5cc2760dc6322b4a561bc8e8690742c41fd54f110ab6c",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-compose-smoke.json",
+      "sha256": "b15c0e61cab9dacb0904fb6e269f2f6d12415e845506319c1d9333f9602675e6",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-contract-fingerprints.json",
+      "sha256": "5088664483a7da3088b7d007c2ad0deebc38565d269140a676acb41d64017a54",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-diff-check-final.json",
+      "sha256": "97f685fc0dafb58941b19bf5c681b772e9c6b61292f3ac932efaf6e27b4c58db",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-diff-check.json",
+      "sha256": "b65821bb12cc4b48e8f81d62cd438a552e18c24167f11b76f6481066c13337ae",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-docker-availability.json",
+      "sha256": "4bdf3c4e2950bb48cac5b96c203e73d9875527073a67e7b8eb156a7617f58c33",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-empty-integration.json",
+      "sha256": "ae34561c825a9b0ff72a267eb5e3363754326801e9c7c7adc8c794cba5f69bf9",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-empty-run.json",
+      "sha256": "8e96181e878b308d6bbd566c2325486f6b5847ea61e43dbd5197f7c51407f455",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-entrypoint-final.json",
+      "sha256": "a140a76d7d9db9419fb3c8e64332a527a64b9e99b040464db1b36f4d2e40f291",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-entrypoint.json",
+      "sha256": "38fbe3fd1efdcad0d33169dba11d1e4d456f17b20577713fb66d7b9311989eff",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-legacy-build.json",
+      "sha256": "5ad4f9a9901b2d51bc35389b0a258129712927bff01e87ca65dc618087379968",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-secret-scan-final.json",
+      "sha256": "ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-secret-scan.json",
+      "sha256": "ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-upgrade-integration.json",
+      "sha256": "cfbf0df28c32cec3b00748ff7491d3a8c0ae524543645aa87bcf00ad73eed017",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-upgrade-run.json",
+      "sha256": "88afe2bf02cbccb538d327d85c10557306cb3cc733c5ddc94f875396880cbf3e",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/resolved-maven-sbom.json",
+      "sha256": "e2d62e7f2aae78142cfff9544012e908fc8a48d639a18a7a13ed113a64aaee7a",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/secret-patterns-final.json",
+      "sha256": "408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/evidence/tool-sources.json",
+      "sha256": "bdcb1166871758872ffa275f50c4dcf61703e95e4a511fe48781cacd2beff75a",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/fixtures/function-order/V1__t02_function_order_probe.sql",
+      "sha256": "0aa4258b88e85db03224db3f2425fbecdf6fd2c3aa5e868549d69d1899e3e1e2",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/gitleaks.toml",
+      "sha256": "fef207ec4ef4880115f71694b589d6c34a55b4e3d0d18d1391baa6df35d88c6e",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/integration.py",
+      "sha256": "e13f7555e0f88c4dc742fecc896293428b311980b9c34d45e918a2a2b1348197",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/output/playwright/disconnected-after-test.png",
+      "sha256": "47fd658ed83a5201f4398d8275e5df0e0cb692ca35851c2dbb95a823fcc4c81c",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/output/playwright/offline.png",
+      "sha256": "c4fd169fecc7f86bace223950831ba8b159dfcb1a082f3fe20df1ff535d35368",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/record.py",
+      "sha256": "f54f6131c25d3d11cc6abab1adb4a9a327362b9910ced391a91ef3a0bca7e7a8",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/revision_integrity.py",
+      "sha256": "2f8d12244379f0cea6f3bae4036b0da0fbcfa68c2f1e88926ff4fdb0702335c5",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/scan_secrets.py",
+      "sha256": "394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc",
+      "matchesAuthor": true
+    },
+    {
+      "path": "tests/engineering/T02/secret_scan.py",
+      "sha256": "568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1",
+      "matchesAuthor": true
+    }
+  ]
+}

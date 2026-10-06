@@ -1,0 +1,13 @@
+{
+  "version": "4.26.0",
+  "results": [
+    {
+      "definition": "ArticleArtifact",
+      "errors": []
+    },
+    {
+      "definition": "ArticleVersion",
+      "errors": []
+    }
+  ]
+}

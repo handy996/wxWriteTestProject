@@ -1,0 +1,129 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "paidCalls": 0,
+  "domainSubstitutes": [
+    "T10/T11 not installed: production Changes and Deletion fail closed; transaction test participant marked explicitly"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/T06/.work/7d48af61c34246de848a7aacd3a6f3bc/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\T06^\\^.work^\\7d48af61c34246de848a7aacd3a6f3bc^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 7502",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\backend\\pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "clean",
+        "test",
+        "-Dtest=T06MigrationUpgradeTest",
+        "-Dt06.root=E:\\project\\codex\\wxAgent"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- clean:3.4.1:clean (default-clean) @ editorial ---\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 16 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 74 source files with javac [debug parameters release 21] to target\\classes\n[INFO] /E:/project/codex/wxAgent/tests/engineering/T06/.work/7d48af61c34246de848a7aacd3a6f3bc/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��\n[INFO] /E:/project/codex/wxAgent/tests/engineering/T06/.work/7d48af61c34246de848a7aacd3a6f3bc/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 25 source files with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.article.job.T06MigrationUpgradeTest\n16:45:16.490 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:7502/editorial (PostgreSQL 17.11)\n16:45:16.576 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table \"editorial_migrations\".\"flyway_schema_history\" does not exist yet\n16:45:16.583 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.061s)\n16:45:16.597 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table \"editorial_migrations\".\"flyway_schema_history\" ...\n16:45:16.816 [main] INFO org.flywaydb.core.internal.callback.SqlScriptCallbackFactory -- Executing SQL callback: beforeMigrate - t02 function defaults\n16:45:16.844 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema \"editorial_migrations\": << Empty Schema >>\n16:45:16.856 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" to version \"1 - t03 isolated test\"\n16:45:16.904 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" to version \"2 - t05 skill policy prompt\"\n16:45:16.934 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" with repeatable migration \"t02 function permissions\"\n16:45:16.946 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" with repeatable migration \"t02 schema permissions\"\n16:45:16.957 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 4 migrations to schema \"editorial_migrations\", now at version v2 (execution time 00:00.060s)\n16:45:17.174 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:7502/editorial (PostgreSQL 17.11)\n16:45:17.190 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.010s)\n16:45:17.251 [main] INFO org.flywaydb.core.internal.callback.SqlScriptCallbackFactory -- Executing SQL callback: beforeMigrate - t02 function defaults\n16:45:17.261 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema \"editorial_migrations\": 2\n16:45:17.269 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema \"editorial_migrations\" to version \"3 - t06 article\"\n16:45:17.319 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 1 migration to schema \"editorial_migrations\", now at version v3 (execution time 00:00.041s)\n16:45:17.358 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:postgresql://127.0.0.1:7502/editorial (PostgreSQL 17.11)\n16:45:17.380 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 5 migrations (execution time 00:00.010s)\n16:45:17.449 [main] INFO org.flywaydb.core.internal.callback.SqlScriptCallbackFactory -- Executing SQL callback: beforeMigrate - t02 function defaults\n16:45:17.462 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema \"editorial_migrations\": 3\n16:45:17.463 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Schema \"editorial_migrations\" is up to date. No migration necessary.\n[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.485 s -- in com.example.editorial.article.job.T06MigrationUpgradeTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  7.256 s\n[INFO] Finished at: 2026-10-05T16:45:17+08:00\n[INFO] ------------------------------------------------------------------------\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc\\data",
+        "-m",
+        "immediate",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down.... done\nserver stopped\n"
+    }
+  ],
+  "t03Patch": {
+    "status": "CORRUPT_PATCH_WORKED_AROUND",
+    "detail": "git apply rejected shared-integration.patch as corrupt; equivalent wiring applied directly"
+  },
+  "testResults": "tests\\engineering\\T06\\evidence\\revision-v2-upgrade-test-results",
+  "isolatedWork": "tests\\engineering\\T06\\.work\\7d48af61c34246de848a7aacd3a6f3bc",
+  "exitCode": 0
+}

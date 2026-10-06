@@ -1,0 +1,134 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "paidCalls": 0,
+  "domainSubstitutes": [
+    "T10/T11 not installed: production Changes and Deletion fail closed; transaction test participant marked explicitly"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/a569df710e464baa8295b56eb76fcc0d/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\docs^\\execution^\\reviews^\\T06^-round4^\\^.work^\\a569df710e464baa8295b56eb76fcc0d^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 6725",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\backend\\pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "clean",
+        "test",
+        "-Dtest=T06PostgresTest,ArticleAstTest,DeletionHandoffTest,CanonicalRequestTest,ReviewArticleAstTest,ReviewNestedClosureTest,ReviewEmphasisPunctuationTest",
+        "-Dt06.root=E:\\project\\codex\\wxAgent"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- clean:3.4.1:clean (default-clean) @ editorial ---\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 16 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 74 source files with javac [debug parameters release 21] to target\\classes\n[INFO] /E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/a569df710e464baa8295b56eb76fcc0d/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��\n[INFO] /E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/a569df710e464baa8295b56eb76fcc0d/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 28 source files with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.example.editorial.article.ast.ArticleAstTest\n[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.425 s -- in com.example.editorial.article.ast.ArticleAstTest\n[INFO] Running com.example.editorial.article.ast.ReviewArticleAstTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.example.editorial.article.ast.ReviewArticleAstTest\n[INFO] Running com.example.editorial.article.ast.ReviewEmphasisPunctuationTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.example.editorial.article.ast.ReviewEmphasisPunctuationTest\n[INFO] Running com.example.editorial.article.ast.ReviewNestedClosureTest\n[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.example.editorial.article.ast.ReviewNestedClosureTest\n[INFO] Running com.example.editorial.article.job.DeletionHandoffTest\n[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in com.example.editorial.article.job.DeletionHandoffTest\n[INFO] Running com.example.editorial.article.job.T06PostgresTest\n{\"@timestamp\":\"2026-10-05T17:05:02.2181925+08:00\",\"@version\":\"1\",\"message\":\"Starting T06PostgresTest using Java 21.0.12.1 with PID 34448 (started by eie04 in E:\\\\project\\\\codex\\\\wxAgent\\\\docs\\\\execution\\\\reviews\\\\T06-round4\\\\.work\\\\a569df710e464baa8295b56eb76fcc0d\\\\backend)\",\"logger_name\":\"com.example.editorial.article.job.T06PostgresTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:02.2286753+08:00\",\"@version\":\"1\",\"message\":\"No active profile set, falling back to 1 default profile: \\\"mock\\\"\",\"logger_name\":\"com.example.editorial.article.job.T06PostgresTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:03.5099925+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:03.5493644+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 26 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.0507588+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 0 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.0705067+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.0725118+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.1243782+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.1243782+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 1874 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.8054598+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:6725/editorial (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.8624668+08:00\",\"@version\":\"1\",\"message\":\"Schema history table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" does not exist yet\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.8624668+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 5 migrations (execution time 00:00.037s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.8797036+08:00\",\"@version\":\"1\",\"message\":\"Creating Schema History table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" ...\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.9721231+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.9993475+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": << Empty Schema >>\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:04.9993475+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"1 - t03 isolated test\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.0494064+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"2 - t05 skill policy prompt\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.0820789+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"3 - t06 article\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.1241005+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 function permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.1356188+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 schema permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.1467232+08:00\",\"@version\":\"1\",\"message\":\"Successfully applied 5 migrations to schema \\\"editorial_migrations\\\", now at version v3 (execution time 00:00.091s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.2556831+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.2972006+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.3250182+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.5285694+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.5493258+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.5852318+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@58e4aa67\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.5872338+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.6359114+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.8520075+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:05.8549712+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:06.3951654+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:06.8643997+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 6744 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:06.875399+08:00\",\"@version\":\"1\",\"message\":\"Started T06PostgresTest in 4.986 seconds (process running for 6.449)\",\"logger_name\":\"com.example.editorial.article.job.T06PostgresTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\nMockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3\nWARNING: A Java agent has been loaded dynamically (E:\\project\\codex\\wxAgent\\.tools\\t02\\m2\\net\\bytebuddy\\byte-buddy-agent\\1.17.8\\byte-buddy-agent-1.17.8.jar)\nWARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning\nWARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information\nWARNING: Dynamic loading of agents will be disallowed by default in a future release\nOpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended\n{\"@timestamp\":\"2026-10-05T17:05:07.5638663+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring DispatcherServlet 'dispatcherServlet'\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:07.5638663+08:00\",\"@version\":\"1\",\"message\":\"Initializing Servlet 'dispatcherServlet'\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-05T17:05:07.5638663+08:00\",\"@version\":\"1\",\"message\":\"Completed initialization in 0 ms\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.52 s -- in com.example.editorial.article.job.T06PostgresTest\n[INFO] Running com.example.editorial.shared.CanonicalRequestTest\n[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.example.editorial.shared.CanonicalRequestTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 48, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  18.076 s\n[INFO] Finished at: 2026-10-05T17:05:12+08:00\n[INFO] ------------------------------------------------------------------------\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d\\data",
+        "-m",
+        "immediate",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down.... done\nserver stopped\n"
+    }
+  ],
+  "reviewRegressions": [
+    "docs\\execution\\reviews\\T06-round1\\ReviewArticleAstTest.java",
+    "docs\\execution\\reviews\\T06-round2\\ReviewNestedClosureTest.java",
+    "docs\\execution\\reviews\\T06-round3\\ReviewEmphasisPunctuationTest.java"
+  ],
+  "t03Patch": {
+    "status": "CORRUPT_PATCH_WORKED_AROUND",
+    "detail": "git apply rejected shared-integration.patch as corrupt; equivalent wiring applied directly"
+  },
+  "testResults": "docs\\execution\\reviews\\T06-round4\\evidence\\current-host-test-results",
+  "isolatedWork": "docs\\execution\\reviews\\T06-round4\\.work\\a569df710e464baa8295b56eb76fcc0d",
+  "exitCode": 0
+}

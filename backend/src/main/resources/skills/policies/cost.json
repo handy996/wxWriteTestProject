@@ -1,0 +1,17 @@
+{
+  "policyType": "COST",
+  "version": "1.0.0",
+  "rules": {
+    "hardGates": {
+      "atomicBudgetReservationRequired": true,
+      "knownPriceRequiredBeforePaidCall": true,
+      "unknownOutcomeRequiresReconciliation": true,
+      "noDoubleCountingTokens": true,
+      "budgetIncreaseDoesNotChangeGeneratedContent": true
+    },
+    "settlement": {
+      "cancelOrPauseDoesNotWaiveIncurredCost": true,
+      "unusedReservationReleasedOnSettlement": true
+    }
+  }
+}

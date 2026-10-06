@@ -1,0 +1,369 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "Python 3.12.14\n"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T07\\t06-extension.patch"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T07\\composition-root.patch"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\shared-integration.patch"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\check_contracts.py"
+      ],
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe",
+        "version"
+      ],
+      "exitCode": 0,
+      "output": "8.30.1\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe",
+        "dir",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T07-round2\\.work\\source-scan-rqa6q_5r",
+        "--redact",
+        "--no-banner",
+        "--config",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\gitleaks.toml",
+        "--report-format",
+        "json",
+        "--report-path",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T07-round2\\evidence\\checks-gitleaks.json"
+      ],
+      "exitCode": 1,
+      "output": "11:18AM INF scanned ~24448984 bytes (24.45 MB) in 975ms\n11:18AM WRN leaks found: 6\n"
+    }
+  ],
+  "inputCount": 1151,
+  "changedInputs": [],
+  "changedT06ReviewedFiles": [],
+  "tests": [
+    {
+      "name": "current",
+      "exitCode": 0,
+      "totals": {
+        "tests": 73,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "name": "com.example.editorial.article.ast.ArticleAstTest",
+          "tests": 14,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.ast.ReviewArticleAstTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.ast.ReviewEmphasisPunctuationTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.ast.ReviewNestedClosureTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.job.DeletionHandoffTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.job.T06PostgresTest",
+          "tests": 19,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.version.ReviewVersionBoundaryTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.version.T07PostgresTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.version.T07RevisionBoundaryTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.version.T07UnavailableTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.article.version.VersionDiffTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.editorial.shared.CanonicalRequestTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ]
+    },
+    {
+      "name": "prior-upgrade",
+      "exitCode": 0,
+      "totals": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suites": [
+        {
+          "name": "com.example.editorial.article.version.T07UpgradeTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ]
+    }
+  ],
+  "schemaValidator": "4.26.0",
+  "schemas": [
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\ArticleVersion.json",
+      "definition": "ArticleVersion",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\RestoreVersion.json",
+      "definition": "ArticleVersion",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\LateVersion.json",
+      "definition": "ArticleVersion",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\ArticleVersionPage.json",
+      "definition": "ArticleVersionPage",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\Diff.json",
+      "definition": "Diff",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\ProposalPage.json",
+      "definition": "ProposalPage",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\DispositionResult.json",
+      "definition": "DispositionResult",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\StepContext.json",
+      "definition": "StepContext",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\WriterOutput.json",
+      "definition": "WriterOutput",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\article-artifact-sample.json",
+      "definition": "ArticleArtifact",
+      "errors": []
+    },
+    {
+      "path": "docs\\execution\\reviews\\T07-round2\\evidence\\current-samples\\article-version-sample.json",
+      "definition": "ArticleVersion",
+      "errors": []
+    }
+  ],
+  "secretScan": {
+    "exitCode": 1,
+    "findingPaths": [
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json"
+    ],
+    "newFindings": []
+  },
+  "files": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/proposal/ProposalService.java",
+      "sha256": "1c28f7e6ae014a1b18bf3d866a447893799c2e0b8d5156b485e2f14c8aaedcff"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/version/PageCursor.java",
+      "sha256": "78d341ec7a93c74b6fe287e91d219aade59e2ee866a09a1d7292fd8a6557e0f3"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/version/VersionController.java",
+      "sha256": "cefccb53e961c879718a5c178b6836ccc5661f08dd3e45e55b3cfa835e90f2a3"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/version/VersionDiff.java",
+      "sha256": "3b7188b4a4c9a5fb778428e4120e890609372880fe2321c7c4e071e36534bf01"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/version/VersionPorts.java",
+      "sha256": "803d941ef47918ff658a2dd2894d693e7d99e4f5d635ef82ef394a3b8b1877ec"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/version/VersionService.java",
+      "sha256": "0a7ca482ce1a3b3e4e99ca24c7195d1eeb1a75bc57b34c89c1b540bea55177e9"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/T07PostgresTest.java",
+      "sha256": "231aa5b94ab1da788d2a72435fc165e705eee9f9ede7d71b13cfdde91f84f280"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/T07RevisionBoundaryTest.java",
+      "sha256": "3fbf2fc3cddf67a26f901bfb7114e690673211b61e75a428e095706ded57e793"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/T07Support.java",
+      "sha256": "ee1def6b8f27a49358e2d70e0cdfec972fcf4d7ba0bc0cdacbc1145897f23758"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/T07UnavailableTest.java",
+      "sha256": "21c9639af53830b3824a85141888a5df916c72e49981e48783ad0bacb262da64"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/T07UpgradeTest.java",
+      "sha256": "0c00e7bb24872532bb0509469d555a6cc2e7bd6fd5af8a225ded770472a86824"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/TestParticipants.java",
+      "sha256": "85fbf5c40f2083a90109a69df43625bdcba84362125e85beb53dc885608c3a5c"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/version/VersionDiffTest.java",
+      "sha256": "98b825eb92e06d8d5447103e6d876ee06ac1219cf2e1035d0d643efee17bfac2"
+    },
+    {
+      "path": "docs/execution/reports/T07.md",
+      "sha256": "75fd9f4e8b81fbe60b6ddeca1751590fed71c9f31e94580cd84afea29c69f659"
+    },
+    {
+      "path": "tests/engineering/T07/.gitignore",
+      "sha256": "3cba886152bff7a7f8618aaa079dbb9aeee4b0214d890efa7154838f2cf42ebb"
+    },
+    {
+      "path": "tests/engineering/T07/VersionIntegration.java",
+      "sha256": "446f2bb0362949c88afc544e2f74b65453d427fdfa8a2b6de14ddfa35d74c374"
+    },
+    {
+      "path": "tests/engineering/T07/composition-root.patch",
+      "sha256": "e068aea408a69d3bab1afb1e1e460f66108ffb4ba4c0dd9bd5e724ce7dd21542"
+    },
+    {
+      "path": "tests/engineering/T07/extend_t06.py",
+      "sha256": "dfbccc3d90473ad0d09dff3b2ee20eb28fefa6cb8077b3d246b2a0620e3f75c0"
+    },
+    {
+      "path": "tests/engineering/T07/integration.py",
+      "sha256": "cdd4c32d8bff4e1ad3bf849531e10b96d6895f9d268ada4ab92b054862a8d3eb"
+    },
+    {
+      "path": "tests/engineering/T07/migration-draft.sql",
+      "sha256": "96a8a78c5ba25854cc05b6d28af5d58a0b61b21eab387ede2716d73dff564402"
+    },
+    {
+      "path": "tests/engineering/T07/t06-extension.patch",
+      "sha256": "5ea086a95dd74903a5ac571ac1936954b15579404225f962bd14b013cc51c6a2"
+    },
+    {
+      "path": "tests/engineering/T07/verify_delivery.py",
+      "sha256": "e4491ff601fb2628459004729e45120c0763133559dde646700c735c07986d65"
+    },
+    {
+      "path": "tests/engineering/T07/verify_revision.py",
+      "sha256": "41c6a4cce61f8cb528596fc547c9bc6e01ca84560f6ae2268c6d77f4df400667"
+    }
+  ],
+  "failures": []
+}

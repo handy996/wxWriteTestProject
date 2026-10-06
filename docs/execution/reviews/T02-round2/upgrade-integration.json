@@ -1,0 +1,852 @@
+{
+  "mode": "REAL_POSTGRES_REAL_JVM_NO_PROVIDER",
+  "paidCalls": 0,
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\.work\\db14f1ecf8444b1b9bebff92c7ae71ad\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\.work\\db14f1ecf8444b1b9bebff92c7ae71ad\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/T02/.work/db14f1ecf8444b1b9bebff92c7ae71ad/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\T02^\\^.work^\\db14f1ecf8444b1b9bebff92c7ae71ad^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\.work\\db14f1ecf8444b1b9bebff92c7ae71ad\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\.work\\db14f1ecf8444b1b9bebff92c7ae71ad\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 8318",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT count(*) FROM pg_tables WHERE schemaname='editorial'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "0\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "tests\\engineering\\T02\\.work\\r01-legacy\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=mock",
+        "--server.address=127.0.0.1",
+        "--server.port=8319"
+      ],
+      "process": "legacy-b115a40-start",
+      "exitCode": "RUNNING_UNTIL_CONTROLLED_STOP"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history WHERE script='R__t02_schema_permissions.sql'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "1|R__t02_schema_permissions.sql|-1396979927|t\n"
+    },
+    {
+      "process": "legacy-b115a40-start",
+      "exitCode": 1,
+      "termination": "CONTROLLED_TEST_SHUTDOWN",
+      "output": "{\"@timestamp\":\"2026-10-03T21:42:44.9102804+08:00\",\"@version\":\"1\",\"message\":\"Starting EditorialApplication v0.1.0-SNAPSHOT using Java 21.0.12.1 with PID 2840 (E:\\\\project\\\\codex\\\\wxAgent\\\\tests\\\\engineering\\\\T02\\\\.work\\\\r01-legacy\\\\backend\\\\target\\\\editorial-0.1.0-SNAPSHOT.jar started by eie04 in E:\\\\project\\\\codex\\\\wxAgent)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:44.918915+08:00\",\"@version\":\"1\",\"message\":\"The following 1 profile is active: \\\"mock\\\"\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:45.9393932+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:45.9691285+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:46.5468027+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 8319 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:46.562506+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:46.5630938+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:46.6016701+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:46.6027936+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 1628 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.316021+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:8318/editorial?connectTimeout=2 (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.3610661+08:00\",\"@version\":\"1\",\"message\":\"Schema history table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" does not exist yet\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.3669665+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 1 migration (execution time 00:00.023s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.3775509+08:00\",\"@version\":\"1\",\"message\":\"Creating Schema History table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" ...\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.4727153+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": << Empty Schema >>\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.4837224+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 schema permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.5138208+08:00\",\"@version\":\"1\",\"message\":\"Successfully applied 1 migration to schema \\\"editorial_migrations\\\" (execution time 00:00.008s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.6025481+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.6567184+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.7021179+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.9053385+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.92666+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.9751112+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5ca4c88a\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:47.9781128+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:48.0422766+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:48.2520372+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:48.2524962+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:48.5940239+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:49.0044036+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 8319 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:49.0139406+08:00\",\"@version\":\"1\",\"message\":\"Started EditorialApplication in 4.56 seconds (process running for 5.191)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:49.4020083+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring DispatcherServlet 'dispatcherServlet'\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:49.4025256+08:00\",\"@version\":\"1\",\"message\":\"Initializing Servlet 'dispatcherServlet'\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:49.4041157+08:00\",\"@version\":\"1\",\"message\":\"Completed initialization in 2 ms\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE FUNCTION editorial.t02_legacy_probe() RETURNS integer LANGUAGE sql AS 'SELECT 42'; CREATE FUNCTION editorial.t02_legacy_probe(value integer) RETURNS integer LANGUAGE sql AS 'SELECT value'; GRANT EXECUTE ON FUNCTION editorial.t02_legacy_probe(integer) TO editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE FUNCTION\nCREATE FUNCTION\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_legacy_probe()"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "42\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=mock",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order"
+      ],
+      "process": "first-start",
+      "exitCode": "RUNNING_UNTIL_CONTROLLED_STOP"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_versioned_probe()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_versioned_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history WHERE script='R__t02_schema_permissions.sql'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "1|R__t02_schema_permissions.sql|-1396979927|t\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_legacy_probe()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_legacy_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_legacy_probe(7)"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "7\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE FUNCTION editorial.t02_new_probe() RETURNS integer LANGUAGE sql AS 'SELECT 42'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE FUNCTION\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_new_probe()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_new_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "GRANT EXECUTE ON FUNCTION editorial.t02_new_probe() TO editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "GRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_new_probe()"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "42\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history ORDER BY installed_rank"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "1|R__t02_schema_permissions.sql|-1396979927|t\n2|V1__t02_function_order_probe.sql|-1389489657|t\n3|R__t02_function_permissions.sql|1186590627|t\n"
+    },
+    {
+      "process": "first-start",
+      "exitCode": 1,
+      "termination": "CONTROLLED_TEST_SHUTDOWN",
+      "output": "{\"@timestamp\":\"2026-10-03T21:42:51.1051034+08:00\",\"@version\":\"1\",\"message\":\"Starting EditorialApplication v0.1.0-SNAPSHOT using Java 21.0.12.1 with PID 19320 (E:\\\\project\\\\codex\\\\wxAgent\\\\backend\\\\target\\\\editorial-0.1.0-SNAPSHOT.jar started by eie04 in E:\\\\project\\\\codex\\\\wxAgent)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:51.1208105+08:00\",\"@version\":\"1\",\"message\":\"The following 1 profile is active: \\\"mock\\\"\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.0937259+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.1228994+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.6825727+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 8319 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.6978709+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.6985045+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.7348546+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:52.7358529+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 1564 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.3891276+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:8318/editorial?connectTimeout=2 (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.4546855+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 3 migrations (execution time 00:00.036s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.5581201+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.5864297+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": null\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.5950908+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"1 - t02 function order probe\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.6142042+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 function permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.6313425+08:00\",\"@version\":\"1\",\"message\":\"Successfully applied 2 migrations to schema \\\"editorial_migrations\\\", now at version v1 (execution time 00:00.013s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.705768+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.7667157+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.8062984+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:53.9746715+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.0017817+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.0355984+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5a63fa71\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.0365982+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.0874001+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.2866909+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.2896238+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:54.6472177+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:55.0672856+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 8319 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:55.0718621+08:00\",\"@version\":\"1\",\"message\":\"Started EditorialApplication in 4.401 seconds (process running for 5.046)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:55.5930485+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring DispatcherServlet 'dispatcherServlet'\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:55.5941519+08:00\",\"@version\":\"1\",\"message\":\"Initializing Servlet 'dispatcherServlet'\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:55.5950502+08:00\",\"@version\":\"1\",\"message\":\"Completed initialization in 1 ms\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=mock",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order"
+      ],
+      "process": "second-start",
+      "exitCode": "RUNNING_UNTIL_CONTROLLED_STOP"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history ORDER BY installed_rank"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "1|R__t02_schema_permissions.sql|-1396979927|t\n2|V1__t02_function_order_probe.sql|-1389489657|t\n3|R__t02_function_permissions.sql|1186590627|t\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_versioned_probe()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_versioned_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_new_probe()"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "42\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE FUNCTION editorial.t02_after_restart() RETURNS integer LANGUAGE sql AS 'SELECT 42'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE FUNCTION\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_after_restart()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_after_restart\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_legacy_probe()"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for function t02_legacy_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT editorial.t02_legacy_probe(9)"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "9\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "DROP FUNCTION editorial.t02_legacy_probe(), editorial.t02_legacy_probe(integer)"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "DROP FUNCTION\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "DROP FUNCTION editorial.t02_versioned_probe(), editorial.t02_new_probe(), editorial.t02_after_restart()"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "DROP FUNCTION\n"
+    },
+    {
+      "process": "second-start",
+      "exitCode": 1,
+      "termination": "CONTROLLED_TEST_SHUTDOWN",
+      "output": "{\"@timestamp\":\"2026-10-03T21:42:57.8839993+08:00\",\"@version\":\"1\",\"message\":\"Starting EditorialApplication v0.1.0-SNAPSHOT using Java 21.0.12.1 with PID 20068 (E:\\\\project\\\\codex\\\\wxAgent\\\\backend\\\\target\\\\editorial-0.1.0-SNAPSHOT.jar started by eie04 in E:\\\\project\\\\codex\\\\wxAgent)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:57.8958873+08:00\",\"@version\":\"1\",\"message\":\"The following 1 profile is active: \\\"mock\\\"\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.1492614+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.1933065+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.9043698+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 8319 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.927586+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.9284882+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.9795571+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:42:59.9821195+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 2027 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:00.9289269+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:8318/editorial?connectTimeout=2 (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:00.9903584+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 3 migrations (execution time 00:00.036s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.1135208+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.1443611+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": 1\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.152583+08:00\",\"@version\":\"1\",\"message\":\"Schema \\\"editorial_migrations\\\" is up to date. No migration necessary.\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.2574594+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.3193889+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.3698765+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.6076909+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.6547772+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.6967142+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@146833a2\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.6971181+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:01.7562698+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:02.0201408+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:02.0212598+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:02.377348+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:02.755592+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 8319 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:02.7688607+08:00\",\"@version\":\"1\",\"message\":\"Started EditorialApplication in 5.527 seconds (process running for 6.25)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:03.2986054+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring DispatcherServlet 'dispatcherServlet'\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:03.2986054+08:00\",\"@version\":\"1\",\"message\":\"Initializing Servlet 'dispatcherServlet'\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:03.2996042+08:00\",\"@version\":\"1\",\"message\":\"Completed initialization in 1 ms\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-127.0.0.1-8319-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE TABLE editorial.t02_forbidden(id int)"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for schema editorial\nLINE 1: CREATE TABLE editorial.t02_forbidden(id int)\n                     ^\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE TEMP TABLE t02_forbidden(id int)"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied to create temporary tables in database \"editorial\"\nLINE 1: CREATE TEMP TABLE t02_forbidden(id int)\n                          ^\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE SCHEMA t02_forbidden"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for database editorial\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT * FROM editorial_migrations.flyway_schema_history"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for schema editorial_migrations\nLINE 1: SELECT * FROM editorial_migrations.flyway_schema_history\n                      ^\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SET ROLE editorial_migrator"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied to set role \"editorial_migrator\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "CREATE TABLE editorial.t02_permission_probe(id int PRIMARY KEY, active boolean, caption text)"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE TABLE\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "INSERT INTO editorial.t02_permission_probe VALUES(1,true,'test')"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for table t02_permission_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "GRANT SELECT, INSERT ON editorial.t02_permission_probe TO editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "GRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "INSERT INTO editorial.t02_permission_probe VALUES(1,true,'test')"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "INSERT 0 1\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "UPDATE editorial.t02_permission_probe SET active=false"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for table t02_permission_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "DELETE FROM editorial.t02_permission_probe"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for table t02_permission_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "TRUNCATE editorial.t02_permission_probe"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for table t02_permission_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "GRANT UPDATE(active) ON editorial.t02_permission_probe TO editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "GRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "UPDATE editorial.t02_permission_probe SET active=false WHERE id=1"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "UPDATE 1\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "UPDATE editorial.t02_permission_probe SET caption='tampered'"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "ERROR:  permission denied for table t02_permission_probe\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "DROP TABLE editorial.t02_permission_probe"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "DROP TABLE\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod,mock",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "21:43:06.910 [main] ERROR org.springframework.boot.SpringApplication -- Application run failed\njava.lang.IllegalStateException: T02_PROFILE: select exactly one of dev, mock, prod\n\tat com.example.editorial.bootstrap.StartupPolicy.require(StartupPolicy.java:41)\n\tat com.example.editorial.bootstrap.StartupPolicy.postProcessEnvironment(StartupPolicy.java:16)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:134)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:117)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)\n\tat org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)\n\tat java.base/java.lang.Iterable.forEach(Iterable.java:75)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)\n\tat org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)\n\tat org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:313)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\n\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order",
+        "--editorial.providers.mock-enabled=true"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "21:43:08.003 [main] ERROR org.springframework.boot.SpringApplication -- Application run failed\njava.lang.IllegalStateException: T02_MOCK: mock cannot be enabled outside mock profile\n\tat com.example.editorial.bootstrap.StartupPolicy.require(StartupPolicy.java:41)\n\tat com.example.editorial.bootstrap.StartupPolicy.postProcessEnvironment(StartupPolicy.java:22)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:134)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:117)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)\n\tat org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)\n\tat java.base/java.lang.Iterable.forEach(Iterable.java:75)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)\n\tat org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)\n\tat org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:313)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\n\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order",
+        "--editorial.providers.paid-calls-enabled=true"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "21:43:09.129 [main] ERROR org.springframework.boot.SpringApplication -- Application run failed\njava.lang.IllegalStateException: T02_PAID_CALLS: budget and provider integration not installed\n\tat com.example.editorial.bootstrap.StartupPolicy.require(StartupPolicy.java:41)\n\tat com.example.editorial.bootstrap.StartupPolicy.postProcessEnvironment(StartupPolicy.java:20)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:134)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:117)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)\n\tat org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)\n\tat java.base/java.lang.Iterable.forEach(Iterable.java:75)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)\n\tat org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)\n\tat org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:313)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\n\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order",
+        "--spring.jpa.hibernate.ddl-auto=update"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "21:43:10.167 [main] ERROR org.springframework.boot.SpringApplication -- Application run failed\njava.lang.IllegalStateException: T02_DDL: only validate is permitted\n\tat com.example.editorial.bootstrap.StartupPolicy.require(StartupPolicy.java:41)\n\tat com.example.editorial.bootstrap.StartupPolicy.postProcessEnvironment(StartupPolicy.java:24)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:134)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:117)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)\n\tat org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)\n\tat java.base/java.lang.Iterable.forEach(Iterable.java:75)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)\n\tat org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)\n\tat org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:313)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\n\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order",
+        "--spring.flyway.enabled=false"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "21:43:11.142 [main] ERROR org.springframework.boot.SpringApplication -- Application run failed\njava.lang.IllegalStateException: T02_FLYWAY: migration validation required\n\tat com.example.editorial.bootstrap.StartupPolicy.require(StartupPolicy.java:41)\n\tat com.example.editorial.bootstrap.StartupPolicy.postProcessEnvironment(StartupPolicy.java:26)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEnvironmentPreparedEvent(EnvironmentPostProcessorApplicationListener.java:134)\n\tat org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.onApplicationEvent(EnvironmentPostProcessorApplicationListener.java:117)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)\n\tat org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)\n\tat org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:81)\n\tat org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:64)\n\tat java.base/java.lang.Iterable.forEach(Iterable.java:75)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)\n\tat org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)\n\tat org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:63)\n\tat org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:353)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:313)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\n\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\n\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\n\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\n\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "GRANT editorial_migrator TO editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "GRANT ROLE\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "{\"@timestamp\":\"2026-10-03T21:43:12.4246112+08:00\",\"@version\":\"1\",\"message\":\"Starting EditorialApplication v0.1.0-SNAPSHOT using Java 21.0.12.1 with PID 7132 (E:\\\\project\\\\codex\\\\wxAgent\\\\backend\\\\target\\\\editorial-0.1.0-SNAPSHOT.jar started by eie04 in E:\\\\project\\\\codex\\\\wxAgent)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:12.4399638+08:00\",\"@version\":\"1\",\"message\":\"The following 1 profile is active: \\\"prod\\\"\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:13.5227739+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:13.5562586+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.1285345+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 8319 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.1456519+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.1467183+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.1841564+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.1851571+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 1687 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.8800349+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:8318/editorial?connectTimeout=2 (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:14.9522448+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 3 migrations (execution time 00:00.039s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.0610621+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.0912671+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": 1\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.0973075+08:00\",\"@version\":\"1\",\"message\":\"Schema \\\"editorial_migrations\\\" is up to date. No migration necessary.\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.1871104+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.2396465+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.2836972+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.478899+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.500109+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.5351224+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4d75c604\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.5362695+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.5867389+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.8118397+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:15.8235248+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.2146308+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.628861+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 8319 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.639816+08:00\",\"@version\":\"1\",\"message\":\"Started EditorialApplication in 4.704 seconds (process running for 5.331)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.7059811+08:00\",\"@version\":\"1\",\"message\":\"\\r\\n\\r\\nError starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.\",\"logger_name\":\"org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.719618+08:00\",\"@version\":\"1\",\"message\":\"Application run failed\",\"logger_name\":\"org.springframework.boot.SpringApplication\",\"thread_name\":\"main\",\"level\":\"ERROR\",\"level_value\":40000,\"stack_trace\":\"java.lang.IllegalStateException: T02_DB_PRIVILEGES: runtime role has unexpected privileges\\r\\n\\tat com.example.editorial.bootstrap.DatabaseRolePolicy.run(DatabaseRolePolicy.java:32)\\r\\n\\tat org.springframework.boot.SpringApplication.lambda$callRunner$4(SpringApplication.java:784)\\r\\n\\tat org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:82)\\r\\n\\tat org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)\\r\\n\\tat org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:86)\\r\\n\\tat org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:796)\\r\\n\\tat org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:784)\\r\\n\\tat org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:772)\\r\\n\\tat java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)\\r\\n\\tat java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357)\\r\\n\\tat java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:510)\\r\\n\\tat java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)\\r\\n\\tat java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)\\r\\n\\tat java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)\\r\\n\\tat java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)\\r\\n\\tat java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)\\r\\n\\tat org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:772)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:325)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\\r\\n\\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\\r\\n\\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\\r\\n\\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\\r\\n\\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\\r\\n\\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\\r\\n\\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\\r\\n\"}\n{\"@timestamp\":\"2026-10-03T21:43:16.7263379+08:00\",\"@version\":\"1\",\"message\":\"Commencing graceful shutdown. Waiting for active requests to complete\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.GracefulShutdown\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.7288297+08:00\",\"@version\":\"1\",\"message\":\"Graceful shutdown complete\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.GracefulShutdown\",\"thread_name\":\"tomcat-shutdown\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.7321265+08:00\",\"@version\":\"1\",\"message\":\"Closing JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.7351253+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Shutdown initiated...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:16.7371261+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Shutdown completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "REVOKE editorial_migrator FROM editorial_runtime"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "REVOKE ROLE\n"
+    },
+    {
+      "argv": [
+        "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+        "-jar",
+        "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar",
+        "--spring.profiles.active=prod",
+        "--server.address=127.0.0.1",
+        "--server.port=8319",
+        "--spring.flyway.locations=classpath:db/migration,filesystem:E:/project/codex/wxAgent/tests/engineering/T02/fixtures/function-order"
+      ],
+      "exitCode": 1,
+      "expected": "nonzero",
+      "output": "{\"@timestamp\":\"2026-10-03T21:43:17.969853+08:00\",\"@version\":\"1\",\"message\":\"Starting EditorialApplication v0.1.0-SNAPSHOT using Java 21.0.12.1 with PID 21568 (E:\\\\project\\\\codex\\\\wxAgent\\\\backend\\\\target\\\\editorial-0.1.0-SNAPSHOT.jar started by eie04 in E:\\\\project\\\\codex\\\\wxAgent)\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:17.983713+08:00\",\"@version\":\"1\",\"message\":\"The following 1 profile is active: \\\"prod\\\"\",\"logger_name\":\"com.example.editorial.EditorialApplication\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.058676+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.0922998+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.7749759+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 8319 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.791681+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.7939042+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.836213+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:19.8382158+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 1800 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:20.3322257+08:00\",\"@version\":\"1\",\"message\":\"Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Unable to obtain connection from database: Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\\nSQL State  : 08001\\nError Code : 0\\nMessage    : Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n\",\"logger_name\":\"org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"WARN\",\"level_value\":30000}\n{\"@timestamp\":\"2026-10-03T21:43:20.3372257+08:00\",\"@version\":\"1\",\"message\":\"Stopping service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:20.351353+08:00\",\"@version\":\"1\",\"message\":\"\\r\\n\\r\\nError starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.\",\"logger_name\":\"org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-03T21:43:20.3733978+08:00\",\"@version\":\"1\",\"message\":\"Application run failed\",\"logger_name\":\"org.springframework.boot.SpringApplication\",\"thread_name\":\"main\",\"level\":\"ERROR\",\"level_value\":40000,\"stack_trace\":\"org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Unable to obtain connection from database: Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\\nSQL State  : 08001\\nError Code : 0\\nMessage    : Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:328)\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)\\r\\n\\tat org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:974)\\r\\n\\tat org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:628)\\r\\n\\tat org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)\\r\\n\\tat org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)\\r\\n\\tat org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:318)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)\\r\\n\\tat org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)\\r\\n\\tat com.example.editorial.EditorialApplication.main(EditorialApplication.java:10)\\r\\n\\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\\r\\n\\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\\r\\n\\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:106)\\r\\n\\tat org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)\\r\\n\\tat org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)\\r\\nCaused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Unable to obtain connection from database: Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\\nSQL State  : 08001\\nError Code : 0\\nMessage    : Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n\\r\\n\\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1824)\\r\\n\\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607)\\r\\n\\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)\\r\\n\\tat org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)\\r\\n\\tat org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)\\r\\n\\t... 15 common frames omitted\\r\\nCaused by: org.flywaydb.core.internal.exception.FlywaySqlException: Unable to obtain connection from database: Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\\nSQL State  : 08001\\nError Code : 0\\nMessage    : Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\n\\r\\n\\tat org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:71)\\r\\n\\tat org.flywaydb.core.internal.jdbc.JdbcConnectionFactory.<init>(JdbcConnectionFactory.java:76)\\r\\n\\tat org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:136)\\r\\n\\tat org.flywaydb.core.Flyway.migrate(Flyway.java:188)\\r\\n\\tat org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)\\r\\n\\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1871)\\r\\n\\tat org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1820)\\r\\n\\t... 22 common frames omitted\\r\\nCaused by: org.postgresql.util.PSQLException: Connection to 127.0.0.1:3301 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.\\r\\n\\tat org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427)\\r\\n\\tat org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52)\\r\\n\\tat org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295)\\r\\n\\tat org.postgresql.Driver.makeConnection(Driver.java:437)\\r\\n\\tat org.postgresql.Driver.connect(Driver.java:305)\\r\\n\\tat org.springframework.jdbc.datasource.SimpleDriverDataSource.getConnectionFromDriver(SimpleDriverDataSource.java:144)\\r\\n\\tat org.springframework.jdbc.datasource.AbstractDriverBasedDataSource.getConnectionFromDriver(AbstractDriverBasedDataSource.java:205)\\r\\n\\tat org.springframework.jdbc.datasource.AbstractDriverBasedDataSource.getConnection(AbstractDriverBasedDataSource.java:169)\\r\\n\\tat org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:59)\\r\\n\\t... 28 common frames omitted\\r\\nCaused by: java.net.ConnectException: Connection refused: getsockopt\\r\\n\\tat java.base/sun.nio.ch.Net.pollConnect(Native Method)\\r\\n\\tat java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694)\\r\\n\\tat java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)\\r\\n\\tat java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)\\r\\n\\tat java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)\\r\\n\\tat java.base/java.net.Socket.connect(Socket.java:751)\\r\\n\\tat org.postgresql.core.PGStream.createSocket(PGStream.java:270)\\r\\n\\tat org.postgresql.core.PGStream.<init>(PGStream.java:131)\\r\\n\\tat org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221)\\r\\n\\tat org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367)\\r\\n\\t... 36 common frames omitted\\r\\n\"}\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+        "-c",
+        "SELECT count(*) FROM pg_tables WHERE schemaname='editorial'"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "0\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\.work\\db14f1ecf8444b1b9bebff92c7ae71ad\\data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down..... done\nserver stopped\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    }
+  ],
+  "checks": [
+    "Bootstrap creates separate runtime/migration roles on an empty real PostgreSQL database",
+    "No domain tables before application startup",
+    "Legacy b115a40 reproduces R01 before upgrade",
+    "Upgrade or empty database: packaged Java 21 application reaches readiness UP",
+    "Global deny applies inside a versioned migration, before repeatables",
+    "Upgrade preserves original migration checksum and history row",
+    "Upgrade revokes PUBLIC on existing function, preserves explicit overloaded grant",
+    "New migration-owned function denies runtime before explicit grant",
+    "Explicit function grant permits runtime execution",
+    "Mock mode is explicit and all real capabilities remain unavailable",
+    "Blocked unauthenticated or sensitive route: /api/v1/articles",
+    "Blocked unauthenticated or sensitive route: /actuator/env",
+    "Blocked unauthenticated or sensitive route: /actuator/configprops",
+    "Flyway applied infrastructure correction plus isolated ordering fixture",
+    "Second application startup leaves migration history unchanged",
+    "Restart preserves explicit function grant",
+    "Restart preserves default function deny",
+    "Restart preserves upgraded function ACLs",
+    "Runtime cannot create tables/temp tables/schemas, read history, or assume migrator",
+    "Default deny; explicit INSERT and column UPDATE work without blanket UPDATE/DELETE",
+    "Packaged application rejects T02_PROFILE",
+    "Packaged application rejects T02_MOCK",
+    "Packaged application rejects T02_PAID_CALLS",
+    "Packaged application rejects T02_DDL",
+    "Packaged application rejects T02_FLYWAY",
+    "Effective database privilege escalation is rejected",
+    "Unreachable database fails startup instead of reporting ready",
+    "No business tables introduced"
+  ],
+  "artifacts": {
+    "E:\\project\\codex\\wxAgent\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar": "e6c513804f1c69e9f8bf7bb22dfdb8fbcabd1586763e30b80854d4b31ae4d23a",
+    "tests\\engineering\\T02\\.work\\r01-legacy\\backend\\target\\editorial-0.1.0-SNAPSHOT.jar": "4acc06d5423a0b94f064ae3f164c66933e1c87ddd7cf9f30b18315a58ee6ce18"
+  },
+  "exitCode": 0,
+  "utc": "2026-10-03T13:43:22.190195+00:00",
+  "postgresql": "postgres (PostgreSQL) 17.11"
+}

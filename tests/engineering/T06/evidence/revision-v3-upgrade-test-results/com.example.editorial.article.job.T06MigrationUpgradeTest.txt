@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.job.T06MigrationUpgradeTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.527 s -- in com.example.editorial.article.job.T06MigrationUpgradeTest

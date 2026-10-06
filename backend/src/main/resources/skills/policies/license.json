@@ -1,0 +1,18 @@
+{
+  "policyType": "LICENSE",
+  "version": "1.0.0",
+  "rules": {
+    "hardReject": ["UNKNOWN", "NC", "ND"],
+    "conditional": {
+      "SA": "obligations must be satisfiable and verified before use",
+      "missingAuthor": "attribution obligations must be satisfied"
+    },
+    "hardGates": {
+      "unknownLicenseNeverAutoUsable": true,
+      "ncNdNeverAutoUsable": true,
+      "unsatisfiedSaNeverAutoUsable": true,
+      "missingChecksNeverPass": true,
+      "manualRiskAcceptanceCannotReleaseUnknown": true
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "version": "4.26.0",
+  "samples": [
+    {
+      "name": "AnalysisOutput",
+      "errors": [],
+      "negativeCases": [
+        {
+          "missing": "coreThesis",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "targetReader",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "articleType",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "outline",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "strongSections",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "weakSections",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "repeatedArguments",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "sectionsToDelete",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "sectionsToCompress",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "sectionsToExpand",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "logicProblems",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "factClaims",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "recommendedStructure",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "recommendedTitles",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "recommendedHeadings",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "imageOpportunities",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "risks",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "uncertainties",
+          "rejectedByRequired": true
+        }
+      ],
+      "serverWrapperRejected": true
+    },
+    {
+      "name": "WriterOutput",
+      "errors": [],
+      "negativeCases": [
+        {
+          "missing": "title",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "subtitle",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "contentAst",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "changeSummary",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "usedClaimIds",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "newClaimCandidates",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "requiresReviewItems",
+          "rejectedByRequired": true
+        }
+      ],
+      "serverWrapperRejected": true
+    },
+    {
+      "name": "ReviewOutput",
+      "errors": [],
+      "negativeCases": [
+        {
+          "missing": "summary",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "scores",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "items",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "overallDecision",
+          "rejectedByRequired": true
+        }
+      ],
+      "serverWrapperRejected": true
+    },
+    {
+      "name": "RevisionOutput",
+      "errors": [],
+      "negativeCases": [
+        {
+          "missing": "writer",
+          "rejectedByRequired": true
+        },
+        {
+          "missing": "itemDecisions",
+          "rejectedByRequired": true
+        }
+      ],
+      "serverWrapperRejected": true
+    }
+  ]
+}

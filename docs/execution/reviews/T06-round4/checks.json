@@ -1,0 +1,38 @@
+[
+  {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "tests/engineering/T02/check_contracts.py"
+    ],
+    "exitCode": 0,
+    "output": "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--check",
+      "tests/engineering/T06/shared-integration.patch"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T06-round4\\verify.py",
+      "--scan"
+    ],
+    "exitCode": 1,
+    "output": "5:05PM INF scanned ~17814651 bytes (17.81 MB) in 659ms\n5:05PM WRN leaks found: 6\n\n[\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 67,\n  \"EndLine\": 67,\n  \"StartColumn\": 38,\n  \"EndColumn\": 135,\n  \"Match\": \"compose-missing-password.json\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.7377474,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:67\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 110,\n  \"EndLine\": 110,\n  \"StartColumn\": 38,\n  \"EndColumn\": 132,\n  \"Match\": \"r01-secret-scan-final.json\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.6937957,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:110\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 111,\n  \"EndLine\": 111,\n  \"StartColumn\": 38,\n  \"EndColumn\": 126,\n  \"Match\": \"r01-secret-scan.json\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.8390038,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:111\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 115,\n  \"EndLine\": 115,\n  \"StartColumn\": 38,\n  \"EndColumn\": 132,\n  \"Match\": \"secret-patterns-final.json\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.7036936,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:115\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 124,\n  \"EndLine\": 124,\n  \"StartColumn\": 29,\n  \"EndColumn\": 112,\n  \"Match\": \"scan_secrets.py\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.777814,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:124\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 125,\n  \"EndLine\": 125,\n  \"StartColumn\": 29,\n  \"EndColumn\": 111,\n  \"Match\": \"secret_scan.py\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.898383,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T06-round4/.work/secret-scan-duby0306/tests/engineering/T02/evidence/r01-integrity.json:generic-api-key:125\"\n }\n]\n\n"
+  }
+]

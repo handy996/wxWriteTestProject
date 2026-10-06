@@ -1,0 +1,48 @@
+{
+  "code": "WechatEditorialSkill",
+  "name": "WechatEditorialSkill",
+  "config": {
+    "name": "WechatEditorialSkill",
+    "description": "公众号内部编辑草稿的默认编辑规则基线：标题、开头、结构、小标题、移动阅读、段落长度、碎片化、信息密度与视觉约束。",
+    "locale": "zh-CN",
+    "channel": "WECHAT",
+    "audience": ["普通公众号读者"],
+    "tone": ["真实", "克制"],
+    "structureRules": ["场景→异常→问题→扩展样本→机制→影响→普通读者", "可按体裁偏离，但必须输出原因"],
+    "titleRules": ["提供 5 个候选标题", "优先反差、问题、重新定义、适度情绪", "标题候选不能超出正文证据", "夸大重要事实为 BLOCKER"],
+    "openingRules": { "problemWithinChars": 300 },
+    "headingRules": ["小标题概括本节且有信息差", "避免『第一部分』『原因分析』『总结』等模板词"],
+    "readabilityRules": {
+      "recommendedMin": 40,
+      "recommendedMax": 160,
+      "longParagraphWarning": 220,
+      "veryLongParagraph": 320,
+      "shortParagraphMax": 29,
+      "shortParagraphRun": 5
+    },
+    "imageRules": { "maxBodyImages": 5, "optionalCover": true },
+    "factPolicyRef": { "policyType": "FACT" },
+    "licensePolicyRef": { "policyType": "LICENSE" },
+    "promptBindings": [
+      { "agentName": "Analyzer", "outputSchema": "AnalysisOutput" },
+      { "agentName": "Writer", "outputSchema": "WriterOutput" },
+      { "agentName": "EditorialReviewer", "outputSchema": "ReviewOutput" },
+      { "agentName": "WriterRevision", "outputSchema": "RevisionOutput" }
+    ],
+    "examples": [
+      "以具体场景开篇，在前 300 字内建立核心问题。",
+      "删除同义结论，保留样本、机制与限制条件。"
+    ],
+    "antiExamples": [
+      "用『第一部分/原因分析/总结』作为小标题。",
+      "单段超过 320 字且不拆分、不说明处置。"
+    ],
+    "evaluationRubric": [
+      "主题保真（1–5）",
+      "结构（1–5）",
+      "信息密度（1–5）",
+      "标题一致性（1–5）",
+      "移动阅读（1–5）"
+    ]
+  }
+}

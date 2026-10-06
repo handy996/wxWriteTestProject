@@ -1,0 +1,149 @@
+{
+  "originalFiles": 619,
+  "changedOriginalFiles": [
+    "backend/src/main/java/com/example/editorial/storage/S3StorageBackend.java",
+    "backend/src/main/java/com/example/editorial/storage/SigV4.java",
+    "infra/storage.env.example"
+  ],
+  "unexpectedChanges": [],
+  "approvedContractFiles": 27,
+  "contractFailures": [],
+  "delivery": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/DefaultObjectStore.java",
+      "sha256": "443c5156b536a9f3ab92fd59a29eb9e3b56a29d59c3aeded7dd459d8298694b6"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/LocalDownloadConfiguration.java",
+      "sha256": "0b23dab3ec4087f0d382bc61678330f63e5b8042fad35b7606cff7c27e646e53"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/LocalDownloadHandler.java",
+      "sha256": "619624ae7493bc4277bd6c2f6fc859914481b2df3d5be441ef976853ebdc77cb"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/LocalStorageBackend.java",
+      "sha256": "31f02df82ec65def3cb24c19d30d7f39106085a10d24b7ec19fb21e33e7d332a"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectKeys.java",
+      "sha256": "a7d87585a6c31b662c364b52b4de3fd4ee25e04eef7f1a6a4cefd131878779f0"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectRef.java",
+      "sha256": "8b0d741f0bae9c193fc23bf8efc67686bef67f07059547d3b5d35d3b72b337fd"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectRefRegistry.java",
+      "sha256": "b360e18d04eae5c081dab2786aafd0f1b4a522d3227a250106a6184601d4f49f"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectRetention.java",
+      "sha256": "e740183c0fc0af0f3a051d49c2f73f44b6b96bfc9748272108ad2100ea912f70"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectStatus.java",
+      "sha256": "473c43f10fff3d59df81a22d468f065c4c42f5145c1c51d38166371037719b39"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectStore.java",
+      "sha256": "c09944b3ac72930e559c2fabd53c8126f703eccb557252018bb7142b8e326f49"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectTransactionLock.java",
+      "sha256": "862cab302f81ac0d3df7dae8511f9c4436c359b1b197317f93accc3bc99d6fc4"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/S3StorageBackend.java",
+      "sha256": "e62952b5438df288ab51679ae9d38a1322f10d42f717a5497cc7f77d584ea750"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/SigV4.java",
+      "sha256": "7d2d5634d601e047417d06bd850de19230edd3a06b3623d8927b426a93587f70"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/SignedUrl.java",
+      "sha256": "62c9525bed903d75f825062bd7e130f1dac3b26b1c5f16559944f34705a5bece"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/StorageBackend.java",
+      "sha256": "ecb1e401d87bf4f51420e3bab371b88a34edde94ffbd5023e1df1f52cea68d51"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/StorageConfiguration.java",
+      "sha256": "7e80082d0a6f18c77aa148e9a9127fd124c2bbbbeda9626b339214527f858e72"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/StoredObject.java",
+      "sha256": "d5084fd5693abbf3417fc3b883a357b75e9e5e43db17b61a0af9a404e5e6c586"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/LocalDownloadHttpTest.java",
+      "sha256": "134d854cab66422791b0b1fadcae5cf9a69c0cb0c7003dc193d81c60975d1cca"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/LocalStorageBackendTest.java",
+      "sha256": "c3e28c95d1add332630bbbcaed7d4c12669de7c4da6f1e529c05b0da97310720"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/ObjectKeysTest.java",
+      "sha256": "93ccd56e29724f45f9178a3027762d21a131f28c125f7fdf3b6c33a06cfe9142"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/S3EndpointAuthorityTest.java",
+      "sha256": "6d5e0998044944f5b17a1b148134fcb01b58ac14dae94f925287b5a5f810151b"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/S3ProtocolRegressionTest.java",
+      "sha256": "649218e2e95aa9afc554f7f5e9a79cc3a2093ccb8ae087a9832bdfa9af2b34e4"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/S3StorageBackendTest.java",
+      "sha256": "c8b4e71dfe4ad62068935783511282255ed9f28715fe468ab86f5fea32f70b88"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/SigV4Test.java",
+      "sha256": "18e969c0aaf889ec742bed8b0ca5ae803645ee4b8d08cb9801a440576d86f3ce"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/SignedUrlTest.java",
+      "sha256": "1d19f737bdef4994c120741a242bcc0ba3eabf4d2374f8c801eee9155e2b8746"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/T04PostgresTest.java",
+      "sha256": "67db85eed04b8a70fee4565d91584e1bb1cc4e0933cadc0f7173529945349dae"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/storage/T04RevisionPostgresTest.java",
+      "sha256": "1c63a45e36818bf5762347e8089192bdde53efcef96e2eef6f893a28aa9e4627"
+    },
+    {
+      "path": "docs/execution/reports/T04-Revision-v2.0.md",
+      "sha256": "96af85e777f6b773173f5e4fbc8e3ce2d7df2f99dc126f13c613dce15d955dc2"
+    },
+    {
+      "path": "infra/storage.env.example",
+      "sha256": "b6a06b9a308747de1f6ea8af1d822d8f0986c2bc4538b63d51d4ee0231b81059"
+    },
+    {
+      "path": "tests/engineering/T04/revision2/after-fix.json",
+      "sha256": "6f199810b87e1f0b93f91a45eb4c5bb78ee2daf605e7462ee369d3eb10cbd079"
+    },
+    {
+      "path": "tests/engineering/T04/revision2/before-fix.json",
+      "sha256": "59c86b70a57a7a980323b9f67db67e578738ebaa29763f646a45bb35c0a8c0bb"
+    },
+    {
+      "path": "tests/engineering/T04/revision2/check_integrity.py",
+      "sha256": "b6b86cf4f13b0f3fec40c82bad010763506bb449e8de5c00bac2fab62402f907"
+    },
+    {
+      "path": "tests/engineering/T04/revision2/run_scans.py",
+      "sha256": "90ddbfda717cb815d159e23cbd89490cf3b579712fb6893cfa7e2adfe4edf6a1"
+    },
+    {
+      "path": "tests/engineering/T04/revision2/verify.py",
+      "sha256": "06f1371981e51567b5664418947dd3f8e9678d0df5be92b881008c81cbc8c4b3"
+    }
+  ]
+}

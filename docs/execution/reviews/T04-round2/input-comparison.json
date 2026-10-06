@@ -1,0 +1,133 @@
+{
+  "snapshotFiles": 572,
+  "changedExistingSinceRound1": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/DefaultObjectStore.java",
+      "previousSha256": "d157ac6cc18976e84b46275103adede0ae090684231a381fd7c5063830e46015",
+      "currentSha256": "443c5156b536a9f3ab92fd59a29eb9e3b56a29d59c3aeded7dd459d8298694b6"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/LocalStorageBackend.java",
+      "previousSha256": "ea622710a5300d2e95e4f7f8ebd564cfdaeff9a406248abed7c2efc11895032a",
+      "currentSha256": "31f02df82ec65def3cb24c19d30d7f39106085a10d24b7ec19fb21e33e7d332a"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/ObjectRefRegistry.java",
+      "previousSha256": "16e50c145442d2c4140a2effb2bb162e94c6c9cfb299bf8b9fdb6e148e85f240",
+      "currentSha256": "b360e18d04eae5c081dab2786aafd0f1b4a522d3227a250106a6184601d4f49f"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/S3StorageBackend.java",
+      "previousSha256": "7f579587e71462fe9a1479c732029ecfc9a758b5eae1e6a9cc7a8276c7ff4531",
+      "currentSha256": "fdc6c9ae2888f740825dce570a0a55739a773460806c60fad4ffd07f33a916b2"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/SigV4.java",
+      "previousSha256": "bfd9060d8d14710e8e5ebb8504e6b46550a244d19f5b686e8c8c402f805ec8c3",
+      "currentSha256": "ad2f26e05e132ae4bd4b2dd51e51e5b511d0ebcaf91f405d2d913d979fcf115c"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/SignedUrl.java",
+      "previousSha256": "467612eee9a46d352cec01de2e236c103ecd10111e1a34df69f2cafa680d1f08",
+      "currentSha256": "62c9525bed903d75f825062bd7e130f1dac3b26b1c5f16559944f34705a5bece"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/storage/StorageBackend.java",
+      "previousSha256": "fa9c797572e1ea042653293973032d02cbbb4b14f6b92fa79ced0f21cba5780b",
+      "currentSha256": "ecb1e401d87bf4f51420e3bab371b88a34edde94ffbd5023e1df1f52cea68d51"
+    },
+    {
+      "path": "infra/storage.env.example",
+      "previousSha256": "0d814840e2680a58ddbc763acef306fc5f5c9f24402863c317d297973b3981bd",
+      "currentSha256": "302b1432ace734bdd999162f599e2dafe3067c52191206b51ac40353e419ddda"
+    },
+    {
+      "path": "tests/engineering/T02/gitleaks.toml",
+      "previousSha256": "fef207ec4ef4880115f71694b589d6c34a55b4e3d0d18d1391baa6df35d88c6e",
+      "currentSha256": "27e8f28b62096fb1c4647c64cf7e63f9da52ae65119562f5a55e57fc8d5e2873"
+    },
+    {
+      "path": "tests/engineering/T04/integration.py",
+      "previousSha256": "0cd9c7ec96449e45ed968f12c05393dc4d6bd02b332e2db5a5acdf31f603b0a9",
+      "currentSha256": "0866733fc06f2f8911aaee2c250f79bd3662d7433dcf63e12ba292c5dacb5878"
+    }
+  ],
+  "newFilesSinceRound1": [
+    "backend/src/main/java/com/example/editorial/storage/LocalDownloadConfiguration.java",
+    "backend/src/main/java/com/example/editorial/storage/LocalDownloadHandler.java",
+    "backend/src/main/java/com/example/editorial/storage/ObjectTransactionLock.java",
+    "backend/src/test/java/com/example/editorial/storage/LocalDownloadHttpTest.java",
+    "backend/src/test/java/com/example/editorial/storage/S3ProtocolRegressionTest.java",
+    "backend/src/test/java/com/example/editorial/storage/T04RevisionPostgresTest.java",
+    "docs/execution/reports/T04-Revision-v1.0.md",
+    "docs/execution/reviews/T04-Review-v1.0.md",
+    "docs/execution/reviews/T04-round1/.gitignore",
+    "docs/execution/reviews/T04-round1/ReviewCounterexamplesTest.java",
+    "docs/execution/reviews/T04-round1/ReviewS3ProtocolTest.java",
+    "docs/execution/reviews/T04-round1/after.json",
+    "docs/execution/reviews/T04-round1/before.json",
+    "docs/execution/reviews/T04-round1/build-location.json",
+    "docs/execution/reviews/T04-round1/environment-attempts.json",
+    "docs/execution/reviews/T04-round1/evidence-normalization.json",
+    "docs/execution/reviews/T04-round1/gitleaks-findings.json",
+    "docs/execution/reviews/T04-round1/gitleaks-initial.json",
+    "docs/execution/reviews/T04-round1/integrity.json",
+    "docs/execution/reviews/T04-round1/normalize_evidence.py",
+    "docs/execution/reviews/T04-round1/review_runner.py",
+    "docs/execution/reviews/T04-round1/run_scans.py",
+    "docs/execution/reviews/T04-round1/runner-pipe-attempt.json",
+    "docs/execution/reviews/T04-round1/sandbox-attempt.json",
+    "docs/execution/reviews/T04-round1/scans-initial.json",
+    "docs/execution/reviews/T04-round1/scans.json",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.LocalStorageBackendTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.ObjectKeysTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.ReviewCounterexamplesTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.ReviewS3ProtocolTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.S3StorageBackendTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.SigV4Test.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.SignedUrlTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/TEST-com.example.editorial.storage.T04PostgresTest.xml",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.LocalStorageBackendTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.ObjectKeysTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.ReviewCounterexamplesTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.ReviewS3ProtocolTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.S3StorageBackendTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.SigV4Test.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.SignedUrlTest.txt",
+    "docs/execution/reviews/T04-round1/test-results/com.example.editorial.storage.T04PostgresTest.txt",
+    "docs/execution/reviews/T04-round1/verification.json",
+    "tests/engineering/T04/evidence/revision1-integration.json",
+    "tests/engineering/T04/revision1/before.json",
+    "tests/engineering/T04/revision1/check_integrity.py",
+    "tests/engineering/T04/revision1/environment.json",
+    "tests/engineering/T04/revision1/gitleaks-findings.json",
+    "tests/engineering/T04/revision1/integration-attempt1.json",
+    "tests/engineering/T04/revision1/integration-attempt2.json",
+    "tests/engineering/T04/revision1/integration-before-final-checks.json",
+    "tests/engineering/T04/revision1/integrity.json",
+    "tests/engineering/T04/revision1/run_scans.py",
+    "tests/engineering/T04/revision1/scans.json",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.LocalDownloadHttpTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.LocalStorageBackendTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.ObjectKeysTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.S3ProtocolRegressionTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.S3StorageBackendTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.SigV4Test.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.SignedUrlTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.T04PostgresTest.xml",
+    "tests/engineering/T04/revision1/test-results/TEST-com.example.editorial.storage.T04RevisionPostgresTest.xml",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.LocalDownloadHttpTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.LocalStorageBackendTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.ObjectKeysTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.S3ProtocolRegressionTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.S3StorageBackendTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.SigV4Test.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.SignedUrlTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.T04PostgresTest.txt",
+    "tests/engineering/T04/revision1/test-results/com.example.editorial.storage.T04RevisionPostgresTest.txt"
+  ],
+  "authorDeliveryFingerprints": 33,
+  "authorDeliveryMismatches": [],
+  "approvedFingerprints": 27,
+  "approvedMismatches": []
+}

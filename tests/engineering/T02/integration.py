@@ -6,6 +6,7 @@ Example: python integration.py --pg-bin /path/to/pgsql/bin --java /path/to/java
 import argparse
 import contextlib
 import datetime
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -31,9 +32,13 @@ def main():
     parser.add_argument('--pg-bin', required=True, type=Path)
     parser.add_argument('--java', default='java')
     parser.add_argument('--jar', type=Path, default=ROOT / 'backend/target/editorial-0.1.0-SNAPSHOT.jar')
+    parser.add_argument('--legacy-jar', type=Path, help='Optional packaged b115a40 application for a real upgrade')
+    parser.add_argument('--evidence-name', default='integration', help='Separate evidence stem; original records can be preserved')
     parser.add_argument('--app-port', type=int, default=0)
     parser.add_argument('--ui-wait-seconds', type=int, choices=range(61), default=0)
     args = parser.parse_args()
+    if Path(args.evidence_name).name != args.evidence_name:
+        parser.error('--evidence-name must be a filename stem')
     work = ROOT / 'tests/engineering/T02/.work' / uuid.uuid4().hex
     work.mkdir(parents=True)
     env = os.environ.copy()
@@ -49,6 +54,8 @@ def main():
                DB_URL=f'jdbc:postgresql://127.0.0.1:{db_port}/editorial?connectTimeout=2')
     flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
     evidence = {'mode': 'REAL_POSTGRES_REAL_JVM_NO_PROVIDER', 'paidCalls': 0, 'commands': [], 'checks': []}
+    evidence['artifacts'] = {str(path): hashlib.file_digest(path.open('rb'), 'sha256').hexdigest()
+                             for path in (args.jar, args.legacy_jar) if path is not None}
     processes = []
     pg_started = False
     success = False
@@ -83,15 +90,21 @@ def main():
         print('OK: ' + name, flush=True)
 
     def app_command(profile='mock', extra=()):
+        fixture = ROOT / 'tests/engineering/T02/fixtures/function-order'
         return [args.java, '-jar', str(args.jar), '--spring.profiles.active=' + profile,
-                '--server.address=127.0.0.1', '--server.port=' + str(app_port), *extra]
+                '--server.address=127.0.0.1', '--server.port=' + str(app_port),
+                '--spring.flyway.locations=classpath:db/migration,filesystem:' + fixture.as_posix(), *extra]
 
-    def start_app(label):
+    def start_app(label, legacy=False):
         log_path = work / (label + '.log')
         stream = log_path.open('w', encoding='utf-8')
-        process = subprocess.Popen(app_command(), env=env, cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT, creationflags=flags)
+        command = app_command()
+        if legacy:
+            command[2] = str(args.legacy_jar)
+            command.pop()  # Original application uses only its original migration location.
+        process = subprocess.Popen(command, env=env, cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT, creationflags=flags)
         processes.append((process, stream, log_path))
-        evidence['commands'].append({'argv': app_command(), 'process': label, 'exitCode': 'RUNNING_UNTIL_CONTROLLED_STOP'})
+        evidence['commands'].append({'argv': command, 'process': label, 'exitCode': 'RUNNING_UNTIL_CONTROLLED_STOP'})
         deadline = time.monotonic() + 90
         while time.monotonic() < deadline:
             if process.poll() is not None:
@@ -135,8 +148,28 @@ def main():
         run([args.pg_bin / 'psql', '-X', '-v', 'ON_ERROR_STOP=1', '-f', ROOT / 'backend/docker/bootstrap.sql'])
         check('Bootstrap creates separate runtime/migration roles on an empty real PostgreSQL database')
         check('No domain tables before application startup', psql("SELECT count(*) FROM pg_tables WHERE schemaname='editorial'") == '0')
+        legacy_history = None
+        if args.legacy_jar:
+            legacy = start_app('legacy-b115a40-start', legacy=True)
+            legacy_history = psql("SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history WHERE script='R__t02_schema_permissions.sql'")
+            stop_app(legacy)
+            psql("CREATE FUNCTION editorial.t02_legacy_probe() RETURNS integer LANGUAGE sql AS 'SELECT 42'; "
+                 "CREATE FUNCTION editorial.t02_legacy_probe(value integer) RETURNS integer LANGUAGE sql AS 'SELECT value'; "
+                 "GRANT EXECUTE ON FUNCTION editorial.t02_legacy_probe(integer) TO editorial_runtime", role='migration')
+            check('Legacy b115a40 reproduces R01 before upgrade', psql('SELECT editorial.t02_legacy_probe()', role='runtime') == '42')
         first = start_app('first-start')
-        check('Empty database: packaged Java 21 application reaches readiness UP')
+        check('Upgrade or empty database: packaged Java 21 application reaches readiness UP')
+        psql('SELECT editorial.t02_versioned_probe()', role='runtime', expected='nonzero')
+        check('Global deny applies inside a versioned migration, before repeatables')
+        if legacy_history is not None:
+            check('Upgrade preserves original migration checksum and history row', legacy_history == psql("SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history WHERE script='R__t02_schema_permissions.sql'"))
+            psql('SELECT editorial.t02_legacy_probe()', role='runtime', expected='nonzero')
+            check('Upgrade revokes PUBLIC on existing function, preserves explicit overloaded grant', psql('SELECT editorial.t02_legacy_probe(7)', role='runtime') == '7')
+        psql("CREATE FUNCTION editorial.t02_new_probe() RETURNS integer LANGUAGE sql AS 'SELECT 42'", role='migration')
+        psql('SELECT editorial.t02_new_probe()', role='runtime', expected='nonzero')
+        check('New migration-owned function denies runtime before explicit grant')
+        psql('GRANT EXECUTE ON FUNCTION editorial.t02_new_probe() TO editorial_runtime', role='migration')
+        check('Explicit function grant permits runtime execution', psql('SELECT editorial.t02_new_probe()', role='runtime') == '42')
         with urllib.request.urlopen(f'http://127.0.0.1:{app_port}/actuator/info') as response:
             info = json.load(response)['skeleton']
         check('Mock mode is explicit and all real capabilities remain unavailable',
@@ -152,11 +185,22 @@ def main():
             except urllib.error.HTTPError as error:
                 check('Blocked unauthenticated or sensitive route: ' + route, error.code in (401, 403))
         before = psql('SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history ORDER BY installed_rank')
-        check('Flyway applied only infrastructure permissions', 'R__t02_schema_permissions.sql' in before)
+        check('Flyway applied infrastructure correction plus isolated ordering fixture',
+              all(script in before for script in ('R__t02_schema_permissions.sql', 'R__t02_function_permissions.sql', 'V1__t02_function_order_probe.sql')))
         stop_app(first)
         second = start_app('second-start')
         after = psql('SELECT installed_rank,script,checksum,success FROM editorial_migrations.flyway_schema_history ORDER BY installed_rank')
         check('Second application startup leaves migration history unchanged', before == after)
+        psql('SELECT editorial.t02_versioned_probe()', role='runtime', expected='nonzero')
+        check('Restart preserves explicit function grant', psql('SELECT editorial.t02_new_probe()', role='runtime') == '42')
+        psql("CREATE FUNCTION editorial.t02_after_restart() RETURNS integer LANGUAGE sql AS 'SELECT 42'", role='migration')
+        psql('SELECT editorial.t02_after_restart()', role='runtime', expected='nonzero')
+        check('Restart preserves default function deny')
+        if args.legacy_jar:
+            psql('SELECT editorial.t02_legacy_probe()', role='runtime', expected='nonzero')
+            check('Restart preserves upgraded function ACLs', psql('SELECT editorial.t02_legacy_probe(9)', role='runtime') == '9')
+            psql('DROP FUNCTION editorial.t02_legacy_probe(), editorial.t02_legacy_probe(integer)', role='migration')
+        psql('DROP FUNCTION editorial.t02_versioned_probe(), editorial.t02_new_probe(), editorial.t02_after_restart()', role='migration')
         stop_app(second)
         for sql in (
             'CREATE TABLE editorial.t02_forbidden(id int)',
@@ -207,7 +251,7 @@ def main():
             run([args.pg_bin / 'pg_ctl', '-D', work / 'data', '-m', 'fast', '-w', 'stop'])
         evidence.update(exitCode=0 if success else 1, utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                         postgresql=run([args.pg_bin / 'postgres', '--version']))
-        output = ROOT / 'tests/engineering/T02/evidence/integration.json'
+        output = ROOT / 'tests/engineering/T02/evidence' / (args.evidence_name + '.json')
         output.parent.mkdir(exist_ok=True)
         output.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     return 0

@@ -1,0 +1,162 @@
+{
+  "tests": {
+    "delivery-final": {
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "upgrade-final": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "scanClassification": [
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 67,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 110,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 111,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 115,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 124,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 125,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 100,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 106,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 123,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 134,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 160,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 207,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 217,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 265,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 330,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 401,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 416,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 508,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 538,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 539,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 597,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 627,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 632,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 722,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 733,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 780,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 825,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    },
+    {
+      "path": "tests/engineering/T06/evidence/input-baseline.json",
+      "line": 836,
+      "classification": "SHA256_FINGERPRINT_METADATA_NOT_CREDENTIAL"
+    }
+  ],
+  "moduleDependencies": [
+    "article -> shared only; cross-domain adapters in proposed bootstrap composition root"
+  ],
+  "existingFilesUnchanged": true
+}

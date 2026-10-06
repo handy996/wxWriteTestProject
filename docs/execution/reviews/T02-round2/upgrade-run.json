@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-03T13:43:22.245433+00:00",
+  "command": [
+    "C:/Users/eie04/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "docs/execution/reviews/T02-round2/run_integration.py",
+    "--pg-bin",
+    "E:/project/codex/wxAgent/.tools/t02/postgresql-full/pgsql/bin",
+    "--java",
+    "E:/project/codex/wxAgent/.tools/t02/jdk-21.0.12.1+1/bin/java.exe",
+    "--legacy-jar",
+    "tests/engineering/T02/.work/r01-legacy/backend/target/editorial-0.1.0-SNAPSHOT.jar",
+    "--evidence-name",
+    "upgrade-integration"
+  ],
+  "exitCode": 0,
+  "stdout": "OK: Bootstrap creates separate runtime/migration roles on an empty real PostgreSQL database\nOK: No domain tables before application startup\nOK: Legacy b115a40 reproduces R01 before upgrade\nOK: Upgrade or empty database: packaged Java 21 application reaches readiness UP\nOK: Global deny applies inside a versioned migration, before repeatables\nOK: Upgrade preserves original migration checksum and history row\nOK: Upgrade revokes PUBLIC on existing function, preserves explicit overloaded grant\nOK: New migration-owned function denies runtime before explicit grant\nOK: Explicit function grant permits runtime execution\nOK: Mock mode is explicit and all real capabilities remain unavailable\nOK: Blocked unauthenticated or sensitive route: /api/v1/articles\nOK: Blocked unauthenticated or sensitive route: /actuator/env\nOK: Blocked unauthenticated or sensitive route: /actuator/configprops\nOK: Flyway applied infrastructure correction plus isolated ordering fixture\nOK: Second application startup leaves migration history unchanged\nOK: Restart preserves explicit function grant\nOK: Restart preserves default function deny\nOK: Restart preserves upgraded function ACLs\nOK: Runtime cannot create tables/temp tables/schemas, read history, or assume migrator\nOK: Default deny; explicit INSERT and column UPDATE work without blanket UPDATE/DELETE\nOK: Packaged application rejects T02_PROFILE\nOK: Packaged application rejects T02_MOCK\nOK: Packaged application rejects T02_PAID_CALLS\nOK: Packaged application rejects T02_DDL\nOK: Packaged application rejects T02_FLYWAY\nOK: Effective database privilege escalation is rejected\nOK: Unreachable database fails startup instead of reporting ready\nOK: No business tables introduced\n",
+  "stderr": ""
+}

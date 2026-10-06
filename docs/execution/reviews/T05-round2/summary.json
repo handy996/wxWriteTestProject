@@ -1,0 +1,245 @@
+{
+  "runs": [
+    {
+      "name": "current",
+      "exitCode": 1,
+      "suites": []
+    },
+    {
+      "name": "host-current",
+      "exitCode": 0,
+      "suites": [
+        {
+          "name": "com.example.editorial.editorial.skill.BaselineResourcesTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "skillManifestBindsAllFourAgentsAndSatisfiesInvariants",
+            "fivePoliciesAllKindsAndRecomputableHashes",
+            "fourPromptsAllAgentsAndRecomputableHashes"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.CursorCodecTest",
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "roundTripAndTampering"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "acceptsValidConfig",
+            "rejectsMissingRequiredAndEmptyBindings",
+            "rejectsWrongType",
+            "rejectsIllegalEnum",
+            "rejectsBadUuidAndClientDeclaredFields",
+            "rejectsUnknownField"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.PromptContractTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "unresolvedReferencesFailClosed",
+            "allTemplatesBindingsAndFixedOutputsMatchFrozenModelDtos"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.ReviewExportSamplesTest",
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "exportExactFixedOutputsForIndependentStandardValidator"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.SemVerTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "parsesAndOrders",
+            "rejectsMalformed",
+            "nextPatchNeverReuses"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.SkillConfigDiffTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "additionsRemovalsModificationsAndPointerEscaping",
+            "sameConfigurationIgnoresObjectKeyOrder"
+          ]
+        },
+        {
+          "name": "com.example.editorial.editorial.skill.T05PostgresTest",
+          "tests": "30",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "emptyInitBaselineAndFourTables",
+            "codeUnique",
+            "firstVersionIs100AndCopySameSkill",
+            "crossSkillCopyRejected",
+            "concurrentFirstVersionOnlyOneSucceeds",
+            "versionNumberNeverReusedAcrossPublishAndRetire",
+            "publishedCannotBeEdited",
+            "invalidConfigRejected",
+            "hashRecomputableAndBindingsCorrect",
+            "replayDoesNotDuplicateBusinessResult",
+            "ownerIsolation",
+            "anonymousAndForgedRejected",
+            "auditAppendOnlyAndSanitized",
+            "snapshotPreservedAfterPublishAndRetire",
+            "draftSnapshotIsNotPublishedAndPortErrors",
+            "eventIdempotencyKeyIsStable",
+            "runtimeRoleHasNoDeleteAndPublishedImmutableInDb",
+            "outputBindingRejectedOnCreateEditAndPublish",
+            "statusFiltersAndPaginationReturnEachIdentityOnce",
+            "cursorsBindOwnerFilterAndVersionScope",
+            "databaseFreezesIdentityContentAndAuditMetadata",
+            "latestVersionUsesNumericPatchAndMinorAndKeepsHistory",
+            "exactVersionDiffIncludesDraftAndChecksBothOwners",
+            "validDraftEditAndPolicyRetirementStillWork",
+            "reviewWriterSchemaMustResolveAgainstApprovedDefinitions",
+            "reviewUnknownOutputSchemaBindingMustBeRejected",
+            "reviewDraftStatusFilterMustReturnDraftSkill",
+            "reviewCursorMustBindStatusFilter",
+            "reviewPublishedPrimaryKeysMustBeImmutable",
+            "reviewPromptLatestUsesSemanticVersion"
+          ]
+        },
+        {
+          "name": "com.example.editorial.settings.policy.HashingTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "contentHashIsDeterministicAndHex",
+            "promptHashCoversTemplatesAndSchema"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "upgrade",
+      "exitCode": 0,
+      "suites": [
+        {
+          "name": "com.example.editorial.editorial.skill.ReviewMigrationUpgradeTest",
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "cases": [
+            "addT05ToPopulatedT03DraftAndRepeatWithoutChangingHistory"
+          ]
+        }
+      ]
+    }
+  ],
+  "cleanup": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\fc07442d17554a6cbee03393e658c418\\data",
+        "status"
+      ],
+      "exitCode": 3,
+      "output": "pg_ctl: no server running\n",
+      "removedOnlyOwnedPath": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\fc07442d17554a6cbee03393e658c418"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\13a4c7fa9a704744ab581bf6f74841cb\\data",
+        "status"
+      ],
+      "exitCode": 3,
+      "output": "pg_ctl: no server running\n",
+      "port": 7312,
+      "portAvailable": true,
+      "removedOnlyOwnedPath": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\13a4c7fa9a704744ab581bf6f74841cb"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\86a05d761dd547aaa847aa4845580928\\data",
+        "status"
+      ],
+      "exitCode": 3,
+      "output": "pg_ctl: no server running\n",
+      "port": 4452,
+      "portAvailable": true,
+      "removedOnlyOwnedPath": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\86a05d761dd547aaa847aa4845580928"
+    },
+    {
+      "removedOnlyOwnedPath": "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T05-round2\\.work\\schema-tools"
+    }
+  ],
+  "gitleaks": [
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 67,
+      "rule": "generic-api-key"
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 110,
+      "rule": "generic-api-key"
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 111,
+      "rule": "generic-api-key"
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 115,
+      "rule": "generic-api-key"
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 124,
+      "rule": "generic-api-key"
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T05-round2/.work/secret-scan-xw3nkoxb/tests/engineering/T02/evidence/r01-integrity.json",
+      "line": 125,
+      "rule": "generic-api-key"
+    }
+  ],
+  "frozenFileVerification": {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "tests/engineering/T02/check_contracts.py"
+    ],
+    "exitCode": 0,
+    "output": "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+  },
+  "reviewBeforeFiles": 777
+}

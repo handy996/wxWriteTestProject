@@ -1,0 +1,24 @@
+{
+  "policyType": "FACT",
+  "version": "1.0.0",
+  "rules": {
+    "verificationRequiredFor": ["CRITICAL", "MAJOR"],
+    "evidenceRules": {
+      "generalImportantFact": "one A-level primary source or two independent B-level sources",
+      "legalPolicy": "official in-force text for the applicable jurisdiction",
+      "scientificCausal": "no media or correlation-only evidence",
+      "independence": "reprints and same press release do not count as independent"
+    },
+    "hardGates": {
+      "unverifiedImportantFactMustBeRemovedOrRephrased": true,
+      "hedgingDoesNotSatisfyGate": true,
+      "conflictingEvidenceMustBeRetained": true,
+      "noVoteOrConfidenceAutoResolution": true
+    },
+    "staleWindows": {
+      "realTime": "24h",
+      "general": "30d",
+      "stable": "180d"
+    }
+  }
+}

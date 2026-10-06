@@ -1,0 +1,12 @@
+--- round1/backend/src/main/java/com/example/editorial/article/version/VersionService.java
++++ round2/backend/src/main/java/com/example/editorial/article/version/VersionService.java
+@@ -78,6 +78,9 @@
+                 if(current.resultVersionId()!=null)return articles.readVersion(actor,article,current.resultVersionId());
+                 if(current.retained()!=retained)throw new PublicFailure(409,"RESTAGE_REQUIRED");
+                 if(!current.agentExecutionId().equals(execution.agentExecutionId())||!current.style().equals(execution.style()))throw new PublicFailure(409,"STALE_FENCE");
++                // usedClaimIds includes title-only facts, not just the AST claimRefs subset.
++                // Recheck on every staged attempt, after result replay and before any business writes.
++                for(var id:output.path("usedClaimIds"))refs.require(actor,article,base,"CLAIM",uuid(id.asText()),output);
+                 validate(p.document().path("contentAst"),(k,id)->refs.require(actor,article,base,k,id,output));
+                 UUID id=store.append(actor,p,retained,current.style());
+                 if(!retained){articles.moveHead(actor,article,id,etag);localChanges.apply(actor,article,id);}

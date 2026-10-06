@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.ast.ArticleAstTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.337 s <<< FAILURE! -- in com.example.editorial.article.ast.ArticleAstTest
+com.example.editorial.article.ast.ArticleAstTest.frozenRealVersionAndTitleAnchor -- Time elapsed: 0.037 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1eb8eefae3c9af8490118ef62886f7b5dae4028980f1594f005e33fc9bda0860> but was: <32c21c86adf5cdc8653a17b410e6ac83a2c9da7075b451a298e38480c3fa3c50>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at com.example.editorial.article.ast.ArticleAstTest.frozenRealVersionAndTitleAnchor(ArticleAstTest.java:67)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

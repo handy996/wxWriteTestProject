@@ -1,0 +1,16 @@
+{
+  "policyType": "QA",
+  "version": "1.0.0",
+  "rules": {
+    "hardGates": {
+      "missingCheckerMustBlock": true,
+      "blockerCannotBeDowngraded": true,
+      "allRequiredHumanTasksResolved": true,
+      "noPendingProposalsOrUnresolvedItems": true
+    },
+    "outcome": {
+      "pass": "READY_FOR_REVIEW only, not formal export",
+      "failure": "NEEDS_REVISION"
+    }
+  }
+}

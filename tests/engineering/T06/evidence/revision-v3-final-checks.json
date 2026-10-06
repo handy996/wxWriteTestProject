@@ -1,0 +1,111 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "Python 3.12.14\n"
+    },
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\prepare_delivery.py"
+      ],
+      "exitCode": 0,
+      "output": "Wrote proposed canonical-v1 UTF8/control escaping + envelope limit + composition root patch.\n"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\shared-integration.patch"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\check_contracts.py"
+      ],
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe",
+        "version"
+      ],
+      "exitCode": 0,
+      "output": "8.30.1\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe",
+        "dir",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\.work\\source-scan-eeuhf6bd",
+        "--redact",
+        "--no-banner",
+        "--config",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\gitleaks.toml",
+        "--report-format",
+        "json",
+        "--report-path",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T06\\evidence\\revision-v3-final-checks-gitleaks-findings.json"
+      ],
+      "exitCode": 1,
+      "output": "5:02PM INF scanned ~17490963 bytes (17.49 MB) in 639ms\n5:02PM WRN leaks found: 6\n"
+    }
+  ],
+  "existingFileCount": 820,
+  "changedExistingFiles": [],
+  "sourceFingerprints": {
+    "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java": "3fcfdfda42c6023606f60043f4613195a89e15ff046720fb0ad791d8ab46bdb9",
+    "backend/src/main/java/com/example/editorial/article/job/ArticleController.java": "33af7c6d534586572e2117d9609427a2be86e64477387bfd2739141879b1d322",
+    "backend/src/main/java/com/example/editorial/article/job/ArticlePorts.java": "45f54655ca9715a762a2ff8d1ba61825fc227dde8345b4b7f40f0652ff183dcf",
+    "backend/src/main/java/com/example/editorial/article/job/ArticleService.java": "ce89bb9e5fc84a5ee2e8bf9be911d573ac4bb2324d225d07dcc45c68d6f75a3a",
+    "backend/src/main/java/com/example/editorial/article/job/DeletionHandoff.java": "75a411b07723cfcc6279b1cf97160f4fffa90318985d794961531c6d9d7119a1",
+    "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java": "b6e039b162bc804634bd4a808bde69d4af8b1610284ae73b2a2b8ea91fadc2fb",
+    "backend/src/test/java/com/example/editorial/article/job/DeletionHandoffTest.java": "7bfc940bfae97a651e90f7c9e4b480aba2258442526a6efd9d4c2ccc5c62fd35",
+    "backend/src/test/java/com/example/editorial/article/job/T06MigrationUpgradeTest.java": "164ea2fc8192acab35a5b07862086307e7d0c27ccc739185b7b5f14dc1ce1363",
+    "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java": "c65589a39c3cb2d3a8a9ea49378e45c742d4c460aacc4367a1c4b522d710e77c",
+    "docs/execution/reports/T06-Revision-v1.0.md": "ce70813e97bb446e7588d064186ae0dc8ab88fea55d9e52d84a4bab60457e237",
+    "docs/execution/reports/T06-Revision-v2.0.md": "d577ca0136f3558deb50d243361357ec78e7dff64f52b03ee8f9acf15e18c10c",
+    "docs/execution/reports/T06-Revision-v3.0.md": "ab2676cfc807a05b12a1fe8c34926ce64c4457489587ba49da4bc8feb13cfeff",
+    "docs/execution/reports/T06.md": "b3b3edc6374cf6e56665f83fa43315fae6b2d84351e25c86570a843116b38a2a",
+    "tests/engineering/T06/.gitignore": "6d3b4a90506d395b4f2cc556f32fdbfaa0d6fba853d1649a68bdbd058a434c78",
+    "tests/engineering/T06/ArticleIntegration.java": "9e7f10ca17f140c791e8c8f155d24293943ea877c3214bd0da23dba8c91e13ba",
+    "tests/engineering/T06/integration.py": "ebe06d971a36ba50af95a759719b20e7e118ccd513c5bcb73e72c9ce496b834d",
+    "tests/engineering/T06/migration-draft.sql": "1893ad02483385ef5e6b8a68781a3a27a8d407c6dd3166b8569828298695bebc",
+    "tests/engineering/T06/prepare_delivery.py": "ae02043c77b4a699ff24d8f01e753c7f5c18398ea4fc6fff9b068a5857d2849b",
+    "tests/engineering/T06/shared-integration.patch": "84a7ccb49452e3de93be883ae97fff1be0a5ebddb0bfaebff7f8a48e7288b71d",
+    "tests/engineering/T06/verify_delivery.py": "4459039fe10fa94bc58b1c42e2b354af01366bd7e9a5efb936a54e628e910bc5"
+  },
+  "secretScan": {
+    "exitCode": 1,
+    "findingPaths": [
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json"
+    ],
+    "t06FindingCount": 0
+  },
+  "schemaValidator": "4.26.0",
+  "actualResponseSchemaErrors": [],
+  "gitHead": "b115a4022375675c7cbff536b239508db8f3f4e1"
+}

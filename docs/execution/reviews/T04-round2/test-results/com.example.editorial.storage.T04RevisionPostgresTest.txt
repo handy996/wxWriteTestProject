@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.storage.T04RevisionPostgresTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.427 s -- in com.example.editorial.storage.T04RevisionPostgresTest

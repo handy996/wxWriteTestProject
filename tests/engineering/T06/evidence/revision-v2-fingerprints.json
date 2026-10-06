@@ -1,0 +1,29 @@
+{
+  "gitHead": "b115a4022375675c7cbff536b239508db8f3f4e1",
+  "files": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/article/ast/ArticleAst.java",
+      "sha256": "07dc8e9c07b30b773d8d5caf1656e56c8a2368118993410e5e608e3e1cddf896"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/ast/ArticleAstTest.java",
+      "sha256": "9075bb95a4d4b3da00206fb91d9e88f21c09c3800de99a31f22b8d63953e2b53"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/article/job/T06PostgresTest.java",
+      "sha256": "524797cda739cbe5eb5a210243cd0a73d4dcb41bee79d618c7f1a0c73303e6af"
+    },
+    {
+      "path": "tests/engineering/T06/integration.py",
+      "sha256": "d0e411521254d321e37a787e72a3fd390c1f3e7918201c7df6d5e6f6d8febecd"
+    },
+    {
+      "path": "tests/engineering/T06/verify_delivery.py",
+      "sha256": "99cce636cdeb7911c1d253f1627bb9b060ba3c4ebeb6458c71405a089ae6bea7"
+    },
+    {
+      "path": "docs/execution/reports/T06-Revision-v2.0.md",
+      "sha256": "d577ca0136f3558deb50d243361357ec78e7dff64f52b03ee8f9acf15e18c10c"
+    }
+  ]
+}

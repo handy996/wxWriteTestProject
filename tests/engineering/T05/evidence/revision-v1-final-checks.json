@@ -1,0 +1,337 @@
+{
+  "contractCheck": "Approved T00 rc.3: 27 hashes verified, no regeneration",
+  "runtimeSchemaMatchesApproved": true,
+  "tests": 49,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.BaselineResourcesTest",
+      "cases": [
+        "skillManifestBindsAllFourAgentsAndSatisfiesInvariants",
+        "fivePoliciesAllKindsAndRecomputableHashes",
+        "fourPromptsAllAgentsAndRecomputableHashes"
+      ]
+    },
+    {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.CursorCodecTest",
+      "cases": [
+        "roundTripAndTampering"
+      ]
+    },
+    {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest",
+      "cases": [
+        "acceptsValidConfig",
+        "rejectsMissingRequiredAndEmptyBindings",
+        "rejectsWrongType",
+        "rejectsIllegalEnum",
+        "rejectsBadUuidAndClientDeclaredFields",
+        "rejectsUnknownField"
+      ]
+    },
+    {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.PromptContractTest",
+      "cases": [
+        "unresolvedReferencesFailClosed",
+        "allTemplatesBindingsAndFixedOutputsMatchFrozenModelDtos"
+      ]
+    },
+    {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.SemVerTest",
+      "cases": [
+        "parsesAndOrders",
+        "rejectsMalformed",
+        "nextPatchNeverReuses"
+      ]
+    },
+    {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.SkillConfigDiffTest",
+      "cases": [
+        "additionsRemovalsModificationsAndPointerEscaping",
+        "sameConfigurationIgnoresObjectKeyOrder"
+      ]
+    },
+    {
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.editorial.skill.T05PostgresTest",
+      "cases": [
+        "emptyInitBaselineAndFourTables",
+        "codeUnique",
+        "firstVersionIs100AndCopySameSkill",
+        "crossSkillCopyRejected",
+        "concurrentFirstVersionOnlyOneSucceeds",
+        "versionNumberNeverReusedAcrossPublishAndRetire",
+        "publishedCannotBeEdited",
+        "invalidConfigRejected",
+        "hashRecomputableAndBindingsCorrect",
+        "replayDoesNotDuplicateBusinessResult",
+        "ownerIsolation",
+        "anonymousAndForgedRejected",
+        "auditAppendOnlyAndSanitized",
+        "snapshotPreservedAfterPublishAndRetire",
+        "draftSnapshotIsNotPublishedAndPortErrors",
+        "eventIdempotencyKeyIsStable",
+        "runtimeRoleHasNoDeleteAndPublishedImmutableInDb",
+        "outputBindingRejectedOnCreateEditAndPublish",
+        "statusFiltersAndPaginationReturnEachIdentityOnce",
+        "cursorsBindOwnerFilterAndVersionScope",
+        "databaseFreezesIdentityContentAndAuditMetadata",
+        "latestVersionUsesNumericPatchAndMinorAndKeepsHistory",
+        "exactVersionDiffIncludesDraftAndChecksBothOwners",
+        "validDraftEditAndPolicyRetirementStillWork",
+        "reviewWriterSchemaMustResolveAgainstApprovedDefinitions",
+        "reviewUnknownOutputSchemaBindingMustBeRejected",
+        "reviewDraftStatusFilterMustReturnDraftSkill",
+        "reviewCursorMustBindStatusFilter",
+        "reviewPublishedPrimaryKeysMustBeImmutable",
+        "reviewPromptLatestUsesSemanticVersion"
+      ]
+    },
+    {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "name": "com.example.editorial.settings.policy.HashingTest",
+      "cases": [
+        "contentHashIsDeterministicAndHex",
+        "promptHashCoversTemplatesAndSchema"
+      ]
+    }
+  ],
+  "sourceFingerprints": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/BaselineAgents.java",
+      "sha256": "c9c7fb75ba7e3e560a98a834fd4976ccfd203b6ee65c2d80d5f3301aa47adabf"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/ConfigChangeEvent.java",
+      "sha256": "351c1151ea69ce9b29e80ac66fa0deaf9bc0243faf7d797d94161b6e5b092614"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/ConfigChangeSink.java",
+      "sha256": "f422a21dc1f9432bca2133f86b7b13fc4d2c9ac1d29318b983002a8a0e1ded2e"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/CursorCodec.java",
+      "sha256": "6521816c56430b7c89551c8b23531c774abdfdd0c77cbe1e2b28f2eb835419f5"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java",
+      "sha256": "68e7fe2b91536d799c2e0b3b69920d0d80d403af1d043262f251588f1f38448a"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SemVer.java",
+      "sha256": "f7054ca08e5116dfc095ac7224da37f87e94dcaf5875a3917607a6f4247804b8"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillBaselineLoader.java",
+      "sha256": "a10f881742df5cf89d238a527bae512f076e0972c81064543a31b763e73ad0f9"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfig.java",
+      "sha256": "8a25f85cef57aa41526c5eb38a750570f039e8bfb08e0a6887ede4a811af34df"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigDiff.java",
+      "sha256": "63ce256f90f88cbcbde123d456f0343213e1a3bdb43fca31927251d53c1b6b18"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfiguration.java",
+      "sha256": "852fbd9d2fd5ad1fe36fb7a9871471088a5cc072f75e3bdefe29efd1b1bec6ac"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+      "sha256": "a23e6e15849a9af566536597358f4df75a446451d40cab32fbb16defc3f6a098"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillController.java",
+      "sha256": "e750e99aef22c7b32cf4a2af704c4827b575beafcb4f4d734ae7f558c6bb00ec"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillIdentity.java",
+      "sha256": "cd633a010c7025c6379c6705963194bc51c3fcbe4cf368aa794bdde40915e895"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillIdentityPage.java",
+      "sha256": "77b95588896d19fd947d5c445f00a2225d7a814465fc7a0e9a954a10a7ff4c68"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+      "sha256": "9769afea80f100ec0cc62013990ea4dfe262bd1c5e9411fb36c04274ad252f4f"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshot.java",
+      "sha256": "7670a31adb0b2e190500c7c1d2c817061d4ade724332c22fa55eab0f031211a0"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshotPage.java",
+      "sha256": "f9037ce9f305f6501cf6825d44498d81bdc6e87049c0ec2f7ccc62eb05841220"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshotPort.java",
+      "sha256": "2a4eac97b656c146f9d7a090efe9cec779b322d348899eca8a6e331eaf0e1479"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillVersion.java",
+      "sha256": "c020c69ad27d6cc41523f8e383023acb7acbbd3380d1e46743cecff427c6fd87"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/Hashing.java",
+      "sha256": "a983fda4189aaaf7dbdcb82453dc0738196e37fd7587fdf5aab304e872bc9eac"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/JsonIO.java",
+      "sha256": "1e9c3544c6b5c08f21877e9adff1c5bfd71b4f72099491da9f7f3285504cf0ee"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyService.java",
+      "sha256": "3dd8abf48c7f1ba812b2388d491ba41ceb272780d1447c213d60ef8b184023c1"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicySnapshot.java",
+      "sha256": "fc220b3f89125eb2ff20a5f79e1131dc4aaf58795906a004f0197d4cb3e5ab74"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicySnapshotPort.java",
+      "sha256": "375c0757b0fad49d833832a2f34f08dee0b466d41cc61a9921f78522544d52e7"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyType.java",
+      "sha256": "b498d5f172f83d697bca4d905f3881e9523951892bf6a4a39ca99c14f42aebf0"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyVersion.java",
+      "sha256": "6432eb66e1a1d6c2462a74f949c01cc952b948b1a4e47bad36c5c9a645b32d58"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptBinding.java",
+      "sha256": "e2aab6a530778010e2c95953584dc2506e2cd1b802c275ea275363e1f50d5a54"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptService.java",
+      "sha256": "083eea8c66d2f769a5bc69c53490805fed1f40dda060901ee68e54ec3c9718df"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptVersion.java",
+      "sha256": "e42a589cc44d74a53fbf450f65ee307579c7d6df2a60b817573a0e65a37f95f8"
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PublicationStatus.java",
+      "sha256": "2d51ac8ebe9462492695f9e4536ac61791c7bb6bc38377e7ee78efdd4e699d3d"
+    },
+    {
+      "path": "backend/src/main/resources/prompts/analyzer.json",
+      "sha256": "fb082c8a9b7ee15c0808ea499a5c877e1ed2748cbd9893b552bd6aa33c2b781a"
+    },
+    {
+      "path": "backend/src/main/resources/prompts/editorial-reviewer.json",
+      "sha256": "746e6de0416ce27e2f582c4bda31ddab2b7bee855098cdfe65b38ef67b1077b1"
+    },
+    {
+      "path": "backend/src/main/resources/prompts/writer-revision-v2.json",
+      "sha256": "ce396199491beaf030bfb98c52f32fdc2d1a9f3040dc2b790706fd2ee6670467"
+    },
+    {
+      "path": "backend/src/main/resources/prompts/writer-v1.json",
+      "sha256": "83870fb962ea0189785917e13953d17e0206079b86f06772e88c8d14a4be7b6c"
+    },
+    {
+      "path": "backend/src/main/resources/skills/editorial.schema.json",
+      "sha256": "7b5872e129817bbcbb32e8b841e430eb69f35d4ca18bac21bc24a708cfcbe2aa"
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/cost.json",
+      "sha256": "c5422e01463027afb3e50dc83f90309c57186136d51a27a34ddb56ae99e9bdd5"
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/fact.json",
+      "sha256": "ab7734d745031c0a614449e88a095b3fca3e855b177cc9608c9502cc5eeee78f"
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/license.json",
+      "sha256": "a7e88930ced6a2c3ea52cdd9b5cec2e18106047b1fc4e270da062d9c8cb974a1"
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/qa.json",
+      "sha256": "6c219da32426bfa06dce943f9c1cd0eab2ea7e1a65724060c2dc4b060ec562ad"
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/watermark.json",
+      "sha256": "bc7c37172f159462d09d4e96ba23f14c7df1a532d1ccf3243358940699431a5c"
+    },
+    {
+      "path": "backend/src/main/resources/skills/wechat-editorial-skill.json",
+      "sha256": "14da35588426b967ba5da9eda141f0fb3b7b1a7518999caa326e6877dc9add30"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/BaselineResourcesTest.java",
+      "sha256": "0da70efdf3365f947d27b8e38e9eb37fca9105dd5860233ad9c98c03c85b5b11"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/CursorCodecTest.java",
+      "sha256": "45a484acfa04c9776d473f54e702b928583d9bafae86588dcaaf12b2cc65b6a2"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/JsonSchemaSkillConfigTest.java",
+      "sha256": "bfc6309c166461c526ef741977ac52abaa752068014de488f5e696a77050bf8a"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/PromptContractTest.java",
+      "sha256": "1e95017b64e2ebc222a2adf87920e3b11db610fda1f73888e9a35f727405da87"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/SemVerTest.java",
+      "sha256": "c842cd8ad13cf54b85304ee32f6e3f515ff61a84a828eb1fb487b18976ca5ab3"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/SkillConfigDiffTest.java",
+      "sha256": "d1809e587c6886be024bbc9debf4b7d324aea4154035913f16aee2a730118dca"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/T05PostgresTest.java",
+      "sha256": "8c7ff7ca9389c7bce3e8ff8eca91ff132c8cbd0e147f91d6652d584e4ec13d90"
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/settings/policy/HashingTest.java",
+      "sha256": "f05434677b325c52f30e8b245c88cbf554be1bd1d4ff0d232ef7e0fc4b45a89b"
+    },
+    {
+      "path": "tests/engineering/T05/integration.py",
+      "sha256": "b7dd5dcdcee620e41a81d856d797777491bdd2fbf62d08208ecec2009e977464"
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "sha256": "5a7988239d4175100ebb2ebf8f8566c19b921d9cc338d1234d4b1983750bf509"
+    }
+  ]
+}

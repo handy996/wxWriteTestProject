@@ -56,7 +56,9 @@ jobs:
           python tests/engineering/T02/dependency_scan.py
           npm --prefix frontend audit
       - name: Actual Docker topology cold start and repeat migration
-        run: python tests/engineering/T02/compose_smoke.py
+        run: |
+          python tests/engineering/T02/record.py --name ci-compose-real -- python tests/engineering/T02/compose_smoke.py
+          python tests/engineering/T02/record.py --name ci-entrypoint-real -- python tests/engineering/T02/compose_smoke.py --entrypoint
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
@@ -65,3 +67,4 @@ jobs:
             backend/target/surefire-reports
             backend/target/sbom
             frontend/dist
+            tests/engineering/T02/evidence/ci-*.json

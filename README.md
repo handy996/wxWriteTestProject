@@ -21,6 +21,8 @@ python backend/scripts/dev.py down
 
 `down` 保留数据库卷。再次 `up` 应复用数据库和已执行迁移。不要手动删除数据卷来掩盖迁移失败。已有卷不会因修改 `.env` 自动轮换密码，需要部署管理员按数据库流程轮换。
 
+隔离测试可指定 `--env-file <临时文件>` 和环境变量 `COMPOSE_PROJECT_NAME`，避免复用开发配置或数据库卷；正常开发无需指定。
+
 也可复制 `infra/env.example` 到 `infra/.env`，填入三个不同的至少 16 字符密码，然后直接使用 Compose：
 
 ```sh
@@ -70,5 +72,7 @@ python tests/engineering/T02/integration.py --pg-bin /path/to/postgresql/bin --j
 ```
 
 该测试新建独立临时集群、随机密码和本机端口，验证空库启动、第二次启动、权限和生产配置反例，最后停止自己的进程。临时数据保留在被忽略的 `tests/engineering/T02/.work/`，不包含用户文章。不要指向已有生产集群。完整容器测试为 `python tests/engineering/T02/compose_smoke.py`，只清理自身随机项目和卷。
+
+审核整改回归：`integration.py` 可增加 `--legacy-jar <审核版本b115a40的JAR> --evidence-name <新记录名>` 验证真实升级；默认也会检查新函数默认拒绝、显式授权成功和重启保持。`python tests/engineering/T02/compose_smoke.py --entrypoint` 则实际调用开发入口 `up → down → up`，检查数据、迁移历史、页面/API 代理、函数权限和生产 mock 拒绝，最后删除自身测试卷。两个容器测试均使用本机 18080 端口，请顺序运行。
 
 CI 已接入构建、类型检查、契约指纹/回归、Gitleaks、依赖扫描与 Compose 启动测试。当前交付的实际运行结果、失败记录和待集成项见 [T02 报告](docs/execution/reports/T02.md)，由主 agent 审核，不代表最终验收。

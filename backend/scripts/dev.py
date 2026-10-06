@@ -13,10 +13,12 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[2]
 parser = argparse.ArgumentParser()
 parser.add_argument('action', choices=['up', 'down', 'logs'], nargs='?', default='up')
+parser.add_argument('--env-file', type=Path, default=ROOT / 'infra/.env',
+                    help='Optional isolated environment file (default: infra/.env)')
 args = parser.parse_args()
 if not shutil.which('docker'):
     sys.exit('Docker with Compose v2 is required. No services were started.')
-env_file = ROOT / 'infra/.env'
+env_file = args.env_file.resolve()
 if args.action == 'up' and not env_file.exists():
     with env_file.open('x', encoding='utf-8') as stream:
         stream.write('APP_PROFILE=mock\nWEB_PORT=8080\n')

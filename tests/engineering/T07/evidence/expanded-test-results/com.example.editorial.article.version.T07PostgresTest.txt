@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.version.T07PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 13, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 4.612 s <<< FAILURE! -- in com.example.editorial.article.version.T07PostgresTest
+com.example.editorial.article.version.T07PostgresTest.executionCompletionAndStageAuditFailureLeaveNoPartialBusinessRows -- Time elapsed: 0.317 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <DATABASE_UNAVAILABLE> but was: <AUDIT_WRITE_FAILED>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
+	at com.example.editorial.article.version.T07Support.error(T07Support.java:75)
+	at com.example.editorial.article.version.T07PostgresTest.executionCompletionAndStageAuditFailureLeaveNoPartialBusinessRows(T07PostgresTest.java:176)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.version.T07PostgresTest.concurrentCandidatesUseUniqueMonotonicNumbersAndCurrentAiCommitsOnce -- Time elapsed: 0.184 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: STALE_FENCE
+	at com.example.editorial.article.version.TestParticipants.inspect(TestParticipants.java:52)
+	at com.example.editorial.article.version.VersionService.lambda$commit$2(VersionService.java:66)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.article.version.VersionService.commit(VersionService.java:66)
+	at com.example.editorial.article.version.T07PostgresTest.concurrentCandidatesUseUniqueMonotonicNumbersAndCurrentAiCommitsOnce(T07PostgresTest.java:145)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

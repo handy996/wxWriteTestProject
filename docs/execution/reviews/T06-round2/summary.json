@@ -1,0 +1,64 @@
+{
+  "status": "CHANGES_REQUIRED",
+  "open": [
+    "T06-R01"
+  ],
+  "closed": [
+    "T06-R02"
+  ],
+  "changedInputOrPriorReviewFiles": [],
+  "suites": [
+    {
+      "name": "com.example.editorial.article.ast.ArticleAstTest",
+      "tests": "11",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewArticleAstTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.job.DeletionHandoffTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.job.T06PostgresTest",
+      "tests": "17",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.shared.CanonicalRequestTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.job.T06MigrationUpgradeTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewNestedClosureTest",
+      "tests": "3",
+      "failures": "3",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "newT06SecretFindings": 0,
+  "preexistingT02SecretFindings": 6,
+  "databaseInstancesStopped": true
+}

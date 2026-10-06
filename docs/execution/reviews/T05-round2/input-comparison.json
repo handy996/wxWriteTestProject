@@ -1,0 +1,314 @@
+{
+  "changedExisting": [
+    "backend/src/main/java/com/example/editorial/editorial/skill/CursorCodec.java",
+    "backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java",
+    "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+    "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+    "backend/src/main/java/com/example/editorial/settings/policy/PolicyService.java",
+    "backend/src/main/java/com/example/editorial/settings/policy/PromptService.java",
+    "backend/src/main/resources/prompts/editorial-reviewer.json",
+    "backend/src/main/resources/prompts/writer-revision-v2.json",
+    "backend/src/main/resources/prompts/writer-v1.json",
+    "backend/src/main/resources/skills/wechat-editorial-skill.json",
+    "backend/src/test/java/com/example/editorial/editorial/skill/T05PostgresTest.java",
+    "docs/execution/reports/T05.md",
+    "tests/engineering/T05/integration.py",
+    "tests/engineering/T05/migration-draft.sql"
+  ],
+  "new": [
+    "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigDiff.java",
+    "backend/src/test/java/com/example/editorial/editorial/skill/CursorCodecTest.java",
+    "backend/src/test/java/com/example/editorial/editorial/skill/PromptContractTest.java",
+    "backend/src/test/java/com/example/editorial/editorial/skill/SkillConfigDiffTest.java",
+    "docs/execution/reports/T05-Revision-v1.0.md",
+    "docs/execution/reviews/T05-Review-v1.0.md",
+    "docs/execution/reviews/T05-round1/.gitignore",
+    "docs/execution/reviews/T05-round1/ReviewCases.java",
+    "docs/execution/reviews/T05-round1/after.json",
+    "docs/execution/reviews/T05-round1/before.json",
+    "docs/execution/reviews/T05-round1/capture.py",
+    "docs/execution/reviews/T05-round1/checks.json",
+    "docs/execution/reviews/T05-round1/cleanup.json",
+    "docs/execution/reviews/T05-round1/cleanup.py",
+    "docs/execution/reviews/T05-round1/evidence/initial-integration.json",
+    "docs/execution/reviews/T05-round1/evidence/integration.json",
+    "docs/execution/reviews/T05-round1/evidence/sandbox-attempt.json",
+    "docs/execution/reviews/T05-round1/executed-tests/0-T05PostgresTest.java",
+    "docs/execution/reviews/T05-round1/executed-tests/1-T05PostgresTest.java",
+    "docs/execution/reviews/T05-round1/executed-tests/2-T05PostgresTest.java",
+    "docs/execution/reviews/T05-round1/gitleaks-findings.json",
+    "docs/execution/reviews/T05-round1/run_checks.py",
+    "docs/execution/reviews/T05-round1/run_review.py",
+    "docs/execution/reviews/T05-round1/static-checks.json",
+    "docs/execution/reviews/T05-round1/static_checks.py",
+    "docs/execution/reviews/T05-round1/test-results-initial/2026-10-04T23-04-29_704.dumpstream",
+    "docs/execution/reviews/T05-round1/test-results-initial/TEST-com.example.editorial.editorial.skill.BaselineResourcesTest.xml",
+    "docs/execution/reviews/T05-round1/test-results-initial/TEST-com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.xml",
+    "docs/execution/reviews/T05-round1/test-results-initial/TEST-com.example.editorial.editorial.skill.SemVerTest.xml",
+    "docs/execution/reviews/T05-round1/test-results-initial/TEST-com.example.editorial.editorial.skill.T05PostgresTest.xml",
+    "docs/execution/reviews/T05-round1/test-results-initial/TEST-com.example.editorial.settings.policy.HashingTest.xml",
+    "docs/execution/reviews/T05-round1/test-results-initial/com.example.editorial.editorial.skill.BaselineResourcesTest.txt",
+    "docs/execution/reviews/T05-round1/test-results-initial/com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.txt",
+    "docs/execution/reviews/T05-round1/test-results-initial/com.example.editorial.editorial.skill.SemVerTest.txt",
+    "docs/execution/reviews/T05-round1/test-results-initial/com.example.editorial.editorial.skill.T05PostgresTest.txt",
+    "docs/execution/reviews/T05-round1/test-results-initial/com.example.editorial.settings.policy.HashingTest.txt",
+    "docs/execution/reviews/T05-round1/test-results/2026-10-04T23-05-59_614.dumpstream",
+    "docs/execution/reviews/T05-round1/test-results/TEST-com.example.editorial.editorial.skill.BaselineResourcesTest.xml",
+    "docs/execution/reviews/T05-round1/test-results/TEST-com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.xml",
+    "docs/execution/reviews/T05-round1/test-results/TEST-com.example.editorial.editorial.skill.SemVerTest.xml",
+    "docs/execution/reviews/T05-round1/test-results/TEST-com.example.editorial.editorial.skill.T05PostgresTest.xml",
+    "docs/execution/reviews/T05-round1/test-results/TEST-com.example.editorial.settings.policy.HashingTest.xml",
+    "docs/execution/reviews/T05-round1/test-results/com.example.editorial.editorial.skill.BaselineResourcesTest.txt",
+    "docs/execution/reviews/T05-round1/test-results/com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.txt",
+    "docs/execution/reviews/T05-round1/test-results/com.example.editorial.editorial.skill.SemVerTest.txt",
+    "docs/execution/reviews/T05-round1/test-results/com.example.editorial.editorial.skill.T05PostgresTest.txt",
+    "docs/execution/reviews/T05-round1/test-results/com.example.editorial.settings.policy.HashingTest.txt",
+    "docs/execution/reviews/T05-round1/test-summary.json",
+    "tests/engineering/T05/check_revision.py",
+    "tests/engineering/T05/evidence/revision-v1-cleanup.json",
+    "tests/engineering/T05/evidence/revision-v1-final-checks.json",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/2026-10-04T23-32-21_906.dumpstream",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.BaselineResourcesTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.CursorCodecTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.PromptContractTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.SemVerTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.SkillConfigDiffTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.editorial.skill.T05PostgresTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/TEST-com.example.editorial.settings.policy.HashingTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.BaselineResourcesTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.CursorCodecTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.PromptContractTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.SemVerTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.SkillConfigDiffTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.editorial.skill.T05PostgresTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final-test-results/com.example.editorial.settings.policy.HashingTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-final.json",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/2026-10-04T23-28-21_987.dumpstream",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.BaselineResourcesTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.CursorCodecTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.PromptContractTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.SemVerTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.SkillConfigDiffTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.editorial.skill.T05PostgresTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/TEST-com.example.editorial.settings.policy.HashingTest.xml",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.BaselineResourcesTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.CursorCodecTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.PromptContractTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.SemVerTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.SkillConfigDiffTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.editorial.skill.T05PostgresTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host-test-results/com.example.editorial.settings.policy.HashingTest.txt",
+    "tests/engineering/T05/evidence/revision-v1-host.json",
+    "tests/engineering/T05/evidence/revision-v1.json"
+  ],
+  "authorFingerprints": [
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/BaselineAgents.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/ConfigChangeEvent.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/ConfigChangeSink.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/CursorCodec.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SemVer.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillBaselineLoader.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfig.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigDiff.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfiguration.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillConfigValidator.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillController.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillIdentity.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillIdentityPage.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillService.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshot.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshotPage.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillSnapshotPort.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/editorial/skill/SkillVersion.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/Hashing.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/JsonIO.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyService.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicySnapshot.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicySnapshotPort.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyType.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PolicyVersion.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptBinding.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptService.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PromptVersion.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/java/com/example/editorial/settings/policy/PublicationStatus.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/prompts/analyzer.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/prompts/editorial-reviewer.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/prompts/writer-revision-v2.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/prompts/writer-v1.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/editorial.schema.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/cost.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/fact.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/license.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/qa.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/policies/watermark.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/main/resources/skills/wechat-editorial-skill.json",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/BaselineResourcesTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/CursorCodecTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/JsonSchemaSkillConfigTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/PromptContractTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/SemVerTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/SkillConfigDiffTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/editorial/skill/T05PostgresTest.java",
+      "match": true
+    },
+    {
+      "path": "backend/src/test/java/com/example/editorial/settings/policy/HashingTest.java",
+      "match": true
+    },
+    {
+      "path": "tests/engineering/T05/integration.py",
+      "match": true
+    },
+    {
+      "path": "tests/engineering/T05/migration-draft.sql",
+      "match": true
+    }
+  ]
+}

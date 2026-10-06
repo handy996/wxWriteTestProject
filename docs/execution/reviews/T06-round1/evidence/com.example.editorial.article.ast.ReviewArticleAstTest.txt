@@ -1,0 +1,47 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.ast.ReviewArticleAstTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 8.231 s <<< FAILURE! -- in com.example.editorial.article.ast.ReviewArticleAstTest
+com.example.editorial.article.ast.ReviewArticleAstTest.nestedEmphasisMustPreserveVisibleText -- Time elapsed: 8.177 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
+	at com.example.editorial.article.ast.ReviewArticleAstTest.nestedEmphasisMustPreserveVisibleText(ReviewArticleAstTest.java:11)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.ast.ReviewArticleAstTest.tripleEmphasisMustNotCountAsReadableText -- Time elapsed: 0.007 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.article.ast.ReviewArticleAstTest.tripleEmphasisMustNotCountAsReadableText(ReviewArticleAstTest.java:14)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.ast.ReviewArticleAstTest.tripleEmphasisAtMaximumMustRemainAccepted -- Time elapsed: 0.027 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception thrown: com.example.editorial.shared.PublicFailure: BLOCK_TOO_LARGE
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:75)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:58)
+	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3259)
+	at com.example.editorial.article.ast.ReviewArticleAstTest.tripleEmphasisAtMaximumMustRemainAccepted(ReviewArticleAstTest.java:17)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: com.example.editorial.shared.PublicFailure: BLOCK_TOO_LARGE
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:169)
+	at com.example.editorial.article.ast.ArticleAst.validate(ArticleAst.java:119)
+	at com.example.editorial.article.ast.ArticleAst.parse(ArticleAst.java:72)
+	at com.example.editorial.article.ast.ReviewArticleAstTest.lambda$tripleEmphasisAtMaximumMustRemainAccepted$1(ReviewArticleAstTest.java:17)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:71)
+	... 6 more
+

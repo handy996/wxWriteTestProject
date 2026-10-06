@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.job.T06PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 11.19 s <<< FAILURE! -- in com.example.editorial.article.job.T06PostgresTest
+com.example.editorial.article.job.T06PostgresTest.atomicCreateAndConcurrentReplay -- Time elapsed: 2.171 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"DEPENDENCY_UNAVAILABLE","message":"Service temporarily unavailable","traceId":"0b353379-0ae7-4e91-b385-1ee210ec2dad","details":[],"retryable":true} ==> expected: <201> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.article.job.T06PostgresTest.atomicCreateAndConcurrentReplay(T06PostgresTest.java:78)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.article.job.T06PostgresTest.schemaSkillOwnershipAndSnapshotImmutability -- Time elapsed: 0.338 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <409> but was: <201>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.article.job.T06PostgresTest.schemaSkillOwnershipAndSnapshotImmutability(T06PostgresTest.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
