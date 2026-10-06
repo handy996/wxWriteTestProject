@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Editorial paged Diff extension
+  version: 1.1.0
+  description: Additive extension to approved T00 rc.3. The frozen Diff route and schema remain unchanged.
+paths:
+  /api/v1/articles/{id}/diff/pages:
+    get:
+      operationId: getArticleDiffPages
+      summary: Read every Diff row for two immutable article versions in stable pages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+        - name: from
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+        - name: to
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+        - name: cursor
+          in: query
+          required: false
+          description: Signed cursor bound to owner, article, both versions and limit.
+          schema: {type: string, maxLength: 1000}
+        - name: limit
+          in: query
+          required: false
+          schema: {type: integer, minimum: 1, maximum: 100, default: 100}
+      responses:
+        '200':
+          description: One page in target order, followed by deleted source blocks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiffPage'
+        '401': {description: Authentication required}
+        '404': {description: Article or version not visible to this owner}
+        '422': {description: Invalid cursor or page size}
+components:
+  schemas:
+    DiffPage:
+      type: object
+      additionalProperties: false
+      required: [articleId, fromVersionId, toVersionId, offset, totalBlocks, blocks, nextCursor]
+      properties:
+        articleId: {type: string, format: uuid}
+        fromVersionId: {type: string, format: uuid}
+        toVersionId: {type: string, format: uuid}
+        offset: {type: integer, minimum: 0, maximum: 60001}
+        totalBlocks: {type: integer, minimum: 2, maximum: 60002}
+        blocks:
+          type: array
+          maxItems: 100
+          items:
+            type: object
+            additionalProperties: false
+            required: [blockId, kind, before, after]
+            properties:
+              blockId: {type: string, minLength: 1, maxLength: 80}
+              kind: {type: string, enum: [ADD, DELETE, CHANGE, UNCHANGED]}
+              before: {type: string, maxLength: 30000}
+              after: {type: string, maxLength: 30000}
+        nextCursor:
+          oneOf:
+            - {type: string, maxLength: 1000}
+            - {type: 'null'}

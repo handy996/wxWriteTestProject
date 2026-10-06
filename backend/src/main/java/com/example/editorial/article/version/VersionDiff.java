@@ -13,14 +13,48 @@ public final class VersionDiff {
     public static Map<String,JsonNode> blocks(JsonNode ast) {
         var result=new LinkedHashMap<String,JsonNode>();for(var b:ast.path("blocks"))result.put(b.path("blockId").asText(),b);return result;
     }
+    private record Plan(Map<String,JsonNode> old,List<Map.Entry<String,JsonNode>> next,
+                        Map<String,Integer> oldPosition,List<Map.Entry<String,JsonNode>> removed) {
+        int total(){return 2+next.size()+removed.size();}
+    }
+    private static Plan plan(JsonNode from,JsonNode to) {
+        var old=blocks(from.path("contentAst"));var next=blocks(to.path("contentAst"));
+        var positions=new HashMap<String,Integer>();int index=0;
+        for(String id:old.keySet())positions.put(id,index++);
+        var removed=new ArrayList<Map.Entry<String,JsonNode>>();
+        for(var entry:old.entrySet())if(!next.containsKey(entry.getKey()))removed.add(entry);
+        return new Plan(old,new ArrayList<>(next.entrySet()),positions,removed);
+    }
+    private static ObjectNode header(UUID article,JsonNode from,JsonNode to) {
+        return JSON.createObjectNode().put("articleId",article.toString())
+            .put("fromVersionId",from.path("meta").path("id").asText())
+            .put("toVersionId",to.path("meta").path("id").asText());
+    }
     public static ObjectNode between(UUID article,JsonNode from,JsonNode to) {
-        var out=JSON.createObjectNode().put("articleId",article.toString()).put("fromVersionId",from.path("meta").path("id").asText()).put("toVersionId",to.path("meta").path("id").asText());
+        var p=plan(from,to);if(p.total()>1000)fail("DIFF_TOO_LARGE");
+        var out=header(article,from,to);var rows=out.putArray("blocks");
+        for(int i=0;i<p.total();i++)append(rows,p,from,to,i);
+        return out;
+    }
+    /** Additive paged contract: immutable version IDs fix the source and signed cursors fix the offset. */
+    public static ObjectNode page(UUID article,JsonNode from,JsonNode to,int offset,int limit) {
+        if(limit<1||limit>100)fail("INVALID_PAGE");
+        var p=plan(from,to);if(offset<0||offset>=p.total())fail("INVALID_CURSOR");
+        var out=header(article,from,to).put("offset",offset).put("totalBlocks",p.total());
         var rows=out.putArray("blocks");
-        for(String anchor:List.of("title","subtitle"))row(rows,anchor,from.path(anchor).asText(""),to.path(anchor).asText(""),from.path(anchor).equals(to.path(anchor))?"UNCHANGED":"CHANGE");
-        var old=blocks(from.path("contentAst"));var next=blocks(to.path("contentAst"));var oldOrder=new ArrayList<>(old.keySet());int i=0;
-        for(var e:next.entrySet()) {var b=old.get(e.getKey());row(rows,e.getKey(),b==null?"":b.path("text").asText(),e.getValue().path("text").asText(),b==null?"ADD":b.equals(e.getValue()) && oldOrder.indexOf(e.getKey())==i?"UNCHANGED":"CHANGE");i++;}
-        old.forEach((id,b)->{if(!next.containsKey(id))row(rows,id,b.path("text").asText(),"","DELETE");});
-        if(rows.size()>1000)fail("DIFF_TOO_LARGE");return out;
+        for(int i=offset;i<Math.min(p.total(),offset+limit);i++)append(rows,p,from,to,i);
+        return out;
+    }
+    private static void append(ArrayNode rows,Plan p,JsonNode from,JsonNode to,int position) {
+        if(position<2){String anchor=position==0?"title":"subtitle";
+            row(rows,anchor,from.path(anchor).asText(""),to.path(anchor).asText(""),from.path(anchor).equals(to.path(anchor))?"UNCHANGED":"CHANGE");return;}
+        int target=position-2;
+        if(target<p.next().size()){
+            var e=p.next().get(target);var before=p.old().get(e.getKey());
+            row(rows,e.getKey(),before==null?"":before.path("text").asText(),e.getValue().path("text").asText(),
+                before==null?"ADD":before.equals(e.getValue())&&p.oldPosition().get(e.getKey())==target?"UNCHANGED":"CHANGE");return;
+        }
+        var e=p.removed().get(target-p.next().size());row(rows,e.getKey(),e.getValue().path("text").asText(),"","DELETE");
     }
     private static void row(ArrayNode rows,String id,String before,String after,String kind) {rows.add(JSON.createObjectNode().put("blockId",id).put("kind",kind).put("before",before).put("after",after));}
     public static void mappings(JsonNode oldAst,JsonNode newAst,JsonNode mappings) {

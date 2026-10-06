@@ -19,6 +19,8 @@ public final class VersionController {
     @GetMapping("/articles/{id}/versions") public JsonNode list(@PathVariable UUID id,@RequestParam(required=false) String cursor,@RequestParam(defaultValue="20") int limit){return versions.list(ActorContext.current(),id,cursor,limit);}
     @GetMapping("/articles/{id}/versions/{versionId}") public void get(@PathVariable UUID id,@PathVariable UUID versionId,HttpServletResponse res)throws Exception {var a=ActorContext.current();reply(res,response(200,a,id,articles.readVersion(a,id,versionId)));}
     @GetMapping("/articles/{id}/diff") public JsonNode diff(@PathVariable UUID id,@RequestParam UUID from,@RequestParam UUID to){return versions.diff(ActorContext.current(),id,from,to);}
+    @GetMapping("/articles/{id}/diff/pages") public JsonNode diffPage(@PathVariable UUID id,@RequestParam UUID from,@RequestParam UUID to,
+            @RequestParam(required=false) String cursor,@RequestParam(defaultValue="100") int limit){return versions.diffPage(ActorContext.current(),id,from,to,cursor,limit);}
     @GetMapping("/articles/{id}/proposals") public JsonNode proposals(@PathVariable UUID id,@RequestParam(required=false) String status,@RequestParam(required=false) String cursor,@RequestParam(defaultValue="20") int limit){return proposals.list(ActorContext.current(),id,status,cursor,limit);}
     @PostMapping("/articles/{id}/versions") public void save(@PathVariable UUID id,HttpServletRequest req,HttpServletResponse res)throws Exception{command(id,"save",req,res);}
     @PostMapping("/articles/{id}/restore") public void restore(@PathVariable UUID id,HttpServletRequest req,HttpServletResponse res)throws Exception{command(id,"restore",req,res);}

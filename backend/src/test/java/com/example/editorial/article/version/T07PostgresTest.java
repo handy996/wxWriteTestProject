@@ -53,6 +53,32 @@ class T07PostgresTest extends T07Support {
         sample("ArticleVersion",saved);sample("RestoreVersion",restored);sample("Diff",diff);sample("ArticleVersionPage",ok(c.get(path(a)+"/versions"),200));
         var get=c.get(path(a)+"/versions/"+saved.path("meta").path("id").asText());assertEquals("\"job-3\"",get.headers().firstValue("ETag").orElseThrow());assertEquals(saved,ok(get,200));
     }
+    @Test void pagedDiffReadsEveryLargeVersionRowWithBoundCursor()throws Exception {
+        var c=signed();var article=tracked(c);var request=edit(article);
+        var blocks=(ArrayNode)request.path("contentAst").path("blocks");var template=(ObjectNode)blocks.get(0);
+        for(int i=0;i<1001;i++){var added=template.deepCopy().put("blockId","paged"+i).put("text","字");blocks.add(added);}
+        var saved=ok(c.write("POST",path(article)+"/versions",request,UUID.randomUUID().toString(),etag(article)),201);
+        String base=path(article)+"/diff?from="+head(article)+"&to="+saved.path("meta").path("id").asText();
+        error(c.get(base),422,"DIFF_TOO_LARGE");
+        String pages=path(article)+"/diff/pages?from="+head(article)+"&to="+saved.path("meta").path("id").asText()+"&limit=100";
+        var first=ok(c.get(pages),200);sample("DiffPage",first);
+        assertEquals(100,first.path("blocks").size());assertEquals(1004,first.path("totalBlocks").asInt());
+        String token=first.path("nextCursor").asText();
+        error(c.get(pages+"&cursor="+token+"x"),422,"INVALID_CURSOR");
+        error(c.get(pages.replace("limit=100","limit=99")+"&cursor="+token),422,"INVALID_CURSOR");
+        error(c.get(pages.replace("from="+head(article),"from="+saved.path("meta").path("id").asText())+"&cursor="+token),422,"INVALID_CURSOR");
+        var hidden=ActorContext.forWorker(UUID.randomUUID(),UUID.randomUUID(),UUID.randomUUID());
+        assertEquals(404,assertThrows(PublicFailure.class,()->versions.diffPage(hidden,articleId(article),head(article),uuid(saved.path("meta").path("id").asText()),null,100)).status());
+        var ids=new ArrayList<String>();String cursor=null;int pagesRead=0;
+        do {
+            var page=ok(c.get(pages+(cursor==null?"":"&cursor="+cursor)),200);
+            assertEquals(ids.size(),page.path("offset").asInt());
+            for(var row:page.path("blocks"))ids.add(row.path("blockId").asText());
+            cursor=page.path("nextCursor").isNull()?null:page.path("nextCursor").asText();pagesRead++;
+        }while(cursor!=null);
+        assertEquals(11,pagesRead);assertEquals(first.path("totalBlocks").asInt(),ids.size());
+        assertEquals(ids.size(),new HashSet<>(ids).size());assertEquals("paged1000",ids.getLast());
+    }
     @Test void preconditionsAuthorizationReplayAndConcurrentSameKey()throws Exception {
         var c=signed();var a=tracked(c);var body=edit(a);String path=path(a)+"/versions",key=UUID.randomUUID().toString();
         error(c.write("POST",path,body,key,null),428,"IF_MATCH_REQUIRED");error(c.write("POST",path,body,key,"\"job-0\""),412,"ETAG_MISMATCH");

@@ -28,6 +28,19 @@ public final class VersionService {
         page.put("nextCursor",rows.size()>limit?cursors.write(rows.get(limit-1).path("versionNo").asText(),scope):null);return page;
     }
     public JsonNode diff(ActorContext a,UUID article,UUID from,UUID to) {return VersionDiff.between(article,articles.readVersion(a,article,from),articles.readVersion(a,article,to));}
+    public JsonNode diffPage(ActorContext a,UUID article,UUID from,UUID to,String cursor,int limit) {
+        PageCursor.limit(limit);
+        // Read both immutable versions with the caller's ownership before interpreting a cursor.
+        var before=articles.readVersion(a,article,from);var after=articles.readVersion(a,article,to);
+        String scope=cursors.scope(a,article,"diff-pages-v1.1",from+":"+to+":"+limit);
+        int offset=0;String last=cursors.read(cursor,scope);
+        if(last!=null)try {offset=Integer.parseInt(last);if(offset<1)throw new IllegalArgumentException();}
+            catch(Exception e){throw new PublicFailure(422,"INVALID_CURSOR");}
+        var page=VersionDiff.page(article,before,after,offset,limit);
+        int next=offset+page.path("blocks").size();
+        page.put("nextCursor",next<page.path("totalBlocks").asInt()?cursors.write(Integer.toString(next),scope):null);
+        return page;
+    }
     public void guard(ActorContext a,UUID article,String etag,UUID base) {
         var job=articles.job(a,article,true);articles.writable(article);Idempotency.requireEtag(etag,job.path("lockVersion").asLong());
         if(job.path("status").asText().equals("CANCELLED"))throw new PublicFailure(409,"CANCELLED");

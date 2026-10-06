@@ -1,0 +1,19 @@
+{
+  "jsonSchemaVersion": "4.26.0",
+  "schema": {
+    "path": "docs\\schemas\\diff-page-v1.1.schema.json",
+    "sha256": "8526de4389f2368a533b8d86c0e2a6453ca469873f9cc3db75f0cf55d29a6f6f"
+  },
+  "openapi": {
+    "path": "docs\\api\\diff-pages-v1.1.openapi.yaml",
+    "sha256": "30f517d772d8dd74928122bbacb45446a8c014776f1f7d7a33315e9872599425"
+  },
+  "sample": {
+    "path": "tests\\engineering\\integration\\evidence\\t07-diff-page-01-samples\\DiffPage.json",
+    "sha256": "648337fc0056454ace14dc57eeae9b77104784d00d828e87954e5720a2b18ae7"
+  },
+  "sampleTotalBlocks": 1004,
+  "samplePageSize": 100,
+  "approvedT00Hashes": 27,
+  "result": "PASS"
+}
