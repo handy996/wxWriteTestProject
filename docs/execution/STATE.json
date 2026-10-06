@@ -3,6 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
+  "pendingReviewCommit": "T07-R04 整改提交（紧随 reviewedBaselineCommit 之后，含 backend/identity 改动与新闸门）：未经独立复审，须由第五轮 T03 复审覆盖后才可作为批准依据",
   "rounds": { "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）", "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）" },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -36,22 +37,31 @@
     "T00": { "verdict": "PASS", "basis": "docs/execution/reviews/T00-rc3-approval.json", "note": "仅工程契约基线，不代表产品或模型质量验收" },
     "T01": { "verdict": "BLOCKED", "basis": "docs/execution/reports/T01.md", "note": "工具与候选材料自测完成；两名独立人工标注者与模型质量人工评分未完成（产品 Owner 事项，不可代签）" },
     "T02": { "verdict": "CHANGES_REQUIRED", "basis": "docs/execution/reviews/T02-Review-v2.0.md", "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论" },
-    "T03": { "verdict": "INTEGRATED_UNREVIEWED", "basis": "docs/execution/reports/T03-T07-Integration-2026-10-06.md", "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录" },
+    "T03": { "verdict": "INTEGRATED_UNREVIEWED", "basis": "docs/execution/reports/T03-T07-Integration-2026-10-06.md", "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录。T07-R04 整改（Cookie 名常量 + 启动断言 + 测试改名 + 新闸门）由主 agent 本人实施，属 T03 域且未经复审，T03 独立批准必须覆盖它" },
     "T04": { "verdict": "BLOCKED", "basis": "docs/execution/reviews/T04-Review-v3.0.md", "note": "R03 默认端口签名缺陷已关闭；B01/R04 真实私有 S3 桶端到端验收缺失（环境依赖）。T07 组合根当前仅允许 Local 后端执行版本写入" },
     "T05": { "verdict": "PASS", "basis": "docs/execution/reviews/T05-Review-v2.0.md", "note": "明示不代表 T03 已批准、全 CI/G1、后续工作流集成或生产上线" },
     "T06": { "verdict": "PASS", "basis": "docs/execution/reviews/T06-Review-v4.0.md", "note": "范围为当时工作区 T06 交付；正式集成版不自动继承，边界由 verify_boundaries.py 逐字节复核" },
-    "T07": { "verdict": "PASS", "basis": "docs/execution/reviews/T07-Review-v4.0.md", "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域" }
+    "T07": { "verdict": "PASS", "basis": "docs/execution/reviews/T07-Review-v4.0.md", "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域" },
+    "T08": { "verdict": "IN_PROGRESS", "basis": "STATE.json（2026-10-06 派发给上下文隔离的实施子 agent）", "note": "自测通过也只报“契约自测完成”；交付后须独立复审。与主 agent 的 T03/T07-R04 改动文件边界互不重叠（cost/ 新包 + T08 迁移草案）" }
   },
 
-  "notStarted": ["T08","T09","T10","T11","T12","T13","T14","T15","T16","T17","T18","T19","T20","T21","T22","T23","T24","T25","T26","T27","T28","T29","T30","T31","T32","T33","T34","T35","T36","T37"],
+  "inProgress": ["T08 — 预算、价格、用量与对账（上下文隔离子 agent 实施中，2026-10-06 派发）"],
+  "notStarted": ["T09","T10","T11","T12","T13","T14","T15","T16","T17","T18","T19","T20","T21","T22","T23","T24","T25","T26","T27","T28","T29","T30","T31","T32","T33","T34","T35","T36","T37"],
 
   "openItems": [
-    { "id": "T07-R04", "task": "T03", "severity": "P1（主 agent 定级；复审方建议 P2）", "status": "OPEN",
-      "issue": "冻结契约与增量契约都把 Session Cookie 声明为 EDITORIAL_SESSION，但 backend/ 无任何 server.servlet.session.cookie.name 配置（application.yml 第 40–44 行只设 http-only 与 same-site，dev/mock/prod 亦无 name），运行时为容器默认 JSESSIONID；T03PostgresTest.java:100-104 等历史 HTTP 测试全部以 JSESSIONID 取证。严格按契约生成的客户端携带 EDITORIAL_SESSION 将得到 401",
-      "whyP1": "影响所有路由的契约派生客户端与 T30 生成式接入，不是单接口问题；且它说明 rc.3 批准至今无人把契约 Cookie 名与运行时行为做过一致性断言",
-      "remediation": "取方向 (a)：让实现符合已批准契约——在 server 配置设 server.servlet.session.cookie.name=EDITORIAL_SESSION（并确认 prod 的 T03_COOKIE 校验仍通过），同步更新硬编码 JSESSIONID 的测试，并新增一条机器断言：冻结契约 securitySchemes.session.name == 运行时 Set-Cookie 名。不改已批准的 rc.3 文本；若反向选择 (b) 改契约，必须按契约变更规则走版本化申请并经主 agent 复审",
-      "foundBy": "docs/execution/reviews/T07-Review-v4.0.md 第 4 节（独立复审中新发现，非 R03 要求范围）",
+    { "id": "T07-R04", "task": "T03", "severity": "P1（主 agent 定级；复审方建议 P2）", "status": "CLOSED",
+      "issue": "冻结契约与增量契约都把 Session Cookie 声明为 EDITORIAL_SESSION，但 backend/ 无任何 server.servlet.session.cookie.name 配置，运行时为容器默认 JSESSIONID；历史 HTTP 测试全部以 JSESSIONID 取证。严格按契约生成的客户端携带 EDITORIAL_SESSION 将得到 401",
+      "foundBy": "docs/execution/reviews/T07-Review-v4.0.md 第 4 节（独立复审计中新发现，非 R03 要求范围）",
+      "fix": "方向 (a) 实现符合已批准 rc.3（契约文本零改动）：application.yml 设 cookie.name=EDITORIAL_SESSION；T03Configuration 增加常量 SESSION_COOKIE_NAME 并在组合根启动即断言配置名==契约名（所有 profile，非仅 prod）；T03PostgresTest 三处 JSESSIONID 字面量改用常量并新增运行时断言 Set-Cookie 必须以 EDITORIAL_SESSION= 开头；新增零依赖闸门 tests/engineering/T03/check_session_cookie.py 比对契约/增量契约/基础与 prod 配置/Java 常量五处全等且禁止容器默认名回流",
+      "fixEvidence": ["docs/execution/reports/T07-R04-Revision-v1.0.md", "tests/engineering/T03/check_session_cookie.py（退出 0；6/6 反向控制被拒）", "tests/engineering/integration/evidence/r04-core-post-change.json（真实 PG+真实 HTTP Session/CSRF，12 类 75 项全通过，paidCalls=0，含 4 项复审回归）", "tests/engineering/integration/evidence/r04-session-cookie.json 与 r04-all-with-identity.json（同套件基线对照用）"],
+      "attribution": "identity 单域 6 项失败与未改动基线工作树（git worktree @ dc95736）差集为 0；--suite all 的 16 项失败与基线差集为 0，且与仓库既有 formal-all-domains-01-test-results（先前已入库，exitCode=1）集合完全相同 → 非本次引入",
+      "closedAt": "2026-10-06", "closedBy": "主 agent 实施并自验；尚未独立复审，见 pendingReview",
       "note": "属身份/会话配置域，不反转 T07 第四轮判决，也不计入 T07 OPEN 项" },
+    { "id": "MULTI-DOMAIN-SUITE", "task": "T10/T11", "severity": "P3（预期限制，非缺陷）", "status": "OPEN",
+      "issue": "formal.py --suite identity 与 --suite all 在当前批次必然部分失败：跨域调用返回 503 OWNERSHIP_NOT_READY、审计写入 AUDIT_WRITE_FAILED、emptyInitializationAndRepeatNeverReset 初始化用户数期望差 1 vs 2，共 16 项",
+      "cause": "T10/T11 未安装，生产 Changes/Deletion fail closed——仓库自己的 formal-all-domains-01.json domainSubstitutes 已记录此点，且其失败集合与本轮逐项相同",
+      "closure": "T10/T11 安装后重跑 --suite all 应转绿；在此之前任何整改的回归判定必须用同套件基线对照，不得要求 120 项全绿，也不得把 core 套件的绿色扩展解释为全域组合根已通过",
+      "openedAt": "2026-10-06", "foundBy": "docs/execution/reports/T07-R04-Revision-v1.0.md 第 4 节" },
     { "id": "T07-R03", "task": "T07", "severity": "P2", "status": "CLOSED",
       "issue": "docs/api/diff-pages-v1.1.openapi.yaml 无根级/操作级 security，也无 components.securitySchemes；独立生成客户端的 agent 无法从机器可读配置得知必须携带登录 Session，实际会收到 401",
       "requiredFix": "在增量 OpenAPI 声明与冻结契约一致的 session Cookie scheme 并在根级或 GET 操作引用；补自动化校验断言该路由的有效 security requirement 及 scheme 的 type/in/name；保留真实 HTTP 匿名 401 与登录成功回归。仅补文字说明不足以关闭",
@@ -76,10 +86,10 @@
   ],
 
   "next": [
-    "1. 关闭 T07-R04（新发现，P1）：让实现符合已批准的 rc.3——设 server.servlet.session.cookie.name=EDITORIAL_SESSION（确认 prod 的 T03_COOKIE 校验仍通过），同步更新硬编码 JSESSIONID 的测试，并新增机器断言“契约 securitySchemes.session.name == 运行时 Set-Cookie 名”。注意这一项改了运行时行为，必须重跑真实 HTTP 登录/匿名 401 回归，不能只靠差分证明",
-    "2. 派发 T08（预算、价格、用量与对账）：批次 B 唯一未开始的基础设施，也是 T09 真实收费调用与 editorial.providers.paid-calls-enabled 门禁的前置",
-    "3. 补 T02 第 3 轮复审与 T03 独立批准以推进 G1；T07-R04 本身就是 T03 缺少独立复审的直接证据。T04 保持 BLOCKED 并登记所需真实 S3 桶环境依赖",
-    "4. T07 已 PASS（范围见 tasks.T07.note）：批次 C 的 T10/T11 可在契约冻结后开工，T09 需等 T08 门禁"
+    "1. 等 T08 子 agent 交付 → 主 agent 集成（Flyway 序号分配、pom/配置/CI 共享文件合入）→ 再派**上下文隔离的复审 agent** 做 T08 第一轮独立复审；同时把 T07-R04 整改（backend/identity 三文件 + 新闸门）纳入同一轮或单独的 T03 复审，使 pendingReviewCommit 转为已复审基线",
+    "2. 补 T02 第 3 轮复审与 T03 独立批准以推进 G1；T07-R04 与其整改都是 T03 缺少独立复审的直接证据。T04 保持 BLOCKED 并登记所需真实 S3 桶环境依赖",
+    "3. T07 已 PASS（范围见 tasks.T07.note）：批次 C 的 T10/T11 可在契约冻结后开工，T09 需等 T08 门禁；T10/T11 装好后重跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
+    "4. 无人工金标就不能宣布 T01/G1 完成：T01-HUMAN 是产品 Owner 事项，不可代签"
   ],
 
   "protocol": [
@@ -92,12 +102,15 @@
     "省的是读取与重复读取，不是关口判断：不得用“读报告结论”替代独立验证",
     "复审不再生成全文件清单快照（单份约 344 KB ≈ 90k tok）：改以 git status 洁净 + rc.3 27 哈希门禁 + 差分路径过滤三项取证（第四轮已验证可复现，且更强：它直接证明生产路径改动数为 0）",
     "跨轮继承的证据必须标注：写明继承自第几轮、绑定哪个未变字节基线、本轮是否重跑；不得把继承证据表述成本轮独立通过",
-    "校验器要自证有效：任何“通过”类断言须附反向控制（对被检对象做最小化变异并要求被拒），否则该闸门可能只是恒真"
+    "校验器要自证有效：任何“通过”类断言须附反向控制（对被检对象做最小化变异并要求被拒），否则该闸门可能只是恒真",
+    "回归判定用同套件基线对照，不用绝对全绿：有些套件在当前批次必然部分失败（如 --suite all 因 T10/T11 未安装 16 项 fail closed，仓库既有 formal-all-domains-01 已记录同一集合）；判断“是否引入回归”须在被忽略的 .work 里用 git worktree add --detach 取未改动基线跑同一命令，比失败方法集合的差集，用完即删",
+    "变异只能改内存：反向控制若要破坏被检对象，禁止临时写回磁盘（尤其不得触碰已批准的 rc.3 文件）——进程崩在半路会留下被改动的冻结契约"
   ],
 
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
     "python tests/engineering/T02/check_contracts.py",
+    "python tests/engineering/T03/check_session_cookie.py   # 会话 Cookie 名五源全等（契约/增量契约/基础与 prod 配置/Java 常量）",
     "python -m unittest discover -s tests/contracts/T00 -v",
     "node tests/contracts/T00/hash-vector-js.cjs",
     "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe",

@@ -1,0 +1,36 @@
+{
+  "agreement": {
+    "schemeKey": "session",
+    "frozenScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "additiveScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "configuredCookieName": "EDITORIAL_SESSION",
+    "prodOverride": null,
+    "javaConstant": "EDITORIAL_SESSION"
+  },
+  "forbiddenDefault": "JSESSIONID",
+  "forbiddenDefaultInCheckedSources": [],
+  "negativeControlsRejected": [
+    "additive-drops-scheme",
+    "additive-scheme-extra-key",
+    "code-constant-drifts",
+    "config-changes-cookie-name",
+    "config-drops-cookie-name",
+    "contract-renames-cookie"
+  ],
+  "sha256": {
+    "docs/api/openapi.yaml": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b",
+    "docs/api/diff-pages-v1.1.openapi.yaml": "0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd",
+    "backend/src/main/resources/application.yml": "fff6a718f32c52273057af9500c7c15e8a8254d068b34ad0021431f3feed1c7a",
+    "backend/src/main/resources/application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+    "backend/src/main/java/com/example/editorial/identity/T03Configuration.java": "56f4d50ac29ff90e16fd6d0c30aa1d7d138723337510aeef5ddf7847e570ee58"
+  },
+  "verdict": "PASS"
+}

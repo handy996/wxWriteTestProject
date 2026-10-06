@@ -40,6 +40,7 @@ server:
   servlet:
     session:
       cookie:
+        name: EDITORIAL_SESSION
         http-only: true
         same-site: strict
 management:

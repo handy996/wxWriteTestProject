@@ -21,6 +21,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration(proxyBeanMethods=false)
 @ConditionalOnProperty(name="editorial.identity.enabled",havingValue="true")
 public class T03Configuration {
+    /** rc.3 declares the session cookie by this exact name; the container default is not contract-conformant. */
+    public static final String SESSION_COOKIE_NAME="EDITORIAL_SESSION";
     @Bean PasswordEncoder t03Passwords(){return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();}
     @Bean AuditSink auditSink(JdbcTemplate db,PlatformTransactionManager tx){return new JdbcAuditSink(db,tx);}
     @Bean Ownership ownership(List<Ownership.Resolver> resolvers){return new Ownership(resolvers);}
@@ -37,6 +39,7 @@ public class T03Configuration {
             || !("https".equals(uri.getScheme()) || ("http".equals(uri.getScheme()) && !env.matchesProfiles("prod"))))
             throw new IllegalStateException("T03_ORIGIN: explicit origin required; HTTPS in production");
         if(!"none".equals(env.getProperty("server.forward-headers-strategy","none"))) throw new IllegalStateException("T03_PEER: forwarded headers must be disabled");
+        if(!SESSION_COOKIE_NAME.equals(env.getProperty("server.servlet.session.cookie.name",""))) throw new IllegalStateException("T03_COOKIE: session cookie name must equal the approved contract name "+SESSION_COOKIE_NAME);
         if(env.matchesProfiles("prod") && (!env.getProperty("server.servlet.session.cookie.secure",Boolean.class,false)
             || !env.getProperty("server.servlet.session.cookie.http-only",Boolean.class,true)
             || !"strict".equals(env.getProperty("server.servlet.session.cookie.same-site","strict")))) throw new IllegalStateException("T03_COOKIE: secure production cookie required");

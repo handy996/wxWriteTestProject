@@ -97,11 +97,12 @@ class T03PostgresTest {
         error(c.call("POST","/api/v1/auth/login",body,Map.of("Origin",ORIGIN,"Forwarded","for=192.0.2.99","X-Forwarded-For","192.0.2.99")),429);
     }
     @Test void fixationRotationAndLogout()throws Exception {
-        var c=signed();String old=c.cookies.getCookieStore().getCookies().stream().filter(x->x.getName().equals("JSESSIONID")).findFirst().orElseThrow().getValue();String first=c.csrf;
+        var c=signed();String old=c.cookies.getCookieStore().getCookies().stream().filter(x->x.getName().equals(T03Configuration.SESSION_COOKIE_NAME)).findFirst().orElseThrow().getValue();String first=c.csrf;
         var r=c.login(username(),password());assertEquals(200,r.statusCode());assertNotEquals(first,c.csrf);
-        String current=c.cookies.getCookieStore().getCookies().stream().filter(x->x.getName().equals("JSESSIONID")).findFirst().orElseThrow().getValue();assertNotEquals(old,current);
+        String current=c.cookies.getCookieStore().getCookies().stream().filter(x->x.getName().equals(T03Configuration.SESSION_COOKIE_NAME)).findFirst().orElseThrow().getValue();assertNotEquals(old,current);
         assertTrue(r.headers().allValues("Set-Cookie").stream().anyMatch(x->x.contains("HttpOnly") && x.contains("SameSite=Strict")));
-        var noCookies=HttpClient.newHttpClient();var oldResponse=noCookies.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/v1/me")).header("Cookie","JSESSIONID="+old).build(),HttpResponse.BodyHandlers.ofString());error(oldResponse,401);
+        assertTrue(r.headers().allValues("Set-Cookie").stream().anyMatch(x->x.startsWith(T03Configuration.SESSION_COOKIE_NAME+"=")),"runtime must issue the session cookie name declared by rc.3, not the container default");
+        var noCookies=HttpClient.newHttpClient();var oldResponse=noCookies.send(HttpRequest.newBuilder(URI.create("http://127.0.0.1:"+port+"/api/v1/me")).header("Cookie",T03Configuration.SESSION_COOKIE_NAME+"="+old).build(),HttpResponse.BodyHandlers.ofString());error(oldResponse,401);
         String path="/api/v1/auth/logout";error(c.call("POST",path,null,Map.of("Origin",ORIGIN,"X-CSRF-Token",c.csrf)),428);
         assertEquals(204,c.call("POST",path,null,Map.of("Origin",ORIGIN,"X-CSRF-Token",c.csrf,"Idempotency-Key",UUID.randomUUID().toString(),"X-Request-Hash",CanonicalRequest.hash("POST",path,new byte[0]))).statusCode());
         error(c.call("GET","/api/v1/me",null,Map.of()),401);
