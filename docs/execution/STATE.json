@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "T07-R04 整改提交（紧随 reviewedBaselineCommit 之后，含 backend/identity 改动与新闸门）：未经独立复审，须由第五轮 T03 复审覆盖后才可作为批准依据",
+  "pendingReviewCommit": "2512025（T07-R04 整改：backend/identity 三文件 + tests/engineering/T03/check_session_cookie.py + 三份套件证据 + 本报告）。它晚于 reviewedBaselineCommit，因此未经独立复审，不得作为 PASS 依据；须由第五轮 T03 复审覆盖后把它写入 rounds 并推进 reviewedBaselineCommit",
   "rounds": { "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）", "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）" },
   "integrationBase": "5413cf4",
   "branch": "main",
