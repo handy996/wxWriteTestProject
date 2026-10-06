@@ -1,0 +1,219 @@
+{
+  "head": "c12738f6eff55e3c2cda6190df38cd165bfa7457",
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\verify_boundaries.py"
+      ],
+      "exitCode": 0,
+      "output": "All reviewed integration boundary comparisons passed"
+    },
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T02\\check_contracts.py"
+      ],
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T07-round3\\scan_review.py",
+        "--gitleaks",
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe"
+      ],
+      "exitCode": 0,
+      "output": "4:51PM INF scanned ~29934567 bytes (29.93 MB) in 1.15s\n4:51PM INF no leaks found\n\n[]\n\n"
+    }
+  ],
+  "totals": {
+    "tests": 78,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "com.example.editorial.article.ast.ArticleAstTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewArticleAstTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewEmphasisPunctuationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.ast.ReviewNestedClosureTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.job.DeletionHandoffTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.job.T06PostgresTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.ReviewDiffHttpTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.ReviewDiffPageTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.ReviewVersionBoundaryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07PostgresTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07RevisionBoundaryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.T07UnavailableTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.article.version.VersionDiffTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.example.editorial.shared.CanonicalRequestTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "schemas": [
+    {
+      "sample": "ArticleVersion",
+      "errors": []
+    },
+    {
+      "sample": "RestoreVersion",
+      "errors": []
+    },
+    {
+      "sample": "LateVersion",
+      "errors": []
+    },
+    {
+      "sample": "ArticleVersionPage",
+      "errors": []
+    },
+    {
+      "sample": "Diff",
+      "errors": []
+    },
+    {
+      "sample": "ProposalPage",
+      "errors": []
+    },
+    {
+      "sample": "DispositionResult",
+      "errors": []
+    },
+    {
+      "sample": "StepContext",
+      "errors": []
+    },
+    {
+      "sample": "WriterOutput",
+      "errors": []
+    },
+    {
+      "sample": "article-artifact-sample",
+      "errors": []
+    },
+    {
+      "sample": "article-version-sample",
+      "errors": []
+    },
+    {
+      "sample": "DiffPage",
+      "errors": []
+    }
+  ],
+  "contract": {
+    "openapiStructureValid": true,
+    "expectedSecurity": [
+      {
+        "session": []
+      }
+    ],
+    "actualSecurity": null,
+    "expectedSessionScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "actualSessionScheme": null,
+    "securityContractMatchesFrozenAuthentication": false,
+    "actualAnonymousHttpStatus": 401
+  },
+  "trackedInputCount": 1737,
+  "changedTrackedInputs": [],
+  "databaseStopped": true,
+  "failures": [
+    "T07-R03: additive OpenAPI does not declare session authentication"
+  ]
+}

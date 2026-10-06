@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.article.version.ReviewDiffPageTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.788 s <<< FAILURE! -- in com.example.editorial.article.version.ReviewDiffPageTest
+com.example.editorial.article.version.ReviewDiffPageTest.reviewSmallMixedDiffPagesEqualFrozenResultAcrossAllPageSizes -- Time elapsed: 0.004 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: CONTENT_LENGTH_INVALID
+	at com.example.editorial.article.ast.ArticleAst.fail(ArticleAst.java:240)
+	at com.example.editorial.article.ast.ArticleAst.capacity(ArticleAst.java:41)
+	at com.example.editorial.article.version.VersionDiffTest.ast(VersionDiffTest.java:20)
+	at com.example.editorial.article.version.ReviewDiffPageTest.reviewSmallMixedDiffPagesEqualFrozenResultAcrossAllPageSizes(ReviewDiffPageTest.java:29)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
