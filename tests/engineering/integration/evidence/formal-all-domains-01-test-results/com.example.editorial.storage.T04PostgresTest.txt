@@ -1,0 +1,93 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.storage.T04PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.524 s <<< FAILURE! -- in com.example.editorial.storage.T04PostgresTest
+com.example.editorial.storage.T04PostgresTest.stageRecomputesHashAndSize -- Time elapsed: 0.033 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.stageRecomputesHashAndSize(T04PostgresTest.java:162)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04PostgresTest.auditNeverLogsContentOrSecrets -- Time elapsed: 0.047 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.auditNeverLogsContentOrSecrets(T04PostgresTest.java:298)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04PostgresTest.crossArticleAndOtherOwnerRejected -- Time elapsed: 0.040 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.crossArticleAndOtherOwnerRejected(T04PostgresTest.java:198)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04PostgresTest.objectWrittenButTransactionFailsProducesNoSuccess -- Time elapsed: 0.040 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.objectWrittenButTransactionFailsProducesNoSuccess(T04PostgresTest.java:174)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04PostgresTest.authorizeDownloadRejectsAndGrants -- Time elapsed: 0.048 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.authorizeDownloadRejectsAndGrants(T04PostgresTest.java:210)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04PostgresTest.commitMarksCompleteAfterCommit -- Time elapsed: 0.037 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04PostgresTest.commitMarksCompleteAfterCommit(T04PostgresTest.java:188)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

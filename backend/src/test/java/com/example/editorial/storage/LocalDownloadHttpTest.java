@@ -52,7 +52,10 @@ class LocalDownloadHttpTest {
         app = (ServletWebServerApplicationContext) new SpringApplicationBuilder(App.class)
             .properties(Map.of("server.port", "0", "server.address", "127.0.0.1", "editorial.storage.enabled", "true",
                 "editorial.storage.mode", "local", "spring.main.banner-mode", "off", "logging.level.root", "WARN"))
-            .run("--server.port=0", "--server.address=127.0.0.1", "--management.endpoint.health.group.readiness.include=ping");
+            .run("--server.port=0", "--server.address=127.0.0.1", "--management.endpoint.health.group.readiness.include=ping",
+                "--editorial.storage.enabled=true", "--editorial.storage.mode=local",
+                "--spring.datasource.password=t04-local-http-runtime-test",
+                "--spring.flyway.password=t04-local-http-migration-test");
         base = "http://127.0.0.1:" + app.getWebServer().getPort();
         backend = (LocalStorageBackend) app.getBean(StorageBackend.class);
     }

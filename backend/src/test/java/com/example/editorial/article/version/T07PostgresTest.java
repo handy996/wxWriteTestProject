@@ -18,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @SpringBootTest(classes=EditorialApplication.class,webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(TestParticipants.Config.class)
+@org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable(named="T06_REAL_PG",matches="true")
 class T07PostgresTest extends T07Support {
     @Autowired TestParticipants participants;
     @BeforeEach void fixture()throws Exception {

@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.storage.T04RevisionPostgresTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 11.20 s <<< FAILURE! -- in com.example.editorial.storage.T04RevisionPostgresTest
+com.example.editorial.storage.T04RevisionPostgresTest.ownerAuthorizedUrlWorksOverRealHttpAndOtherOwnerCannotObtainOne -- Time elapsed: 0.404 s <<< ERROR!
+com.example.editorial.shared.PublicFailure: AUDIT_WRITE_FAILED
+	at com.example.editorial.audit.JdbcAuditSink.lambda$append$1(JdbcAuditSink.java:24)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at com.example.editorial.audit.JdbcAuditSink.append(JdbcAuditSink.java:15)
+	at com.example.editorial.storage.DefaultObjectStore.lambda$stage$0(DefaultObjectStore.java:77)
+	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
+	at com.example.editorial.storage.DefaultObjectStore.stage(DefaultObjectStore.java:76)
+	at com.example.editorial.storage.T04RevisionPostgresTest.ownerAuthorizedUrlWorksOverRealHttpAndOtherOwnerCannotObtainOne(T04RevisionPostgresTest.java:181)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.storage.T04RevisionPostgresTest.referenceWinsAndLockCoversOuterTransactionCommit -- Time elapsed: 10.06 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
+	at com.example.editorial.storage.T04RevisionPostgresTest.await(T04RevisionPostgresTest.java:45)
+	at com.example.editorial.storage.T04RevisionPostgresTest.referenceWinsAndLockCoversOuterTransactionCommit(T04RevisionPostgresTest.java:112)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

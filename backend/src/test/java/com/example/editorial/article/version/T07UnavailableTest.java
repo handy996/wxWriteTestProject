@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes=EditorialApplication.class,webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
+@org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable(named="T06_REAL_PG",matches="true")
 class T07UnavailableTest extends T07Support {
     @Test void realQueriesWorkButMissingProductionParticipantsRefuseHeadWrites()throws Exception {
         var c=signed();var a=create(c);

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,7 @@ public class SkeletonConfiguration {
     }
 
     /** Temporary deny-by-default shell; T03 owns authentication and replaces this bean. */
+    @ConditionalOnProperty(name = "editorial.identity.enabled", havingValue = "false", matchIfMissing = true)
     @Bean SecurityFilterChain skeletonSecurity(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()

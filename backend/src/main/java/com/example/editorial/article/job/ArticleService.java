@@ -173,26 +173,51 @@ public final class ArticleService implements Ownership.Resolver {
     public record PreparedVersion(UUID article,UUID base,String etag,JsonNode document,JsonNode object) {}
     /** T07 stages immutable bytes outside the transaction, then commits under ETag/base/fencing. */
     public PreparedVersion prepareVersion(ActorContext actor,UUID article,UUID base,String etag,String kind,String source,String title,String subtitle,JsonNode ast,String summary,JsonNode mappings,UUID execution,String inputHash,ArticleAst.References references) {
+        return prepareVersionExtended(actor,article,base,etag,kind,source,title,subtitle,ast,summary,mappings,execution,inputHash,references,null,false);
+    }
+    /** Extended T07 entry: restored provenance and retained historical base are fixed BEFORE staging.
+     * Number is provisional until locked append; RESTAGE_REQUIRED means rollback and stage new bytes. */
+    public PreparedVersion prepareVersionExtended(ActorContext actor,UUID article,UUID base,String etag,String kind,String source,String title,String subtitle,JsonNode ast,String summary,JsonNode mappings,UUID execution,String inputHash,ArticleAst.References references,UUID restored,boolean retained) {
         if(TransactionSynchronizationManager.isActualTransactionActive()) throw new IllegalStateException("Stage outside the business transaction");
-        var j=job(actor,article,false); writable(article); Idempotency.requireEtag(etag,j.path("lockVersion").asLong());
+        var j=job(actor,article,false); writable(article); readVersion(actor,article,base);
+        if(!retained) {
+            Idempotency.requireEtag(etag,j.path("lockVersion").asLong());
+            if(!uuid(j.path("currentVersionId").asText()).equals(base)) throw new PublicFailure(409,"STALE_INPUT");
+        } else if(!source.equals("AI") || execution==null) fail("INVALID_RETAINED_VERSION");
         if(j.path("status").asText().equals("CANCELLED")) throw new PublicFailure(409,"CANCELLED");
-        if(!uuid(j.path("currentVersionId").asText()).equals(base)) throw new PublicFailure(409,"STALE_INPUT");
         if(!Set.of("DRAFT","REVISION","MANUAL","RESTORE").contains(kind)) fail("INVALID_VERSION_KIND");
+        if(kind.equals("RESTORE")!=(restored!=null)) fail("INVALID_RESTORE_SOURCE");
+        if(restored!=null) readVersion(actor,article,restored);
         text(title); if(subtitle!=null) text(subtitle); ArticleAst.validate(ast,references); capacity(ast);
-        UUID id=UUID.randomUUID(); int no=db.queryForObject("SELECT coalesce(max(version_no),0)+1 FROM editorial.article_version WHERE article_id=?",Integer.class,article);
-        var doc=document(actor,article,id,no,base,null,kind,source,title,subtitle,ast,summary,mappings,execution,inputHash);
+        UUID id=UUID.randomUUID(); int no=nextVersionNumber(article);
+        var doc=document(actor,article,id,no,base,restored,kind,source,title,subtitle,ast.deepCopy(),summary,mappings.deepCopy(),execution,inputHash);
+        ((ObjectNode)doc.path("meta")).put("stale",retained);
         return new PreparedVersion(article,base,etag,doc,objects.stage(actor,CanonicalRequest.canonical(doc)));
     }
-    /** Appending alone never changes the working head or inherits a prior rights declaration.
-     * T07 must validate execution fencing in this SAME transaction before invoking for AI output. */
-    public UUID appendVersion(ActorContext actor,PreparedVersion prepared) {
+    private int nextVersionNumber(UUID article) {
+        long no=db.queryForObject("SELECT coalesce(max(version_no),0)::bigint+1 FROM editorial.article_version WHERE article_id=?",Long.class,article);
+        if(no>Integer.MAX_VALUE) throw new PublicFailure(409,"VERSION_LIMIT");return (int)no;
+    }
+    public List<JsonNode> versionPage(ActorContext actor,UUID article,long before,int limit) {
+        job(actor,article,false);
+        return db.query("SELECT document::text FROM editorial.article_version WHERE article_id=? AND version_no<? ORDER BY version_no DESC LIMIT ?",(rs,n)->node(rs.getString(1)),article,before,limit);
+    }
+    public UUID appendVersion(ActorContext actor,PreparedVersion prepared) {return appendVersionExtended(actor,prepared,false,null);}
+    /** Caller has validated execution fencing in THIS transaction. Retained results never call moveHead.
+     * executionStyle is the original persisted execution snapshot supplied by the authenticated T10 port. */
+    public UUID appendVersionExtended(ActorContext actor,PreparedVersion prepared,boolean retained,JsonNode executionStyle) {
         transaction(); UUID article=prepared.article(); var j=job(actor,article,true); writable(article);
-        Idempotency.requireEtag(prepared.etag(),j.path("lockVersion").asLong());
         if(j.path("status").asText().equals("CANCELLED")) throw new PublicFailure(409,"CANCELLED");
-        if(!j.path("currentVersionId").asText().equals(prepared.base().toString())) throw new PublicFailure(409,"STALE_INPUT");
-        JsonNode style=node(db.queryForObject("SELECT style_snapshot::text FROM editorial.article_job WHERE id=?",String.class,article));
+        readVersion(actor,article,prepared.base());
+        if(!retained) {
+            Idempotency.requireEtag(prepared.etag(),j.path("lockVersion").asLong());
+            if(!j.path("currentVersionId").asText().equals(prepared.base().toString())) throw new PublicFailure(409,"STALE_INPUT");
+        } else if(!prepared.document().path("changeSource").asText().equals("AI") || prepared.document().path("meta").path("executionId").isNull() || executionStyle==null) fail("INVALID_RETAINED_VERSION");
+        if(prepared.document().path("meta").path("stale").asBoolean()!=retained) fail("INVALID_RETAINED_VERSION");
+        if(prepared.document().path("versionNo").asInt()!=nextVersionNumber(article)) throw new PublicFailure(409,"RESTAGE_REQUIRED");
+        JsonNode style=executionStyle==null?node(db.queryForObject("SELECT style_snapshot::text FROM editorial.article_job WHERE id=?",String.class,article)):executionStyle;
         insertVersion(actor,prepared.document(),prepared.object(),style); UUID id=uuid(prepared.document().path("meta").path("id").asText());
-        audit.append(actor,"VERSION_APPENDED",article,id,null,prepared.document().path("meta").path("contentHash").asText()); return id;
+        audit.append(actor,retained?"VERSION_CONFLICT_RETAINED":"VERSION_APPENDED",article,id,null,prepared.document().path("meta").path("contentHash").asText()); return id;
     }
     public void moveHead(ActorContext actor,UUID article,UUID version,String etag) {
         transaction(); var j=job(actor,article,true); writable(article); Idempotency.requireEtag(etag,j.path("lockVersion").asLong());
@@ -227,7 +252,10 @@ public final class ArticleService implements Ownership.Resolver {
     public boolean supports(String kind) {return Set.of("ARTICLE","VERSION","VERSION_OBJECT").contains(kind);}
     public Ownership.Resolved resolve(String kind,UUID id) {
         String sql=kind.equals("ARTICLE")?"SELECT owner_id,id,id,NULL::text,deletion_pending FROM editorial.article_job WHERE id=?":
-            "SELECT j.owner_id,j.id,v.id,"+(kind.equals("VERSION_OBJECT")?"v.object_ref->>'hash'":"v.content_hash")+",j.deletion_pending FROM editorial.article_version v JOIN editorial.article_job j ON j.id=v.article_id WHERE v.id=?";
+            // VERSION gates semantic reuse. VERSION_OBJECT authorizes physical retention of even
+            // stale candidates, so committing their historical bytes does not imply a fresh input.
+            // Deletion blocks new references of BOTH kinds; historical VERSION reads remain possible.
+            "SELECT j.owner_id,j.id,v.id,"+(kind.equals("VERSION_OBJECT")?"v.object_ref->>'hash',j.deletion_pending":"v.content_hash,(j.deletion_pending OR coalesce((v.document->'meta'->>'stale')::boolean,false))")+" FROM editorial.article_version v JOIN editorial.article_job j ON j.id=v.article_id WHERE v.id=?";
         var rows=db.query(sql,(rs,n)->new Ownership.Resolved(rs.getObject(1,UUID.class),new Ownership.ArtifactRef(id,rs.getObject(2,UUID.class),kind.equals("ARTICLE")?null:rs.getObject(3,UUID.class),kind,rs.getString(4),rs.getBoolean(5))),id);return rows.isEmpty()?null:rows.getFirst();
     }
     public record ObjectOwner(UUID article,boolean revoked) {}

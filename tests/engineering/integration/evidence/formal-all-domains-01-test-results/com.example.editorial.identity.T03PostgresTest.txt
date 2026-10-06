@@ -1,0 +1,81 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.identity.T03PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 15, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 3.427 s <<< FAILURE! -- in com.example.editorial.identity.T03PostgresTest
+com.example.editorial.identity.T03PostgresTest.emptyInitializationAndRepeatNeverReset -- Time elapsed: 0.048 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.identity.T03PostgresTest.emptyInitializationAndRepeatNeverReset(T03PostgresTest.java:81)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.identity.T03PostgresTest.crossArticleRefsWorkerAndMissingResolver -- Time elapsed: 0.032 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <404> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.identity.T03PostgresTest.crossArticleRefsWorkerAndMissingResolver(T03PostgresTest.java:144)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.identity.T03PostgresTest.replayConflictHashAndEtagOrder -- Time elapsed: 0.159 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <201> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.identity.T03PostgresTest.replayConflictHashAndEtagOrder(T03PostgresTest.java:150)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.identity.T03PostgresTest.secondOwnerCannotReadOrReplay -- Time elapsed: 0.318 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: {"code":"OWNERSHIP_NOT_READY","message":"Service temporarily unavailable","traceId":"450fb494-b14c-412d-9d42-ee14765aacfc","details":[],"retryable":true} ==> expected: <404> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:563)
+	at com.example.editorial.identity.T03PostgresTest.error(T03PostgresTest.java:75)
+	at com.example.editorial.identity.T03PostgresTest.secondOwnerCannotReadOrReplay(T03PostgresTest.java:138)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.identity.T03PostgresTest.auditIsolationPagingAndTrace -- Time elapsed: 0.143 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <201> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.identity.T03PostgresTest.auditIsolationPagingAndTrace(T03PostgresTest.java:124)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.editorial.identity.T03PostgresTest.concurrentIdenticalHttpOnlyOneEffect -- Time elapsed: 0.159 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <201> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at com.example.editorial.identity.T03PostgresTest.concurrentIdenticalHttpOnlyOneEffect(T03PostgresTest.java:164)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

@@ -10,11 +10,13 @@ import java.util.*;
 /** Frozen canonical-v1, deliberately not RFC 8785. */
 public final class CanonicalRequest {
     private static final ObjectMapper JSON=new ObjectMapper().enable(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
-            .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+            .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
+            .disable(com.fasterxml.jackson.core.json.JsonWriteFeature.WRITE_HEX_UPPER_CASE.mappedFeature())
+            .enable(com.fasterxml.jackson.core.json.JsonWriteFeature.COMBINE_UNICODE_SURROGATES_IN_UTF8.mappedFeature());
     private CanonicalRequest() {}
     public static JsonNode parse(byte[] bytes) {
         try {
-            if(bytes.length>1_048_576) throw new PublicFailure(422,"BODY_TOO_LARGE");
+            if(bytes.length>8*1_048_576) throw new PublicFailure(422,"BODY_TOO_LARGE");
             return bytes.length==0 ? NullNode.instance : validate(JSON.readTree(bytes));
         } catch(PublicFailure e){throw e;} catch(Exception e){throw new PublicFailure(400,"INVALID_JSON");}
     }

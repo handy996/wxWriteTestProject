@@ -1,0 +1,636 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "paidCalls": 0,
+  "domainSubstitutes": [
+    "T10/T11 not installed: production Changes and Deletion fail closed; transaction test participant marked explicitly"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "The files belonging to this database system will be owned by user \"eie04\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/integration/.work/349eaa6d84334748a85f62dec74d7bf6/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\integration^\\^.work^\\349eaa6d84334748a85f62dec74d7bf6^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 13916",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to start.... done\nserver started\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\nCREATE ROLE\nCREATE ROLE\nREVOKE\nGRANT\nREVOKE\nCREATE SCHEMA\nCREATE SCHEMA\nREVOKE\nGRANT\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-o",
+        "-B",
+        "-ntp",
+        "-f",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "clean",
+        "test",
+        "-Dtest=T07UpgradeTest",
+        "-Dt06.root=E:\\project\\codex\\wxAgent",
+        "-Dt07.samples=E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\evidence\\formal-upgrade-post-ci-samples"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\temp\n[INFO] Scanning for projects...\n[INFO] \n[INFO] -----------------------< com.example:editorial >------------------------\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- clean:3.4.1:clean (default-clean) @ editorial ---\n[INFO] \n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\n[INFO] Copying 20 resources from src\\main\\resources to target\\classes\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 81 source files with javac [debug parameters release 21] to target\\classes\n[INFO] /E:/project/codex/wxAgent/tests/engineering/integration/.work/349eaa6d84334748a85f62dec74d7bf6/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��\n[INFO] /E:/project/codex/wxAgent/tests/engineering/integration/.work/349eaa6d84334748a85f62dec74d7bf6/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---\n[INFO] skip non existing resourceDirectory E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 32 source files with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\nPicked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\temp\n[INFO] Running com.example.editorial.article.version.T07UpgradeTest\n{\"@timestamp\":\"2026-10-06T14:57:45.0288297+08:00\",\"@version\":\"1\",\"message\":\"Starting T07UpgradeTest using Java 21.0.12.1 with PID 2936 (started by eie04 in E:\\\\project\\\\codex\\\\wxAgent\\\\tests\\\\engineering\\\\integration\\\\.work\\\\349eaa6d84334748a85f62dec74d7bf6\\\\backend)\",\"logger_name\":\"com.example.editorial.article.version.T07UpgradeTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:45.0512084+08:00\",\"@version\":\"1\",\"message\":\"No active profile set, falling back to 1 default profile: \\\"mock\\\"\",\"logger_name\":\"com.example.editorial.article.version.T07UpgradeTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:46.4808776+08:00\",\"@version\":\"1\",\"message\":\"Bootstrapping Spring Data JPA repositories in DEFAULT mode.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:46.5156143+08:00\",\"@version\":\"1\",\"message\":\"Finished Spring Data repository scanning in 26 ms. Found 0 JPA repository interfaces.\",\"logger_name\":\"org.springframework.data.repository.config.RepositoryConfigurationDelegate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.0124996+08:00\",\"@version\":\"1\",\"message\":\"Tomcat initialized with port 0 (http)\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.0404365+08:00\",\"@version\":\"1\",\"message\":\"Starting service [Tomcat]\",\"logger_name\":\"org.apache.catalina.core.StandardService\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.0412899+08:00\",\"@version\":\"1\",\"message\":\"Starting Servlet engine: [Apache Tomcat/10.1.60]\",\"logger_name\":\"org.apache.catalina.core.StandardEngine\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.0897416+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring embedded WebApplicationContext\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.0920421+08:00\",\"@version\":\"1\",\"message\":\"Root WebApplicationContext: initialization completed in 2030 ms\",\"logger_name\":\"org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.5930749+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:13916/editorial (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.6535183+08:00\",\"@version\":\"1\",\"message\":\"Schema history table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" does not exist yet\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.6565002+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 6 migrations (execution time 00:00.038s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.6618193+08:00\",\"@version\":\"1\",\"message\":\"Creating Schema History table \\\"editorial_migrations\\\".\\\"flyway_schema_history\\\" ...\",\"logger_name\":\"org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.78757+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.8144013+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": << Empty Schema >>\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.8244018+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"1 - identity audit idempotency\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.8619998+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"2 - skill prompt policy\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.8987598+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"3 - article job version\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.9383581+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 function permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.9478876+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" with repeatable migration \\\"t02 schema permissions\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:47.9608137+08:00\",\"@version\":\"1\",\"message\":\"Successfully applied 5 migrations to schema \\\"editorial_migrations\\\", now at version v3 (execution time 00:00.089s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.0287133+08:00\",\"@version\":\"1\",\"message\":\"HHH000204: Processing PersistenceUnitInfo [name: default]\",\"logger_name\":\"org.hibernate.jpa.internal.util.LogHelper\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.0861514+08:00\",\"@version\":\"1\",\"message\":\"HHH000412: Hibernate ORM core version 6.6.53.Final\",\"logger_name\":\"org.hibernate.Version\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.1083885+08:00\",\"@version\":\"1\",\"message\":\"HHH000026: Second-level cache disabled\",\"logger_name\":\"org.hibernate.cache.internal.RegionFactoryInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.2787553+08:00\",\"@version\":\"1\",\"message\":\"No LoadTimeWeaver setup: ignoring JPA class transformer\",\"logger_name\":\"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.2981678+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Starting...\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.3413129+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ef220e4\",\"logger_name\":\"com.zaxxer.hikari.pool.HikariPool\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.3426954+08:00\",\"@version\":\"1\",\"message\":\"HikariPool-1 - Start completed.\",\"logger_name\":\"com.zaxxer.hikari.HikariDataSource\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.3888777+08:00\",\"@version\":\"1\",\"message\":\"HHH10001005: Database info:\\n\\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\\n\\tDatabase driver: undefined/unknown\\n\\tDatabase version: 17.11\\n\\tAutocommit mode: undefined/unknown\\n\\tIsolation level: undefined/unknown\\n\\tMinimum pool size: undefined/unknown\\n\\tMaximum pool size: undefined/unknown\",\"logger_name\":\"org.hibernate.orm.connections.pooling\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.5966701+08:00\",\"@version\":\"1\",\"message\":\"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)\",\"logger_name\":\"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:48.5966701+08:00\",\"@version\":\"1\",\"message\":\"Initialized JPA EntityManagerFactory for persistence unit 'default'\",\"logger_name\":\"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:49.1537664+08:00\",\"@version\":\"1\",\"message\":\"Exposing 2 endpoints beneath base path '/actuator'\",\"logger_name\":\"org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:49.569256+08:00\",\"@version\":\"1\",\"message\":\"Tomcat started on port 3550 (http) with context path '/'\",\"logger_name\":\"org.springframework.boot.web.embedded.tomcat.TomcatWebServer\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:49.5842274+08:00\",\"@version\":\"1\",\"message\":\"Started T07UpgradeTest in 4.856 seconds (process running for 5.562)\",\"logger_name\":\"com.example.editorial.article.version.T07UpgradeTest\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\nMockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3\nOpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended\nWARNING: A Java agent has been loaded dynamically (E:\\project\\codex\\wxAgent\\.tools\\t02\\m2\\net\\bytebuddy\\byte-buddy-agent\\1.17.8\\byte-buddy-agent-1.17.8.jar)\nWARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning\nWARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information\nWARNING: Dynamic loading of agents will be disallowed by default in a future release\n{\"@timestamp\":\"2026-10-06T14:57:50.2982214+08:00\",\"@version\":\"1\",\"message\":\"Initializing Spring DispatcherServlet 'dispatcherServlet'\",\"logger_name\":\"org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.2982214+08:00\",\"@version\":\"1\",\"message\":\"Initializing Servlet 'dispatcherServlet'\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.2982214+08:00\",\"@version\":\"1\",\"message\":\"Completed initialization in 0 ms\",\"logger_name\":\"org.springframework.web.servlet.DispatcherServlet\",\"thread_name\":\"http-nio-auto-1-exec-1\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.6800059+08:00\",\"@version\":\"1\",\"message\":\"Database: jdbc:postgresql://127.0.0.1:13916/editorial (PostgreSQL 17.11)\",\"logger_name\":\"org.flywaydb.core.FlywayExecutor\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.6938722+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 6 migrations (execution time 00:00.009s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.7656383+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.7772654+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": 3\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.7778655+08:00\",\"@version\":\"1\",\"message\":\"Migrating schema \\\"editorial_migrations\\\" to version \\\"4 - change proposal\\\"\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.8024515+08:00\",\"@version\":\"1\",\"message\":\"Successfully applied 1 migration to schema \\\"editorial_migrations\\\", now at version v4 (execution time 00:00.017s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.8508051+08:00\",\"@version\":\"1\",\"message\":\"Successfully validated 6 migrations (execution time 00:00.007s)\",\"logger_name\":\"org.flywaydb.core.internal.command.DbValidate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.9231947+08:00\",\"@version\":\"1\",\"message\":\"Executing SQL callback: beforeMigrate - t02 function defaults\",\"logger_name\":\"org.flywaydb.core.internal.callback.SqlScriptCallbackFactory\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.9343199+08:00\",\"@version\":\"1\",\"message\":\"Current version of schema \\\"editorial_migrations\\\": 4\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n{\"@timestamp\":\"2026-10-06T14:57:50.9353189+08:00\",\"@version\":\"1\",\"message\":\"Schema \\\"editorial_migrations\\\" is up to date. No migration necessary.\",\"logger_name\":\"org.flywaydb.core.internal.command.DbMigrate\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}\n[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.551 s -- in com.example.editorial.article.version.T07UpgradeTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  13.242 s\n[INFO] Finished at: 2026-10-06T14:57:51+08:00\n[INFO] ------------------------------------------------------------------------\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\data",
+        "-m",
+        "immediate",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "waiting for server to shut down.... done\nserver stopped\n"
+    }
+  ],
+  "transformations": [
+    "T06 sample paths redirected; test assertions unchanged"
+  ],
+  "samples": "tests\\engineering\\integration\\evidence\\formal-upgrade-post-ci-samples",
+  "executedInputs": [
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\docker\\bootstrap.sql",
+      "sha256": "ef70f7a175f2216f66236efaf23d5d1db56b00520af810d4ad8dbb9a34b0d949"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\pom.xml",
+      "sha256": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\ast\\ArticleAst.java",
+      "sha256": "3fcfdfda42c6023606f60043f4613195a89e15ff046720fb0ad791d8ab46bdb9"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\job\\ArticleController.java",
+      "sha256": "33af7c6d534586572e2117d9609427a2be86e64477387bfd2739141879b1d322"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\job\\ArticlePorts.java",
+      "sha256": "45f54655ca9715a762a2ff8d1ba61825fc227dde8345b4b7f40f0652ff183dcf"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\job\\ArticleService.java",
+      "sha256": "5166072e07814afddddc8991b82622c5df5f20e8c07d7d265fc2e2f2f0816976"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\job\\DeletionHandoff.java",
+      "sha256": "75a411b07723cfcc6279b1cf97160f4fffa90318985d794961531c6d9d7119a1"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\proposal\\ProposalService.java",
+      "sha256": "1c28f7e6ae014a1b18bf3d866a447893799c2e0b8d5156b485e2f14c8aaedcff"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\version\\PageCursor.java",
+      "sha256": "78d341ec7a93c74b6fe287e91d219aade59e2ee866a09a1d7292fd8a6557e0f3"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\version\\VersionController.java",
+      "sha256": "cefccb53e961c879718a5c178b6836ccc5661f08dd3e45e55b3cfa835e90f2a3"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\version\\VersionDiff.java",
+      "sha256": "3b7188b4a4c9a5fb778428e4120e890609372880fe2321c7c4e071e36534bf01"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\version\\VersionPorts.java",
+      "sha256": "803d941ef47918ff658a2dd2894d693e7d99e4f5d635ef82ef394a3b8b1877ec"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\article\\version\\VersionService.java",
+      "sha256": "0a7ca482ce1a3b3e4e99ca24c7195d1eeb1a75bc57b34c89c1b540bea55177e9"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\audit\\AuditController.java",
+      "sha256": "4dd9cc451cc9d4065c82833f050d87946db9c1673316a07dd35b8882916324b0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\audit\\AuditQuery.java",
+      "sha256": "9edcb47bc7552fb18b9bf47eb9a790b6c9491f1a6a47731deeef3152172e2955"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\audit\\AuditSink.java",
+      "sha256": "9a5df466baf03c739a027908500a3b11e46b4d055116b886de5c38f4c1790be9"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\audit\\JdbcAuditSink.java",
+      "sha256": "65f9ce95e77c864008187b3d248c2a13b611f631c4ea5505fb77ae7df09e3ea6"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\bootstrap\\ArticleIntegration.java",
+      "sha256": "9e7f10ca17f140c791e8c8f155d24293943ea877c3214bd0da23dba8c91e13ba"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\bootstrap\\DatabaseRolePolicy.java",
+      "sha256": "d8350b268ba40a8e865f3e6d200e25b5c3992ab69159e2db1936ec131f78cb62"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\bootstrap\\SkeletonConfiguration.java",
+      "sha256": "d0a1fa72f49ae1848e48be9dd0b8dbb9950924cebfbadf6a2199d5b52fe5ffe0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\bootstrap\\StartupPolicy.java",
+      "sha256": "13d3367bb247ba895c08af7f21f4bfd519c345adc88865ae7619a5652419f569"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\bootstrap\\VersionIntegration.java",
+      "sha256": "446f2bb0362949c88afc544e2f74b65453d427fdfa8a2b6de14ddfa35d74c374"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\BaselineAgents.java",
+      "sha256": "c9c7fb75ba7e3e560a98a834fd4976ccfd203b6ee65c2d80d5f3301aa47adabf"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\ConfigChangeEvent.java",
+      "sha256": "351c1151ea69ce9b29e80ac66fa0deaf9bc0243faf7d797d94161b6e5b092614"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\ConfigChangeSink.java",
+      "sha256": "f422a21dc1f9432bca2133f86b7b13fc4d2c9ac1d29318b983002a8a0e1ded2e"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\CursorCodec.java",
+      "sha256": "6521816c56430b7c89551c8b23531c774abdfdd0c77cbe1e2b28f2eb835419f5"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchema.java",
+      "sha256": "68e7fe2b91536d799c2e0b3b69920d0d80d403af1d043262f251588f1f38448a"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SemVer.java",
+      "sha256": "f7054ca08e5116dfc095ac7224da37f87e94dcaf5875a3917607a6f4247804b8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillBaselineLoader.java",
+      "sha256": "a10f881742df5cf89d238a527bae512f076e0972c81064543a31b763e73ad0f9"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillConfig.java",
+      "sha256": "8a25f85cef57aa41526c5eb38a750570f039e8bfb08e0a6887ede4a811af34df"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillConfigDiff.java",
+      "sha256": "63ce256f90f88cbcbde123d456f0343213e1a3bdb43fca31927251d53c1b6b18"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillConfiguration.java",
+      "sha256": "852fbd9d2fd5ad1fe36fb7a9871471088a5cc072f75e3bdefe29efd1b1bec6ac"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillConfigValidator.java",
+      "sha256": "a23e6e15849a9af566536597358f4df75a446451d40cab32fbb16defc3f6a098"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillController.java",
+      "sha256": "e750e99aef22c7b32cf4a2af704c4827b575beafcb4f4d734ae7f558c6bb00ec"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillIdentity.java",
+      "sha256": "cd633a010c7025c6379c6705963194bc51c3fcbe4cf368aa794bdde40915e895"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillIdentityPage.java",
+      "sha256": "77b95588896d19fd947d5c445f00a2225d7a814465fc7a0e9a954a10a7ff4c68"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillService.java",
+      "sha256": "9769afea80f100ec0cc62013990ea4dfe262bd1c5e9411fb36c04274ad252f4f"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillSnapshot.java",
+      "sha256": "7670a31adb0b2e190500c7c1d2c817061d4ade724332c22fa55eab0f031211a0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillSnapshotPage.java",
+      "sha256": "f9037ce9f305f6501cf6825d44498d81bdc6e87049c0ec2f7ccc62eb05841220"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillSnapshotPort.java",
+      "sha256": "2a4eac97b656c146f9d7a090efe9cec779b322d348899eca8a6e331eaf0e1479"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\editorial\\skill\\SkillVersion.java",
+      "sha256": "c020c69ad27d6cc41523f8e383023acb7acbbd3380d1e46743cecff427c6fd87"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\EditorialApplication.java",
+      "sha256": "b399f57e9293c9ba405d1b399236ea34b38a90c36773a07e8da3b0e7d15dc0f1"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\AuthController.java",
+      "sha256": "3fe7181eb56627779b07b458adb3ff33f43fc7f0c85e8a5cf177a68194837223"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\IdentityService.java",
+      "sha256": "511a96a1e98eb89e25846ac80cbaa90c5013e34cea66c1e9c46b9d44e981bd5a"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\RequestBoundary.java",
+      "sha256": "4d49c966109a068f2b030469495dadd899eb6cd665f0dd98113fbc457192aeeb"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\RequestGuards.java",
+      "sha256": "7823295092207b38c57964da7b28e8c63c0d162a6565efc9dd8fd8ce74a694c7"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\SessionIdentity.java",
+      "sha256": "d0a27b93e0c62a22600d5a4fd9334c2a1e6d269a828ba7f97059acc511fd7054"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\T03Configuration.java",
+      "sha256": "f96c0a279af35a7362f0dae526c7eb798d8391ef985819eb0b599beb49cbc19f"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\Hashing.java",
+      "sha256": "a983fda4189aaaf7dbdcb82453dc0738196e37fd7587fdf5aab304e872bc9eac"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\JsonIO.java",
+      "sha256": "1e9c3544c6b5c08f21877e9adff1c5bfd71b4f72099491da9f7f3285504cf0ee"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PolicyService.java",
+      "sha256": "3dd8abf48c7f1ba812b2388d491ba41ceb272780d1447c213d60ef8b184023c1"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PolicySnapshot.java",
+      "sha256": "fc220b3f89125eb2ff20a5f79e1131dc4aaf58795906a004f0197d4cb3e5ab74"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PolicySnapshotPort.java",
+      "sha256": "375c0757b0fad49d833832a2f34f08dee0b466d41cc61a9921f78522544d52e7"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PolicyType.java",
+      "sha256": "b498d5f172f83d697bca4d905f3881e9523951892bf6a4a39ca99c14f42aebf0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PolicyVersion.java",
+      "sha256": "6432eb66e1a1d6c2462a74f949c01cc952b948b1a4e47bad36c5c9a645b32d58"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PromptBinding.java",
+      "sha256": "e2aab6a530778010e2c95953584dc2506e2cd1b802c275ea275363e1f50d5a54"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PromptService.java",
+      "sha256": "083eea8c66d2f769a5bc69c53490805fed1f40dda060901ee68e54ec3c9718df"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PromptVersion.java",
+      "sha256": "e42a589cc44d74a53fbf450f65ee307579c7d6df2a60b817573a0e65a37f95f8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\settings\\policy\\PublicationStatus.java",
+      "sha256": "2d51ac8ebe9462492695f9e4536ac61791c7bb6bc38377e7ee78efdd4e699d3d"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\ActorContext.java",
+      "sha256": "0d931a342dbc5a72fc896db8150ec0d632e51bbd9eae129d08ffc9ad558b2a03"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\CanonicalRequest.java",
+      "sha256": "7bbcb809d7bd192423c2f1976672381bd4f0795c69e6279742343625c4e4dbf8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\ErrorResponses.java",
+      "sha256": "693852202788a15801d937d58cfb5b05e1c6dc086850fcc7448ff5e939a2f34f"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\Idempotency.java",
+      "sha256": "25bc250b5cce30ca2813ba071e364cdb79c85d5af41b4b948ea955198f1d0f83"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\Ownership.java",
+      "sha256": "3594916dfabaea95ee21d97baa606fc0b5b18fe8650f150f500df7c98b589ff8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\PublicFailure.java",
+      "sha256": "005daa975f9082a1d3a0f01e49eef155dee7ed963810e89ca19f94f7f2190a0e"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\shared\\TraceContext.java",
+      "sha256": "7779e133eff7d91d755b5890900647e0fd3e092ae2952aa0dee7950c06cd6ffd"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\DefaultObjectStore.java",
+      "sha256": "443c5156b536a9f3ab92fd59a29eb9e3b56a29d59c3aeded7dd459d8298694b6"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\LocalDownloadConfiguration.java",
+      "sha256": "0b23dab3ec4087f0d382bc61678330f63e5b8042fad35b7606cff7c27e646e53"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\LocalDownloadHandler.java",
+      "sha256": "619624ae7493bc4277bd6c2f6fc859914481b2df3d5be441ef976853ebdc77cb"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\LocalStorageBackend.java",
+      "sha256": "31f02df82ec65def3cb24c19d30d7f39106085a10d24b7ec19fb21e33e7d332a"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectKeys.java",
+      "sha256": "a7d87585a6c31b662c364b52b4de3fd4ee25e04eef7f1a6a4cefd131878779f0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectRef.java",
+      "sha256": "8b0d741f0bae9c193fc23bf8efc67686bef67f07059547d3b5d35d3b72b337fd"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectRefRegistry.java",
+      "sha256": "b360e18d04eae5c081dab2786aafd0f1b4a522d3227a250106a6184601d4f49f"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectRetention.java",
+      "sha256": "e740183c0fc0af0f3a051d49c2f73f44b6b96bfc9748272108ad2100ea912f70"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectStatus.java",
+      "sha256": "473c43f10fff3d59df81a22d468f065c4c42f5145c1c51d38166371037719b39"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectStore.java",
+      "sha256": "c09944b3ac72930e559c2fabd53c8126f703eccb557252018bb7142b8e326f49"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\ObjectTransactionLock.java",
+      "sha256": "862cab302f81ac0d3df7dae8511f9c4436c359b1b197317f93accc3bc99d6fc4"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\S3StorageBackend.java",
+      "sha256": "e62952b5438df288ab51679ae9d38a1322f10d42f717a5497cc7f77d584ea750"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\SignedUrl.java",
+      "sha256": "62c9525bed903d75f825062bd7e130f1dac3b26b1c5f16559944f34705a5bece"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\SigV4.java",
+      "sha256": "7d2d5634d601e047417d06bd850de19230edd3a06b3623d8927b426a93587f70"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\StorageBackend.java",
+      "sha256": "ecb1e401d87bf4f51420e3bab371b88a34edde94ffbd5023e1df1f52cea68d51"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\StorageConfiguration.java",
+      "sha256": "7e80082d0a6f18c77aa148e9a9127fd124c2bbbbeda9626b339214527f858e72"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\java\\com\\example\\editorial\\storage\\StoredObject.java",
+      "sha256": "d5084fd5693abbf3417fc3b883a357b75e9e5e43db17b61a0af9a404e5e6c586"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\application-dev.yml",
+      "sha256": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\application-mock.yml",
+      "sha256": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\application-prod.yml",
+      "sha256": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\application.yml",
+      "sha256": "76cf04ee7f94a658943348a81f66988832e3ed0d106cfeebeaaf796ef111d416"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\beforeMigrate__t02_function_defaults.sql",
+      "sha256": "57d17a44dabefc4d0ad87b5ccd88118a84ce3a5baeceaac423ee2e570093f502"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\R__t02_function_permissions.sql",
+      "sha256": "1c6cc53da1e8b6c499a318056f7592f85bfe625dab474b539dbbac0de9723f26"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\R__t02_schema_permissions.sql",
+      "sha256": "6b5e594baba3d3dcb035a1f5ff19cb9859bad83bf90298b3999163b2c787d852"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\V1__identity_audit_idempotency.sql",
+      "sha256": "fe34a84b909c4b97e56377504b685c0c293ba41f3efae5855c3cdf1c8bfc334e"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\V2__skill_prompt_policy.sql",
+      "sha256": "7eeee255170a50bc7a95009e7f18a1586cb399e84315a6d7f9c07b4ff12c5911"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\V3__article_job_version.sql",
+      "sha256": "1893ad02483385ef5e6b8a68781a3a27a8d407c6dd3166b8569828298695bebc"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\main\\resources\\db\\migration\\V4__change_proposal.sql",
+      "sha256": "96a8a78c5ba25854cc05b6d28af5d58a0b61b21eab387ede2716d73dff564402"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\ast\\ArticleAstTest.java",
+      "sha256": "b6e039b162bc804634bd4a808bde69d4af8b1610284ae73b2a2b8ea91fadc2fb"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\job\\DeletionHandoffTest.java",
+      "sha256": "7bfc940bfae97a651e90f7c9e4b480aba2258442526a6efd9d4c2ccc5c62fd35"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\job\\T06MigrationUpgradeTest.java",
+      "sha256": "164ea2fc8192acab35a5b07862086307e7d0c27ccc739185b7b5f14dc1ce1363"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\job\\T06PostgresTest.java",
+      "sha256": "6046c00b580c7dfca26691b74a2cd2a08db6c4ef392fac59d9203ebc69ba0ca8"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\T07PostgresTest.java",
+      "sha256": "2e4a9b0ba828ab0ec7b752e264876e21ba59acf82b0b3028f75e2c1eaf0bde4d"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\T07RevisionBoundaryTest.java",
+      "sha256": "28a42f14ea74d2b5c5d05ba172d112426e3043879200167bfaaf0e39b08c0fec"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\T07Support.java",
+      "sha256": "ee1def6b8f27a49358e2d70e0cdfec972fcf4d7ba0bc0cdacbc1145897f23758"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\T07UnavailableTest.java",
+      "sha256": "a0158a6b42dc04c11fb8c1116108deae7f00660f13774e3263c8144aafaff93b"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\T07UpgradeTest.java",
+      "sha256": "e797a754a498d34d6515a94f04bc19ff5645e431ec7646b6188dd241ab6c2ea7"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\TestParticipants.java",
+      "sha256": "85fbf5c40f2083a90109a69df43625bdcba84362125e85beb53dc885608c3a5c"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\article\\version\\VersionDiffTest.java",
+      "sha256": "98b825eb92e06d8d5447103e6d876ee06ac1219cf2e1035d0d643efee17bfac2"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\bootstrap\\StartupPolicyTest.java",
+      "sha256": "c8ac0f7fa4f77cdd678e90ea443b2658d346e00b6a1a9e521ed9045149dad900"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\BaselineResourcesTest.java",
+      "sha256": "0da70efdf3365f947d27b8e38e9eb37fca9105dd5860233ad9c98c03c85b5b11"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\CursorCodecTest.java",
+      "sha256": "45a484acfa04c9776d473f54e702b928583d9bafae86588dcaaf12b2cc65b6a2"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\JsonSchemaSkillConfigTest.java",
+      "sha256": "bfc6309c166461c526ef741977ac52abaa752068014de488f5e696a77050bf8a"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\PromptContractTest.java",
+      "sha256": "1e95017b64e2ebc222a2adf87920e3b11db610fda1f73888e9a35f727405da87"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\SemVerTest.java",
+      "sha256": "c842cd8ad13cf54b85304ee32f6e3f515ff61a84a828eb1fb487b18976ca5ab3"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\SkillConfigDiffTest.java",
+      "sha256": "d1809e587c6886be024bbc9debf4b7d324aea4154035913f16aee2a730118dca"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\editorial\\skill\\T05PostgresTest.java",
+      "sha256": "8c7ff7ca9389c7bce3e8ff8eca91ff132c8cbd0e147f91d6652d584e4ec13d90"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\identity\\T03PostgresTest.java",
+      "sha256": "0815b862aeada97978b0523b111994aa84016335804d4b374a1ebe1c3414ed0b"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\settings\\policy\\HashingTest.java",
+      "sha256": "f05434677b325c52f30e8b245c88cbf554be1bd1d4ff0d232ef7e0fc4b45a89b"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\shared\\CanonicalRequestTest.java",
+      "sha256": "663e78f31704c65df8acece248486d925e97256895bb47b0d7c57bd511d3c776"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\LocalDownloadHttpTest.java",
+      "sha256": "21c165802d6f19012e4094168fd4e9e918904edc2d5ffa94066cc8e60f4050fa"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\LocalStorageBackendTest.java",
+      "sha256": "c3e28c95d1add332630bbbcaed7d4c12669de7c4da6f1e529c05b0da97310720"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\ObjectKeysTest.java",
+      "sha256": "93ccd56e29724f45f9178a3027762d21a131f28c125f7fdf3b6c33a06cfe9142"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\S3EndpointAuthorityTest.java",
+      "sha256": "6d5e0998044944f5b17a1b148134fcb01b58ac14dae94f925287b5a5f810151b"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\S3ProtocolRegressionTest.java",
+      "sha256": "649218e2e95aa9afc554f7f5e9a79cc3a2093ccb8ae087a9832bdfa9af2b34e4"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\S3StorageBackendTest.java",
+      "sha256": "c8b4e71dfe4ad62068935783511282255ed9f28715fe468ab86f5fea32f70b88"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\SignedUrlTest.java",
+      "sha256": "1d19f737bdef4994c120741a242bcc0ba3eabf4d2374f8c801eee9155e2b8746"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\SigV4Test.java",
+      "sha256": "18e969c0aaf889ec742bed8b0ca5ae803645ee4b8d08cb9801a440576d86f3ce"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\T04PostgresTest.java",
+      "sha256": "67db85eed04b8a70fee4565d91584e1bb1cc4e0933cadc0f7173529945349dae"
+    },
+    {
+      "path": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6\\backend\\src\\test\\java\\com\\example\\editorial\\storage\\T04RevisionPostgresTest.java",
+      "sha256": "1c63a45e36818bf5762347e8089192bdde53efcef96e2eef6f893a28aa9e4627"
+    }
+  ],
+  "testResults": "tests\\engineering\\integration\\evidence\\formal-upgrade-post-ci-test-results",
+  "isolatedWork": "tests\\engineering\\integration\\.work\\349eaa6d84334748a85f62dec74d7bf6",
+  "exitCode": 0
+}

@@ -32,6 +32,7 @@ spring:
     baseline-on-migrate: false
     validate-migration-naming: true
 server:
+  forward-headers-strategy: none
   port: 8080
   error:
     include-message: never
@@ -59,6 +60,19 @@ logging:
     format:
       console: logstash
 editorial:
+  identity:
+    enabled: ${EDITORIAL_IDENTITY_ENABLED:false}
+    origin: ${APP_ORIGIN:}
+    owner-username: ${INITIAL_OWNER_USERNAME:}
+    owner-display-name: ${INITIAL_OWNER_DISPLAY_NAME:Owner}
+    owner-password: ${INITIAL_OWNER_PASSWORD:}
+    cursor-key: ${AUDIT_CURSOR_KEY:}
+  storage:
+    enabled: ${EDITORIAL_STORAGE_ENABLED:false}
+  article:
+    enabled: ${EDITORIAL_ARTICLE_ENABLED:false}
+  version:
+    enabled: ${EDITORIAL_VERSION_ENABLED:false}
   providers:
     paid-calls-enabled: false
     mock-enabled: false

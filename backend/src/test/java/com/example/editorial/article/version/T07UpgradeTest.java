@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes=EditorialApplication.class,webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT,properties="spring.flyway.target=3")
+@org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable(named="T06_REAL_PG",matches="true")
 class T07UpgradeTest extends T07Support {
     @Test void addsProposalTableWithoutChangingPopulatedT03T05T06OrExecutedMigrations()throws Exception {
         var c=signed();var article=create(c);

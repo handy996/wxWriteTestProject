@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /** Real PG/Local/Ownership regressions; reference applicability and orchestration remain explicit substitutes. */
+@org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable(named="T06_REAL_PG",matches="true")
 class T07RevisionBoundaryTest extends T07PostgresTest {
     private Ownership.ArtifactRef ref(JsonNode a,JsonNode v,String kind) {
         UUID id=uuid(v.path("meta").path("id").asText());

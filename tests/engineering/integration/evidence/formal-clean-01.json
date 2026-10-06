@@ -1,0 +1,96 @@
+{
+  "mode": "REAL_POSTGRES_REAL_HTTP_SESSION_CSRF",
+  "paidCalls": 0,
+  "domainSubstitutes": [
+    "T10/T11 not installed: production Changes and Deletion fail closed; transaction test participant marked explicitly"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\nDefault locale: zh_CN, platform encoding: UTF-8\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\"\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "initdb: error: could not create restricted token: error code 87\ninitdb: error: could not re-execute with restricted token: error code 3\nThe files belonging to this database system will be owned by user \"CodexSandboxOffline\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory E:/project/codex/wxAgent/tests/engineering/integration/.work/25842807d58940c8b1f3d98ea9e4c1cb/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Asia/Shanghai\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"E^:^\\project^\\codex^\\wxAgent^\\tests^\\engineering^\\integration^\\^.work^\\25842807d58940c8b1f3d98ea9e4c1cb^\\data^\" -l logfile start\n\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb\\data",
+        "-l",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb\\postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 2064",
+        "-w",
+        "start"
+      ],
+      "exitCode": 1,
+      "expected": 0,
+      "output": "pg_ctl: could not create restricted token: error code 87\npg_ctl: could not start server: error code 3\n"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl",
+        "-D",
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb\\data",
+        "-m",
+        "immediate",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 1,
+      "expected": 0,
+      "output": "pg_ctl: PID file \"E:/project/codex/wxAgent/tests/engineering/integration/.work/25842807d58940c8b1f3d98ea9e4c1cb/data/postmaster.pid\" does not exist\nIs server running?\n"
+    }
+  ],
+  "reviewRegressions": [
+    "docs\\execution\\reviews\\T06-round1\\ReviewArticleAstTest.java",
+    "docs\\execution\\reviews\\T06-round2\\ReviewNestedClosureTest.java",
+    "docs\\execution\\reviews\\T06-round3\\ReviewEmphasisPunctuationTest.java",
+    "docs\\execution\\reviews\\T07-round1\\ReviewVersionBoundaryTest.java"
+  ],
+  "transformations": [
+    "T06 sample paths redirected; test assertions unchanged"
+  ],
+  "samples": "tests\\engineering\\integration\\evidence\\formal-clean-01-samples",
+  "failure": "RuntimeError: Recorded command failed",
+  "isolatedWork": "tests\\engineering\\integration\\.work\\25842807d58940c8b1f3d98ea9e4c1cb",
+  "cleanupFailure": "Recorded command failed",
+  "exitCode": 1
+}
