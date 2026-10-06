@@ -6,6 +6,7 @@
   "integrationBase": "5413cf4",
   "branch": "main",
   "trackedFilesAtReviewedBaseline": 1737,
+  "baselineInvariant": "reviewedBaselineCommit 是最后一个已复审的代码基线；其后的 docs/chore/整改提交未经复审，一律不得当作 PASS 依据",
 
   "contract": {
     "version": "1.0.0-rc.3",
@@ -38,16 +39,20 @@
     "T04": { "verdict": "BLOCKED", "basis": "docs/execution/reviews/T04-Review-v3.0.md", "note": "R03 默认端口签名缺陷已关闭；B01/R04 真实私有 S3 桶端到端验收缺失（环境依赖）。T07 组合根当前仅允许 Local 后端执行版本写入" },
     "T05": { "verdict": "PASS", "basis": "docs/execution/reviews/T05-Review-v2.0.md", "note": "明示不代表 T03 已批准、全 CI/G1、后续工作流集成或生产上线" },
     "T06": { "verdict": "PASS", "basis": "docs/execution/reviews/T06-Review-v4.0.md", "note": "范围为当时工作区 T06 交付；正式集成版不自动继承，边界由 verify_boundaries.py 逐字节复核" },
-    "T07": { "verdict": "CHANGES_REQUIRED", "basis": "docs/execution/reviews/T07-Review-v3.0.md", "note": "R01/R02 保持关闭；容量功能已 601 页 / 60,002 行逐行验证；本轮唯一新增问题是 T07-R03 增量契约鉴权声明遗漏" }
+    "T07": { "verdict": "CHANGES_REQUIRED", "basis": "docs/execution/reviews/T07-Review-v3.0.md", "note": "R01/R02 保持关闭；容量功能已 601 页 / 60,002 行逐行验证；R03 已整改（见 docs/execution/reports/T07-Revision-v3.0.md），T07 整体仍待第四轮复审，不得自标 PASS" }
   },
 
   "notStarted": ["T08","T09","T10","T11","T12","T13","T14","T15","T16","T17","T18","T19","T20","T21","T22","T23","T24","T25","T26","T27","T28","T29","T30","T31","T32","T33","T34","T35","T36","T37"],
 
   "openItems": [
-    { "id": "T07-R03", "task": "T07", "severity": "P2", "status": "OPEN",
+    { "id": "T07-R03", "task": "T07", "severity": "P2", "status": "FIXED_AWAITING_REREVIEW",
       "issue": "docs/api/diff-pages-v1.1.openapi.yaml 无根级/操作级 security，也无 components.securitySchemes；独立生成客户端的 agent 无法从机器可读配置得知必须携带登录 Session，实际会收到 401",
       "requiredFix": "在增量 OpenAPI 声明与冻结契约一致的 session Cookie scheme 并在根级或 GET 操作引用；补自动化校验断言该路由的有效 security requirement 及 scheme 的 type/in/name；保留真实 HTTP 匿名 401 与登录成功回归。仅补文字说明不足以关闭",
-      "evidence": "docs/execution/reviews/T07-round3/evidence/checks.json（contract 记录：期望 security=[{session:[]}]，实际 null）" },
+      "evidence": "docs/execution/reviews/T07-round3/evidence/checks.json（contract 记录：期望 security=[{session:[]}]，实际 null）",
+      "fixedAt": "2026-10-06",
+      "fix": "增量 OpenAPI 现声明根级 security=[{session:[]}] 与 securitySchemes.session（apiKey/cookie/EDITORIAL_SESSION，与冻结契约字典全等）；verify_diff_page.py 按“操作级优先否则根级”解析有效 security 并校验 scheme 的 type/in/name，另加 4 项深拷贝反向控制（删根级 security、删 scheme、in 改 header、security 置空）必须全部被拒",
+      "fixEvidence": ["tests/engineering/T07/evidence/diff-page-v1.1-check-r03.json（退出 0；反向控制 4/4 拒绝；内嵌 rc.3 27/27）", "docs/execution/reports/T07-Revision-v3.0.md"],
+      "closureNote": "关闭以第四轮复审为准；复审方 check_review.py 绑定 1,737 文件旧快照，需新快照运行，否则按设计必然报 tracked inputs changed" },
     { "id": "CR-T07-01", "task": "T07", "severity": "登记项", "status": "OPEN",
       "issue": "冻结 Diff 旧路由仍最多返回 1,000 项而合法 AST 可达 30,000 块；超限返回 DIFF_TOO_LARGE",
       "note": "分页新路由已覆盖容量场景，正式关闭以 T07-R03 修复及增量契约复审为前提；在此之前不得宣称 AC-19 对任意合法版本 Diff 完整通过" },
@@ -62,7 +67,7 @@
   ],
 
   "next": [
-    "1. 关闭 T07-R03：改动范围仅 docs/api/diff-pages-v1.1.openapi.yaml、校验器与鉴权一致性断言；复审只需针对增量契约，未变化的后端与迁移测试不无理由重跑。随后正式确认 CR-T07-01",
+    "1. 第四轮 T07 复审（范围极小）：取新 input-snapshot 后跑 check_review.py 的鉴权复算等价式 + verify_diff_page.py（含反向控制）；后端与迁移未变化不重跑。通过后关闭 T07-R03，并正式确认 CR-T07-01 与增量契约状态",
     "2. 派发 T08（预算、价格、用量与对账）：批次 B 唯一未开始的基础设施，也是 T09 真实收费调用与 editorial.providers.paid-calls-enabled 门禁的前置",
     "3. 补 T02 第 3 轮复审与 T03 独立批准以推进 G1；T04 保持 BLOCKED 并登记所需真实桶环境依赖"
   ],

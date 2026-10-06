@@ -1,0 +1,60 @@
+{
+  "jsonSchemaVersion": "4.26.0",
+  "schema": {
+    "path": "docs\\schemas\\diff-page-v1.1.schema.json",
+    "sha256": "8526de4389f2368a533b8d86c0e2a6453ca469873f9cc3db75f0cf55d29a6f6f"
+  },
+  "openapi": {
+    "path": "docs\\api\\diff-pages-v1.1.openapi.yaml",
+    "sha256": "0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd"
+  },
+  "frozenOpenapi": {
+    "path": "docs\\api\\openapi.yaml",
+    "sha256": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b"
+  },
+  "sample": {
+    "path": "tests\\engineering\\integration\\evidence\\t07-diff-page-01-samples\\DiffPage.json",
+    "sha256": "648337fc0056454ace14dc57eeae9b77104784d00d828e87954e5720a2b18ae7"
+  },
+  "sampleTotalBlocks": 1004,
+  "samplePageSize": 100,
+  "approvedT00Hashes": 27,
+  "authentication": {
+    "schemeName": "session",
+    "frozenSecurity": [
+      {
+        "session": []
+      }
+    ],
+    "frozenScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "operations": [
+      {
+        "route": "/api/v1/articles/{id}/diff/pages",
+        "method": "GET",
+        "declaredAt": "root",
+        "effectiveSecurity": [
+          {
+            "session": []
+          }
+        ],
+        "scheme": {
+          "type": "apiKey",
+          "in": "cookie",
+          "name": "EDITORIAL_SESSION"
+        },
+        "problems": []
+      }
+    ]
+  },
+  "authenticationNegativeControlsRejected": [
+    "anonymous-security-list",
+    "drop-root-security",
+    "drop-session-scheme",
+    "scheme-in-header"
+  ],
+  "result": "PASS"
+}

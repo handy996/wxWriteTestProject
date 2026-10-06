@@ -3,6 +3,8 @@ info:
   title: Editorial paged Diff extension
   version: 1.1.0
   description: Additive extension to approved T00 rc.3. The frozen Diff route and schema remain unchanged.
+security:
+  - session: []
 paths:
   /api/v1/articles/{id}/diff/pages:
     get:
@@ -41,6 +43,11 @@ paths:
         '404': {description: Article or version not visible to this owner}
         '422': {description: Invalid cursor or page size}
 components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: EDITORIAL_SESSION
   schemas:
     DiffPage:
       type: object
