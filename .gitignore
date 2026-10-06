@@ -15,6 +15,7 @@ infra/.env
 .idea/
 .vscode/
 frontend/.npm-cache/
-tests/engineering/T02/.work/
-tests/engineering/integration/.work/
 **/.playwright-cli/
+# 任意目录下的临时工作区：评审轮次与工程测试会在此启动本机临时 PostgreSQL 集群与对象目录
+# （单轮可达数百 MB）。必须由根规则兜底，不依赖每个轮次目录自带的 .gitignore。
+**/.work/
