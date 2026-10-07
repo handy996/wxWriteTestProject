@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "待独立复审：T02 第五轮整改（agent-08fdac2f 在跑，见 T02-REVIEW-5TH）；A-1 修复 2a13a2e 由主 agent 所写，同样进第五轮复审范围（复审方需自证解析步在 Linux 形状下真能跑，或明确交回我在 runner 上验）；T03 第十轮整改（agent-95794bd8 独占 maven 与 backend/target）；T08 第三轮整改 fb62212+c21e681（agent-8149640e 第四轮续跑中，前三次派单零工件）。已复审入库：8304401（T02 第四轮判决与 31 份工件）、d733b3f（T03 第九轮判决与 41 份工件）、976e8ee+91c789b（T08 第三轮复审记录）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
+  "pendingReviewCommit": "待独立复审：T02 第五轮整改 a051eb2 + 我的 CI 修复 2a13a2e（agent-4aae5bf5 第五轮在跑，骨架优先）；T08 第四轮整改（agent-35018604 在跑，将另派第五轮复审）；T03 第十轮整改（agent-95794bd8 独占 maven 与 backend/target，它已把两个导致 testCompile 失败的未跟踪探针文件清掉，工作树现只剩它一个 M 文件）。已复审入库：37542cb（T08 第四轮判决与 55 份工件）、8304401（T02 第四轮判决与 31 份工件）、d733b3f（T03 第九轮判决与 41 份工件）、976e8ee+91c789b（T08 第三轮复审记录）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -21,7 +21,10 @@
     "T08-3rd-docs": "整改报告 v2（提交 c21e681，纯文档，代码与证据字节与 fb62212 相同；我在其后复跑 verify.py exit 0（14/14）与 --reverse-control exit 0（44 削弱全拒、5 良性全绿、blind/misplaced/brittle 三者皆 none））。要点：全量 verify 的 289/0/147 在报告里**明确记为集成方实测、非本卡亲跑**（我按文本核对而非听交付说明，见 :17、§7-1、§8）；反向对照 30→44 的算术写成 57−8 新−5 同名改写=44 而非含糊带过；T08-SRS-DEFAULT-CLASH 被如实留在开放面（在该测试自己的 YAML 里声明 image-units-per-article:100 属改测试前提，产品默认值是否恰当它明说没有证据回答）。另记两条我自己造成的偏差：PowerShell 5.1 的 Set-Content -Encoding UTF8 给提交说明加了 BOM（标题首码点 0xfeff），已用 python 重写并 --amend 复核为 0x64；两路复审会话（agent-04cf7fc5、agent-c62923dd）启动即失败且**零工件**",
     "T03-9th": "第九轮独立复审（agent-6c491b4a，docs/execution/reviews/T03-round9/review.md 35 KB + evidence/ 41 个自跑原件 185 KB，无 .work、无二进制）→ CHANGES_REQUIRED：P1×5 + P2×4 + P3×3，每条附「期望红→实际绿」最小复现。基线由它自己重跑而非抄录：闸门 exit 0 / 49 反证全拒 / 12 良性全过 / 8 绑定输入 / 4 配置，闸门 sha256 前缀 a86f64dd3f59（主 agent 已复核为当前字节），check_contracts.py exit 0（27 哈希）；HEAD 从 fb62212 漂到 9f1df7e 后它复测绑定的 9 个字节逐一未变。F-01（P1）可达性判据实质是**花括号算术且双向失效**：无括号 if (false)、Boolean.FALSE.booleanValue()、static final false、调用前无条件 return、\\u002a\\u002a 转义注释包裹 ⇒ javac 证明守卫不执行而闸门 ACCEPT，while(false) 连编译都不过仍 ACCEPT；反向真执行的 try{}finally{} 与 switch{default:} 却被 REJECT ⇒ 台账 T03-R8-DEPTH1-STRICTNESS 写的「只是有意过严」被证伪，真相是先不严。F-02/F-05（P1）配置普查只看 resources 根下 application*.yml：多行 flow、flow+注释、块别名 *anchor、合并键 <<:、.properties/.yaml、classpath:/config/ 全部不可见，而它用仓库内 JDK21 + spring-boot 3.5.16 真跑 YamlPropertySourceLoader+Binder 证明这些位置**确实绑出错误名并盖过合规名**；反向把合规名写成多行 flow 反而假红。F-04（P1）守卫测试可「合规掏空」：7 个 @Test 体换成含全部 needles 的文本块散文 ⇒ 闸门 exit 0、javac 通过、junit-platform 实跑 found=7 succeeded=7 failed=0 与原件逐字段相同 ⇒ record_guard_binding.py 会**合法刷新** 8 指纹与 7/0/0，第八轮 F-03 通道原样重开。F-05/F-08（P1/P2）转义族只松不严：JSESSION\\u0049D 的 javap 常量池即 JSESSIONID 却被 ACCEPT、\\\\u000a 注释包裹（javap 里无该调用）被 ACCEPT、非法 \\uZZZZ 与编不过的 x\\u000ay 也被 ACCEPT；而注释或 prod.yml 里提及 JSESSIONID 反而假红 ⇒ 第 71 行未实现 JLS 3.3 偶数反斜杠规则，且禁名扫描作用在未剥注释原文上。F-06（P2）CI 判定只钉文本：continue-on-error、步骤级 if:、作业级 if: workflow_dispatch、搬进 schedule-only 作业四例全绿；加 shell: bash / 改步骤名 / 写 python3 全红，且红因是内置控件 ci-drops-cookie-gate 的两行锚碎裂。F-07（P2）绑定可徒手伪造：command=echo pretend 配自洽 XML ⇒ exit 0；surefireJarSha256、surefireJar、jdk 三字段**从不复核**，而 note 写「the gate re-hashes every input listed here」属过度声称。F-09/F-10/F-11（P3）两个词法器 mask_literals 与 literal_spans 对文本块答案不同（模糊 6000 例分歧 1548、纯文本块 3000 例分歧 2308，76.9%，方向恒为 spanOnly）；needles 钉措辞不钉行为（参数顺序调换、List.of、受钉 helper 改名、加 throws Exception 全红，未受钉的 env( 改名与全限定 assertThrows 反而绿）；新维度普遍缺良性半边。承重审计（它把每条新检查换成宽容桩后重跑 49+12）：红侧承重的是 guard_is_reachable、depth_at、decode_unicode_escapes、expand_flow、binding_inputs 的 profile 覆盖；**红侧不承重的是** mask_literals 遮罩、live_pattern/in_literal、method_span、逐体 needles、CI_GATE_NEEDLE 具体性——且 live_pattern 致盲后它手制的散文变异被 ACCEPT。第八轮闭合判定：F-01 未闭合（原样重开）、F-02 部分、F-03 未闭合（重开）、F-04 部分、F-05 部分、F-06 闭合（仅现状层面）、F-07 部分、F-08 部分（形参遮蔽已修，数字更正只落到叙述层）。诚实性：49/12/8/4 与 sha 前缀无虚报；r08(48/11) 与 r09(49/12) 并存、--output 拒绝覆盖 ⇒「不覆盖历史证据」成立；identity 守卫 7 例确在 mvn verify 中跑属实（pom 无 surefire 选择）。它另查出三条**记账缺陷**（见本轮整改）：T03-R6-GATE 同时 OPEN 与 closedAt；「9 次」仍留在 T03-R7-GATE.evidence（artefact 实为 10 次）；r09 记的 sha256.ci=098b6bb8 已被 0b2a6f8 淘汰（当前 ci.yml 为 2f651cb7）。它未证明：真实条件恒假的可达性、GitHub Actions 上作业真红、多来源 spring.config.location 完整优先级、mvn 那次记录是否真发生过、YAML 形状穷尽、identity.enabled=false 下谁接住错名；全量 verify、record_guard_binding、formal.py 注入反证、r10 重录四条因禁则原样交回主 agent，未冒充跑过",
     "T02-4th": "第四轮独立复审（agent-5c03f262，**续跑**自一次零工件失败但留下骨架与两脚本的中断会话；要求它自证字节继承）→ CHANGES_REQUIRED：唯一 P1 是 A-1，其余 A-2…A-9 为口径与加固。四项必做控制全部用它自己的数字独立重做并通过：C-1 值豁免不放行整文件（交付配置 6/6 canary 退出 1；`deca2a1^` 原配置 0 canary 退出 0 且 `scanned ~0 bytes` ⇒ 盲区原样复现）；C-2 11 条字面量可证伪（44/44 变异含中段两点全部重新变红、0 空转 ⇒ 我要求的中段改一位仍被抑制这一攻击未成功）；C-3 配置不自触发（只有中性文件名副本口径有效，原名两者皆 `~0 bytes`）；C-4 良性半边（自造 271 条/47,792 B 清单 0 命中退出 0；`--out` 指冻结名退出 1；四份不变文件前后哈希全等）。全树三配置 0/7/15，两个差值稳定：150,604（整文件跳过）与 148,267（二进制跳过）。F-01…F-06 全部判 CLOSED（F-04 转化为 T07 排期，F-05 带残余）。它当众自我纠错两次且处理方式正确：第一版全树扫描的 1 条命中来自它自己的 review.md（连写 20 字符 AKIA 形），第二份工件又因同行 `path`+`digest` 配对命中一次，两次都改自己的文本而不是新增豁免，最终在默认规则下 0 命中（这是 F-03 根因的现场复现，不是被审缺陷）",
-    "T02-4th-A1-fixed": "A-1 由主 agent 修复并入库 2a13a2e（唯一 P1，且是主 agent 自己写坏的那行）：`--gitleaks .tools/t02/gitleaks/gitleaks.exe` 在 ubuntu-24.04 不可能存在（workflow 装的是 linux tar，释出单文件 `.tools/t02/gitleaks`，同文件既有 `scan_secrets` 调用即反证），脚本又不校验传入路径，`run: |` 是 `bash -e` ⇒ 其后 `secret_scan.py`/`scan_secrets.py`/`dependency_scan.py`/`npm audit` 永不执行，CI 密钥与依赖扫描能力为 0（响亮全灭，不是静默跳过）。修法两步：新增 Locate the pinned gitleaks binary 步骤按三种形状探测并导出 `GITLEAKS_BIN`，找不到就以具名错误退出 1；两个调用点改用 `${GITLEAKS_BIN:?}`；controls 拆成独立步骤并移到真实扫描之后（复审说得对：验证抑制是否生效的控制，绝不能有能力取消它要保护的那套抑制）。本地实跑 structural exit 0、controls exit 0（GITLEAKS ALLOWLIST POLICY PASSED）、cookie 门 exit 0（它读这个文件）。未验证并已如实记录：本环境无 pyyaml/js-yaml，文件未经真 YAML 解析器验证；我自己写的缩进检查误报 12 行文档级键（是检查器错，不是文件错）；解析步在 Linux 形状上无法本地端到端跑"
+    "T02-4th-A1-fixed": "A-1 由主 agent 修复并入库 2a13a2e（唯一 P1，且是主 agent 自己写坏的那行）：`--gitleaks .tools/t02/gitleaks/gitleaks.exe` 在 ubuntu-24.04 不可能存在（workflow 装的是 linux tar，释出单文件 `.tools/t02/gitleaks`，同文件既有 `scan_secrets` 调用即反证），脚本又不校验传入路径，`run: |` 是 `bash -e` ⇒ 其后 `secret_scan.py`/`scan_secrets.py`/`dependency_scan.py`/`npm audit` 永不执行，CI 密钥与依赖扫描能力为 0（响亮全灭，不是静默跳过）。修法两步：新增 Locate the pinned gitleaks binary 步骤按三种形状探测并导出 `GITLEAKS_BIN`，找不到就以具名错误退出 1；两个调用点改用 `${GITLEAKS_BIN:?}`；controls 拆成独立步骤并移到真实扫描之后（复审说得对：验证抑制是否生效的控制，绝不能有能力取消它要保护的那套抑制）。本地实跑 structural exit 0、controls exit 0（GITLEAKS ALLOWLIST POLICY PASSED）、cookie 门 exit 0（它读这个文件）。未验证并已如实记录：本环境无 pyyaml/js-yaml，文件未经真 YAML 解析器验证；我自己写的缩进检查误报 12 行文档级键（是检查器错，不是文件错）；解析步在 Linux 形状上无法本地端到端跑",
+    "T02-5th-remediation": "第五轮整改（agent-08fdac2f 实施，主 agent 集成入库 a051eb2，7 个文件）：A-2 值豁免改词边界锚定（10 条用 \\b 包精确值；第 11 条 19 字符截断摘要尾部是字面点、\\b 不成立，改 RE2 安全的前缀形式）；A-3 更正为路径含 gitleaks.toml 子串者一律不读（sub- 前缀、点前缀、.bak、.txt 尾实测 0 字节）；A-4/J-1 覆盖边界与显式风险边界写进 T02.md；A-5 只留稳定量并**更正二进制跳过量 148,267 → 146,191**（旧值混进了当时 2,076 字节的 gitleaks.toml 自我跳过；算术两向闭合：146,191+3,329=149,520、146,191+2,076=148,267）；A-6 FROZEN 补 gitleaks-findings.json 且仓库外 --out 给可读失败；A-7 T02.md:30 原位标注；A-8 结构标签按形态拆分；A-9 新增 pairing_gate（同行 path+digest 必须报错、分行必须接受）；A-1 姊妹项 resolve_scanner 响亮校验 --gitleaks。--with-controls 断言 88→139、结构模式 16→18。gitleaks.toml 2,076→3,329 字节，摘要 efd32a24→641c19b6b16282db（申报在报告与新证据里）。主 agent 独立复跑七条命令全部 exit 0（self-test 10 夹具+1 豁免、全树 no matches、structure PASSED、controls PASSED 用真扫描器、contracts 27 哈希、digest_records 静默、scan_secrets 报告体 []）且字节数与摘要核对一致",
+    "T02-5th-measurement": "主 agent 本轮两项独立测量，两项都改变了台账措辞：(1) **熵是独立下界**。我此前写「判据不是熵、是字母表」，那只在我 60 个随机 id 所处的高熵带内成立。按唯一字符数扫 base32 后缀：1/2/3/4/5/6 个不同字符（熵 1.000/1.579/2.000/2.311/2.561）**全部漏**，7 个（2.781）起**全部抓** ⇒ 双门成立（base32 字母表 AND 熵下界），且翻转区间是 (2.561, 2.781]；实施方报告写「约 3.0」落在实测边界的错误一侧，台账按我的扫描改。(2) **否定环视在 8.30.1 上不可实现**：配置里放 (?<! 让 gitleaks **exit=2** 并打 `re2.cc: Error parsing ... invalid perl operator`，即第四轮复审 C-13 的建议无法落地；实施方以实测推翻上级建议、改用 RE2 安全形式，这是正确的服从关系",
+    "T08-4th": "第四轮独立复审（agent-8149640e，**第三次派单+一次续跑**才拿到工件；docs/execution/reviews/T08-round4/review.md 365 行 + evidence/ 55 个原件 692 KB，其中 3 个 .log 被 .gitignore 的 *.log 规则排除、由主 agent 显式 -f 入库）→ CHANGES_REQUIRED：P2×2 + P3×13。三条主 agent 裁定经独立检验**全部接受**（含「一次调用触及的每一条 ceiling 排进同一锁序列逐条检查」优于我原来的两数比较裁定）。第三轮 F-01/03/04/05/06/07/08 关闭，**F-02 判未关闭**（换了摘法）。**F-R4-01（P2）provider 帽按 Owner 分区**：provider 窗口与 ceilings() 锁键都带 owner_id（BudgetService.java:308-316），max-concurrent=2 实为「每 Owner 2」；探针 provider(2,30) 下 Owner1 两笔 + Owner2 两笔 ⇒ 4 笔全放行（stdout with maxConcurrent=2 -> 4、整轮 exit 0）；而 T08.md:26/66/137 与 SRS:1093 写的是不分 Owner 的 provider 级上限、不得多密钥绕过。交付用例从不用第二个 Owner（T08PostgresTest.java:67 单一 OWNER）⇒ 57 例全绿照不出此盲区。定级 P2 而非 P1 的理由是 SRS:1290 OQ-18 默认单用户；**语义由 Owner 定，不由我定**。**F-R4-06（P2）体内绑定证据可摘成装饰**：bound_in/service_fed_from_bound 是不剥注释的子串搜索 ⇒ 平铺键 + 四个 token 留在注释里 ⇒ 14 门全绿 + 真库 22+35=57 全绿 + exit 0（evidence/r4-gutted-A5.json）；同时 A8 良性重写（局部变量喂 service）保持绿。最小修法在复审 §3（先剥注释再判体内证据 + 要求体内真实构造调用 + 注释装饰反向控制，MUTATIONS 44→46 且 blind 仍须 none）。**F-R4-09（P3，由我原记的「边界」升格为缺陷）**：删掉 ceilings.sort ⇒ 14 门全绿 + 57 例全绿 ⇒ 声称的锁序防线无人看守（复审明确不谎称今天会死锁）。其余 P3：F-R4-02 env 前缀多一字母静默 (EMPTY)、F-R4-03 env 段大写被小写入库致 providerWideQuota(\"MOCK\")=false 静默失配、F-R4-04 配置面绑 Integer（99999999999 被 503 拒）而记录字段是 long、F-R4-05 点号规范名放 env 形状源 getProperty() 读得到而 from(env) 读不到、F-R4-07 java_method_body 不跳字面量/注释（一句 String r4Fragment = \"}\"; 把切片从 3688 塌成 32、一个 { 撑成 54666）、F-R4-08 verify.py:253-254 与 fb62212 提交说明里「只加宽不裁窄/skips string literals」两句被实测推翻、F-R4-10 未知叶子改回静默跳过不红、F-R4-11a/b 默认 image-units-per-article=4 下「文章帽先说话并报 QUOTA_EXCEEDED」的顺序只躺在返工表无用例、F-R4-12 **run_pg.py:389 把证据目录硬编码成脚本自己的 HERE/evidence**、F-R4-13 套件名比对不容方法过滤器且 --path-selftest 对仓库外绝对根判 exit 1、F-R4-14「歧义即拒」文档未限定范围（实测文件 100/env 2 取 2 且不拒，行为正确）。**T08-SRS-DEFAULT-CLASH 裁定**：属「测试自己的前提」——产品默认值 BudgetPolicyConfig.java:101 未被改动、也未判它错，不路由 Owner；但默认值下的真实拒绝顺序缺文档与用例，记 F-R4-11a/b。两条自报边界：属性源合并顺序**不升格**（探针证明实现不自造合并规则、完全委托 Spring precedence，我原来那条边界收窄了）；锁序边界**升格**为 F-R4-09。它另加 7 条自建跨 model 真库探针全绿、7 条新削弱中 B1/B3 双重盲（静态门与 57 例都看不见）"
   },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -63,8 +66,8 @@
       "note": "工具与候选材料自测完成；两名独立人工标注者与模型质量人工评分未完成（产品 Owner 事项，不可代签）"
     },
     "T02": {
-      "verdict": "CHANGES_REQUIRED",
-      "basis": "第四轮判 CHANGES_REQUIRED：唯一 P1（A-1，主 agent 自己写坏的 CI 行）已由主 agent 修复入库 2a13a2e；余下 A-2…A-9 与 J-1…J-6 残余派 agent-08fdac2f 做第五轮整改。G0 仍不能签：整改未经独立复审，且 0 命中不等于基线无密钥这条口径尚未写进报告",
+      "verdict": "INTEGRATED_UNREVIEWED",
+      "basis": "R02c 与主 agent 跨域两项经第四轮判 CHANGES_REQUIRED（唯一 P1=A-1，主 agent 自修 2a13a2e）；第五轮整改入库 a051eb2（值豁免词边界化 + 8 项口径/加固 + 两处由主 agent 实测作出的更正），主 agent 复跑七条命令全 exit 0。第五轮独立复审 agent-4aae5bf5 在跑，重点打第 11 条 RE2 前缀形式会不会连带抑制同前缀的不同摘要",
       "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论"
     },
     "T03": {
@@ -93,8 +96,8 @@
       "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域"
     },
     "T08": {
-      "verdict": "INTEGRATED_UNREVIEWED",
-      "basis": "第三轮判 CHANGES_REQUIRED（P2×3 + P3×5）；整改入库 fb62212，主 agent 复跑全量 verify exit 0（289/0/147）、run_pg 57/57、verify 14/14、反向 44 全拒 + 5 良性全绿。第四轮独立复审在跑（前两次派单 agent-c62923dd、agent-84592013 均启动即失败且零工件，第三次改用短派单），重点验跨 model 汇总、宽松绑定是否引入新的静默路径、体内证据能否再摘、以及那处 YAML 上限改动是不是迁就测试。分层语义两级都生效取较严是主 agent 裁定、非 Owner 批准",
+      "verdict": "CHANGES_REQUIRED",
+      "basis": "第四轮判 CHANGES_REQUIRED（P2×2 + P3×13）：F-R4-01 provider 帽实为每 Owner 分区，与 T08.md/SRS 的provider 级不分 Owner 表述相反，且 57 例从不用第二个 Owner 照不出来；F-R4-06 体内绑定证据可摘成注释装饰（14 门 + 真库 57 全绿、exit 0），第三轮 F-02 判未闭合。整改派 agent-35018604。F-R4-01 的全局帽/每 Owner 帽语义**转 Owner 决策**，本轮只做如实文档 + 一条标注待决的双 Owner 用例",
       "note": "第一轮独立复审（4e7342ba）判 CHANGES_REQUIRED：F-01 额度默认值与主 agent 的表述相反（P1）、F-02 AC-28 的\"数据库也守上限\"超出实现（P1）、另有死工厂/镜像守卫/over_run 无投影等 P2/P3。作者已整改：8 个回退值实为 SRS :1099/:1103/:1143 文档示例值（OQ-09 仍 OPEN），SRS 未写的两项改为无默认+配置期 503 QUOTA_NOT_CONFIGURED；t08_admit_estimate 先 FOR UPDATE 锁文章行再聚合，并在真实集群用两个 origin 裸连接并发绕过服务实测恰好 1 提交、另 1 个 23514（修前证据 t08-r1-baseline-gap-pre-fix.json：mvn 命令退出 1）；noAudit 死工厂已删（现仅存在于注释，verify.py 剥注释后检查）；审计用例改走生产 CostIntegration 适配器。主 agent 复现：run_pg --expect-tests 44 → 44/0/0、verify 13/13、--reverse-control 18/18 blind=none、contracts 27/27。仍待第二轮独立复审确认，未 PASS 第二轮独立复审（agent-257c7361）判两条 P1 CLOSED、新发现 F2-01（P2，provider-quota model 级 scope 永不命中＝配置静默 fail-open）与 F2-02/F2-03/F2-04/F2-05（P3），整改中，待第三轮；启用前置条件见本任务 activationPreconditions 字段（F2-04 要求从报告移入台账）",
       "activationPreconditions": [
         "editorial.cost.enabled=true 要求 editorial.identity.enabled=true：审计链由 bootstrap/CostIntegration 绑定 CostPorts.Audit，无审计绑定即启动失败（故意不提供 noAudit() 兜底，见 CostPorts.java:72 注释）",
@@ -554,12 +557,14 @@
       "id": "T08-REVIEW-4TH",
       "task": "T08",
       "severity": "P1（门禁前置）",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "第三轮整改由实施方编写、主 agent 集成，二者不得自判采纳；分层语义的两级都生效取较严是我在无 Owner 在场时的裁定，必须被独立检验",
       "requiredFix": "第四轮复审 agent-84592013 在跑（前一次 agent-c62923dd 启动即失败、零工件）。必做：(1) 自造交错用例验 provider 封顶真跨 model 生效；(2) 找宽松绑定引入的**新静默路径**（拼错键静默忽略、YAML 与 env 同时不同值是否歧义即拒、大小写混用、值非数字是否 503 归一）；(3) 再摘体内证据（helper 拆分、assertTrue 包一层、先赋字段再断言、用 fixture 里的花括号骗过 java_method_body）；(4) 44 条削弱的归因抽验 + 自造 3–5 条新削弱试 blind；(5) 8 个新用例是否真断言；(6) --path-selftest 是否真走相对分支；(7) 那处 YAML 上限改 100 是修测试还是迁就测试",
-      "closure": "第四轮 PASS 且无新 P0-P2 后，T08 的 activationPreconditions 五条才进运维启用清单",
+      "closure": "已执行（agent-8149640e，三次派单加一次续跑才拿到工件）：判 CHANGES_REQUIRED，P2×2 + P3×13；我的三条裁定经独立检验全部接受，第三轮 F-02 判未闭合（F-R4-06），我原记为边界的锁序升格为缺陷（F-R4-09）。新发现 F-R4-01 需 Owner 定语义，其余转第四轮整改 agent-35018604，见 T08-REVIEW-5TH",
       "openedAt": "2026-10-07",
-      "foundBy": "协议“不得自判采纳”"
+      "foundBy": "协议“不得自判采纳”",
+      "closedAt": "2026-10-08",
+      "evidence": "docs/execution/reviews/T08-round4/review.md（365 行）+ evidence/ 55 份 692 KB；提交 37542cb"
     },
     {
       "id": "T07-BASELINE-STALE",
@@ -586,8 +591,8 @@
       "task": "T02",
       "severity": "P2",
       "status": "OPEN",
-      "issue": "更正本项原表述（原写默认规则漏裸 AKIA，第四轮复审更正为能抓，主 agent 实测后两边都不成立）：60 个受控 AKIA 样本下，交付配置与仅默认规则配置命中数相同，均为 14/60，规则一律 aws-access-token；判据不是熵（命中组与未命中组区间 [3.2806,3.8750] 完全重叠、均值 3.5937 对 3.6022），而是字母表：后缀纯 base32（A-Z2-7）的 14 个全部命中，含 0/1/8/9 任一的 46 个全部漏掉（100% 对 0%）。真 AWS key id 正是 base32 ⇒ 规则对真实形状可靠；主 agent 第一轮用 A-Z0-9 造 canary，多半造出无效 key，才误读为规则失明。残余缺口仍是复审列举的那些：短口令（password= 与 DB_PASSWORD=）、含斜杠的 40 字符风格 secret、JWT、二进制内明文、gitignore 路径、以及路径含 gitleaks.toml 者整文件不读。**0 命中不得支撑基线无密钥**",
-      "requiredFix": "按实测口径改写报告句子（禁止二值化的能抓或不能抓）、补 canary 合法形状、写三条覆盖边界；若决定新增规则（短口令、JWT、含斜杠 secret），须同时给出会误报的良性半边",
+      "issue": "更正本项原表述（原写默认规则漏裸 AKIA，第四轮复审更正为能抓，主 agent 实测后两边都不成立）：60 个受控 AKIA 样本下，交付配置与仅默认规则配置命中数相同，均为 14/60，规则一律 aws-access-token；原判据表述「不是熵、而是字母表」已被主 agent 自己的后续扫描**部分推翻**：那只适用于 60 个随机 id 所处的高熵带。实测是**双门**——base32 字母表 AND 熵下界（按唯一字符数扫，1–6 个字符熵 1.000–2.561 全漏，7 个 2.781 起全抓，翻转区间 (2.561, 2.781]；命中组与未命中组在我原样本内熵区间完全重叠这一事实仍然成立）：后缀纯 base32（A-Z2-7）的 14 个全部命中，含 0/1/8/9 任一的 46 个全部漏掉（100% 对 0%）。真 AWS key id 正是 base32 ⇒ 规则对真实形状可靠；主 agent 第一轮用 A-Z0-9 造 canary，多半造出无效 key，才误读为规则失明。残余缺口仍是复审列举的那些：短口令（password= 与 DB_PASSWORD=）、含斜杠的 40 字符风格 secret、JWT、二进制内明文、gitignore 路径、以及路径含 gitleaks.toml 者整文件不读。**0 命中不得支撑基线无密钥**",
+      "requiredFix": "按实测口径改写报告句子（禁止二值化的能抓或不能抓，也禁止单因表述）；报告现写「约 3.0」落在实测边界错误一侧，第五轮复审须独立复现并给出可复现的窄边界；短口令/JWT/含斜杠 secret 是否补规则由复审后定",
       "openedAt": "2026-10-08",
       "foundBy": "agent-abbe86de「仍未证明」第 2 条 + 主 agent 变体实验"
     },
@@ -707,7 +712,7 @@
       "severity": "P1",
       "status": "OPEN",
       "issue": "第五轮整改（A-2…A-9 与 J-1 残余，加 canary 字母表）完成后需独立复审第五轮",
-      "requiredFix": "复审方必须自己重跑 --with-controls 与 44 个变异、验词界加固后原值仍被抑制且近邻仍被抓、验新增 base32 canary 真命中、抽查报告句子是否与 60 样本实测一致（不许二值化）、并验 2a13a2e 的解析步在 Linux 形状下真能跑或明确交回主 agent 在 runner 上验",
+      "requiredFix": "复审方 agent-4aae5bf5 已派出（骨架优先）。重点：(1) 第 11 条 RE2 前缀形式是否连带抑制「同前缀不同后续」的别的摘要；(2) 139 断言是否真承重（抽 10 条换宽容桩必红）；(3) 44 变异全红 + 11/11 精确抑制；(4) 熵下界独立复现（主 agent 测得翻转在 2.561→2.781，实施方报告写约 3.0，属错误一侧）；(5) 否定环视 panic 是否属实（主 agent 实测 exit=2 re2.cc invalid perl operator）；(6) 覆盖边界三条与 T02.md:30 原位标注；(7) 2a13a2e 的 CI 解析步在 Linux 形状下是否真成立",
       "openedAt": "2026-10-08",
       "foundBy": "docs/execution/reviews/T02-round4/review.md 判决"
     },
@@ -715,81 +720,172 @@
       "id": "T02-R5-CANARY-ALPHABET",
       "task": "T02",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "活体 canary 的字母表落在被测规则承认的字符集之外，会把 canary 造错读成规则失明：A-Z0-9 随机后缀只有 23% 被 aws-access-token 命中，纯 base32 是 100%",
       "requiredFix": "canary 集补一条 AKIA+16 位 A-Z2-7 的合法形状样本，让 --with-controls 真能证到 AWS 形状会被抓；另留一条含 0/1/8/9 的近邻样本并写明越界形状不保证是特性不是缺陷。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "主 agent 60 样本实测（两种配置同为 14/60，判据为 base32 字母表）"
+      "foundBy": "主 agent 60 样本实测（两种配置同为 14/60，判据为 base32 字母表）",
+      "closedAt": "2026-10-08",
+      "closure": "canary 集已补一条 AKIA+16 位 base32 活体正例（必须被抓）+ 一条含 1 的越界近例（必须不被抓，写明为特性）。**并纠正本项自身的结论**：字母表不是唯一判据，熵是独立下界——base32 后缀按唯一字符数扫，1–6 个字符（熵 1.000–2.561）全漏、7 个（2.781）起全抓，翻转区间 (2.561, 2.781]",
+      "evidence": "a051eb2 + 主 agent 熵扫描（.work 临时探针，逐点命中表已写入 rounds.T02-5th-measurement）"
     },
     {
       "id": "T02-R5-VALUE-SUBSTRING",
       "task": "T02",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "值豁免实测是子串豁免：超串 ab+值、值+cd、内嵌形态都被抑制；且单块内多条 regexes 配 condition=AND 实为任一命中即抑制（AND 只在维度之间），配置注释未写",
       "requiredFix": "按复审 C-13 用反斜杠 b 词界加固（10/11 有效，第 11 条 19 字符含字面点需否定环视）；^…$ 方案已被 C-12 否证不得回退；改完必须重跑 --with-controls（88 条断言不减）与 44 个变异全红。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "docs/execution/reviews/T02-round4/review.md A-2 与 C-12/C-13"
+      "foundBy": "docs/execution/reviews/T02-round4/review.md A-2 与 C-12/C-13",
+      "closedAt": "2026-10-08",
+      "closure": "值豁免实测是子串豁免：超串 ab+值、值+cd、内嵌形态都被抑制；且单块内多条 regexes 配 condition=AND 实为任一命中即抑制（AND 只在维度之间），配置注释未写 ⇒ 第五轮整改已实现，主 agent 独立复跑七条命令全 exit 0 并核对 gitleaks.toml 3,329 字节 / 摘要 641c19b6b16282db",
+      "evidence": "a051eb2 + docs/execution/reports/T02-Revision-R05.md + tests/engineering/T02/evidence/r05-allowlist-hardening.json"
     },
     {
       "id": "T02-R5-COVERAGE-WORDING",
       "task": "T02",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "四处口径与实态不符：报告写恰为 gitleaks.toml 而实测是路径含该子串者一律不读（sub- 前缀、点前缀、.bak 都 0 字节）；T02.md:30 仍留同类已证伪表述却未就地标注（:113 与 :135 标注过，处理不一致）；缺 0 命中不等于基线无密钥、148,267 B 二进制跳过、子串抑制三条边界；T02-Revision-R02.md:164 的裸 AKIA 半句需按实测改写",
       "requiredFix": "原位改文，不留新章节掩盖；同时把 11 个豁免值均为公开示例或摘要、但同值日后真实出现也会被抑制写成显式风险边界（不得为此新增豁免）；报告另须更正仍未证明序号（是第 5 条，派单写错为第 6 条）。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "docs/execution/reviews/T02-round4/review.md A-3/A-4/A-7 与 J-1"
+      "foundBy": "docs/execution/reviews/T02-round4/review.md A-3/A-4/A-7 与 J-1",
+      "closedAt": "2026-10-08",
+      "closure": "四处口径与实态不符：报告写恰为 gitleaks.toml 而实测是路径含该子串者一律不读（sub- 前缀、点前缀、.bak 都 0 字节）；T02.md:30 仍留同类已证伪表述却未就地标注（:113 与 :135 标注过，处理不一致）；缺 0 命中不等于基线无密钥、148,267 B 二进制跳过、子串抑制三条边界；T02-Revision-R02.md:164 的裸 AKIA 半句需按实测改写 ⇒ 第五轮整改已实现，主 agent 独立复跑七条命令全 exit 0 并核对 gitleaks.toml 3,329 字节 / 摘要 641c19b6b16282db",
+      "evidence": "a051eb2 + docs/execution/reports/T02-Revision-R05.md + tests/engineering/T02/evidence/r05-allowlist-hardening.json"
     },
     {
       "id": "T02-R5-STABLE-QUANTITIES",
       "task": "T02",
       "severity": "P3",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "断言里混入运行时量：绝对总字节三轮实测 2,187 到 2,261 到 2,263 项不等；结构断言标签把 19 字符含转义点条目也叫 no wildcard（名实不符）",
       "requiredFix": "只保留稳定量（0/7/15 命中数、150,604 整文件跳过量、148,267 二进制跳过量），标签改到名实相符。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "docs/execution/reviews/T02-round4/review.md A-5 与 A-8"
+      "foundBy": "docs/execution/reviews/T02-round4/review.md A-5 与 A-8",
+      "closedAt": "2026-10-08",
+      "closure": "断言里混入运行时量：绝对总字节三轮实测 2,187 到 2,261 到 2,263 项不等；结构断言标签把 19 字符含转义点条目也叫 no wildcard（名实不符） ⇒ 第五轮整改已实现，主 agent 独立复跑七条命令全 exit 0 并核对 gitleaks.toml 3,329 字节 / 摘要 641c19b6b16282db",
+      "evidence": "a051eb2 + docs/execution/reports/T02-Revision-R05.md + tests/engineering/T02/evidence/r05-allowlist-hardening.json"
     },
     {
       "id": "T02-R5-FROZEN-ERRORS-PAIRING",
       "task": "T02",
       "severity": "P3",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "revision_integrity.py 的 FROZEN 缺第三份冻结件 gitleaks-findings.json；仓库外 --out 抛裸 ValueError；无配对形状前置门（同行 path+digest 配对只有人肉发现）",
       "requiredFix": "补 FROZEN 项、改可读失败并退出非 0、让 CI 调 digest_records.check()。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "docs/execution/reviews/T02-round4/review.md A-6 与 A-9"
+      "foundBy": "docs/execution/reviews/T02-round4/review.md A-6 与 A-9",
+      "closedAt": "2026-10-08",
+      "closure": "revision_integrity.py 的 FROZEN 缺第三份冻结件 gitleaks-findings.json；仓库外 --out 抛裸 ValueError；无配对形状前置门（同行 path+digest 配对只有人肉发现） ⇒ 第五轮整改已实现，主 agent 独立复跑七条命令全 exit 0 并核对 gitleaks.toml 3,329 字节 / 摘要 641c19b6b16282db",
+      "evidence": "a051eb2 + docs/execution/reports/T02-Revision-R05.md + tests/engineering/T02/evidence/r05-allowlist-hardening.json"
     },
     {
       "id": "T02-R5-SCRIPT-PATH-GUARD",
       "task": "T02",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "check_gitleaks_allowlists.py 对 --gitleaks 传入路径不做存在性与可执行性校验（目录触发 PermissionError、不存在触发 FileNotFoundError，均为未捕获 OSError）。CI 侧主 agent 已在 2a13a2e 加解析步与具名错误，脚本侧仍裸奔",
       "requiredFix": "脚本自己校验路径存在且可执行，失败给具名错误与非 0 退出。已派 agent-08fdac2f",
       "openedAt": "2026-10-08",
-      "foundBy": "docs/execution/reviews/T02-round4/review.md A-1 姊妹项"
+      "foundBy": "docs/execution/reviews/T02-round4/review.md A-1 姊妹项",
+      "closedAt": "2026-10-08",
+      "closure": "check_gitleaks_allowlists.py 对 --gitleaks 传入路径不做存在性与可执行性校验（目录触发 PermissionError、不存在触发 FileNotFoundError，均为未捕获 OSError）。CI 侧主 agent 已在 2a13a2e 加解析步与具名错误，脚本侧仍裸奔 ⇒ 第五轮整改已实现，主 agent 独立复跑七条命令全 exit 0 并核对 gitleaks.toml 3,329 字节 / 摘要 641c19b6b16282db",
+      "evidence": "a051eb2 + docs/execution/reports/T02-Revision-R05.md + tests/engineering/T02/evidence/r05-allowlist-hardening.json"
     },
     {
       "id": "T08-R4-EVIDENCE-PLACEMENT",
       "task": "T08",
       "severity": "P3",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "第四轮复审续跑会话把 r4-main.json 与 r4-main-test-results/ 写进了受控 evidence 目录（派单要求它只写自己的 reviews/ 目录）；内容看起来是它自跑的真实测量，不是伪造",
       "requiredFix": "主 agent 处置：判决到手后要么按证据规范补 provenance 再入库，要么移入 docs/execution/reviews/T08-round4/evidence/；复审方与实施方都不得自行写入受控证据目录，派单需再明确一次",
       "openedAt": "2026-10-08",
-      "foundBy": "主 agent 工作树审计（?? tests/engineering/T08/evidence/r4-main.json）"
+      "foundBy": "主 agent 工作树审计（?? tests/engineering/T08/evidence/r4-main.json）",
+      "closedAt": "2026-10-08",
+      "closure": "复审方按我要求的顺序处理且比我写的更稳：先把两个条目逐字节复制进自己的 evidence 并核 sha256（r4-main.json e23425821c0f…185b9f04 match=True、5 个 test-results 全 match），**核对为真之后**才回收自己造成的两个未跟踪条目；git ls-files 证明二者本就未跟踪。根因另立缺陷条目 F-R4-12（run_pg.py:389 硬编码证据目录）",
+      "evidence": "docs/execution/reviews/T08-round4/evidence/r4_preserve_controlled.py + 提交 37542cb"
+    },
+    {
+      "id": "T08-R4-OWNER-CEILING-SCOPE",
+      "task": "T08",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "provider 窗口与锁键都带 owner_id，max-concurrent=2 实为每 Owner 2；探针 provider(2,30) 下两 Owner 各两笔共 4 笔全放行，而 T08.md:26/66/137 与 SRS:1093 写的是不分 Owner 的 provider 级上限、不得多密钥绕过。交付用例从不用第二个 Owner ⇒ 57 例全绿照不出",
+      "requiredFix": "语义由 Owner 决定（全局帽 ⇒ 改窗口与锁键；每 Owner 帽 ⇒ 把现状写进文档并保留双 Owner 用例）。本轮整改只做如实文档 + 一条显式标注待决的双 Owner 用例；主 agent 已把该决策列入需人类/Owner 清单",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-01（agent-8149640e）"
+    },
+    {
+      "id": "T08-R4-BODY-EVIDENCE-DECOR",
+      "task": "T08",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "verify.py 的体内绑定证据是不剥注释的子串搜索：平铺键 + 四个 token 写进注释 ⇒ 14 门全绿 + 真库 57 全绿 + exit 0；第三轮 F-02 判未闭合",
+      "requiredFix": "先 strip_java_comments 再判体内证据 + 要求体内出现真实构造调用 + 注释装饰反向控制（MUTATIONS 44→46、blind 仍须 none），且 A8 良性重写必须保持绿。已派 agent-35018604",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-06 + evidence/r4-gutted-A5.json"
+    },
+    {
+      "id": "T08-R4-SILENT-CONFIG-PATHS",
+      "task": "T08",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "宽松绑定残留四条静默路径：env 前缀多一字母静默 (EMPTY)；env 段大写被小写入库致 providerWideQuota(\"MOCK\")=false 静默失配；配置面绑 Integer 使 99999999999 被 503 拒而记录字段是 long；点号规范名放进 env 形状源时 getProperty() 读得到而 from(env) 读不到。另有 F-R4-10 未知叶子改回静默跳过也不红",
+      "requiredFix": "每条要么响亮拒绝、要么写用例钉住真实行为，并各配一条内置反向控制。已派 agent-35018604",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-02/03/04/05/10"
+    },
+    {
+      "id": "T08-R4-SCANNER-CLAIMS",
+      "task": "T08",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "三处声称与实态不符：java_method_body 不跳字面量与注释（一句 String r4Fragment = 右花括号 把切片从 3688 塌成 32 字符、一个左花括号撑成 54666）；verify.py:253-254 与提交 fb62212 说明里「只加宽不裁窄 / skips string literals」两句被实测推翻；删掉 ceilings.sort 后 14 门与 57 例全绿，即声称的锁序防线无看守（我原记为边界，复审判为缺陷）",
+      "requiredFix": "修 java_method_body 的字面量与注释跳过并证两例不再失真、良性写法不误红；原位更正两处文案；把锁序写成可断言的检查或单测并把删 sort 收进反向控制。已派 agent-35018604",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-07/08/09"
+    },
+    {
+      "id": "T08-R4-HARDCODED-EVIDENCE-DIR",
+      "task": "T08",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "run_pg.py:389 把证据目录硬编码为脚本自己的 HERE/evidence ⇒ 复审中断轮次把 r4-main.json 与 test-results 写进受控证据目录；另有 run_pg.py:338-342 套件名比对不容方法过滤器、--path-selftest 对仓库外绝对根判 exit 1",
+      "requiredFix": "证据落点改为显式参数或工作根相对路径，默认不得写受控目录，并加落点自检；套件名比对容忍方法过滤器；--path-selftest 支持仓库外绝对根。已派 agent-35018604",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-12/13 + 主 agent 工作树审计"
+    },
+    {
+      "id": "T08-R4-DOC-REALITY",
+      "task": "T08",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "文档承诺超出实态两处：「歧义即拒」未限定范围（实测文件 100 与 env 2 取 2 且不拒，行为正确但文档不符）；默认 image-units-per-article=4 下「文章帽先拒绝并报 QUOTA_EXCEEDED」的真实顺序只躺在返工表、行为章节与用例都没有",
+      "requiredFix": "文档改到与实态一致并在行为章节写清拒绝顺序、补用例。已派 agent-35018604",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md F-R4-11a/b 与 F-R4-14"
+    },
+    {
+      "id": "T08-REVIEW-5TH",
+      "task": "T08",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "T08 第四轮整改（agent-35018604）完成后需独立复审第五轮",
+      "requiredFix": "复审方必须自己重放 A5 注释装饰摘法（修后必须变红）与 A8 良性重写（必须保持绿）、重放删 ceilings.sort 削弱（必须变红）、核 MUTATIONS 44→46 且 blind/misplaced/brittle/stale 全 0、核 F-R4-01 只做了文档与标注用例而没有偷改语义、核用例增减明细三处同步",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T08-round4/review.md 判决"
     }
   ],
   "next": [
-    "1) 三路在跑：agent-95794bd8（T03 第十轮整改，独占 maven 与 backend/target）、agent-8149640e（T08 第四轮续跑）、agent-08fdac2f（T02 第五轮整改）。我期间不跑 maven，也不改 ci.yml 之外的共享文件。",
-    "2) T03 整改回来后由我代跑复审交回的四条：全量 mvn clean verify、record_guard_binding.py、formal.py --suite identity 注入错名反证、check_session_cookie.py --output r10（不得覆盖 r08/r09），再派第十轮复审。",
-    "3) T08 第四轮判到手后处置 T08-R4-EVIDENCE-PLACEMENT（复审方写进受控 evidence 的 r4-main.json）。",
-    "4) T07-BASELINE-STALE 已被第四轮复审升格为：常年红的门等于没有门，基线与三个 patch 的重录应列为下一轮必交付，重录前其退出码不得当验收依据。需要一个决定并单开一轮，本轮不碰 T07。",
-    "5) 需 Owner 或人类：COST-BUDGET-LIMITS（8 个 SRS 示例值加 2 个必需配额键加 alert-percent）、含点 model id 是否需 model 级上限、T08-SRS-DEFAULT-CLASH 的默认单位、T03-APPROVAL（第十轮之后）、B01 真实私有桶、T01-HUMAN 金标签、COMPAT-INVENTORY、WAITING_MANUAL 归属。",
-    "6) G0 仍不能签：T02 与 T03 都在整改-复审循环中，且 0 命中不等于基线无密钥的口径未落进报告。",
-    "7) T09 仍不派（卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 依赖 T03/T04/T05/T08；T04 阻塞于 B01）。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all。"
+    "1) 三路在跑：agent-95794bd8（T03 第十轮整改，独占 maven/backend/target）、agent-35018604（T08 第四轮整改）、agent-4aae5bf5（T02 第五轮复审）。我期间不跑 maven。",
+    "2) **需人类/Owner 转达**：provider 帽语义（全局 vs 每 Owner，T08-R4-OWNER-CEILING-SCOPE；SRS:1290 OQ-18 默认单用户，但 SRS:1093 与 T08.md 的措辞是不分 Owner）；其余待决仍是 COST-BUDGET-LIMITS、含点 model id、T03-APPROVAL、B01 真实私有桶、T01-HUMAN 金标签、COMPAT-INVENTORY、WAITING_MANUAL、T07 基线重录方向。",
+    "3) T03 整改回来后由我代跑复审交回的四条：全量 mvn clean verify、record_guard_binding.py、formal.py --suite identity 注入错名反证、check_session_cookie.py --output r10（不得覆盖 r08/r09），再派第十轮复审。",
+    "4) T08 整改回来后核 F-R4-01 只做文档+标注用例（不得偷改语义）、MUTATIONS 44→46、blind/misplaced/brittle/stale 全 0、用例增减明细三处同步，再派第五轮复审。",
+    "5) T02 第五轮复审若 PASS：正式产出 evidence/r02-integrity.json（R02-INTEGRITY-OUTPUT）并定覆盖边界是否补规则；若仍不绿则继续整改，G0 不签。",
+    "6) T07-BASELINE-STALE 需要一个决定并单开一轮：常年红的门等于没有门，重录基线与三个 patch 之前其退出码不得当验收依据。",
+    "7) T09 仍不派（卡片 :179 依赖 T03/T04/T05/T08；T04 阻塞于 B01）。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all。"
   ],
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
@@ -839,7 +935,11 @@
     "绝不允许凭记忆或推测补齐数据。我把只打印了 8 个下标的命中集合手打补成 14 个（多写的 6 个是编造的），幸而在下一步分析前自查发现、重跑取回真下标 6,9,13,25,33,34,35,38,39,40,41,42,51,52。任何统计结论必须来自同一次运行的原始输出留存，不能来自我看到的片段",
     "取退出码必须紧跟该命令并立刻存入变量。我有一次先执行了一条语法错误的赋值，后面两行门根本没跑，打印出的 exit=1 是前一条命令的残留，差点把门红了两条写进结论",
     "反向 canary 的字符集必须落在被测规则承认的字母表内，否则测的是探针不是规则：A-Z0-9 造 AWS 形状只有 23% 命中，纯 base32（A-Z2-7）是 100%。任何某规则漏 X 的结论都要先在规则承认的 X 形状上验证，并且必须带阳性对照（我用的是一条 ghp_ 形态）",
-    "中文正文里的引号一律用直角引号，绝不在双引号 Python 字符串内写 ASCII 直引号；我在这份台账脚本里连打十余处，会导致语法错，而靠邻接字符自动猜测哪些是内层引号同样不可靠（AKIA 这类 ASCII 收尾会让规则失效）"
+    "中文正文里的引号一律用直角引号，绝不在双引号 Python 字符串内写 ASCII 直引号；我在这份台账脚本里连打十余处，会导致语法错，而靠邻接字符自动猜测哪些是内层引号同样不可靠（AKIA 这类 ASCII 收尾会让规则失效）",
+    "结论必须带**适用域**。我写的「判据不是熵，是字母表」只在 60 个随机 id 所占的高熵带内成立；沿另一维度扫一遍（唯一字符数 1→16）就出现独立下界，翻转在 (2.561, 2.781]。两句话各自没错，合起来才是错的。凡「X 单独解释 Y」的结论，要沿被排除的那个维度扫一次再落笔",
+    "被审方可以用实测推翻复审方与我的建议：第四轮建议的否定环视在 gitleaks 8.30.1 上会 panic 中止整条配置（exit=2，re2.cc invalid perl operator），实施方改用 RE2 安全前缀形式是对的。服从关系是「证据 > 建议」，不是「复审 > 实施」。但推翻必须自带复现命令，否则就是偷懒",
+    "被 .gitignore 排除的证据不得静默少入库：T08 第四轮 3 个 .log 原件被仓库级 *.log 规则挡在门外，我用显式 git add -f 入册并在提交说明里写明。证据完整性优先于忽略规则的便利，但强制加入必须可审计",
+    "每轮复审判决必须在 rounds 里留下一条含判决词（CHANGES_REQUIRED/PASS/BLOCKED）的轮次文本，否则 REVIEW 项不得关闭。本条由反向不变量抓到 T08-REVIEW-2ND 的历史缺口后设立；该缺口以显式 LEGACY 枚举记录在案，不靠放宽检查掩盖"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
@@ -866,10 +966,11 @@
     "python tests/engineering/T08/run_pg.py --work-root <绝对路径> --evidence-name <新名> --expect-tests 57   # 期望 exit 0、57/57（22 单元 + 35 活库）",
     "python tests/engineering/T08/verify.py --reverse-control   # 实测 44 条削弱全 REJECT + 5 条良性等价重写全绿；blind/misplaced/brittle 三个 none 缺任何一个都不算通过",
     "python tests/engineering/T03/check_session_cookie.py --output tests/engineering/T03/evidence/session-cookie-r10.json   # 整改后在当前 HEAD 重录；不得覆盖 r08(48/11) 与 r09(49/12)",
-    "python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks <解析出的真实二进制>   # 本地 Windows 用 .tools/t02/gitleaks/gitleaks.exe；CI 由 Locate the pinned gitleaks binary 步骤导出 GITLEAKS_BIN。禁止在任一发调用方硬编码单一 OS 形状（A-1 就是这么把四项扫描全灭的）"
+    "python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks <解析出的真实二进制>   # 本地 Windows 用 .tools/t02/gitleaks/gitleaks.exe；CI 由 Locate the pinned gitleaks binary 步骤导出 GITLEAKS_BIN。禁止在任一发调用方硬编码单一 OS 形状（A-1 就是这么把四项扫描全灭的）",
+    "python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks <解析出的真实二进制>   # R05 后实测 139 条断言全 PASS（改前 88）、结构模式 18（改前 16）；CI 期望条数若存在需同步更新"
   ],
   "budget": {
-    "sessionBootstrap": "只读状态文件实测约 10k tok（21 顶层键、tasks 9、openItems 56、protocol 48、rounds 17）；整单读 SRS+计划+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 11k tok（21 顶层键、tasks 9、openItems 63、protocol 52、rounds 20）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",
@@ -877,6 +978,6 @@
       "openapi.yaml 全文": "~170k tok（禁止）",
       "editorial.schema.json 全文": "~59k tok（禁止）"
     },
-    "note": "本轮（T02 第四轮入账 + A-1 自修）主上下文只做了：读复审交回消息（未整份读那 50 KB review.md）、复核它三个锚点、改 ci.yml 两处、跑 6 道门、做 60 样本 AKIA 实测（4 次探针迭代，前 3 次各有方法缺陷）、提交 3 个入库、派第五轮整改。三次探针迭代是本轮最大的自我开销：错在 canary 字母表与残留退出码，不是门错"
+    "note": "本轮（T02 R05 集成 + T08 第四轮入账）主上下文做了：重跑 7 条 T02 门、两次独立测量（熵扫描 12 点、RE2 panic 复现）、提交 3 个入库（含 55 份工件与 3 个 -f 强加的 .log）、派两路实施/一路复审、写台账。三份 review.md 与两份整改报告**均未整份读入主上下文**，细节由各子 agent 自带；我读的是判决摘要 + 我负责裁定的条目 + 我自己要复核的锚点"
   }
 }
