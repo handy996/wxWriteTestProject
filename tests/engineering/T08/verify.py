@@ -732,9 +732,37 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
             return False
         fed = re.search(r"\.load\(\s*\"[^\"]*\",\s*new\s+ByteArrayResource\(\s*(\w+)\s*\.\s*getBytes", body)
         declared = re.search(r"String\s+(\w+)\s*=\s*\"\"\"", body)
-        return bool(fed and declared and fed.group(1) == declared.group(1) and document.search(body)
-                    and "getPropertySources().add" in body
-                    and bool(re.search(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)", body)))
+        if not (fed and declared and fed.group(1) == declared.group(1) and document.search(body)):
+            return False
+        # Round-5 finding F-R5-01: the five checks above still let a case gut the binding a third and a fourth way
+        # (round-5 controls G1 and G2), because none of them asked WHERE the loader's sources were added — the decoy
+        # parses the real document into an environment nobody reads while the bound environment is filled with flat
+        # hand-fed keys by string concatenation (G1) or by a same-file helper (G2). So the claim is now judged as a
+        # data-flow: the property sources must be added into the exact environment BudgetPolicyConfig.from() reads,
+        # they must come from the loader (not a hand-built PropertySource smuggled in alongside it), and that
+        # environment must be touched by NOTHING else in the body. A benign rewrite that keeps the same flow — a
+        # local variable catching from(env) before service() — is still accepted (round-5 control A8).
+        from_var = re.search(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*(\w+)\s*\)", body)
+        if not from_var:
+            return False
+        env = from_var.group(1)
+        # every add(...) target must be the environment from() reads — a decoy environment kills the claim (G1/G2)
+        add_targets = re.findall(r"\b(\w+)\s*\.\s*getPropertySources\s*\(\s*\)\s*\.\s*add", body)
+        if not add_targets or any(target != env for target in add_targets):
+            return False
+        # the sources added must be the loader's: constructing any other PropertySource in the body is a second
+        # channel into the bound environment (round-5 third type H3: a MapPropertySource added next to the loader)
+        if re.search(r"new\s+\w*PropertySource\s*\(", body):
+            return False
+        # the bound environment is written only by the loader loop — no property-write API, no merge, no mutable
+        # accessor, and no other method handed that environment (r5FlatQuotaKeys(env) is exactly this, G2)
+        if re.search(r"\.\s*(?:setProperty|withProperty|getMutablePropertySources|merge)\s*\(", body):
+            return False
+        # strip the three sanctioned touches of the environment variable; anything that survives is a hidden writer
+        residual = re.sub(r"MockEnvironment\s+" + re.escape(env) + r"\s*=\s*new\s+MockEnvironment\s*\(\s*\)", " ", body)
+        residual = re.sub(re.escape(env) + r"\s*\.\s*getPropertySources\s*\(\s*\)\s*\.\s*add", " ", residual)
+        residual = re.sub(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*" + re.escape(env) + r"\s*\)", " ", residual)
+        return not re.search(r"\b" + re.escape(env) + r"\b", residual)
 
     def service_fed_from_bound(body: str) -> bool:
         if body.count("service(") != 1 or "new BudgetPolicy(" in body or "policy(wideCaps" in body:
@@ -797,6 +825,13 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
         and "theArticleCeilingSpeaksBeforeTheProviderQuotaWindow" in report,
         "跨源同名键不拒" in report,
         "EDITORIAL_COST_PROVIDER_QUOTAS" in report and "99999999999" in report,
+        # Round-5 finding F-R5-04: the near-neighbour net is contains("quota"), so a misspelling INSIDE the marker
+        # word (QUTOA_/QUOT_) is outside it. Not reopened as a product rule (that would widen a settled tradeoff);
+        # pinned as measured behaviour in environmentQuotaPrefixTypoRefusesTheBoot and stated in the report, so a
+        # re-wording back to "every near miss is caught" loses its witness.
+        "EDITORIAL_COST_PROVIDER_QUTOA_MOCK_MAX_CONCURRENT" in unit
+        and "EDITORIAL_COST_PROVIDER_QUOT_MOCK_MAX_CONCURRENT" in unit
+        and "词内拼错" in report,
     ]
     ok = (bool(definition) and canonical and joined == ["|"] and writers >= 2 and readers >= 2
           and config_keys_by_scope and malformed_refused and segment_shape and reserved_switch_refused
@@ -888,22 +923,38 @@ def check_runner_paths() -> tuple[str, bool, str]:
     default_is_scratch = ("'--evidence-dir'" in runner
                           and "(work_root / 'evidence').resolve(), False" in runner
                           and "HERE / 'evidence' /" not in runner)
+    # Round-5 finding F-R5-02: the landing test is ANCESTRY now, not equality, and the gate has to see the helper
+    # the decision actually calls — a check that only looked for the word "CONTROLLED_EVIDENCE" stayed green when
+    # the reviewer replaced the equality with `if False:` (their R1 probe). The gate therefore pins three things at
+    # once: the ancestry helper exists, the un-chosen refusal is reachable (guarded on the helper, not on a literal
+    # `False`), and the recorded field uses the same helper rather than the old equality.
+    lands_by_ancestry = ("def lands_in_controlled(" in runner
+                         and "controlled in candidate.parents" in runner)
     controlled_dir_named = "CONTROLLED_EVIDENCE = HERE / 'evidence'" in runner \
-        and "evidence_dir == CONTROLLED_EVIDENCE.resolve()" in runner
-    refuses_unchosen_landing = ("without an explicit --evidence-dir" in runner
-                                and "evidenceLanding" in runner and "insideControlledDirectory" in runner)
+        and lands_by_ancestry and "evidence_dir == CONTROLLED_EVIDENCE.resolve()" not in runner
+    refuses_unchosen_landing = ("if lands_in_controlled(evidence_dir) and not chosen:" in runner
+                                and "without an explicit --evidence-dir" in runner
+                                and "if lands_in_controlled(evidence_dir):" in runner)
+    records_the_same_ancestry = ("'insideControlledDirectory': lands_in_controlled(evidence_dir)" in runner
+                                 and "'insideControlledDirectory': evidence_dir ==" not in runner)
     exists_check_follows_the_dir = "(evidence_dir / (args.evidence_name + '.json')).exists()" in runner
+    # Round-5 finding F-R5-03: the selftest has to judge the OPERATOR's --tests, not a hardcoded string, so the
+    # gate pins that the selftest path calls wanted_suites(args.tests) and echoes the raw input.
     method_filters = ("def wanted_suites(" in runner and "wanted = wanted_suites(args.tests)" in runner
+                      and "filtered = wanted_suites(args.tests)" in runner
+                      and "'testsInput': args.tests" in runner
                       and "[t.strip() for t in args.tests.split(',') if t.strip()]" not in runner)
     outside_repo_is_a_choice = ("notes.append('run directory resolves outside the repository root" in runner
                                 and "problems.append('run directory does not resolve inside the repository root"
                                 not in runner)
     ok = (default_is_scratch and controlled_dir_named and refuses_unchosen_landing and exists_check_follows_the_dir
-          and method_filters and outside_repo_is_a_choice)
+          and method_filters and outside_repo_is_a_choice and lands_by_ancestry and records_the_same_ancestry)
     return ("the runner writes where it was told to and judges suites by class", ok,
             f"evidence default is scratch under --work-root={default_is_scratch}, "
+            f"landing tested by ancestry not equality={lands_by_ancestry}, "
             f"controlled directory named explicitly={controlled_dir_named}, "
-            f"unchosen landing is refused and recorded={refuses_unchosen_landing}, "
+            f"unchosen landing is refused and reachable={refuses_unchosen_landing}, "
+            f"recorded field uses the same ancestry={records_the_same_ancestry}, "
             f"collision check follows the chosen directory={exists_check_follows_the_dir}, "
             f"method filters stripped before the presence check={method_filters}, "
             f"outside-repo work root is a note not a defect={outside_repo_is_a_choice}")
@@ -1204,6 +1255,98 @@ def reversals() -> list[dict]:
                     '                editorial.cost.image-units-per-article: 100\n'
                     '                editorial.cost.reconciliation-stale-minutes: 30\n')],
          "red": [quotas, anchors]},
+        {"name": "the live case parses the document into a decoy environment and feeds flat keys (round-5 G1)",
+         "path": PG_TEST,
+         "edits": [('        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        service(BudgetPolicyConfig.from(env));',
+                    '        java.util.List<PropertySource<?>> r5Parsed = new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)));\n'
+                    '        MockEnvironment r5Decoy = new MockEnvironment();\n'
+                    '        for (PropertySource<?> r5Source : r5Parsed) {\n'
+                    '            r5Decoy.getPropertySources().addLast(r5Source);\n'
+                    '        }\n'
+                    '        MockEnvironment env = new MockEnvironment();\n'
+                    '        String r5Head = "editorial.cost.";\n'
+                    '        String r5Quota = "provider-quota.";\n'
+                    '        env.setProperty(r5Head + r5Quota + "unconfigured", "refuse");\n'
+                    '        env.setProperty(r5Head + r5Quota + "mock-provider.max-concurrent", "4");\n'
+                    '        env.setProperty(r5Head + r5Quota + "mock-provider.calls-per-day", "26");\n'
+                    '        env.setProperty(r5Head + r5Quota + "mock-provider.mock-gpt.max-concurrent", "1");\n'
+                    '        env.setProperty(r5Head + r5Quota + "mock-provider.mock-gpt.calls-per-day", "9");\n'
+                    '        service(BudgetPolicyConfig.from(env));')],
+         "red": [quotas]},
+        {"name": "the live case assembles flat keys in a same-file helper (round-5 G2)",
+         "path": PG_TEST,
+         "edits": [('        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        service(BudgetPolicyConfig.from(env));',
+                    '        MockEnvironment env = new MockEnvironment();\n'
+                    '        r5QuotaKeys(env);\n'
+                    '        service(BudgetPolicyConfig.from(env));'),
+                   ('    /** The reservation the quota cases place:',
+                    '\n    /** Round-5 G2 helper: the same dotted keys the nested document spells, assembled '
+                    'outside the case body. */\n'
+                    '    private void r5QuotaKeys(MockEnvironment env) {\n'
+                    '        String r5Prefix = "editorial" + ".cost" + ".provider-quota.";\n'
+                    '        env.setProperty("editorial.cost.max-calls-per-article", "1000");\n'
+                    '        env.setProperty(r5Prefix + "unconfigured", "refuse");\n'
+                    '        env.setProperty(r5Prefix + "mock-provider.max-concurrent", "4");\n'
+                    '        env.setProperty(r5Prefix + "mock-provider.calls-per-day", "26");\n'
+                    '    }\n\n'
+                    '    /** The reservation the quota cases place:')],
+         "red": [quotas]},
+        {"name": "the live case parses correctly then shadows the bound values with a concatenated property write "
+                 "(round-5 H3, the implementer's own third shape)",
+         "path": PG_TEST,
+         "edits": [('        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        service(BudgetPolicyConfig.from(env));',
+                    '        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        String r5fHead = "editorial" + "." + "cost" + ".";\n'
+                    '        String r5fQuota = "provider" + "-" + "quota" + ".";\n'
+                    '        env.setProperty(r5fHead + r5fQuota + "mock-provider.max-concurrent", "4");\n'
+                    '        service(BudgetPolicyConfig.from(env));')],
+         "red": [quotas]},
+        {"name": "the live case parses correctly then a same-file helper rewrites the environment (round-5 H4, "
+                 "the implementer's own fourth shape)",
+         "path": PG_TEST,
+         "edits": [('        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        service(BudgetPolicyConfig.from(env));',
+                    '        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        r5QuotaShadow(env);\n'
+                    '        service(BudgetPolicyConfig.from(env));'),
+                   ('    /** The reservation the quota cases place:',
+                    '\n    /** Round-5 H4 helper: handed the bound environment, so the case body carries no flat '
+                    'literal at all. */\n'
+                    '    private void r5QuotaShadow(MockEnvironment env) {\n'
+                    '        String r5h = "editorial" + "." + "cost" + ".";\n'
+                    '        String r5q = "provider" + "-" + "quota" + ".";\n'
+                    '        env.setProperty(r5h + r5q + "mock-provider.max-concurrent", "4");\n'
+                    '    }\n\n'
+                    '    /** The reservation the quota cases place:')],
+         "red": [quotas]},
         {"name": "the lock-order sort is deleted (round-4 control B1, unseen across 14 gates and 57 cases)",
          "path": quota_service,
          "edits": [("        ordered.sort(Comparator.comparing(Ceiling::lockKey));\n", "")],
@@ -1280,6 +1423,37 @@ def reversals() -> list[dict]:
          "edits": [("notes.append('run directory resolves outside the repository root '",
                     "problems.append('run directory does not resolve inside the repository root '")],
          "red": [landing]},
+        # Round-5 findings F-R5-02 / F-R5-03: the reviewer's R1 probe reached the refusal logic behind `if False:`
+        # and the gate stayed 16/16 — a gate that reads a sentence, not a decision. These controls make the two
+        # shapes the reviewer used, plus their equality regression, cost a red gate.
+        {"name": "the un-chosen controlled landing is reachable again but with the guard removed (round-5 R1)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("if lands_in_controlled(evidence_dir) and not chosen:",
+                    "if False and not chosen:")],
+         "red": [landing]},
+        {"name": "the runner refuses the un-chosen default under the tracked directory (round-5 R1b)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("        if lands_in_controlled(evidence_dir):\n"
+                    "            raise SystemExit(",
+                    "        if False:\n            raise SystemExit(")],
+         "red": [landing]},
+        {"name": "the landing test goes back to equality, so a sub-directory is not seen as controlled (round-5 F-R5-02)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("    return candidate == controlled or controlled in candidate.parents",
+                    "    return candidate == controlled")],
+         "red": [landing]},
+        {"name": "the recorded insideControlledDirectory field reverts to the old equality (round-5 F-R5-02)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("'insideControlledDirectory': lands_in_controlled(evidence_dir)}",
+                    "'insideControlledDirectory': evidence_dir == CONTROLLED_EVIDENCE.resolve()}")],
+         "red": [landing]},
+        {"name": "--path-selftest judges a hardcoded --tests again instead of the operator's (round-5 F-R5-03)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("        filtered = wanted_suites(args.tests)\n"
+                    "        unknown = sorted(set(filtered) - set(KNOWN_SUITES))",
+                    "        filtered = wanted_suites('CostPricingTest,T08PostgresTest')\n"
+                    "        unknown = sorted(set(filtered) - set(KNOWN_SUITES))")],
+         "red": [landing]},
         {"name": "the report claims the provider window is global across Owners (F-R4-01)",
          "path": ROOT / "docs/execution/reports/T08.md",
          "edits": [("**但这个合并窗口按 `(owner, provider, day)` 划分**", "**这个合并窗口跨所有 Owner 全局生效**")],
@@ -1300,6 +1474,15 @@ def reversals() -> list[dict]:
          "path": ROOT / "docs/execution/reports/T08.md",
          "edits": [("EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_MAX_CONCURRENT", "一个拼错前缀的环境变量名"),
                    ("99999999999", "一个很大的日调用数")],
+         "red": [quotas]},
+        {"name": "the report re-words the near-neighbour net back to 'every typo is caught' (round-5 F-R5-04)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("词内拼错", "所有拼写错误一律拦下")],
+         "red": [quotas]},
+        {"name": "the F-R5-04 near-neighbour case stops pinning the marker-word typo (round-5 F-R5-04 witness)",
+         "path": COST_TEST / "CostPricingTest.java",
+         "edits": [('        swapped.put("EDITORIAL_COST_PROVIDER_QUTOA_MOCK_MAX_CONCURRENT", "2");',
+                    '        swapped.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");')],
          "red": [quotas]},
         {"name": "the report says the locks follow construction order again (F-R4-09's claim without a watchman)",
          "path": ROOT / "docs/execution/reports/T08.md",

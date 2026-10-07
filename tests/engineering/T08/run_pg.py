@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 MIGRATIONS = ROOT / 'backend/src/main/resources/db/migration'
 TESTS_DEFAULT = 'CostPricingTest,T08PostgresTest'
+# The suites Surefire is actually asked to run: a --tests value naming anything else is a typo a self-check must
+# catch rather than a green run with a missing report (round-5 finding F-R5-03).
+KNOWN_SUITES = ('CostPricingTest', 'T08PostgresTest')
 # The delivered self-test shape, asserted by --expect-tests: 22 Money/price/policy unit cases plus 35 cases
 # against the real cluster. Deliberately a number the script enforces, so a silent skip cannot exit 0. Round 2
 # added modelLevelQuotaReachesTheLookupThatReadsIt (config path -> scope -> lookup), the two service-path quota
@@ -118,6 +121,19 @@ def clip(text: str, limit: int = 2200) -> str:
 
 
 CONTROLLED_EVIDENCE = HERE / 'evidence'
+
+
+def lands_in_controlled(candidate: Path) -> bool:
+    """Whether this landing place is the tracked, review-relevant evidence directory **or anything under it**.
+
+    Round-5 finding F-R5-02: the refusal compared the landing place with **equality** to the resolved tracked
+    directory — so ``--work-root tests/engineering/T08/evidence`` (whose
+    unchosen default is ``…/evidence/evidence``) resolved to a directory one level below the tracked one, was not
+    equal to it, and passed the check with ``problems=[]`` while writing straight into the controlled tree. A
+    sub-directory of the controlled directory is just as controlled as the directory itself, so the test is now
+    ancestry: the candidate is the tracked directory or has the tracked directory among its parents."""
+    controlled = CONTROLLED_EVIDENCE.resolve()
+    return candidate == controlled or controlled in candidate.parents
 
 
 def resolve_evidence_dir(raw, work_root: Path) -> tuple[Path, bool]:
@@ -204,21 +220,37 @@ def main() -> int:
             notes.append('run directory resolves outside the repository root ' + str(ROOT) + ': ' + str(probe)
                          + ' (a deliberate --work-root, not a defect: the run simply cannot be described by a '
                          'repository-relative path)')
-        if evidence_dir == CONTROLLED_EVIDENCE.resolve() and not chosen:
+        if lands_in_controlled(evidence_dir) and not chosen:
+            # Round-5 finding F-R5-02: ancestry, not equality — a landing under the tracked directory is inside it.
             problems.append('evidence would land in the controlled directory '
-                            + str(CONTROLLED_EVIDENCE) + ' without an explicit --evidence-dir')
-        filtered = wanted_suites('CostPricingTest#dayCountLeafCarriesTheLongTheRecordStores,T08PostgresTest')
-        if filtered != ['CostPricingTest', 'T08PostgresTest']:
-            problems.append(f'a method filter would break the suite-presence check: {filtered}')
+                            + str(CONTROLLED_EVIDENCE) + ' or under it without an explicit --evidence-dir')
+        # Round-5 finding F-R5-03: the selftest has to check the --tests the OPERATOR passed, not a hardcoded
+        # string — the fourth round shipped a check that always reported the same two classes whatever the command
+        # line said, so it never exercised the method filter a reviewer actually types. The raw input is echoed too.
+        filtered = wanted_suites(args.tests)
+        unknown = sorted(set(filtered) - set(KNOWN_SUITES))
+        if unknown:
+            problems.append('--tests names suites Surefire never reports here: ' + ', '.join(unknown)
+                            + ' (the deliverable suites are ' + ', '.join(KNOWN_SUITES) + ')')
         print(json.dumps({'workRoot': work_root.as_posix(), 'runDirectoryShape': probe.as_posix(),
                           'relativeInput': str(args.work_root) if args.work_root else '(default)',
                           'evidenceDir': evidence_dir.as_posix(),
                           'evidenceDirChosen': chosen,
                           'controlledEvidenceDir': CONTROLLED_EVIDENCE.as_posix(),
+                          'insideControlledDirectory': lands_in_controlled(evidence_dir),
+                          'testsInput': args.tests,
                           'methodFilterStripped': filtered,
                           'notes': notes, 'problems': problems}, ensure_ascii=False))
         return 1 if problems else 0
     if not chosen:
+        # Round-5 finding F-R5-02, the half the equality check missed: a default landing UNDER the tracked
+        # directory (e.g. --work-root tests/engineering/T08/evidence → …/evidence/evidence) is inside the controlled
+        # tree just as much as the tree itself. An unchosen landing there is refused before any cluster or build is
+        # started, so the refusal is reachable, not a string a weakening can park behind an `if False:`.
+        if lands_in_controlled(evidence_dir):
+            raise SystemExit(f'--work-root {work_root} puts the unchosen default evidence into the controlled '
+                             f'directory {evidence_dir}; pass --evidence-dir tests/engineering/T08/evidence to keep '
+                             'it on purpose, or point --work-root somewhere outside the tracked tree')
         print(f'evidence will land in {evidence_dir} (scratch, under --work-root); '
               'pass --evidence-dir tests/engineering/T08/evidence to persist it', flush=True)
     if (evidence_dir / (args.evidence_name + '.json')).exists():
@@ -425,20 +457,18 @@ def main() -> int:
         if server is not None:
             if args.keep_cluster:
                 evidence['clusterLeftRunning'] = server.pid
-                # A kept cluster is for diagnosis, so hand back the throwaway credentials. They live in the
-                # ignored run directory beside a cluster that holds nothing but fixtures.
+                # A kept cluster is for diagnosis, so hand back the throwaway credentials — one write, the
+                # database name included, so a diagnosis session can attach. They live in the ignored run
+                # directory beside a cluster that holds nothing but fixtures. (Round-5 finding F-R5-06: this
+                # file was previously written twice, the second overwriting the first in a different format,
+                # and evidence['credentialsFile'] was assigned twice.)
                 (work / 'credentials.txt').write_text(
-                    f"port={port}\nadmin={ADMIN_ROLE}\nadmin_password={passwords['admin']}\n"
-                    f"runtime_password={passwords['runtime']}\nmigration_password={passwords['migration']}\n",
+                    f'port={port}\ndatabase={DATABASE}\nadmin={ADMIN_ROLE}\n'
+                    f"admin_password={passwords['admin']}\nruntime_password={passwords['runtime']}\n"
+                    f"migration_password={passwords['migration']}\n",
                     encoding='utf-8', newline='\n')
                 evidence['credentialsFile'] = inside_repo(work / 'credentials.txt')
                 print(f"kept cluster: port={port} credentials={work / 'credentials.txt'}", flush=True)
-                # A throwaway local cluster with throwaway passwords, so a diagnosis session can attach.
-                (work / 'credentials.txt').write_text(
-                    f'port={port}\ndatabase={DATABASE}\n'
-                    + '\n'.join(f'{role}={passwords[role]}' for role in ('admin', 'runtime', 'migration')) + '\n',
-                    encoding='utf-8', newline='\n')
-                evidence['credentialsFile'] = inside_repo(work / 'credentials.txt')
             else:
                 server.terminate()
                 server.wait(timeout=60)
@@ -457,7 +487,7 @@ def main() -> int:
         # before the write and recorded after it.
         evidence['evidenceLanding'] = {'directory': inside_repo(evidence_dir), 'absolute': evidence_dir.as_posix(),
                                        'explicitlyChosen': chosen,
-                                       'insideControlledDirectory': evidence_dir == CONTROLLED_EVIDENCE.resolve()}
+                                       'insideControlledDirectory': lands_in_controlled(evidence_dir)}
         out = evidence_dir / (args.evidence_name + '.json')
         try:
             out.parent.mkdir(parents=True, exist_ok=True)

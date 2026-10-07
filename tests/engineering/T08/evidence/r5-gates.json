@@ -1,0 +1,336 @@
+{
+  "purpose": "Round-5 remediation STATIC gate evidence (no mvn). Mirrors r4-gates.json. Live r5fix-*.json round is the parent agent's after the mvn hand-back.",
+  "generated_by": "scripts/gen_r5_gates.py (this file), byte-captured subprocess output",
+  "verify": {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\verify.py"
+    ],
+    "exit": 0,
+    "summary": "T08 static checks: 16/16 passed (contract self-check only, not an approval); run --reverse-control to test the gates themselves"
+  },
+  "reverse_control": {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\verify.py",
+      "--reverse-control"
+    ],
+    "exit": 0,
+    "summary": "reverse control: 77 weakenings, 8 benign probes, blind=none, misplaced=none, brittle=none"
+  },
+  "reviewer_gate_probe_r5_gate_probe_py": {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T08-round5\\evidence\\r5_gate_probe.py"
+    ],
+    "exit": 0,
+    "note": "read-only reviewer probe; G1/G2 must show red on gate 11, A8 must stay 16/16 green",
+    "cases_seen": [
+      {
+        "case": "A8-benign-local",
+        "present": true
+      },
+      {
+        "case": "G1-concatenated-flat-keys",
+        "present": true
+      },
+      {
+        "case": "G2-helper-flat-keys",
+        "present": true
+      }
+    ],
+    "full_output": [
+      {
+        "case": "A5-live-gutting",
+        "stale": null,
+        "redCount": 2,
+        "green": "14/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice",
+          "acceptance cases still assert what they claim"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, False, True, False] (unit slice 5147 chars, live slice 4315 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=['live'], flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where ",
+          "weakened=[\"live quota case is fed by the bound environment/nestedYamlQuotaIsEnforcedByTheService: ['new YamlPropertySourceLoader()'] (slice 4315 chars)\"]"
+        ]
+      },
+      {
+        "case": "E4-unit-gutting",
+        "stale": null,
+        "redCount": 2,
+        "green": "14/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice",
+          "acceptance cases still assert what they claim"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[False, True, True, False] (unit slice 5683 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=['unit'], flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where ",
+          "weakened=[\"quota case binds a real YAML document/quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads: ['new YamlPropertySourceLoader()'] (slice 5683 chars)\"]"
+        ]
+      },
+      {
+        "case": "A8-benign-local",
+        "stale": null,
+        "redCount": 0,
+        "green": "16/16",
+        "redGates": [],
+        "details": []
+      },
+      {
+        "case": "G1-concatenated-flat-keys",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, False, True, True] (unit slice 5147 chars, live slice 4521 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "G2-helper-flat-keys",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, False, True, True] (unit slice 5147 chars, live slice 3846 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "B1-delete-sort",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "the advisory lock sequence is decided once and watched"
+        ],
+        "details": [
+          "sorted by the key it locks=True, inLockOrder applied before lockScope=False, lock call sites in reserve=1, lockScope given lockKey=True, windows built=['ARTICLE', 'DAY', 'PROVIDER-MODEL', 'PROVIDER', 'CLAIM', 'SLOT'], each key prefixed by its own scope=[True, True, True, True, True, True], sequence asserted at runtime=True, order claimed in the report=True"
+        ]
+      },
+      {
+        "case": "B1b-sort-by-label",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "the advisory lock sequence is decided once and watched"
+        ],
+        "details": [
+          "sorted by the key it locks=False, inLockOrder applied before lockScope=True, lock call sites in reserve=1, lockScope given lockKey=True, windows built=['ARTICLE', 'DAY', 'PROVIDER-MODEL', 'PROVIDER', 'CLAIM', 'SLOT'], each key prefixed by its own scope=[True, True, True, True, True, True], sequence asserted at runtime=True, order claimed in the report=True"
+        ]
+      },
+      {
+        "case": "B1c-lock-taken-on-label",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "the advisory lock sequence is decided once and watched"
+        ],
+        "details": [
+          "sorted by the key it locks=True, inLockOrder applied before lockScope=True, lock call sites in reserve=1, lockScope given lockKey=False, windows built=['ARTICLE', 'DAY', 'PROVIDER-MODEL', 'PROVIDER', 'CLAIM', 'SLOT'], each key prefixed by its own scope=[True, True, True, True, True, True], sequence asserted at runtime=True, order claimed in the report=True"
+        ]
+      },
+      {
+        "case": "S1-prefix-neighbour-silently-skipped",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[False, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "S2-canonical-name-in-env-source-dropped",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, False, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "S3-unknown-leaf-falls-through",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, False, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "S4-day-leaf-read-as-int",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, False, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      },
+      {
+        "case": "S5-unspellable-name-escapes",
+        "stale": null,
+        "redCount": 1,
+        "green": "15/16",
+        "redGates": [
+          "provider quota scopes are spelled one way and absence is a stated choice"
+        ],
+        "details": [
+          "scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, False], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a rea"
+        ]
+      }
+    ]
+  },
+  "path_selftest_readings": {
+    "selftest_default_scratch": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest"
+      ],
+      "exit": 0,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence",
+      "evidenceDirChosen": false,
+      "insideControlledDirectory": false,
+      "testsInput": "CostPricingTest,T08PostgresTest",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "problems": [],
+      "notes": []
+    },
+    "selftest_workroot_is_evidence_dir_F_R5_02_attack": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest",
+        "--work-root",
+        "tests/engineering/T08/evidence"
+      ],
+      "exit": 1,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence/evidence",
+      "evidenceDirChosen": false,
+      "insideControlledDirectory": true,
+      "testsInput": "CostPricingTest,T08PostgresTest",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "problems": [
+        "evidence would land in the controlled directory E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\evidence or under it without an explicit --evidence-dir"
+      ],
+      "notes": []
+    },
+    "selftest_workroot_under_evidence_sub_F_R5_02_attack": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest",
+        "--work-root",
+        "tests/engineering/T08/evidence/sub"
+      ],
+      "exit": 1,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence/sub/evidence",
+      "evidenceDirChosen": false,
+      "insideControlledDirectory": true,
+      "testsInput": "CostPricingTest,T08PostgresTest",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "problems": [
+        "evidence would land in the controlled directory E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\evidence or under it without an explicit --evidence-dir"
+      ],
+      "notes": []
+    },
+    "selftest_bad_tests_F_R5_03_attack": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest",
+        "--tests",
+        "CostPricingTest#someMethod,NotARealSuite"
+      ],
+      "exit": 1,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence",
+      "evidenceDirChosen": false,
+      "insideControlledDirectory": false,
+      "testsInput": "CostPricingTest#someMethod,NotARealSuite",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "NotARealSuite"
+      ],
+      "problems": [
+        "--tests names suites Surefire never reports here: NotARealSuite (the deliverable suites are CostPricingTest, T08PostgresTest)"
+      ],
+      "notes": []
+    },
+    "selftest_method_filter_benign": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest",
+        "--tests",
+        "CostPricingTest#dayCountLeafCarriesTheLongTheRecordStores,T08PostgresTest"
+      ],
+      "exit": 0,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence",
+      "evidenceDirChosen": false,
+      "insideControlledDirectory": false,
+      "testsInput": "CostPricingTest#dayCountLeafCarriesTheLongTheRecordStores,T08PostgresTest",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "problems": [],
+      "notes": []
+    },
+    "selftest_evidence_dir_chosen_benign": {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\tests\\engineering\\T08\\run_pg.py",
+        "--path-selftest",
+        "--work-root",
+        "tests/engineering/T08/evidence",
+        "--evidence-dir",
+        "tests/engineering/T08/evidence"
+      ],
+      "exit": 0,
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence",
+      "evidenceDirChosen": true,
+      "insideControlledDirectory": true,
+      "testsInput": "CostPricingTest,T08PostgresTest",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "problems": [],
+      "notes": []
+    }
+  },
+  "count_sync": {
+    "static_gates": 16,
+    "EXPECTED_TESTS_run_pg": 65,
+    "expect_tests_default": "EXPECTED_TESTS",
+    "unit_cases": 28,
+    "live_cases": 37,
+    "total_cases": 65,
+    "reversal_scenarios": 77,
+    "reversal_edit_triples_total": 82,
+    "reversal_edit_triples_unique": 81,
+    "benign_probes": 8
+  },
+  "pending_parent_mvn": [
+    "run_pg.py --work-root <scratch> --evidence-dir tests/engineering/T08/evidence --evidence-name r5fix-65  (expect Tests run: 65, Failures: 0, Errors: 0, Skipped: 0)",
+    "r5_gutted_live.py G1/G2 CONTROL (expect gutted copies exit non-zero now that bound_in is data-flow)"
+  ]
+}

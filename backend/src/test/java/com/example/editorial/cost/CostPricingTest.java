@@ -819,6 +819,26 @@ class CostPricingTest {
         unrelated.put("EDITORIAL_COST_PROVIDER_CLUSTER_SHARDS", "4");
         assertEquals(64, BudgetPolicyConfig.from(environmentShaped(unrelated)).cap(BudgetPolicy.Counter.CALLS),
                 "a name in the namespace without the word quota is not about provider ceilings and stays readable");
+        // Round-5 finding F-R5-04, pinned from the other side: the near-neighbour net is contains("quota"), so a
+        // misspelling INSIDE the marker word itself is outside it — QUTOA_ and QUOT_ do not say "quota", are not on
+        // the exact prefix, and therefore bind NOTHING and refuse NOTHING: the key is silently ignored, and the
+        // provider is left uncapped. That is not a new bug to fix here (the accepted rule is "any name in our
+        // namespace that says quota is refused"; widening to edit-distance would reopen that settled tradeoff, and
+        // the loud half under the delivered unconfigured=refuse is T08PostgresTest's PROVIDER_QUOTA_NOT_CONFIGURED)
+        // — it is the measured edge of the net, and this case now states it as fact instead of leaving it implicit.
+        java.util.Map<String, Object> swapped = environmentBase();
+        swapped.put("EDITORIAL_COST_PROVIDER_QUTOA_MOCK_MAX_CONCURRENT", "2");
+        swapped.put("EDITORIAL_COST_PROVIDER_QUTOA_MOCK_CALLS_PER_DAY", "30");
+        BudgetPolicy pastTheNet = BudgetPolicyConfig.from(environmentShaped(swapped));
+        assertTrue(pastTheNet.providers().isEmpty(),
+                "QUTOA_ is quota with two letters swapped: it does not contain the marker, so the net never sees it");
+        assertEquals(BudgetPolicy.UnconfiguredQuota.UNLIMITED, pastTheNet.unconfigured(),
+                "and under the unlimited default the typo leaves every provider uncapped, silently — the edge this "
+                        + "case pins");
+        java.util.Map<String, Object> truncated = environmentBase();
+        truncated.put("EDITORIAL_COST_PROVIDER_QUOT_MOCK_MAX_CONCURRENT", "2");
+        assertTrue(BudgetPolicyConfig.from(environmentShaped(truncated)).providers().isEmpty(),
+                "QUOT_ (the marker truncated) is the same class of miss: not refused, not bound");
     }
 
     /**
