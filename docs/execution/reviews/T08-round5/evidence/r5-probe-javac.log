@@ -1,0 +1,53 @@
+classes=C:\Users\eie04\AppData\Local\Temp\t08r5\gut-G2\.work\96e33b78231c41919c9718efdaba05e1\backend\target
+cp=C:\Users\eie04\AppData\Local\Temp\t08r5\gut-G2\.work\96e33b78231c41919c9718efdaba05e1\backend\target;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\spring-core\6.2.19\spring-core-6.2.19.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\boot\spring-boot\3.5.16\spring-boot-3.5.16.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\spring-context\6.2.19\spring-context-6.2.19.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\spring-beans\6.2.19\spring-beans-6.2.19.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\spring-jcl\6.2.19\spring-jcl-6.2.19.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\yaml\snakeyaml\2.4\snakeyaml-2.4.jar;E:\project\codex\wxAgent\.tools\t02\m2\org\springframework\boot\spring-boot-autoconfigure\3.5.16\spring-boot-autoconfigure-3.5.16.jar
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:9: ����: �����com.example.editorial.cost������
+import com.example.editorial.cost.BudgetPolicy;
+                                 ^
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:10: ����: �����com.example.editorial.cost������
+import com.example.editorial.cost.BudgetPolicyConfig;
+                                 ^
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:11: ����: �����com.example.editorial.shared������
+import com.example.editorial.shared.PublicFailure;
+                                   ^
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:42: ����: �Ҳ�������
+            BudgetPolicy policy = BudgetPolicyConfig.from(env);
+            ^
+  ����:   �� BudgetPolicy
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:42: ����: �Ҳ�������
+            BudgetPolicy policy = BudgetPolicyConfig.from(env);
+                                  ^
+  ����:   ���� BudgetPolicyConfig
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:43: ����: �����BudgetPolicy������
+            Map<String, BudgetPolicy.ProviderQuota> providers = policy.providers();
+                                    ^
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:45: ����: �����BudgetPolicy������
+            for (Map.Entry<String, BudgetPolicy.ProviderQuota> e : providers.entrySet()) {
+                                               ^
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:50: ����: �Ҳ�������
+        } catch (PublicFailure refused) {
+                 ^
+  ����:   �� PublicFailure
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:134: ����: �Ҳ�������
+            BudgetPolicyConfig.from(twice);
+            ^
+  ����:   ���� BudgetPolicyConfig
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:137: ����: �Ҳ�������
+        } catch (PublicFailure refused) {
+                 ^
+  ����:   �� PublicFailure
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:153: ����: �Ҳ�������
+            BudgetPolicyConfig.from(disagree);
+            ^
+  ����:   ���� BudgetPolicyConfig
+  λ��: �� R5Probe
+E:\project\codex\wxAgent\docs\execution\reviews\T08-round5\evidence\R5Probe.java:156: ����: �Ҳ�������
+        } catch (PublicFailure refused) {
+                 ^
+  ����:   �� PublicFailure
+  λ��: �� R5Probe
+12 ������

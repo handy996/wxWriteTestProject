@@ -1,0 +1,293 @@
+{
+  "onlyInFirst": [
+    "failure"
+  ],
+  "onlyInSecond": [
+    "expectations",
+    "suites",
+    "testResults",
+    "totals"
+  ],
+  "identicalNonVolatileFields": [
+    "clusterStart",
+    "clusterStopped",
+    "costTables",
+    "costTriggers",
+    "migrationOrder",
+    "mode",
+    "note",
+    "paidCalls",
+    "runtimeGrants",
+    "task"
+  ],
+  "movedNonVolatileFields": [],
+  "firstFailure": "RuntimeError: recorded command failed: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd -B -ntp -o -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\backend\\pom.xml -Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2 test -Dtest=CostPricingTest,T08PostgresTest -Dsurefire.failIfNoSpecifiedTests=false",
+  "secondFailure": null,
+  "firstExit": 1,
+  "secondExit": 0,
+  "commandCount": [
+    14,
+    14
+  ],
+  "commandsFirst": [
+    [
+      0,
+      0,
+      "java.exe",
+      "-version"
+    ],
+    [
+      0,
+      0,
+      "mvn.cmd",
+      "-version"
+    ],
+    [
+      0,
+      0,
+      "postgres.exe",
+      "--version"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "--version"
+    ],
+    [
+      0,
+      0,
+      "initdb.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\data -U editorial_admin --auth=sc"
+    ],
+    [
+      0,
+      0,
+      "pg_ctl.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\data -l C:\\Users\\eie04\\AppData\\Lo"
+    ],
+    [
+      0,
+      0,
+      "createdb.exe",
+      "editorial"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -f E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-d editorial -X -v ON_ERROR_STOP=1 -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2af"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select c.relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname="
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select tgname from pg_trigger t join pg_class c on c.oid=t.tgrelid where c.relname='cost_ledg"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select grantee||'='||string_agg(privilege_type,'/' order by privilege_type) from information_"
+    ],
+    [
+      1,
+      0,
+      "mvn.cmd",
+      "-B -ntp -o -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\backend\\pom.xml -Dmave"
+    ],
+    [
+      0,
+      0,
+      "pg_ctl.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\data -m fast -w stop"
+    ]
+  ],
+  "commandsSecond": [
+    [
+      0,
+      0,
+      "java.exe",
+      "-version"
+    ],
+    [
+      0,
+      0,
+      "mvn.cmd",
+      "-version"
+    ],
+    [
+      0,
+      0,
+      "postgres.exe",
+      "--version"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "--version"
+    ],
+    [
+      0,
+      0,
+      "initdb.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\af9ef8d9f68545218d118af932af6d4d\\data -U editorial_admin --auth=sc"
+    ],
+    [
+      0,
+      0,
+      "pg_ctl.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\af9ef8d9f68545218d118af932af6d4d\\data -l C:\\Users\\eie04\\AppData\\Lo"
+    ],
+    [
+      0,
+      0,
+      "createdb.exe",
+      "editorial"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -f E:\\project\\codex\\wxAgent\\backend\\docker\\bootstrap.sql"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-d editorial -X -v ON_ERROR_STOP=1 -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\af9ef8d9f68545218d118af932af6d4"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select c.relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname="
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select tgname from pg_trigger t join pg_class c on c.oid=t.tgrelid where c.relname='cost_ledg"
+    ],
+    [
+      0,
+      0,
+      "psql.exe",
+      "-X -v ON_ERROR_STOP=1 -Atc select grantee||'='||string_agg(privilege_type,'/' order by privilege_type) from information_"
+    ],
+    [
+      0,
+      0,
+      "mvn.cmd",
+      "-B -ntp -o -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\af9ef8d9f68545218d118af932af6d4d\\backend\\pom.xml -Dmave"
+    ],
+    [
+      0,
+      0,
+      "pg_ctl.exe",
+      "-D C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\af9ef8d9f68545218d118af932af6d4d\\data -m fast -w stop"
+    ]
+  ],
+  "failingCommandOutputMentions": [
+    {
+      "argv": "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd -B -ntp -o -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3",
+      "InvalidConfigurationPropertyNameException": 0,
+      "BUILD_FAILURE": true,
+      "TestsRun": [
+        "[ERROR] Tests run: 65, Failures: 0, Errors: 1, Skipped: 0"
+      ],
+      "excerpt": "[INFO] Scanning for projects...\r\n[INFO] \r\n[INFO] -----------------------< com.example:editorial >------------------------\r\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\r\n[INFO] from pom.xml\r\n[INFO] --------------------------------[ jar ]---------------------------------\r\n[INFO] \r\n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\r\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\r\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\r\n[INFO] \r\n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\r\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\r\n[INFO] Copying 21 resources from src\\main\\resources to target\\classes …[3798 chars elided, full log kept in the run directory]… NFO] \r\n[INFO] Results:\r\n[INFO] \r\n[ERROR] Errors: \r\n[ERROR] CostPricingTest.environmentChannelAddressesProvidersInLowerCaseOnly:846 ? InvalidConfigurationPropertyName Configuration property name 'editorial.cost.provider-quota.MOCK.max-concurrent' is not valid\r\n[INFO] \r\n[ERROR] Tests run: 65, Failures: 0, Errors: 1, Skipped: 0\r\n[INFO] \r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] BUILD FAILURE\r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] Total time: 24.870 s\r\n[INFO] Finished at: 2026-10-08T04:28:28+08:00\r\n[INFO] ------------------------------------------------------------------------\r\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project editorial: \r\n[ERROR] \r\n[ERROR] See C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\38bc347553854f81a8843dad1c3f2afa\\backend\\target\\surefire-reports for the individual test results.\r\n[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\r\n[ERROR] -> [Help 1]\r\n[ERROR] \r\n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\r\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\r\n[ERROR] \r\n[ERROR] For more information about the errors and possible solutions, please read the following articles:\r\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+    }
+  ],
+  "casesFirst": 0,
+  "casesSecond": 65,
+  "casesOnlyInFirst": [],
+  "casesOnlyInSecond": [
+    "admissionCeilingIsADatabaseRule",
+    "advisoryLockOrderIsTheDictionaryOrderOfLockKeys",
+    "alertPercent",
+    "articleAndDayCeilings",
+    "auditRowsLandInTheAuditTableThroughTheRealSink",
+    "autoEditLoopCap",
+    "bothQuotaLevelsAnswerTheirOwnEntries",
+    "budgetAlertData",
+    "budgetPolicyCeilings",
+    "budgetPolicyOverrides",
+    "cachedInputSplit",
+    "cancellationDoesNotWaiveIncurredCost",
+    "canonicalAmountIsText",
+    "canonicalQuotaNamesInsideAnEnvironmentShapedSourceAreBound",
+    "concurrentBypassWritersCannotOversubscribe",
+    "costFormula",
+    "countCapsAreEnforced",
+    "dayCountLeafCarriesTheLongTheRecordStores",
+    "dottedModelIdIsMeteredInTheProviderWindow",
+    "environmentChannelAddressesProvidersInLowerCaseOnly",
+    "environmentQuotaPrefixTypoRefusesTheBoot",
+    "everyUnknownQuotaLeafRefusesTheBoot",
+    "executionScopeIsChecked",
+    "executionScopeIsFailClosed",
+    "lastBalanceSingleWinner",
+    "ledgerGuardsHold",
+    "looserModelEntryCannotLiftTheProviderCeiling",
+    "modelAndProviderQuotaScopesEachBindTheirWindow",
+    "modelLevelQuotaReachesTheLookupThatReadsIt",
+    "moneyArithmetic",
+    "moneyWire",
+    "nestedYamlQuotaIsEnforcedByTheService",
+    "overRunIsBookedAndReported",
+    "pricingDocumentIsStrict",
+    "providerDayWindowClosesBeforeTheLooserModelDayWindow",
+    "providerQuota",
+    "providerWideQuotaWindowIsPartitionedByOwnerToday",
+    "publishedPriceIsImmutable",
+    "quotaLeavesAreNormalisedAtAssembly",
+    "quotaSuppliedThroughEnvironmentStyleNamesBinds",
+    "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads",
+    "reasoningIsBilledOnceOnTheLedger",
+    "reasoningNeverDoubleCounted",
+    "reconciliationGate",
+    "releaseClearsTheHold",
+    "reservationIsIdempotent",
+    "reservationRowsAreAuditable",
+    "runtimeGrantsAreMinimal",
+    "separatorBearingIdsAreRefusedNotCollided",
+    "settlementReleasesTheDifference",
+    "settlementReplayAndConflict",
+    "settlementShape",
+    "settlementUsesThePinnedVersion",
+    "staleHoldsAreReported",
+    "statusMachine",
+    "theArticleCeilingSpeaksBeforeTheProviderQuotaWindow",
+    "unboundExecutionScopeWritesNothing",
+    "undocumentedCeilingsHaveNoDefault",
+    "unknownKeepsTheHold",
+    "unknownPriceRefusesGeneration",
+    "unlistedProviderFollowsTheStatedQuotaPolicy",
+    "usageIsStrict",
+    "usageProjectionIsTheFrozenShape",
+    "zeroCallsPerDayClosesTheDayButNotTheBoot",
+    "zeroIsNotUnknown"
+  ],
+  "totals": [
+    null,
+    {
+      "tests": 65,
+      "failures": 0,
+      "skipped": 0
+    }
+  ]
+}

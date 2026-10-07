@@ -1,0 +1,30 @@
+classes=C:\Users\eie04\AppData\Local\Temp\t08r5\workroot\5bcef0e675bc401b93fecd99279f5130\backend\target\classes
+jars=spring-core-6.2.19.jar;spring-boot-3.5.16.jar;spring-context-6.2.19.jar;spring-beans-6.2.19.jar;spring-jcl-6.2.19.jar;snakeyaml-2.4.jar;spring-boot-autoconfigure-3.5.16.jar
+
+java exit 0
+
+F-R4-02  prefix + one letter (QUOTAS_)                     | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-02  prefix + two letters (QUOTASS_)                   | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-02  marker transposed (QUTOA_)                        | OK providers={}unconfigured=REFUSE
+F-R4-02  marker missing a letter (QUOT_)                   | OK providers={}unconfigured=REFUSE
+F-R4-02  namespace + word quota, not the subtree           | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-03  env channel, capital letters in the provider segment | OK providers={mockprovider=2/30 }unconfigured=REFUSE
+F-R4-03  file channel, capital segment (unspellable name)  | 503 INVALID_BUDGET_POLICY
+F-R4-03  file channel, capital segment on the day leaf     | 503 INVALID_BUDGET_POLICY
+F-R4-04  calls-per-day = 99999999999 (long the record stores) | OK providers={mock=2/99999999999 }unconfigured=REFUSE
+F-R4-04  max-concurrent = 2147483648 (int field overflow)  | 503 INVALID_BUDGET_POLICY
+F-R4-04  max-concurrent = 2147483647 (int field edge)      | OK providers={mock=2147483647/30 }unconfigured=REFUSE
+F-R4-05  canonical dotted names inside an env-shaped source | OK providers={mock=7/70 }unconfigured=REFUSE
+doc-boundary same canonical name in two env-shaped sources | OK (the two copies agreed)
+doc-boundary same canonical name, two different values (precedence) | OK (it guessed one of them)
+F-R4-10  unknown leaf, camel case (MAXCONCURRENCY)         | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-10  unknown leaf, unrelated word (SHARDS)             | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-10  env channel, model level (deeper than provider.leaf) | 503 INVALID_PROVIDER_QUOTA_KEY
+F-R4-07  provider actually named unconfigured              | 503 INVALID_PROVIDER_QUOTA_KEY
+F-08     max-concurrent = 0 (the wedge)                    | 503 INVALID_BUDGET_POLICY
+F-08     calls-per-day = 0 (the closed day)                | OK providers={mock=9/0 }unconfigured=REFUSE
+residual  QUTOA typo with unconfigured=allow (not a value) | 503 INVALID_BUDGET_POLICY
+residual  typo QUTOA_ with unconfigured=unlimited          | OK providers={}unconfigured=UNLIMITED
+residual  typo QUOT_ with unconfigured=unlimited           | OK providers={}unconfigured=UNLIMITED
+control   spelled correctly with unconfigured=unlimited    | OK providers={mock=2/30 }unconfigured=UNLIMITED
+residual  no unconfigured switch at all                    | 503 QUOTA_NOT_CONFIGURED

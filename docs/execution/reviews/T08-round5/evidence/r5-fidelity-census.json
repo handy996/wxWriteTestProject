@@ -1,0 +1,55 @@
+{
+  "recordedTracked": 1026,
+  "headMismatchCount": 0,
+  "headMismatchExamples": [],
+  "recordedWithCrlfOnDisk": 130,
+  "preFixSampled": 0,
+  "preFixDivergent": 0,
+  "preFixMatched": 0,
+  "preFixMissingNow": 0,
+  "preFixDivergentExamples": [],
+  "preFixMatchedExamples": [],
+  "trackedUnderTestsEngineering": 1130,
+  "stillDivergentAtHead": [
+    "tests/engineering/T03/check_session_cookie.py"
+  ],
+  "authoredSourcesWithCrlfOnDisk": [],
+  "attributeReach": [
+    "tests/engineering/T08/verify.py: text: set",
+    "tests/engineering/T08/verify.py: eol: lf",
+    "tests/engineering/T08/run_pg.py: text: set",
+    "tests/engineering/T08/run_pg.py: eol: lf",
+    "tests/engineering/T08/evidence/r4-integration-main.json: text: unset",
+    "tests/engineering/T08/evidence/r4-integration-main.json: eol: lf",
+    "tests/engineering/T02/check_contracts.py: text: set",
+    "tests/engineering/T02/check_contracts.py: eol: lf",
+    "docs/execution/reviews/T08-round5/review.md: text: unset",
+    "docs/execution/reviews/T08-round5/review.md: eol: unspecified",
+    "backend/src/main/java/com/example/editorial/cost/BudgetService.java: text: set",
+    "backend/src/main/java/com/example/editorial/cost/BudgetService.java: eol: lf"
+  ],
+  "caseLedger": {
+    "unit": {
+      "then": 22,
+      "now": 28,
+      "removed": [],
+      "added": [
+        "advisoryLockOrderIsTheDictionaryOrderOfLockKeys",
+        "canonicalQuotaNamesInsideAnEnvironmentShapedSourceAreBound",
+        "dayCountLeafCarriesTheLongTheRecordStores",
+        "environmentChannelAddressesProvidersInLowerCaseOnly",
+        "environmentQuotaPrefixTypoRefusesTheBoot",
+        "everyUnknownQuotaLeafRefusesTheBoot"
+      ]
+    },
+    "live": {
+      "then": 35,
+      "now": 37,
+      "removed": [],
+      "added": [
+        "providerWideQuotaWindowIsPartitionedByOwnerToday",
+        "theArticleCeilingSpeaksBeforeTheProviderQuotaWindow"
+      ]
+    }
+  }
+}

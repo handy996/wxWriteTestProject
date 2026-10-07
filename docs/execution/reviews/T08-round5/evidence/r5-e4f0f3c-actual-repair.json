@@ -1,0 +1,62 @@
+{
+  "commit": "e4f0f3c",
+  "filesChanged": 136,
+  "crRestoredOnly": 130,
+  "crRestoredDiskMatchesNow": 130,
+  "contentChangeNotLineEndings": 6,
+  "blobIdentical": 0,
+  "contentList": [
+    {
+      "path": ".gitattributes",
+      "before": 254,
+      "after": 601,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": true
+    },
+    {
+      "path": "tests/engineering/T03/check_session_cookie.py",
+      "before": 58746,
+      "after": 155999,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": false
+    },
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.txt",
+      "before": 362,
+      "after": 363,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": false
+    },
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml",
+      "before": 30449,
+      "after": 33738,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": false
+    },
+    {
+      "path": "tests/engineering/T03/evidence/guard-test-binding.json",
+      "before": 2003,
+      "after": 4920,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": false
+    },
+    {
+      "path": "tests/engineering/T03/record_guard_binding.py",
+      "before": 5392,
+      "after": 8078,
+      "beforeCrlf": 0,
+      "afterCrlf": 0,
+      "diskMatchesNewBlob": true
+    }
+  ],
+  "crRestoredBuckets": [
+    "tests/engineering/T08",
+    "tests/engineering/integration"
+  ]
+}

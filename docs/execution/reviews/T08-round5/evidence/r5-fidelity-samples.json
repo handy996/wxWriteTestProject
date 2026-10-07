@@ -1,0 +1,62 @@
+{
+  "recordedFilesCheckedAgainstHead": 1026,
+  "headMismatches": [],
+  "samples": [
+    {
+      "path": "tests/engineering/T05/evidence/revision-v1-final-test-results/2026-10-04T23-32-21_906.dumpstream",
+      "diskBytes": 313,
+      "headBytes": 313,
+      "preBytes": 313,
+      "diskSha": "1356c3541178cb186e93875cd748e8d1d83b8eb5dbb860481b217e2df66ec6aa",
+      "headSha": "1356c3541178cb186e93875cd748e8d1d83b8eb5dbb860481b217e2df66ec6aa",
+      "preSha": "1356c3541178cb186e93875cd748e8d1d83b8eb5dbb860481b217e2df66ec6aa",
+      "diskEqualsHead": true,
+      "diskEqualsPre": true,
+      "diskCrlf": false,
+      "headCrlf": false,
+      "preCrlf": false
+    },
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.txt",
+      "diskBytes": 363,
+      "headBytes": 363,
+      "preBytes": 362,
+      "diskSha": "1f2c1cbe15c9fe83431e778297a2fe6acc9bc35fa63a2f58036e00aeececc854",
+      "headSha": "1f2c1cbe15c9fe83431e778297a2fe6acc9bc35fa63a2f58036e00aeececc854",
+      "preSha": "3a555034d56d2d144d2b2614495ec837551379dfb79cc094e45b4cef54cf2c3e",
+      "diskEqualsHead": true,
+      "diskEqualsPre": false,
+      "diskCrlf": false,
+      "headCrlf": false,
+      "preCrlf": false
+    },
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml",
+      "diskBytes": 33738,
+      "headBytes": 33738,
+      "preBytes": 30449,
+      "diskSha": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
+      "headSha": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
+      "preSha": "d101e511311bf8dcd5aab670d1e426df77a0b17eca3521d32ea0cbe7211f7306",
+      "diskEqualsHead": true,
+      "diskEqualsPre": false,
+      "diskCrlf": false,
+      "headCrlf": false,
+      "preCrlf": false
+    },
+    {
+      "path": "tests/engineering/T08/evidence/main-repro-1-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "diskBytes": 31438,
+      "headBytes": 31438,
+      "preBytes": 31438,
+      "diskSha": "6bc0491704f883730d5a82bffd3da16a8c82508a7a6d3b916ffaa508e23ac331",
+      "headSha": "6bc0491704f883730d5a82bffd3da16a8c82508a7a6d3b916ffaa508e23ac331",
+      "preSha": "6bc0491704f883730d5a82bffd3da16a8c82508a7a6d3b916ffaa508e23ac331",
+      "diskEqualsHead": true,
+      "diskEqualsPre": true,
+      "diskCrlf": false,
+      "headCrlf": false,
+      "preCrlf": false
+    }
+  ]
+}

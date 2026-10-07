@@ -1,0 +1,121 @@
+{
+  "preFixCompared": 1009,
+  "preFixDivergent": 127,
+  "preFixIdentical": 882,
+  "preFixDivergentButHeadFixed": 127,
+  "preFixDivergentExamples": [
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.txt",
+      "disk": "1f2c1cbe15c9fe83431e778297a2fe6acc9bc35fa63a2f58036e00aeececc854",
+      "pre": "3a555034d56d2d144d2b2614495ec837551379dfb79cc094e45b4cef54cf2c3e",
+      "head": "1f2c1cbe15c9fe83431e778297a2fe6acc9bc35fa63a2f58036e00aeececc854",
+      "headMatchesDisk": true
+    },
+    {
+      "path": "tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml",
+      "disk": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
+      "pre": "d101e511311bf8dcd5aab670d1e426df77a0b17eca3521d32ea0cbe7211f7306",
+      "head": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
+      "headMatchesDisk": true
+    },
+    {
+      "path": "tests/engineering/T03/evidence/guard-test-binding.json",
+      "disk": "aa92352f8d99b1ff7c6e07eb062ded0e865c8a0dc0fa41ee38e859cf09bcbd5a",
+      "pre": "2c674ccc68940f9c087db3404e17771c51a77f1fc514bee04692e25bd9212d12",
+      "head": "aa92352f8d99b1ff7c6e07eb062ded0e865c8a0dc0fa41ee38e859cf09bcbd5a",
+      "headMatchesDisk": true
+    },
+    {
+      "path": "tests/engineering/T08/evidence/main-repro-1-test-results/2026-10-07T11-23-59_722.dumpstream",
+      "disk": "e27da46c5981cb72e8136c65c42e36cd1c235908a584d18f633bcc657761896b",
+      "pre": "993b8bb0c7b34a9534dabaa794624f8acc55e353a97108050d906e1845234603",
+      "head": "e27da46c5981cb72e8136c65c42e36cd1c235908a584d18f633bcc657761896b",
+      "headMatchesDisk": true
+    }
+  ],
+  "preFixIdenticalExamples": [
+    "tests/engineering/T02/evidence/advisory-review.json",
+    "tests/engineering/T02/evidence/approved-contracts.json",
+    "tests/engineering/T02/evidence/backend-delivery-build.json",
+    "tests/engineering/T02/evidence/backend-delivery-online.json"
+  ],
+  "dumpstreamShape": {
+    "path": "tests/engineering/T08/evidence/main-repro-1-test-results/2026-10-07T11-23-59_722.dumpstream",
+    "diskBytes": 318,
+    "preBytes": 313,
+    "diskCrlf": true,
+    "preCrlf": false
+  },
+  "gateCount": 16,
+  "gateNames": [
+    "check_frozen_contracts",
+    "check_module_boundary",
+    "check_package_contents",
+    "check_installed_migration",
+    "check_grants",
+    "check_decimal_only",
+    "check_frozen_usage_surface",
+    "check_audit_payload_shape",
+    "check_documented_ceilings",
+    "check_admission_ceiling",
+    "check_quota_scope_spelling",
+    "check_advisory_lock_order",
+    "check_runner_paths",
+    "check_configuration_ownership",
+    "check_paid_calls_still_refused",
+    "check_acceptance_anchors"
+  ],
+  "reversalCount": 66,
+  "distinctTriples": 68,
+  "duplicateTriples": [
+    "  SELECT budget_limit INTO limit_amount FROM editorial.artic"
+  ],
+  "duplicateLabels": [],
+  "reversalsPerGate": {
+    "ceilings are the documented SRS numbers or required outright": 6,
+    "acceptance cases still assert what they claim": 8,
+    "feature gate only, no invented limits, reproducible runner": 1,
+    "article ceiling is a locked database rule": 4,
+    "installed V5 equals the reviewed draft": 3,
+    "runtime grants are minimal": 1,
+    "frozen GET /usage surface, no field drift": 1,
+    "cost module depends only on shared": 1,
+    "audit trail carries identifiers, not amounts": 3,
+    "startup still refuses paid provider calls": 1,
+    "provider quota scopes are spelled one way and absence is a stated choice": 36,
+    "the advisory lock sequence is decided once and watched": 6,
+    "the runner writes where it was told to and judges suites by class": 3
+  },
+  "benignCount": 8,
+  "benignLabels": [
+    "indexOf instead of contains for the stored dot check",
+    "the live service handover goes through one local variable",
+    "the unit loader loop wraps one argument per line",
+    "the F-03 comment rewords itself",
+    "the activePolicy assertion chain wraps a line",
+    "braces inside a literal and inside a comment join the live quota case",
+    "the same brace literal joins the unit quota case",
+    "the report adds a clause beside the owner-partition marker"
+  ],
+  "entriesNamingRound4": 18,
+  "entriesNamingRound4List": [
+    "the live case's binding survives only as a comment quoting it (round-4 control A5)",
+    "the live case binds flat dotted keys through a real loader (round-4 control E4)",
+    "the lock-order sort is deleted (round-4 control B1, unseen across 14 gates and 57 cases)",
+    "the provider quota window is measured before the article and day ceilings (F-R4-11a)",
+    "a near-miss env quota name is skipped in silence again (F-R4-02)",
+    "a canonical dotted name inside an environment-shaped source is dropped again (F-R4-05)",
+    "an unrecognised quota leaf falls through silently again (round-4 control B3)",
+    "the day leaf is read through the int channel again (F-R4-04)",
+    "an unspellable canonical name escapes as a raw Spring stack again (F-R4-03)",
+    "the runner's evidence default points back into the tracked evidence directory (F-R4-12)",
+    "the suite-presence check compares raw --tests values again (F-R4-13)",
+    "--path-selftest refuses an absolute work root outside the repository again (F-R4-13)",
+    "the report claims the provider window is global across Owners (F-R4-01)",
+    "the report says the env channel ignores case (F-R4-03)",
+    "the report says the provider quota speaks before the article ceiling (F-R4-11a)",
+    "the report widens the ambiguity refusal to duplicate keys across sources (F-R4-14)",
+    "the report drops the two refused silent paths (F-R4-02 / F-R4-04)",
+    "the report says the locks follow construction order again (F-R4-09's claim without a watchman)"
+  ]
+}

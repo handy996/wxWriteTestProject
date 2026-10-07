@@ -1,0 +1,192 @@
+{
+  "duplicateTriples": [
+    {
+      "file": "V5__cost_ledger_pricing.sql",
+      "old": "  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id FOR UPDATE;\n  IF NOT FOUND",
+      "new": "  -- FOR UPDATE is applied to the aggregate below\n  IF NOT FOUND",
+      "entries": [
+        "a decoy FOR UPDATE comment stands where the lock should be",
+        "the lock moves after the aggregate while a decoy mentions it first"
+      ]
+    }
+  ],
+  "entriesTotal": 66,
+  "triplesTotal": 69,
+  "multiEditEntries": [
+    {
+      "name": "the quota case feeds dotted keys instead of the nested document",
+      "edits": 1
+    },
+    {
+      "name": "the live quota case builds the policy by hand instead of from the bound environment",
+      "edits": 1
+    },
+    {
+      "name": "a provider named after the reserved switch stops being refused",
+      "edits": 1
+    },
+    {
+      "name": "the OS-environment channel stops being recognised (finding F-01 rebuilt)",
+      "edits": 1
+    },
+    {
+      "name": "the quota enumeration matches literal dotted names only again",
+      "edits": 1
+    },
+    {
+      "name": "an ambiguous env name is guessed instead of refused",
+      "edits": 1
+    },
+    {
+      "name": "an unreadable quota leaf escapes as the raw conversion failure (finding F-08)",
+      "edits": 1
+    },
+    {
+      "name": "max-concurrent zero is accepted and wedges the provider forever",
+      "edits": 1
+    },
+    {
+      "name": "a model key starts answering by prefix again (variant probe V4)",
+      "edits": 1
+    },
+    {
+      "name": "a provider-wide entry stops building its own window (ruling F-03 half)",
+      "edits": 1
+    },
+    {
+      "name": "a model entry stops building its own window (ruling F-03 half)",
+      "edits": 1
+    },
+    {
+      "name": "a second provider+model join appears in the service (finding F-06's blind spot)",
+      "edits": 1
+    },
+    {
+      "name": "a stored scope key stops being checked for the dotted shape",
+      "edits": 1
+    },
+    {
+      "name": "the loader call leaves the unit case body that claims to bind it (finding F-02's A probe)",
+      "edits": 1
+    },
+    {
+      "name": "the unit case feeds flat hand-built keys again",
+      "edits": 1
+    },
+    {
+      "name": "the live case grows a second, hand-built service handover (finding F-02's B probe)",
+      "edits": 1
+    },
+    {
+      "name": "the env-shaped test source stops being env-shaped at all",
+      "edits": 1
+    },
+    {
+      "name": "the lock moves after the aggregate while a decoy mentions it first",
+      "edits": 2
+    },
+    {
+      "name": "the live case's binding survives only as a comment quoting it (round-4 control A5)",
+      "edits": 1
+    },
+    {
+      "name": "the live case binds flat dotted keys through a real loader (round-4 control E4)",
+      "edits": 1
+    },
+    {
+      "name": "the lock-order sort is deleted (round-4 control B1, unseen across 14 gates and 57 cases)",
+      "edits": 1
+    },
+    {
+      "name": "the sequence is decided by the display label instead of the key that is locked",
+      "edits": 1
+    },
+    {
+      "name": "ceilings are locked in the order they were built in",
+      "edits": 1
+    },
+    {
+      "name": "the advisory lock is taken on the label, not on the key",
+      "edits": 1
+    },
+    {
+      "name": "a window joins the set with a lock key that drops its own scope name",
+      "edits": 1
+    },
+    {
+      "name": "the provider quota window is measured before the article and day ceilings (F-R4-11a)",
+      "edits": 2
+    },
+    {
+      "name": "a near-miss env quota name is skipped in silence again (F-R4-02)",
+      "edits": 1
+    },
+    {
+      "name": "a canonical dotted name inside an environment-shaped source is dropped again (F-R4-05)",
+      "edits": 1
+    },
+    {
+      "name": "an unrecognised quota leaf falls through silently again (round-4 control B3)",
+      "edits": 1
+    },
+    {
+      "name": "the day leaf is read through the int channel again (F-R4-04)",
+      "edits": 1
+    },
+    {
+      "name": "an unspellable canonical name escapes as a raw Spring stack again (F-R4-03)",
+      "edits": 1
+    },
+    {
+      "name": "the runner's evidence default points back into the tracked evidence directory (F-R4-12)",
+      "edits": 1
+    },
+    {
+      "name": "the suite-presence check compares raw --tests values again (F-R4-13)",
+      "edits": 1
+    },
+    {
+      "name": "--path-selftest refuses an absolute work root outside the repository again (F-R4-13)",
+      "edits": 1
+    },
+    {
+      "name": "the report claims the provider window is global across Owners (F-R4-01)",
+      "edits": 1
+    },
+    {
+      "name": "the report says the env channel ignores case (F-R4-03)",
+      "edits": 1
+    },
+    {
+      "name": "the report says the provider quota speaks before the article ceiling (F-R4-11a)",
+      "edits": 1
+    },
+    {
+      "name": "the report widens the ambiguity refusal to duplicate keys across sources (F-R4-14)",
+      "edits": 1
+    },
+    {
+      "name": "the report drops the two refused silent paths (F-R4-02 / F-R4-04)",
+      "edits": 2
+    },
+    {
+      "name": "the report says the locks follow construction order again (F-R4-09's claim without a watchman)",
+      "edits": 1
+    }
+  ],
+  "recordedTracked": 1026,
+  "recordedCrlfOnDisk": 130,
+  "recordedCrlfAddedSincePreFix": [
+    "tests/engineering/T08/evidence/r4-baseline-57-test-results/2026-10-08T03-33-51_110.dumpstream",
+    "tests/engineering/T08/evidence/r4-baseline-57-test-results/com.example.editorial.cost.CostPricingTest.txt",
+    "tests/engineering/T08/evidence/r4-baseline-57-test-results/com.example.editorial.cost.T08PostgresTest.txt",
+    "tests/engineering/T08/evidence/r4fix-65-retry-test-results/2026-10-08T04-38-13_085.dumpstream",
+    "tests/engineering/T08/evidence/r4fix-65-retry-test-results/com.example.editorial.cost.CostPricingTest.txt",
+    "tests/engineering/T08/evidence/r4fix-65-retry-test-results/com.example.editorial.cost.T08PostgresTest.txt"
+  ],
+  "divergentAtPreFix": 127,
+  "divergentAtPreFixAllFixedAtHead": true,
+  "notPresentAtPreFix": 17,
+  "missingOnDisk": [],
+  "crlfAndDivergentAtPre": 124
+}
