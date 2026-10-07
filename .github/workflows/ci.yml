@@ -35,6 +35,21 @@ jobs:
           curl --fail --location --retry 3 https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o .tools/t02/gitleaks.tar.gz
           echo '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  .tools/t02/gitleaks.tar.gz' | sha256sum --check
           tar -xzf .tools/t02/gitleaks.tar.gz -C .tools/t02
+      - name: Locate the pinned gitleaks binary
+        run: |
+          set -eu
+          # Callers must never hardcode one OS's file shape: the tarball drops a single-file binary on Linux,
+          # while a local Windows tree keeps it in a directory as gitleaks.exe. Resolve once, reuse everywhere,
+          # and fail loudly with a named error if the pinned tool is absent (silence here would cancel the scans).
+          for candidate in .tools/t02/gitleaks .tools/t02/gitleaks/gitleaks .tools/t02/gitleaks/gitleaks.exe; do
+            if [ -f "$candidate" ] && [ -x "$candidate" ]; then
+              echo "GITLEAKS_BIN=$candidate" >> "$GITHUB_ENV"
+              echo "resolved gitleaks binary: $candidate"
+              exit 0
+            fi
+          done
+          echo '::error::pinned gitleaks binary not found under .tools/t02/gitleaks; the secret scans would be cancelled' >&2
+          exit 1
       - name: Approved contract, schema and cross-language vectors
         run: |
           python tests/engineering/T02/check_contracts.py
@@ -53,15 +68,22 @@ jobs:
           npm run build
       - name: Secret and dependency scans (fail on findings or unavailable service)
         run: |
+          set -eu
           # Exemptions must be value-shaped: a gitleaks allowlist with a paths clause leaves the whole file
           # unscanned, so the allowlist itself and its suppression behaviour are policed here, not just the tree.
           python tests/engineering/T02/secret_scan.py --self-test
           python tests/engineering/T02/check_gitleaks_allowlists.py
-          python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe
           python tests/engineering/T02/secret_scan.py
-          python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks
+          python tests/engineering/T02/scan_secrets.py --gitleaks "${GITLEAKS_BIN:?gitleaks binary unresolved}"
           python tests/engineering/T02/dependency_scan.py
           npm --prefix frontend audit
+      - name: Gitleaks suppression controls (canary must be caught, benign manifest must stay clean)
+        run: |
+          set -eu
+          # Separate step on purpose: earlier these controls sat before the real scans in one bash -e block, so a
+          # broken control path cancelled secret_scan, scan_secrets, dependency_scan and npm audit together.
+          test -x "${GITLEAKS_BIN:?gitleaks binary unresolved}"
+          python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks "${GITLEAKS_BIN}"
       - name: Actual Docker topology cold start and repeat migration
         run: |
           python tests/engineering/T02/record.py --name ci-compose-real -- python tests/engineering/T02/compose_smoke.py
