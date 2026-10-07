@@ -1,0 +1,86 @@
+{
+  "task": "T08 预算、价格、用量与对账",
+  "status": "PRE-INTEGRATION SELF-TEST, SUPERSEDED",
+  "supersededBy": "tests/engineering/T08/evidence/pg-selftest-2026-10-07.json",
+  "supersededReason": "recorded before the main agent allocated V5, moved audit hashes to null, removed the noAudit fallback and added run_pg.py; the 39-case counts here are history and the old manual draft-apply path is no longer the reproducible route",
+  "generatedAt": "2026-10-06T15:45:40+00:00",
+  "head": "bb45244f76944610d55b5b2a0997ae27569160b2",
+  "scope": "契约自测记录。不是 T08/G1/G2 批准，不含任何收费供应商调用，未重新生成契约。",
+  "environment": {
+    "jdk": ".tools/t02/jdk-21.0.12.1+1",
+    "maven": ".tools/t02/apache-maven-3.9.11 (offline, local repo .tools/t02/m2)",
+    "python": "3.12.14 (codex primary runtime)",
+    "postgres": "psql (PostgreSQL) 17.11, PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+    "database": "t08run @ 127.0.0.1:55432, provisioned by .work/t08/apply.sql (V1-V4 + R__t02_* + tests/engineering/T08/migration-draft.sql as editorial_migrator)",
+    "scratch": "byte-exact command capture retained at .work/t08/evidence/t08-evidence.json plus surefire XML; that path is untracked scratch, not a deliverable"
+  },
+  "commands": [
+    {
+      "id": "contracts",
+      "argv": ["python", "tests/engineering/T02/check_contracts.py"],
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration"
+    },
+    {
+      "id": "static-verify",
+      "argv": ["python", "tests/engineering/T08/verify.py"],
+      "exitCode": 0,
+      "output": "[PASS] frozen contract files unchanged: 24 manifest files match, drifted=none, missing=none | [PASS] cost module depends only on shared: declared=['shared'], cross-domain imports=none | [PASS] cost package complete: 19 sources, absent=none, bad package=none | [PASS] cost draft is DRAFT and not installed: draft=True, owns both tables=True, installed=none, versioned files remain 4 | [PASS] runtime grants are minimal: ledger rw=True, pricing read=True, baseline revoke=True, delete grants=none | [PASS] amounts are decimal, never binary floats | [PASS] frozen GET /usage surface, no field drift: operations=['get'], controller=[('Get','/usage')], summary 11/11, reservation 10/10, settlement 6/6 | [PASS] startup still refuses paid provider calls | [PASS] acceptance cases have real tests | T08 static checks: 9/9 passed"
+    },
+    {
+      "id": "workspace-state",
+      "argv": ["git", "status", "--porcelain"],
+      "exitCode": 0,
+      "output": "?? backend/src/main/java/com/example/editorial/cost/ | ?? backend/src/test/java/com/example/editorial/cost/ | ?? tests/engineering/T08/  (no tracked file modified; git add/commit not run)"
+    },
+    {
+      "id": "schema-rebuild",
+      "argv": ["psql -d t08run -c \"DROP SCHEMA IF EXISTS editorial CASCADE; DROP SCHEMA IF EXISTS editorial_migrations CASCADE\"", "psql -d t08run -v ON_ERROR_STOP=1 -f .work/t08/apply.sql"],
+      "exitCode": 0,
+      "output": "DROP SCHEMA x2 (cascade over 23 objects from the previous run), then CREATE SCHEMA/GRANT/CREATE TABLE/CREATE INDEX/REVOKE/GRANT/CREATE FUNCTION/CREATE TRIGGER sequence finished without error; editorial tables after apply: app_user article_job article_version audit_log change_proposal cost_ledger cost_pricing_version editorial_skill editorial_skill_version idempotency_record policy_version prompt_version"
+    },
+    {
+      "id": "cost-triggers",
+      "argv": ["psql -d t08run -Atc \"select tgname ... where relname='cost_ledger' and not tgisinternal\""],
+      "exitCode": 0,
+      "output": "cost_ledger_admit cost_ledger_consistent cost_ledger_guard"
+    },
+    {
+      "id": "cost-grants",
+      "argv": ["psql -d t08run -Atc \"select grantee||'='||string_agg(privilege_type,'/') ... table in (cost_ledger,cost_pricing_version)\""],
+      "exitCode": 0,
+      "output": "editorial_migrator=DELETE/INSERT/REFERENCES/SELECT/TRIGGER/TRUNCATE/UPDATE (owner rights) | editorial_runtime=INSERT/SELECT/SELECT/UPDATE — i.e. cost_ledger SELECT,INSERT,UPDATE plus cost_pricing_version SELECT only, no DELETE, no TRUNCATE, no price write"
+    },
+    {
+      "id": "unit-and-postgres-tests",
+      "argv": ["mvn -B -ntp -o -f .work/t08/backend/pom.xml -Dmaven.repo.local=.tools/t02/m2 -Dtest=CostPricingTest,T08PostgresTest -Dsurefire.failIfNoSpecifiedTests=false test"],
+      "exitCode": 0,
+      "environment": { "T08_REAL_PG": "true", "T08_ADMIN_URL": "jdbc:postgresql://127.0.0.1:55432/t08run", "T08_ADMIN_USER": "probe_admin" },
+      "output": "Tests run: 39, Failures: 0, Errors: 0, Skipped: 0 — BUILD SUCCESS (cost sources compiled inside the .work copy because the sandbox denies writes to backend/target; production backend/pom.xml untouched)"
+    }
+  ],
+  "surefire": [
+    {
+      "class": "com.example.editorial.cost.CostPricingTest",
+      "tests": 14, "failures": 0, "errors": 0, "skipped": 0, "timeSeconds": 0.301,
+      "cases": ["alertPercent", "budgetPolicyCeilings", "budgetPolicyOverrides", "cachedInputSplit", "canonicalAmountIsText", "costFormula", "moneyArithmetic", "moneyWire", "pricingDocumentIsStrict", "reasoningNeverDoubleCounted", "settlementShape", "statusMachine", "usageIsStrict", "zeroIsNotUnknown"]
+    },
+    {
+      "class": "com.example.editorial.cost.T08PostgresTest",
+      "tests": 25, "failures": 0, "errors": 0, "skipped": 0, "timeSeconds": 19.06,
+      "cases": ["admissionCeilingIsADatabaseRule", "articleAndDayCeilings", "autoEditLoopCap", "budgetAlertData", "cancellationDoesNotWaiveIncurredCost", "countCapsAreEnforced", "executionScopeIsChecked", "lastBalanceSingleWinner", "ledgerGuardsHold", "overRunIsBookedAndReported", "providerQuota", "publishedPriceIsImmutable", "reasoningIsBilledOnceOnTheLedger", "reconciliationGate", "releaseClearsTheHold", "reservationIsIdempotent", "reservationRowsAreAuditable", "runtimeGrantsAreMinimal", "settlementReleasesTheDifference", "settlementReplayAndConflict", "settlementUsesThePinnedVersion", "staleHoldsAreReported", "unknownKeepsTheHold", "unknownPriceRefusesGeneration", "usageProjectionIsTheFrozenShape"]
+    }
+  ],
+  "summary": {
+    "checksExecuted": 7,
+    "nonZeroExits": 0,
+    "testCases": 39,
+    "testFailures": 0,
+    "notRun": [
+      "shared composition root / Spring context boot with the cost beans wired (blocked: application*.yml and identity/ are owned by the main agent and were mid-edit)",
+      "full module test suite and CI (mvn verify, .github/workflows/ci.yml) — only the two cost classes were executed",
+      "FK integration to T06/T09/T10 tables (execution_id, claim_id, slot_id are checked by the service, not by foreign keys yet)",
+      "any paid provider call, real model pricing, or crash/DR drill"
+    ]
+  }
+}

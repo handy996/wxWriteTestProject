@@ -1,0 +1,3 @@
+# Scratch: run_pg.py boots an isolated throwaway PostgreSQL cluster and build copy in here.
+.work/
+__pycache__/

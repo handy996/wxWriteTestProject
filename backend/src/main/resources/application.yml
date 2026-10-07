@@ -74,6 +74,8 @@ editorial:
     enabled: ${EDITORIAL_ARTICLE_ENABLED:false}
   version:
     enabled: ${EDITORIAL_VERSION_ENABLED:false}
+  cost:
+    enabled: ${EDITORIAL_COST_ENABLED:false}
   providers:
     paid-calls-enabled: false
     mock-enabled: false

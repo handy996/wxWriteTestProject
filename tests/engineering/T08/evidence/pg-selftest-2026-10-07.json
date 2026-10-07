@@ -1,0 +1,87 @@
+{
+  "task": "T08 cost ledger, pricing, usage and reconciliation on real PostgreSQL",
+  "mode": "REAL_POSTGRES_INSTALLED_MIGRATIONS",
+  "runner": "tests/engineering/T08/run_pg.py --work-root .work/t08/runs --evidence-name pg-selftest-v2",
+  "runnerCommand": "python tests/engineering/T08/run_pg.py",
+  "paidCalls": 0,
+  "note": "Contract self-test only; no approval, no contract regeneration, no shared checkout mutation.",
+  "generatedAt": "2026-10-07T10:37:47+08:00",
+  "runDirectory": ".work/t08/runs/2853474dc5ab48c89679f1d356d322c0",
+  "cluster": {
+    "port": 5003,
+    "database": "editorial",
+    "adminRole": "editorial_admin",
+    "authentication": "scram-sha-256 with random per-run passwords (redacted from every recorded command)",
+    "start": "direct child process (pg_ctl unavailable under this restricted shell; the runner tries pg_ctl first and records that attempt with exit code 1)",
+    "stoppedByRunner": true
+  },
+  "inputs": {
+    "backendCopy": "verbatim copy of tracked backend/pom.xml + backend/src into the run directory, target excluded",
+    "copiedSourceFiles": 150,
+    "migrationsAppliedFrom": "backend/src/main/resources/db/migration (Flyway order: beforeMigrate callback, V1..V5 as editorial_migrator, then the two R__ permission scripts)",
+    "migrationOrder": [
+      "beforeMigrate__t02_function_defaults.sql",
+      "V1__identity_audit_idempotency.sql",
+      "V2__skill_prompt_policy.sql",
+      "V3__article_job_version.sql",
+      "V4__change_proposal.sql",
+      "V5__cost_ledger_pricing.sql",
+      "R__t02_function_permissions.sql",
+      "R__t02_schema_permissions.sql"
+    ],
+    "draftNotAppliedSeparately": "tests/engineering/T08/migration-draft.sql is NOT applied; its body is installed as V5 and verify.py compares the two (identical once CRLF/LF is normalised)",
+    "roles": "backend/docker/bootstrap.sql with DB_RUNTIME_PASSWORD / DB_MIGRATION_PASSWORD from the environment",
+    "fingerprints": [
+      { "path": "backend/pom.xml", "sha256": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee" },
+      { "path": "backend/docker/bootstrap.sql", "sha256": "ef70f7a175f2216f66236efaf23d5d1db56b00520af810d4ad8dbb9a34b0d949" },
+      { "path": "backend/src/main/resources/db/migration/beforeMigrate__t02_function_defaults.sql", "sha256": "57d17a44dabefc4d0ad87b5ccd88118a84ce3a5baeceaac423ee2e570093f502" },
+      { "path": "backend/src/main/resources/db/migration/R__t02_function_permissions.sql", "sha256": "1c6cc53da1e8b6c499a318056f7592f85bfe625dab474b539dbbac0de9723f26" },
+      { "path": "backend/src/main/resources/db/migration/R__t02_schema_permissions.sql", "sha256": "6b5e594baba3d3dcb035a1f5ff19cb9859bad83bf90298b3999163b2c787d852" },
+      { "path": "backend/src/main/resources/db/migration/V1__identity_audit_idempotency.sql", "sha256": "fe34a84b909c4b97e56377504b685c0c293ba41f3efae5855c3cdf1c8bfc334e" }
+    ],
+    "fingerprintsNote": "full list for every migration file is inside the run directory's pg-selftest-v2.json",
+    "jdk": "openjdk 21.0.12.1 Temurin-21.0.12.1+1-LTS",
+    "maven": "Apache Maven 3.9.11, offline (-o) against .tools/t02/m2",
+    "postgres": "postgres (PostgreSQL) 17.11 / psql (PostgreSQL) 17.11"
+  },
+  "schemaProbe": {
+    "tablesAfterApply": 12,
+    "costTables": ["cost_ledger", "cost_pricing_version"],
+    "costLedgerTriggers": ["cost_ledger_admit", "cost_ledger_consistent", "cost_ledger_guard"],
+    "grants": "editorial_migrator=DELETE/INSERT/REFERENCES/SELECT/TRIGGER/TRUNCATE/UPDATE on all three probed tables; editorial_runtime=INSERT/INSERT/SELECT/SELECT/SELECT/UPDATE — cost_ledger SELECT+INSERT+UPDATE, cost_pricing_version SELECT only, audit_log SELECT+INSERT only, no DELETE/TRUNCATE anywhere"
+  },
+  "commands": [
+    { "argv": "java -version", "exitCode": 0 },
+    { "argv": "mvn -version", "exitCode": 0 },
+    { "argv": "postgres --version", "exitCode": 0 },
+    { "argv": "psql --version", "exitCode": 0 },
+    { "argv": "initdb -D <run>/data -U editorial_admin --auth=scram-sha-256 --pwfile=<temporary> --encoding=UTF8 --locale=C", "exitCode": 0 },
+    { "argv": "pg_ctl -D <run>/data -l <run>/postgres.log -o '-p 5003 -h 127.0.0.1' -w -t 60 start", "exitCode": 1, "note": "expected failure under this shell: 'pg_ctl: could not create restricted token: error code 87'; the runner then starts postgres as its own child process" },
+    { "argv": "createdb editorial", "exitCode": 0 },
+    { "argv": "psql -X -v ON_ERROR_STOP=1 -f backend/docker/bootstrap.sql", "exitCode": 0, "output": "CREATE ROLE x3, REVOKE/GRANT, CREATE SCHEMA x2, REVOKE, GRANT" },
+    { "argv": "psql -d editorial -X -v ON_ERROR_STOP=1 -f <run>/apply-installed-migrations.sql", "exitCode": 0, "output": "applied | 12 tables" },
+    { "argv": "psql -Atc <cost tables listing>", "exitCode": 0, "output": "cost_ledger, cost_pricing_version" },
+    { "argv": "psql -Atc <cost_ledger trigger listing>", "exitCode": 0, "output": "cost_ledger_admit, cost_ledger_consistent, cost_ledger_guard" },
+    { "argv": "psql -Atc <grant listing>", "exitCode": 0, "output": "see schemaProbe.grants" },
+    { "argv": "mvn -B -ntp -o -f <run>/backend/pom.xml -Dmaven.repo.local=.tools/t02/m2 test -Dtest=CostPricingTest,T08PostgresTest -Dsurefire.failIfNoSpecifiedTests=false", "exitCode": 0, "output": "Tests run: 40, Failures: 0, Errors: 0, Skipped: 0 — BUILD SUCCESS, Total time: 30.110 s" }
+  ],
+  "suites": [
+    {
+      "suite": "com.example.editorial.cost.CostPricingTest",
+      "tests": 14, "failures": 0, "errors": 0, "skipped": 0, "timeSeconds": 0.348,
+      "cases": ["alertPercent", "budgetPolicyCeilings", "budgetPolicyOverrides", "cachedInputSplit", "canonicalAmountIsText", "costFormula", "moneyArithmetic", "moneyWire", "pricingDocumentIsStrict", "reasoningNeverDoubleCounted", "settlementShape", "statusMachine", "usageIsStrict", "zeroIsNotUnknown"]
+    },
+    {
+      "suite": "com.example.editorial.cost.T08PostgresTest",
+      "tests": 26, "failures": 0, "errors": 0, "skipped": 0, "timeSeconds": 21.931,
+      "cases": ["admissionCeilingIsADatabaseRule", "articleAndDayCeilings", "auditRowsLandInTheAuditTableThroughTheRealSink", "autoEditLoopCap", "budgetAlertData", "cancellationDoesNotWaiveIncurredCost", "countCapsAreEnforced", "executionScopeIsChecked", "lastBalanceSingleWinner", "ledgerGuardsHold", "overRunIsBookedAndReported", "providerQuota", "publishedPriceIsImmutable", "reasoningIsBilledOnceOnTheLedger", "reconciliationGate", "releaseClearsTheHold", "reservationIsIdempotent", "reservationRowsAreAuditable", "runtimeGrantsAreMinimal", "settlementReleasesTheDifference", "settlementReplayAndConflict", "settlementUsesThePinnedVersion", "staleHoldsAreReported", "unknownKeepsTheHold", "unknownPriceRefusesGeneration", "usageProjectionIsTheFrozenShape"]
+    }
+  ],
+  "totals": { "tests": 40, "failures": 0, "errors": 0, "skipped": 0 },
+  "auditClosedLoop": "auditRowsLandInTheAuditTableThroughTheRealSink binds the real audit.JdbcAuditSink as editorial_runtime: a reserve plus a settlement land exactly two audit_log rows (entity_type COST, actor_type SYSTEM_WORKER, before_hash/after_hash NULL, detail '{}'), the service hands the port 'COST_RESERVED|null|null' and 'COST_SETTLED|null|null', a money string used as before_hash is refused with SQLSTATE 23514, a money payload in detail is refused with 23514 as well, the shape guard rejects a non-hash payload without echoing it, and the runtime role is refused DELETE (42501) and UPDATE (42501) on audit_log with no rows left behind.",
+  "staticChecks": {
+    "verifyPy": "python tests/engineering/T08/verify.py → exit 0, 11/11 passed (installed V5 equals the reviewed draft once CRLF/LF is normalised; versioned files exactly V1..V5; V5 creates only cost_ledger and cost_pricing_version; feature gate on with no invented limits; only CostPorts.Audit bound)",
+    "checkContracts": "python tests/engineering/T02/check_contracts.py → exit 0, 'Approved T00 rc.3: 27 hashes verified, no regeneration'"
+  },
+  "provenance": "The runner writes this file itself into tests/engineering/T08/evidence/. Under this session's sandbox a subprocess may not write there, so the runner reported 'evidence write ... blocked (PermissionError); kept at <run directory>/pg-selftest-v2.json' and this tracked copy was transcribed from that file with per-command outputs summarised. Re-running the same command on an unrestricted checkout produces the byte-exact full record with the same 40 counts."
+}

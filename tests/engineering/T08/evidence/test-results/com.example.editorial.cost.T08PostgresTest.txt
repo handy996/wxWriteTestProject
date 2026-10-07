@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.cost.T08PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.931 s -- in com.example.editorial.cost.T08PostgresTest
+
+Produced by `python tests/engineering/T08/run_pg.py` — isolated PostgreSQL 17.11 cluster on a random port
+(database `editorial`, connected as `editorial_runtime`), schema applied from
+backend/src/main/resources/db/migration in Flyway order: beforeMigrate callback + V1..V5 + the two R__ scripts.
+Run of 2026-10-07 10:38 Asia/Hong_Kong; full record in ../pg-selftest-2026-10-07.json.
+The class is skipped unless T08_REAL_PG=true, so an ordinary offline `mvn test` does not require a cluster.

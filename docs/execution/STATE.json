@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "2512025（T07-R04 整改：backend/identity 三文件 + tests/engineering/T03/check_session_cookie.py + 三份套件证据 + 本报告）。它晚于 reviewedBaselineCommit，因此未经独立复审，不得作为 PASS 依据；须由第五轮 T03 复审覆盖后把它写入 rounds 并推进 reviewedBaselineCommit",
+  "pendingReviewCommit": "两项待复审：2512025（T07-R04 整改）与本轮 T08 集成提交（V5 迁移 + bootstrap/CostIntegration + CostAuditWiringTest + application.yml 开关 + cost 包与其测试/runner/证据）。二者均晚于 reviewedBaselineCommit，未经独立复审，不得作为 PASS 依据；须由第五轮 T03 复审与 T08 第一轮独立复审覆盖后写入 rounds 并推进 reviewedBaselineCommit",
   "rounds": { "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）", "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）" },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -42,10 +42,10 @@
     "T05": { "verdict": "PASS", "basis": "docs/execution/reviews/T05-Review-v2.0.md", "note": "明示不代表 T03 已批准、全 CI/G1、后续工作流集成或生产上线" },
     "T06": { "verdict": "PASS", "basis": "docs/execution/reviews/T06-Review-v4.0.md", "note": "范围为当时工作区 T06 交付；正式集成版不自动继承，边界由 verify_boundaries.py 逐字节复核" },
     "T07": { "verdict": "PASS", "basis": "docs/execution/reviews/T07-Review-v4.0.md", "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域" },
-    "T08": { "verdict": "IN_PROGRESS", "basis": "STATE.json（2026-10-06 派发给上下文隔离的实施子 agent）", "note": "自测通过也只报“契约自测完成”；交付后须独立复审。与主 agent 的 T03/T07-R04 改动文件边界互不重叠（cost/ 新包 + T08 迁移草案）" }
+    "T08": { "verdict": "INTEGRATED_UNREVIEWED", "basis": "docs/execution/reports/T08-Integration-2026-10-07.md", "note": "实施由上下文隔离子 agent 完成（自测口径：契约自测完成），集成与 7 项决定由主 agent 完成：V5 已分配安装（正文与草案原始字节等同）、只加功能开关不编额度、CostPorts.Audit 已绑且 noAudit 兜底已删、Executions/AlertSink 保持未绑定、不镜像 article_job 金额列。40/40 已由主 agent 从零复现（安装版迁移路径），mvn clean verify 265 项全绿。两处缺陷已修：金额进审计 hash 列（会 23514）与主 agent 自己引入的 V5 BOM+CRLF。无独立复审" }
   },
 
-  "inProgress": ["T08 — 预算、价格、用量与对账（上下文隔离子 agent 实施中，2026-10-06 派发）"],
+  "inProgress": [],
   "notStarted": ["T09","T10","T11","T12","T13","T14","T15","T16","T17","T18","T19","T20","T21","T22","T23","T24","T25","T26","T27","T28","T29","T30","T31","T32","T33","T34","T35","T36","T37"],
 
   "openItems": [
@@ -62,6 +62,15 @@
       "cause": "T10/T11 未安装，生产 Changes/Deletion fail closed——仓库自己的 formal-all-domains-01.json domainSubstitutes 已记录此点，且其失败集合与本轮逐项相同",
       "closure": "T10/T11 安装后重跑 --suite all 应转绿；在此之前任何整改的回归判定必须用同套件基线对照，不得要求 120 项全绿，也不得把 core 套件的绿色扩展解释为全域组合根已通过",
       "openedAt": "2026-10-06", "foundBy": "docs/execution/reports/T07-R04-Revision-v1.0.md 第 4 节" },
+    { "id": "COST-BUDGET-LIMITS", "task": "T08", "severity": "P2（Owner 事项，不可代签）", "status": "OPEN",
+      "issue": "editorial.cost.* 的业务额度全部缺失：daily-budget、search-queries-per-article、model-output-tokens-per-article、queries-per-claim、auto-edit-loops-per-article、image-units-per-slot、image-units-per-article、alert-percent、reconciliation-stale-minutes、provider-quota.<scope>.max-concurrent|calls-per-day。集成时我刻意一个数都不编，只加功能开关 editorial.cost.enabled",
+      "consequence": "EDITORIAL_COST_ENABLED=true 必然 fail-closed 启动失败（设计正确）；因此启用态的组合根启动与 GET /api/v1/usage 真实 HTTP 端到端都无法验证，T09 的真实预算预占也拿不到上限",
+      "closure": "产品 Owner 给出额度数值与告警阈值；同时需要价格发布的受控运维入口（现仅 migrator 可写，runtime 只读）。另需裁定是否镜像 article_job 金额列（主 agent 本轮决定：不镜像，账本为唯一事实源）",
+      "openedAt": "2026-10-07", "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 2 节" },
+    { "id": "COST-HTTP-E2E", "task": "T08", "severity": "P3", "status": "OPEN",
+      "issue": "GET /api/v1/usage 未做真实 HTTP 端到端验证；CostController 仅在 editorial.cost.enabled=true 时装配，而该开关受 COST-BUDGET-LIMITS 阻塞",
+      "closure": "拿到额度后以真实 PG + 真实 HTTP 跑通 /usage 的鉴权、分页游标与字段形状（对照 rc.3 DTO），并把证据并入 formal 套件或 T08 runner",
+      "openedAt": "2026-10-07", "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 6 节" },
     { "id": "T07-R03", "task": "T07", "severity": "P2", "status": "CLOSED",
       "issue": "docs/api/diff-pages-v1.1.openapi.yaml 无根级/操作级 security，也无 components.securitySchemes；独立生成客户端的 agent 无法从机器可读配置得知必须携带登录 Session，实际会收到 401",
       "requiredFix": "在增量 OpenAPI 声明与冻结契约一致的 session Cookie scheme 并在根级或 GET 操作引用；补自动化校验断言该路由的有效 security requirement 及 scheme 的 type/in/name；保留真实 HTTP 匿名 401 与登录成功回归。仅补文字说明不足以关闭",
@@ -86,9 +95,10 @@
   ],
 
   "next": [
-    "1. 等 T08 子 agent 交付 → 主 agent 集成（Flyway 序号分配、pom/配置/CI 共享文件合入）→ 再派**上下文隔离的复审 agent** 做 T08 第一轮独立复审；同时把 T07-R04 整改（backend/identity 三文件 + 新闸门）纳入同一轮或单独的 T03 复审，使 pendingReviewCommit 转为已复审基线",
+    "1. 已并行派出两路独立复审（实施方与集成方同侧，必须外部判决）：T08 第一轮（重点：锁序与 AC-28 并发论证、BEFORE-INSERT 触发器与服务上限一致性、UNKNOWN 先提交再 409 的语义、审计只存 id/哈希这一决定是否可接受、40/40 是否真能从零复现）与 T03 第五轮（覆盖 2512025 的 R04 整改）。按判决整改后才允许写入 rounds",
     "2. 补 T02 第 3 轮复审与 T03 独立批准以推进 G1；T07-R04 与其整改都是 T03 缺少独立复审的直接证据。T04 保持 BLOCKED 并登记所需真实 S3 桶环境依赖",
-    "3. T07 已 PASS（范围见 tasks.T07.note）：批次 C 的 T10/T11 可在契约冻结后开工，T09 需等 T08 门禁；T10/T11 装好后重跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
+    "3. 向产品 Owner 索取 COST-BUDGET-LIMITS 的额度数值与告警阈值，并要价格发布运维入口；拿到后才能验证启用态组合根与 GET /usage 端到端（COST-HTTP-E2E），T09 也需要它们做真实预占",
+    "4. T09（AI 网关与调用追踪）的前置 T08 已集成，可派发；但真实收费调用仍被 editorial.providers.paid-calls-enabled=false 门禁锁住，T09 不得放开。T10/T11 装好后重跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
     "4. 无人工金标就不能宣布 T01/G1 完成：T01-HUMAN 是产品 Owner 事项，不可代签"
   ],
 
@@ -104,13 +114,17 @@
     "跨轮继承的证据必须标注：写明继承自第几轮、绑定哪个未变字节基线、本轮是否重跑；不得把继承证据表述成本轮独立通过",
     "校验器要自证有效：任何“通过”类断言须附反向控制（对被检对象做最小化变异并要求被拒），否则该闸门可能只是恒真",
     "回归判定用同套件基线对照，不用绝对全绿：有些套件在当前批次必然部分失败（如 --suite all 因 T10/T11 未安装 16 项 fail closed，仓库既有 formal-all-domains-01 已记录同一集合）；判断“是否引入回归”须在被忽略的 .work 里用 git worktree add --detach 取未改动基线跑同一命令，比失败方法集合的差集，用完即删",
-    "变异只能改内存：反向控制若要破坏被检对象，禁止临时写回磁盘（尤其不得触碰已批准的 rc.3 文件）——进程崩在半路会留下被改动的冻结契约"
+    "变异只能改内存：反向控制若要破坏被检对象，禁止临时写回磁盘（尤其不得触碰已批准的 rc.3 文件）——进程崩在半路会留下被改动的冻结契约",
+    "写进仓库的文本必须无 BOM 且 LF：PowerShell 的 Set-Content -Encoding UTF8 会加 EF BB BF，而 .gitattributes 的 eol=lf 只规范换行、BOM 属内容会被原样提交；迁移类文件尤其要拿首字节与前 3 字节同既有文件对比（本轮 V5 就由主 agent 引入 BOM+CRLF 后返工重验）",
+    "复现主张必须绑定当前字节：改了被验文件（含编码）就先重跑再声称通过，否则“我复现过”指的是另一个字节序列"
   ],
 
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
     "python tests/engineering/T02/check_contracts.py",
     "python tests/engineering/T03/check_session_cookie.py   # 会话 Cookie 名五源全等（契约/增量契约/基础与 prod 配置/Java 常量）",
+    "python tests/engineering/T08/verify.py   # T08 静态自检 11 项（含 V5 与草案字节比对、只绑 CostPorts.Audit、无编造额度键）",
+    "python tests/engineering/T08/run_pg.py --evidence-name <新名>   # 真实 PG：应用安装版 V1–V5 + 跑 CostPricing/T08Postgres（40 项）；需 JDK21 与 .tools/t02 工具链，结束自停集群",
     "python -m unittest discover -s tests/contracts/T00 -v",
     "node tests/contracts/T00/hash-vector-js.cjs",
     "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe",
