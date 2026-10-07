@@ -1,0 +1,415 @@
+{
+  "tool": "8.30.1",
+  "contracts": [
+    0,
+    "Approved T00 rc.3: 27 hashes verified, no regeneration\n"
+  ],
+  "shippedTomlSha256": "66e1fc1cd93d6be2e6d7d8ad67a92d75045f11a04f286f268d2954f8cc3ceed9",
+  "exceptionCount": 3,
+  "exceptions": [
+    {
+      "description": "SRS line 937: public example request UUID, not an authentication credential",
+      "paths": "['''docs[/\\\\]AI-Editorial-Agent-SRS-v1\\.0\\.md$''']",
+      "regexTarget": "\"match\"",
+      "valueScope": "exact-value alternation listed",
+      "listedValuePrefixes": [
+        "397c4e7a-d8f"
+      ]
+    },
+    {
+      "description": "T04-R07: preserve original integration evidence; this exact UUID identifies a deleted test object, not a credential",
+      "paths": "['''tests[/\\\\]engineering[/\\\\]T04[/\\\\]evidence[/\\\\]integration\\.json$''']",
+      "regexTarget": "\"match\"",
+      "valueScope": "exact-value alternation listed",
+      "listedValuePrefixes": [
+        "55565d49-a89"
+      ]
+    },
+    {
+      "description": "T02 R02: six reviewed SHA-256 file fingerprints, not credentials",
+      "paths": "['''tests[/\\\\]engineering[/\\\\]T02[/\\\\]evidence[/\\\\]r01-integrity\\.json$''']",
+      "regexTarget": "\"match\"",
+      "valueScope": "exact-value alternation listed",
+      "listedValuePrefixes": [
+        "775fb0764e03",
+        "ecfd7efc8206",
+        "ac4a337a1116",
+        "408651c69683",
+        "394de144ba32",
+        "568ac57369de"
+      ]
+    }
+  ],
+  "baseline": {
+    "scanExit": 1,
+    "total": 7,
+    "perFile": {
+      "docs/execution/reviews/T03-round5/evidence/checks.json": [
+        "L11:generic-api-key",
+        "L12:generic-api-key",
+        "L20:generic-api-key"
+      ],
+      "docs/execution/reviews/T07-round4/checks.json": [
+        "L91:generic-api-key",
+        "L93:generic-api-key"
+      ],
+      "tests/engineering/T03/evidence/session-cookie-r04.json": [
+        "L29:generic-api-key",
+        "L30:generic-api-key"
+      ]
+    },
+    "gitVisibleWithUntracked": 2115,
+    "gitTrackedOnly": 2092,
+    "scannedBytes": "scanned ~35414429 bytes",
+    "logLeaks": 7
+  },
+  "attribution": {
+    "ex0_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex0_minusBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L2:generic-api-key",
+        "L1:github-pat"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex0_valueInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex0_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L1:github-pat",
+        "L2:generic-api-key"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex0_siblingFile": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L2:generic-api-key",
+        "L1:github-pat"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex1_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex1_minusBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L2:generic-api-key",
+        "L1:github-pat"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex1_valueInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex1_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L1:github-pat",
+        "L2:generic-api-key"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex1_siblingFile": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L1:github-pat",
+        "L2:generic-api-key"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex2_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex2_minusBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L1:github-pat",
+        "L2:generic-api-key"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex2_valueInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "ex2_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L2:generic-api-key",
+        "L1:github-pat"
+      ],
+      "bytesScanned": 115.0
+    },
+    "ex2_siblingFile": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "lines": [
+        "L1:github-pat",
+        "L2:generic-api-key"
+      ],
+      "bytesScanned": 115.0
+    }
+  },
+  "valuePrecision": {
+    "allowlistedHashAtR02Path": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "flippedHashAtR02Path": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "flippedHashAtSibling": {
+      "exit": 1,
+      "leaks": 1,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L1:generic-api-key"
+      ],
+      "bytesScanned": 117.0
+    },
+    "flippedHashStock": {
+      "exit": 1,
+      "leaks": 1,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L1:generic-api-key"
+      ],
+      "bytesScanned": 117.0
+    },
+    "realManifestVerbatim": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "realManifestMinusBlock3": {
+      "exit": 1,
+      "leaks": 6,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L67:generic-api-key",
+        "L110:generic-api-key",
+        "L111:generic-api-key",
+        "L115:generic-api-key",
+        "L124:generic-api-key",
+        "L125:generic-api-key"
+      ],
+      "bytesScanned": 14783.0
+    },
+    "realManifestFlippedOneDigit": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    }
+  },
+  "attenuation": {
+    "movedPath_shipped": {
+      "exit": 1,
+      "leaks": 6,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L67:generic-api-key",
+        "L110:generic-api-key",
+        "L111:generic-api-key",
+        "L115:generic-api-key",
+        "L124:generic-api-key",
+        "L125:generic-api-key"
+      ],
+      "bytesScanned": 14783.0
+    },
+    "movedPath_noPathsConstraint": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 14783.0
+    },
+    "samePath_noPathsConstraint": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 14783.0
+    },
+    "widenedToDirectory_swallowsNewFile": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "widenedToExtension_swallowsAnyJson": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 0.0
+    },
+    "brandNewManifest_shippedConfig": {
+      "exit": 1,
+      "leaks": 1,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L1:generic-api-key"
+      ],
+      "bytesScanned": 117.0
+    }
+  },
+  "positiveControls": {
+    "perFileShippedThenDefault": [
+      [
+        "notes/aws_pair.txt",
+        1,
+        1
+      ],
+      [
+        "notes/gh.txt",
+        1,
+        1
+      ],
+      [
+        "notes/hexkey.txt",
+        1,
+        1
+      ],
+      [
+        "notes/pem.txt",
+        1,
+        1
+      ],
+      [
+        "notes/pass.env",
+        0,
+        0
+      ],
+      [
+        "notes/pass.yml",
+        0,
+        0
+      ]
+    ],
+    "benignHashManifestNoKeyword": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "lines": [],
+      "bytesScanned": 192.0
+    },
+    "benignHashManifestApiKeyWord": {
+      "exit": 1,
+      "leaks": 1,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L3:generic-api-key"
+      ],
+      "bytesScanned": 117.0
+    },
+    "benignManifestAtNonExemptPath": {
+      "exit": 1,
+      "leaks": 1,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        "L1:generic-api-key"
+      ],
+      "bytesScanned": 117.0
+    }
+  }
+}

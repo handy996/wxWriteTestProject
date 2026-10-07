@@ -1,0 +1,150 @@
+{
+  "attribution": {
+    "allowlist0_SRS_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist0_SRS_minusThisBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    },
+    "allowlist0_SRS_valueRegexInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist0_SRS_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    },
+    "allowlist1_T04_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist1_T04_minusThisBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    },
+    "allowlist1_T04_valueRegexInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist1_T04_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    },
+    "allowlist2_T02R02_shipped": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist2_T02R02_minusThisBlock": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    },
+    "allowlist2_T02R02_valueRegexInert": {
+      "exit": 0,
+      "leaks": 0,
+      "rules": [],
+      "bytesScanned": "0 bytes"
+    },
+    "allowlist2_T02R02_stockDefaults": {
+      "exit": 1,
+      "leaks": 2,
+      "rules": [
+        "generic-api-key",
+        "github-pat"
+      ],
+      "bytesScanned": "115 bytes"
+    }
+  },
+  "baseline": {
+    "total": 24,
+    "perFile": {
+      "docs/execution/reviews/T02-round3/emat.py": [
+        "L15:generic-api-key",
+        "L14:github-pat"
+      ],
+      "docs/execution/reviews/T02-round3/probes.py": [
+        "L15:github-pat"
+      ],
+      "docs/execution/reviews/T02-round3/triangulate.py": [
+        "L15:github-pat"
+      ],
+      "docs/execution/reviews/T02-round3/attribution.py": [
+        "L20:generic-api-key",
+        "L19:github-pat"
+      ],
+      "docs/execution/reviews/T02-round3/semantics.py": [
+        "L48:generic-api-key",
+        "L12:github-pat"
+      ],
+      "docs/execution/reviews/T02-round3/pipeline_control2.py": [
+        "L15:generic-api-key",
+        "L16:generic-api-key"
+      ],
+      "docs/execution/reviews/T02-round3/pipeline_control.py": [
+        "L17:generic-api-key",
+        "L18:generic-api-key"
+      ],
+      "docs/execution/reviews/T02-round3/diag.py": [
+        "L67:private-key",
+        "L63:generic-api-key",
+        "L76:generic-api-key",
+        "L68:github-pat"
+      ],
+      "docs/execution/reviews/T03-round5/evidence/checks.json": [
+        "L11:generic-api-key",
+        "L12:generic-api-key",
+        "L20:generic-api-key"
+      ],
+      "docs/execution/reviews/T02-round3/controls.py": [
+        "L68:generic-api-key"
+      ],
+      "docs/execution/reviews/T07-round4/checks.json": [
+        "L91:generic-api-key",
+        "L93:generic-api-key"
+      ],
+      "tests/engineering/T03/evidence/session-cookie-r04.json": [
+        "L29:generic-api-key",
+        "L30:generic-api-key"
+      ]
+    },
+    "allowlistedFilesStillHitting": []
+  },
+  "shippedTomlSha256": "66e1fc1cd93d6be2e6d7d8ad67a92d75045f11a04f286f268d2954f8cc3ceed9",
+  "evidenceDirClean": true
+}

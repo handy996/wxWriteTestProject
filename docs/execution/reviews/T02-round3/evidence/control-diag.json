@@ -1,0 +1,57 @@
+{
+  "allow6first": "775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99",
+  "targetPresentInManifest": true,
+  "targetOnLines": [
+    67
+  ],
+  "flipActuallyChangedBytes": true,
+  "flipValue": "775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec90",
+  "integritySha": "1d18eef28322218a",
+  "flippedSha": "cff373a7028fc55e",
+  "A_flip_samePath": [
+    0,
+    []
+  ],
+  "B_fire_in_allowlisted_file": [
+    0,
+    []
+  ],
+  "C_fire_elsewhere": [
+    0,
+    []
+  ],
+  "D_default_rules": [
+    1,
+    [
+      "notes/aws_pair.txt:L2:generic-api-key",
+      "notes/gh.txt:L1:github-pat",
+      "notes/key.txt:L1:generic-api-key",
+      "notes/pem.txt:L1:private-key"
+    ]
+  ],
+  "E_shipped_toml": [
+    1,
+    [
+      "notes/gh.txt:L1:github-pat",
+      "notes/pem.txt:L1:private-key",
+      "notes/key.txt:L1:generic-api-key",
+      "notes/aws_pair.txt:L2:generic-api-key"
+    ]
+  ],
+  "F_srs_flip_line": [
+    0,
+    []
+  ],
+  "G_srs_fire_same_file": [
+    0,
+    []
+  ],
+  "H_t04_allowlist_file": [
+    0,
+    []
+  ],
+  "I_t04_path_only": [
+    0,
+    []
+  ]
+}

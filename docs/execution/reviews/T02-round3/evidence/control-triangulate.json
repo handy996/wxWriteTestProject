@@ -1,0 +1,76 @@
+{
+  "a_default_no_config_AL": {
+    "exit": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "n": 1
+  },
+  "b_config_without_allowlists_AL": {
+    "exit": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "n": 1
+  },
+  "c_real_config_AL": {
+    "exit": 0,
+    "rules": [],
+    "n": 0
+  },
+  "d_real_config_SIB": {
+    "exit": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "n": 1
+  },
+  "e_path_rewritten_to_other_AL": {
+    "exit": 2,
+    "rules": [],
+    "n": 0
+  },
+  "f_impossible_regex_AL": {
+    "exit": 0,
+    "rules": [],
+    "n": 0
+  },
+  "g_impossible_regex_SIB": {
+    "exit": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "n": 1
+  },
+  "h_no_paths_AL": {
+    "exit": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "n": 1
+  },
+  "i_allowlisted_hash_AL": {
+    "exit": 0,
+    "rules": [],
+    "n": 0
+  },
+  "j_flipped_hash_AL": {
+    "exit": 0,
+    "rules": [],
+    "n": 0
+  },
+  "k_flipped_hash_SIB": {
+    "exit": 1,
+    "rules": [
+      "generic-api-key"
+    ],
+    "n": 1
+  },
+  "l_flipped_hash_default": {
+    "exit": 1,
+    "rules": [
+      "generic-api-key"
+    ],
+    "n": 1
+  }
+}

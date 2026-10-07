@@ -6,19 +6,21 @@ Example: python integration.py --pg-bin /path/to/pgsql/bin --java /path/to/java
 import argparse
 import contextlib
 import datetime
-import hashlib
 import json
 import os
 from pathlib import Path
 import secrets
 import socket
 import subprocess
+import sys
 import time
 import urllib.error
 import urllib.request
 import uuid
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import digest_records
 
 
 def free_port():
@@ -54,8 +56,8 @@ def main():
                DB_URL=f'jdbc:postgresql://127.0.0.1:{db_port}/editorial?connectTimeout=2')
     flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
     evidence = {'mode': 'REAL_POSTGRES_REAL_JVM_NO_PROVIDER', 'paidCalls': 0, 'commands': [], 'checks': []}
-    evidence['artifacts'] = {str(path): hashlib.file_digest(path.open('rb'), 'sha256').hexdigest()
-                             for path in (args.jar, args.legacy_jar) if path is not None}
+    evidence['artifacts'] = digest_records.records(
+        [path for path in (args.jar, args.legacy_jar) if path is not None])
     processes = []
     pg_started = False
     success = False

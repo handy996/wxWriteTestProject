@@ -1,0 +1,176 @@
+{
+  "task": "T02",
+  "round": 3,
+  "reviewer": "independent third-round re-review (no relation to implementer or main agent)",
+  "verdict": "CHANGES_REQUIRED",
+  "head": "7a8fc75 (docs(state): retract the T09 dispatch claim and refresh the queue)",
+  "runtime": {
+    "os": "Windows / PowerShell 5.1",
+    "python": "C:/Users/eie04/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "gitleaksVersionCommand": ".tools/t02/gitleaks/gitleaks.exe version",
+    "gitleaksVersion": "8.30.1",
+    "gitleaksVersionExitCode": 0
+  },
+  "commands": [
+    {
+      "command": ".tools/t02/gitleaks/gitleaks.exe version",
+      "exitCode": 0,
+      "output": "8.30.1"
+    },
+    {
+      "command": "python tests/engineering/T02/check_contracts.py",
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration",
+      "hashCount": 27
+    },
+    {
+      "command": "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe",
+      "exitCode": 1,
+      "findingCount": 7,
+      "inputFilesGitVisible": 2115,
+      "inputFilesTrackedOnly": 2092,
+      "scannedBytes": "35406776",
+      "note": "run through docs/execution/reviews/T02-round3/run_checks.py, which only rewrites the report path (evidence/gitleaks-findings.json) and the .work directory into the review folder; scan input, shipped config, rules and exit code are unchanged",
+      "findings": [
+        {"file": "docs/execution/reviews/T03-round5/evidence/checks.json", "line": 11, "rule": "generic-api-key", "tracked": true, "lastCommit": "849d784"},
+        {"file": "docs/execution/reviews/T03-round5/evidence/checks.json", "line": 12, "rule": "generic-api-key", "tracked": true, "lastCommit": "849d784"},
+        {"file": "docs/execution/reviews/T03-round5/evidence/checks.json", "line": 20, "rule": "generic-api-key", "tracked": true, "lastCommit": "849d784"},
+        {"file": "docs/execution/reviews/T07-round4/checks.json", "line": 91, "rule": "generic-api-key", "tracked": true, "lastCommit": "dc95736"},
+        {"file": "docs/execution/reviews/T07-round4/checks.json", "line": 93, "rule": "generic-api-key", "tracked": true, "lastCommit": "dc95736"},
+        {"file": "tests/engineering/T03/evidence/session-cookie-r04.json", "line": 29, "rule": "generic-api-key", "tracked": true, "lastCommit": "2512025"},
+        {"file": "tests/engineering/T03/evidence/session-cookie-r04.json", "line": 30, "rule": "generic-api-key", "tracked": true, "lastCommit": "2512025"}
+      ],
+      "falsePositiveConfirmation": {
+        "docs/api/openapi.yaml sha256 prefix": "e285471760a5dce4",
+        "docs/api/diff-pages-v1.1.openapi.yaml sha256 prefix": "0db04ea086c2c563",
+        "statement": "6 of 7 hit values equal the recomputed SHA-256 of the named file; the 7th (L20) is prose containing the same fingerprints' first 16 hex digits",
+        "allHitsInTrackedFiles": true
+      }
+    },
+    {
+      "command": "python tests/engineering/T02/secret_scan.py",
+      "exitCode": 1,
+      "output": "Secret pattern scan: FAILED: backend/src/test/java/com/example/editorial/storage/S3ProtocolRegressionTest.java",
+      "patternHit": "AKIA[0-9A-Z]{16} at line 16 - the AWS documented example key pair (access-key-id literal obfuscated here on purpose, secret literal 20/40 chars omitted)",
+      "note": "this is the first command of the same CI step (ci.yml:54); it fails before Gitleaks even runs, so R02's 'complete secret scan passes' is unmet on two commands",
+      "reviewerOwnedFilesExcluded": true
+    },
+    {
+      "command": "git diff --name-only HEAD -- tests/engineering/T02/evidence",
+      "exitCode": 0,
+      "output": "",
+      "meaning": "frozen T02 evidence originals untouched by this review"
+    }
+  ],
+  "exceptionInventory": {
+    "config": "tests/engineering/T02/gitleaks.toml",
+    "sha256": "66e1fc1cd93d6be2e6d7d8ad67a92d75045f11a04f286f268d2954f8cc3ceed9",
+    "count": 3,
+    "extendUseDefault": true,
+    "entries": [
+      {"index": 0, "paths": "docs[/\\\\]AI-Editorial-Agent-SRS-v1\\.0\\.md$", "regexTarget": "match", "value": "Idempotency-Key: 397c4e7a- (truncated on purpose; full literal is gitleaks.toml line 9)", "condition": "AND"},
+      {"index": 1, "paths": "tests[/\\\\]engineering[/\\\\]T04[/\\\\]evidence[/\\\\]integration\\.json$", "regexTarget": "match", "value": "key=55565d49- (truncated on purpose; full literal is gitleaks.toml line 16)", "condition": "AND"},
+      {"index": 2, "paths": "tests[/\\\\]engineering[/\\\\]T02[/\\\\]evidence[/\\\\]r01-integrity\\.json$", "regexTarget": "match", "value": "six SHA-256 fingerprints (775fb076..., ecfd7efc..., ac4a337a..., 408651c6..., 394de144..., 568ac573...)", "condition": "AND", "landsOnLines": [67, 110, 111, 115, 124, 125]}
+    ],
+    "remediationCommit": "5413cf4 feat: integrate T03-T07 migrations and composition roots (allowlist #2 added by ab956ec)"
+  },
+  "controls": {
+    "matrix": "evidence/verify.json",
+    "allowlistIsFileScopedNotValueScoped": {
+      "detectableSecretsInsideExemptedFile": {"exit": 0, "leaks": 0, "bytesScanned": 0, "identicalForAllThreeExceptions": true},
+      "sameBlockRemoved": {"exit": 1, "leaks": 2, "bytesScanned": 115},
+      "valueRegexReplacedWithImpossibleLiteral": {"exit": 0, "leaks": 0, "bytesScanned": 0},
+      "stockDefaultRules": {"exit": 1, "leaks": 2, "bytesScanned": 115},
+      "siblingFileSameDirectory": {"exit": 1, "leaks": 2, "bytesScanned": 115},
+      "conclusion": "only the paths condition is evaluated; the value regex never binds; the exempted file is not opened at all"
+    },
+    "reverseControls": {
+      "oneHexDigitFlippedOnAllowlistedFingerprintAtSamePath": {"exit": 0, "leaks": 0, "expectedIfValueBound": 1},
+      "allowlistedFingerprintAtMovedPath": {"exit": 1, "leaks": 6},
+      "realManifestMinusThirdBlock": {"exit": 1, "leaks": 6},
+      "realManifestVerbatim": {"exit": 0, "leaks": 0},
+      "srsUuidChangedDigitAtSamePath": {"exit": 0, "leaks": 0}
+    },
+    "attenuationControlsInMemoryOnly": {
+      "pathsConstraintDropped_movedManifest": {"exit": 0, "leaks": 0, "shippedConfigSameInput": {"exit": 1, "leaks": 6}},
+      "pathsWidenedToDirectoryPrefix_newFile": {"exit": 0, "leaks": 0},
+      "pathsWidenedToExtensionAnyJson": {"exit": 0, "leaks": 0},
+      "brandNewManifestUnderShippedConfig": {"exit": 1, "leaks": 1}
+    },
+    "positiveControls": {
+      "caughtByShippedAndIdenticallyByStockDefaults": ["GitHub PAT form", "aws_secret_access_key form", "64-hex private-key-like value", "PEM/OPENSSH private key block"],
+      "missedByBothShippedConfigAndStockDefaults": ["bare AKIA[0-9A-Z]{16} line", "password=/DB_PASSWORD= plaintext"],
+      "attributableToExceptions": false,
+      "allFakeSamplesCaught": false
+    },
+    "benignProbe": {
+      "plainSha256ManifestWithoutKeywordKeys": {"exit": 0, "leaks": 0},
+      "sameManifestWithDocsApiOpenapiYamlKey": {"exit": 1, "leaks": 1},
+      "reviewerShipmentOfExtraFindings": "self-hits from reviewer scripts were eliminated; final baseline is 7"
+    }
+  },
+  "pipelinePositiveControlRun": {
+    "evidence": "evidence/pipeline-control.json",
+    "scratchGitVisible": ["aws-sample.txt", "benign-hashes.json", "hexkey.json", "plainpass.txt"],
+    "totalFindingsWithScratch": 24,
+    "compositionOfThatNumber": "7 repo findings + 2 scratch findings + 15 findings from the reviewer's own probe scripts, which still held contiguous credential literals at that point",
+    "totalAfterScratchRemoved": 22,
+    "finalCleanBaselineAfterSelfSanitization": 7,
+    "scratchFindingsCaught": 2,
+    "scratchFilesCaught": ["scratch/aws-sample.txt:2 (generic-api-key, the AWS secret line)", "scratch/hexkey.json:1 (generic-api-key, 64-hex value)"],
+    "scratchFilesNotCaught": ["scratch/plainpass.txt (password= plaintext; stock gitleaks defaults miss it too, so not attributable to the exceptions)"],
+    "benignProbeFindings": 0,
+    "scratchRemoved": true,
+    "note": "reviewer-owned noise must never be read as repo signal; the AKIA access-key-id line itself was never flagged by gitleaks 8.30.1 with or without the shipped config"
+  },
+  "history": {
+    "T02-Review-v2.0": "R02 P2, exit 1 with 6 hits in r01-integrity.json lines 67,110,111,115,124,125",
+    "T04-round3/scans.json": {"scanExit": 1, "leaksFound": 6, "hitFile": "tests/engineering/T02/evidence/r01-integrity.json"},
+    "T05-round2/checks.json": {"scanExit": 1, "leaksFound": 6, "hitFile": "tests/engineering/T02/evidence/r01-integrity.json"},
+    "T06-round4/checks.json": {"scanExit": 1, "leaksFound": 6, "hitFile": "tests/engineering/T02/evidence/r01-integrity.json"},
+    "drift": "the historical '6 T02 fingerprints' no longer exist post-allowlist; today's 7 hits are in three different files added by T03/T05/T07 rounds"
+  },
+  "crossTaskImpact": {
+    "file": "tests/engineering/T07/verify_delivery.py:52-53",
+    "assertion": "len(finding_paths)==6 and all equal tests/engineering/T02/evidence/r01-integrity.json",
+    "currentReality": {"total": 7, "t02HitsSuppressed": 6, "otherFiles": 3},
+    "consequence": "T07 delivery gate now records 'secret scan differs from known T02 six findings' and exits nonzero",
+    "verified": "static derivation plus this round's measured finding set"
+  },
+  "diskHygieneAppendix": {
+    "unit": "bytes",
+    "T04-round1": 135057906,
+    "T04-round2": 102923333,
+    "T04-round3": 3996285,
+    "T04-roundsTotal": 241977524,
+    "T07-round1": 165624509,
+    "T07-round2": 59933887,
+    "T07-round3": 120785411,
+    "T07-round4": 20454,
+    "T07-roundsTotal": 346364261,
+    "combinedTotal": 588341785,
+    "combinedMiB": 561.1,
+    "ignoredWorkCopiesUnderTheseRounds": 582618348,
+    "fileCount": 19306,
+    "gitignored": true,
+    "ignoreRule": ".gitignore:21 **/.work/",
+    "assessment": "gitignored but working-tree polluting full-repo copies including backend/target; reported only, nothing deleted",
+    "measurement": "Get-ChildItem -Recurse -File | Measure-Object -Property Length -Sum"
+  },
+  "ciEquivalenceAppendix": {
+    "ciYmlGitleaksDownload": "lines 35-37, v8.30.1 linux_x64 tarball pinned by sha256 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb",
+    "ciSecretStep": "line 54 secret_scan.py, line 55 python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks",
+    "localInvocation": "same script with --gitleaks .tools/t02/gitleaks/gitleaks.exe",
+    "configSource": "tests/engineering/T02/gitleaks.toml, hardcoded at scan_secrets.py:32, identical for CI and local",
+    "rootDotGitleaksToml": "absent",
+    "versionEquivalence": "both 8.30.1",
+    "inputSetDifference": "CI scans a checkout (tracked files); local run also includes untracked non-ignored files; all 7 findings are in tracked files so CI reproduces them",
+    "conclusion": "invocation form is equivalent; no config or version drift found"
+  },
+  "cleanup": {
+    "scratchDir": "docs/execution/reviews/T02-round3/scratch - removed (Test-Path False)",
+    "weakenedConfigs": "written only under docs/execution/reviews/T02-round3/.work/, removed with the work tree",
+    "repoFilesModified": ["docs/execution/reviews/T02-round3/** only"],
+    "gitAddOrCommit": "not performed"
+  }
+}

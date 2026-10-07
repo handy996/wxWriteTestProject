@@ -1,24 +1,49 @@
-title = "T02 source scan with exact SRS fixture exception"
+title = "T02 source scan: value-only exceptions, no whole-file exemptions"
 [extend]
 useDefault = true
 
-[[allowlists]]
-description = "SRS line 937: public example request UUID, not an authentication credential"
-condition = "AND"
-paths = ['''docs[/\\]AI-Editorial-Agent-SRS-v1\.0\.md$''']
-regexTarget = "match"
-regexes = ['''Idempotency-Key: 397c4e7a-d8f0-4d83-b885-342f8248d8e2''']
+# Gitleaks 8.30.1 allowlist semantics, measured in tests/engineering/T02/check_gitleaks_allowlists.py:
+# a file-condition entry makes the scanner skip the file entirely ("scanned 0 bytes"), so the
+# value test never runs and a real credential committed into that file is invisible. This file
+# therefore carries no file-condition entry at all; every exception below is an exact value, and
+# the file holding that value stays scanned. Ban asserted by the check script and by CI.
+# Reproduce the semantics: docs/execution/reports/T02-Revision-R02.md.
 
 [[allowlists]]
-description = "T04-R07: preserve original integration evidence; this exact UUID identifies a deleted test object, not a credential"
+description = "SRS public example request identifier (fixture), exact value only"
 condition = "AND"
-paths = ['''tests[/\\]engineering[/\\]T04[/\\]evidence[/\\]integration\.json$''']
 regexTarget = "match"
-regexes = ['''key=55565d49-a894-42ec-8a42-df7e2dc50a86''']
+regexes = [
+  '''397c4e7a\-d8f0\-4d83\-b885\-342f8248d8e2''',
+]
 
 [[allowlists]]
-description = "T02 R02: six reviewed SHA-256 file fingerprints, not credentials"
+description = "UUID of a deleted T04 integration test object quoted in frozen evidence, exact value only"
 condition = "AND"
-paths = ['''tests[/\\]engineering[/\\]T02[/\\]evidence[/\\]r01-integrity\.json$''']
 regexTarget = "match"
-regexes = ['''(?:775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99|ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea|ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4|408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9|394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc|568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1)''']
+regexes = [
+  '''55565d49\-a894\-42ec\-8a42\-df7e2dc50a86''',
+]
+
+[[allowlists]]
+description = "Six R01 delivery fingerprints quoted in the frozen r01-integrity record, exact values only"
+condition = "AND"
+regexTarget = "match"
+regexes = [
+  '''775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99''',
+  '''ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea''',
+  '''ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4''',
+  '''408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9''',
+  '''394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc''',
+  '''568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1''',
+]
+
+[[allowlists]]
+description = "Two frozen 1.0.0-rc.3 contract file digests, plus one 16-character prefix quoted in prose, exact values only"
+condition = "AND"
+regexTarget = "match"
+regexes = [
+  '''e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b''',
+  '''0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd''',
+  '''e285471760a5dce4\.\.\.''',
+]

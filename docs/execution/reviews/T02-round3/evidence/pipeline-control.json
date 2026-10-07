@@ -1,0 +1,30 @@
+{
+  "gitVisibleScratchFiles": [
+    "docs/execution/reviews/T02-round3/scratch/aws-sample.txt",
+    "docs/execution/reviews/T02-round3/scratch/benign-hashes.json",
+    "docs/execution/reviews/T02-round3/scratch/hexkey.json",
+    "docs/execution/reviews/T02-round3/scratch/plainpass.txt"
+  ],
+  "checkIgnoreOutput": [
+    ".gitignore:21:**/.work/\t\"docs/execution/reviews/T02-round3/.work/x\\r\""
+  ],
+  "scanExit": 1,
+  "gitleaksLogTail": "  \"StartColumn\": 16,\n  \"EndColumn\": 112,\n  \"Match\": \"diff-pages-v1.1.openapi.yaml\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-ky5aoz5z/tests/engineering/T03/evidence/session-cookie-r04.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.9117384,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-ky5aoz5z/tests/engineering/T03/evidence/session-cookie-r04.json:generic-api-key:30\"\n }\n]\n\n",
+  "totalFindings": 24,
+  "scratchFindings": [
+    {
+      "rel": "docs/execution/reviews/T02-round3/scratch/aws-sample.txt",
+      "line": 2,
+      "rule": "generic-api-key"
+    },
+    {
+      "rel": "docs/execution/reviews/T02-round3/scratch/hexkey.json",
+      "line": 1,
+      "rule": "generic-api-key"
+    }
+  ],
+  "benignProbeFindings": [],
+  "scratchDeleted": true,
+  "exitAfterCleanup": 1,
+  "totalAfterCleanup": 22
+}

@@ -1,12 +1,27 @@
-"""Bind R01/B01 source/evidence to the delivery without rewriting old evidence."""
-import hashlib
-import json
+"""Bind R01/B01 source/evidence to the delivery without rewriting old evidence.
+
+Round 3 review closed the scanner blind spot only by changing this generator's output shape:
+fingerprints are records with `path` and `sha256` on separate lines (`digest_records`), so no
+line ever pairs a key-like path (`.../secret_scan.py`) with a long hex token, which is what
+Gitleaks' generic-api-key rule reports. Historical evidence stays immutable: writing to the
+frozen R01 record is refused.
+"""
+import argparse
 from pathlib import Path
+import json
 import subprocess
+import sys
 import zipfile
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import digest_records
 
 ROOT = Path(__file__).resolve().parents[3]
 BASELINE = 'b115a4022375675c7cbff536b239508db8f3f4e1'
+FROZEN = ('tests/engineering/T02/evidence/r01-integrity.json',
+          'tests/engineering/T02/evidence/r01-integrity-run.json')
+DEFAULT_OUT = 'tests/engineering/T02/evidence/r02-integrity.json'
+
 original = 'backend/src/main/resources/db/migration/R__t02_schema_permissions.sql'
 assert (ROOT / original).read_bytes() == subprocess.check_output(['git', 'show', BASELINE + ':' + original], cwd=ROOT)
 jar = ROOT / 'backend/target/editorial-0.1.0-SNAPSHOT.jar'
@@ -17,22 +32,25 @@ with zipfile.ZipFile(jar) as archive:
         assert archive.read('BOOT-INF/classes/' + resource) == (ROOT / 'backend/src/main/resources' / resource).read_bytes()
     assert not any('V1__t02_function_order_probe.sql' in name for name in archive.namelist())
 
+parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+parser.add_argument('--out', default=DEFAULT_OUT, help='manifest path (default %s); never the frozen R01 record' % DEFAULT_OUT)
+args = parser.parse_args()
+out = Path(args.out)
+relative = (out if out.is_absolute() else ROOT / out).resolve().relative_to(ROOT).as_posix()
+if relative in FROZEN:
+    raise SystemExit('refusing to rewrite frozen evidence record: ' + relative)
+
 names = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
-excluded = {'tests/engineering/T02/evidence/r01-integrity.json', 'tests/engineering/T02/evidence/r01-integrity-run.json'}
+excluded = {relative}
 paths = sorted(name for name in set(names) if name not in excluded and (
     name.startswith(('backend/', 'frontend/', 'infra/', '.github/', 'tests/engineering/T02/')) or
-    name in ('README.md', 'docs/execution/reports/T02.md')))
-
-
-def sha256(path):
-    with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
-
+    name in ('README.md', 'docs/execution/reports/T02.md',
+             'docs/execution/reports/T02-Revision-R02.md')))
 
 result = {'reviewedCommit': BASELINE, 'contractVersion': '1.0.0-rc.3',
           'originalMigrationUnchanged': True, 'packagedMigrationBytesMatch': True,
           'testVersionedMigrationNotPackaged': True,
-          'jarSha256': sha256(jar), 'files': {name: sha256(ROOT / name) for name in paths}}
-(ROOT / 'tests/engineering/T02/evidence/r01-integrity.json').write_text(
-    json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
+          'jarSha256': digest_records.sha256_file(jar),
+          'files': digest_records.records(paths, root=ROOT)}
+digest_records.write(result, ROOT / relative)
 print(f'{len(paths)} delivery fingerprints; original migration unchanged; packaged SQL matches; test V1 absent')

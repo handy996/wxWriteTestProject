@@ -1,0 +1,54 @@
+{
+  "s1_match_target": {
+    "exit": 0,
+    "n": 0,
+    "rules": [],
+    "stderr": "11:23PM INF scanned ~0 bytes (0) in 1.94ms\n11:23PM INF no leaks found\n"
+  },
+  "s2_line_target": {
+    "exit": 0,
+    "n": 0,
+    "rules": [],
+    "stderr": "11:23PM INF scanned ~0 bytes (0) in 0s\n11:23PM INF no leaks found\n"
+  },
+  "s3_or_condition": {
+    "exit": 0,
+    "n": 0,
+    "rules": [],
+    "stderr": "11:23PM INF scanned ~0 bytes (0) in 2ms\n11:23PM INF no leaks found\n"
+  },
+  "s4_other_path_only": {
+    "exit": 1,
+    "n": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "stderr": "11:23PM INF scanned ~51 bytes (51 bytes) in 7.1ms\n11:23PM WRN leaks found: 1\n"
+  },
+  "s5_sibling_still_red": {
+    "exit": 1,
+    "n": 1,
+    "rules": [
+      "github-pat"
+    ],
+    "stderr": "11:23PM INF scanned ~51 bytes (51 bytes) in 8.7ms\n11:23PM WRN leaks found: 1\n"
+  },
+  "s6_no_regexes": {
+    "exit": 2,
+    "n": 0,
+    "rules": [],
+    "stderr": "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nE0000 00:00:1791386601.683251  145936 re2.cc:237] Error parsing 'tests[/\\"
+  },
+  "s7_dir_prefix": {
+    "exit": 0,
+    "n": 0,
+    "rules": [],
+    "stderr": "11:23PM INF scanned ~0 bytes (0) in 2.64ms\n11:23PM INF no leaks found\n"
+  },
+  "s8_srs_absorbs": {
+    "exit": 0,
+    "n": 0,
+    "rules": [],
+    "stderr": "11:23PM INF scanned ~0 bytes (0) in 0s\n11:23PM INF no leaks found\n"
+  }
+}

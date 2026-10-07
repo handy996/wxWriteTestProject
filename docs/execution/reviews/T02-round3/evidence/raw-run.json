@@ -1,0 +1,51 @@
+[
+  {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "--version"
+    ],
+    "exitCode": 0,
+    "outputTail": "Python 3.12.14\n",
+    "outputChars": 15
+  },
+  {
+    "argv": [
+      "E:\\project\\codex\\wxAgent\\.tools\\t02\\gitleaks\\gitleaks.exe",
+      "version"
+    ],
+    "exitCode": 0,
+    "outputTail": "8.30.1\n",
+    "outputChars": 7
+  },
+  {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "tests/engineering/T02/check_contracts.py"
+    ],
+    "exitCode": 0,
+    "outputTail": "Approved T00 rc.3: 27 hashes verified, no regeneration\n",
+    "outputChars": 55
+  },
+  {
+    "argv": [
+      "C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "E:\\project\\codex\\wxAgent\\docs\\execution\\reviews\\T02-round3\\run_checks.py",
+      "--scan"
+    ],
+    "exitCode": 1,
+    "outputTail": "y exposing access to various services and sensitive operations.\",\n  \"StartLine\": 91,\n  \"EndLine\": 91,\n  \"StartColumn\": 16,\n  \"EndColumn\": 96,\n  \"Match\": \"openapi.yaml\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.861187,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json:generic-api-key:91\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 93,\n  \"EndLine\": 93,\n  \"StartColumn\": 16,\n  \"EndColumn\": 112,\n  \"Match\": \"diff-pages-v1.1.openapi.yaml\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.9117384,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json:generic-api-key:93\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 29,\n  \"EndLine\": 29,\n  \"StartColumn\": 16,\n  \"EndColumn\": 96,\n  \"Match\": \"openapi.yaml\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.861187,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json:generic-api-key:29\"\n },\n {\n  \"RuleID\": \"generic-api-key\",\n  \"Description\": \"Detected a Generic API Key, potentially exposing access to various services and sensitive operations.\",\n  \"StartLine\": 30,\n  \"EndLine\": 30,\n  \"StartColumn\": 16,\n  \"EndColumn\": 112,\n  \"Match\": \"diff-pages-v1.1.openapi.yaml\\\": \\\"REDACTED\\\"\",\n  \"Secret\": \"REDACTED\",\n  \"File\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json\",\n  \"SymlinkFile\": \"\",\n  \"Commit\": \"\",\n  \"Entropy\": 3.9117384,\n  \"Author\": \"\",\n  \"Email\": \"\",\n  \"Date\": \"\",\n  \"Message\": \"\",\n  \"Tags\": [],\n  \"Fingerprint\": \"E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json:generic-api-key:30\"\n }\n]\n\n",
+    "outputChars": 5505
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--cached",
+      "--others",
+      "--exclude-standard"
+    ],
+    "exitCode": 0,
+    "outputTail": "1-correction.md\ntests/fixtures/representative-v1/sources/narrative-01-primary.md\ntests/fixtures/representative-v1/sources/narrative-01-reprint.md\ntests/fixtures/representative-v1/sources/narrative-02-correction.md\ntests/fixtures/representative-v1/sources/narrative-02-primary.md\ntests/fixtures/representative-v1/sources/narrative-02-reprint.md\ntests/fixtures/representative-v1/sources/narrative-03-correction.md\ntests/fixtures/representative-v1/sources/narrative-03-primary.md\ntests/fixtures/representative-v1/sources/narrative-03-reprint.md\ntests/fixtures/representative-v1/sources/narrative-04-correction.md\ntests/fixtures/representative-v1/sources/narrative-04-primary.md\ntests/fixtures/representative-v1/sources/narrative-04-reprint.md\ntests/fixtures/representative-v1/sources/policy-01-correction.md\ntests/fixtures/representative-v1/sources/policy-01-primary.md\ntests/fixtures/representative-v1/sources/policy-01-reprint.md\ntests/fixtures/representative-v1/sources/policy-02-correction.md\ntests/fixtures/representative-v1/sources/policy-02-primary.md\ntests/fixtures/representative-v1/sources/policy-02-reprint.md\ntests/fixtures/representative-v1/sources/policy-03-correction.md\ntests/fixtures/representative-v1/sources/policy-03-primary.md\ntests/fixtures/representative-v1/sources/policy-03-reprint.md\ntests/fixtures/representative-v1/sources/policy-04-correction.md\ntests/fixtures/representative-v1/sources/policy-04-primary.md\ntests/fixtures/representative-v1/sources/policy-04-reprint.md\ntests/fixtures/representative-v1/sources/science-01-correction.md\ntests/fixtures/representative-v1/sources/science-01-primary.md\ntests/fixtures/representative-v1/sources/science-01-reprint.md\ntests/fixtures/representative-v1/sources/science-02-correction.md\ntests/fixtures/representative-v1/sources/science-02-primary.md\ntests/fixtures/representative-v1/sources/science-02-reprint.md\ntests/fixtures/representative-v1/sources/science-03-correction.md\ntests/fixtures/representative-v1/sources/science-03-primary.md\ntests/fixtures/representative-v1/sources/science-03-reprint.md\ntests/fixtures/representative-v1/sources/science-04-correction.md\ntests/fixtures/representative-v1/sources/science-04-primary.md\ntests/fixtures/representative-v1/sources/science-04-reprint.md\ntests/fixtures/sources/brand-01.md\ntests/fixtures/sources/brand-02.md\ntests/fixtures/sources/brand-03.md\ntests/fixtures/sources/brand-04.md\ntests/fixtures/sources/history-01.md\ntests/fixtures/sources/history-02.md\ntests/fixtures/sources/history-03.md\ntests/fixtures/sources/history-04.md\ntests/fixtures/sources/narrative-01.md\ntests/fixtures/sources/narrative-02.md\ntests/fixtures/sources/narrative-03.md\ntests/fixtures/sources/narrative-04.md\ntests/fixtures/sources/policy-01.md\ntests/fixtures/sources/policy-02.md\ntests/fixtures/sources/policy-03.md\ntests/fixtures/sources/policy-04.md\ntests/fixtures/sources/science-01.md\ntests/fixtures/sources/science-02.md\ntests/fixtures/sources/science-03.md\ntests/fixtures/sources/science-04.md\n",
+    "outputChars": 182327
+  }
+]

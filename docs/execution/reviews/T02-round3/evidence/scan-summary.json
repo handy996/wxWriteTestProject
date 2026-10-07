@@ -1,0 +1,53 @@
+{
+  "gitleaksVersion": "8.30.1",
+  "contractsExit": 0,
+  "contractsOutput": "Approved T00 rc.3: 27 hashes verified, no regeneration",
+  "scanExit": 1,
+  "findingCount": 7,
+  "findings": [
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T03-round5/evidence/checks.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T03-round5/evidence/checks.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T03-round5/evidence/checks.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/docs/execution/reviews/T07-round4/checks.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    },
+    {
+      "file": "E:/project/codex/wxAgent/docs/execution/reviews/T02-round3/.work/secret-scan-p96ppzq2/tests/engineering/T03/evidence/session-cookie-r04.json",
+      "line": null,
+      "rule": "generic-api-key",
+      "matchRedacted": true
+    }
+  ],
+  "gitVisibleFiles": 2117,
+  "lsFilesTruncatedToTail": false
+}

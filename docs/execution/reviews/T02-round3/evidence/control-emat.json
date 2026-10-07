@@ -1,0 +1,95 @@
+{
+  "E1_nonmatching_path": {
+    "exit": 1,
+    "leaks": 1,
+    "scannedBytes": 51.0,
+    "rules": [
+      "github-pat"
+    ]
+  },
+  "E2_dir_prefix_no_anchor": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  },
+  "E3_substring_only": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  },
+  "E4_ext_only": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  },
+  "E5_regex_only_no_path": {
+    "exit": 1,
+    "leaks": 0,
+    "scannedBytes": null,
+    "rules": []
+  },
+  "E6_path_and_matching_value": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  },
+  "E7_shiped_realconfig_AL": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  },
+  "E8_shiped_realconfig_sib": {
+    "exit": 1,
+    "leaks": 2,
+    "scannedBytes": 115.0,
+    "rules": [
+      "generic-api-key",
+      "github-pat"
+    ]
+  },
+  "E9_default_AL": {
+    "exit": 1,
+    "leaks": 2,
+    "scannedBytes": 115.0,
+    "rules": [
+      "generic-api-key",
+      "github-pat"
+    ]
+  },
+  "E10_shiped_minus3_AL": {
+    "exit": 1,
+    "leaks": 2,
+    "scannedBytes": 115.0,
+    "rules": [
+      "generic-api-key",
+      "github-pat"
+    ]
+  },
+  "E11_shiped_minus3_hashline": {
+    "exit": 1,
+    "leaks": 1,
+    "scannedBytes": 117.0,
+    "rules": [
+      "generic-api-key"
+    ]
+  },
+  "E12_shiped_minus3_realmanifest": {
+    "exit": 1,
+    "leaks": 6,
+    "scannedBytes": 14783.0,
+    "rules": [
+      "generic-api-key"
+    ]
+  },
+  "E13_shiped_real_realmanifest": {
+    "exit": 0,
+    "leaks": 0,
+    "scannedBytes": 0.0,
+    "rules": []
+  }
+}

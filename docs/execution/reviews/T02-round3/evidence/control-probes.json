@@ -1,0 +1,89 @@
+{
+  "00_pat_neutral": {
+    "rel": "notes/a.txt",
+    "exit": 1,
+    "hits": [
+      "L1:github-pat"
+    ]
+  },
+  "01_aws_neutral": {
+    "rel": "notes/b.txt",
+    "exit": 1,
+    "hits": [
+      "L1:generic-api-key"
+    ]
+  },
+  "02_hashline_neutral": {
+    "rel": "notes/c.json",
+    "exit": 1,
+    "hits": [
+      "L1:generic-api-key"
+    ]
+  },
+  "03_flip_neutral": {
+    "rel": "notes/d.json",
+    "exit": 1,
+    "hits": [
+      "L1:generic-api-key"
+    ]
+  },
+  "10_pat_in_r02_file": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  },
+  "11_hashline_in_r02_file": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  },
+  "12_flip_in_r02_file": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  },
+  "13_aws_in_r02_file": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  },
+  "20_pat_in_srs_file": {
+    "rel": "docs/AI-Editorial-Agent-SRS-v1.0.md",
+    "exit": 0,
+    "hits": []
+  },
+  "21_aws_in_t04_file": {
+    "rel": "tests/engineering/T04/evidence/integration.json",
+    "exit": 0,
+    "hits": []
+  },
+  "22_pat_in_t04_file": {
+    "rel": "tests/engineering/T04/evidence/integration.json",
+    "exit": 0,
+    "hits": []
+  },
+  "30_pat_sibling_dir": {
+    "rel": "tests/engineering/T02/evidence/other.json",
+    "exit": 1,
+    "hits": [
+      "L1:github-pat"
+    ]
+  },
+  "31_hashline_in_delivery_manifest": {
+    "rel": "tests/engineering/T02/evidence/delivery-integrity.json",
+    "exit": 1,
+    "hits": [
+      "L1:generic-api-key"
+    ]
+  },
+  "40_real_manifest_flipped_one_digit": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  },
+  "41_real_manifest_verbatim": {
+    "rel": "tests/engineering/T02/evidence/r01-integrity.json",
+    "exit": 0,
+    "hits": []
+  }
+}

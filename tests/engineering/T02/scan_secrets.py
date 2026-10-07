@@ -9,6 +9,9 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[3]
 parser = argparse.ArgumentParser()
 parser.add_argument('--gitleaks', default='gitleaks')
+parser.add_argument('--report', default='tests/engineering/T02/evidence/gitleaks-findings.json',
+                    help='report path; keep the default for CI, point elsewhere to re-run without '
+                         'touching a tracked evidence file')
 args = parser.parse_args()
 work = ROOT / 'tests/engineering/T02/.work'
 work.mkdir(exist_ok=True)
@@ -26,8 +29,9 @@ with tempfile.TemporaryDirectory(prefix='secret-scan-', dir=work) as directory:
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
     scanner = str(Path(args.gitleaks).resolve()) if '/' in args.gitleaks else args.gitleaks
-    report = ROOT / 'tests/engineering/T02/evidence/gitleaks-findings.json'
-    report.parent.mkdir(exist_ok=True)
+    report = Path(args.report)
+    report = report if report.is_absolute() else ROOT / report
+    report.parent.mkdir(parents=True, exist_ok=True)
     result = subprocess.run([scanner, 'dir', str(destination), '--redact', '--no-banner',
                              '--config', str(ROOT / 'tests/engineering/T02/gitleaks.toml'),
                              '--report-format', 'json', '--report-path', str(report)], cwd=ROOT,
