@@ -24,9 +24,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * Every statement that touches {@code cost_ledger}. This class decides no policy: it takes the transaction
  * scoped advisory lock for an accounting scope, reads that scope's occupancy, and writes either an estimate
- * hold or a settlement fact. Atomic last-balance admission is the scope lock plus the guarded write; the draft
- * migration repeats the same ceiling as a database constraint, so a writer that skipped the lock still cannot
- * oversubscribe a budget.
+ * hold or a settlement fact. Atomic last-balance admission is the scope lock plus the guarded write; the
+ * installed migration repeats the article ceiling as a database rule — the admission trigger locks the
+ * {@code article_job} row before it aggregates, so a writer that skipped these locks cannot oversubscribe an
+ * article, one at a time or two at once. The other ceilings (daily, counts, provider) are enforced on the
+ * service path alone, because only the article limit is stored in a row the database can lock.
  */
 public final class CostLedger {
     /** Rows that occupy a ceiling or report spend: live holds, plus settled facts once they exist. */
@@ -243,7 +245,8 @@ public final class CostLedger {
         return estimate.compareTo(settled) > 0 ? estimate.subtract(settled) : Money.ZERO;
     }
 
-    /** A real bill above the estimate is booked as an overrun and reported, never rejected or hidden. */
+    /** A real bill above the estimate is booked as an overrun: it is never rejected or hidden. The over_run column
+     * is written and read back into the reservation, and nothing projects it yet — reporting it is T10/T11 work. */
     public static Money overRun(Settlement command, Money estimate, Money settled) {
         if (command.result() != ReservationStatus.SETTLED || settled == null) return Money.ZERO;
         return settled.compareTo(estimate) > 0 ? settled.subtract(estimate) : Money.ZERO;

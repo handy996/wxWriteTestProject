@@ -76,6 +76,9 @@ class CostPricingTest {
         }
         assertEquals("USD", Money.CURRENCY);
         assertEquals("UNSUPPORTED_CURRENCY", failure(() -> Money.currency("usd")).code());
+        // The wire bound is twelve integer digits, which is what numeric(18,6) holds: the money field is a scaled
+        // decimal string, not int32 cents. One digit more than the bound is refused above.
+        assertEquals("999999999999.999999", Money.of("999999999999.999999").text());
         // No float path exists: the only ways in are the strict text parse and an already-exact decimal.
         assertEquals("AMOUNT_SCALE", failure(() -> Money.ofExact(new BigDecimal("0.0000001"))).code());
         assertEquals("NEGATIVE_AMOUNT", failure(() -> Money.ofExact(new BigDecimal("-1.000000"))).code());
@@ -337,9 +340,13 @@ class CostPricingTest {
     }
 
     @Test
-    @DisplayName("Ceilings default to the documented SRS limits and an unconfigured cap refuses")
+    @DisplayName("The ceilings that fall back to a number are the ones the SRS documents")
     void budgetPolicyCeilings() {
-        BudgetPolicy policy = BudgetPolicyConfig.from(new MockEnvironment());
+        // The eight values below are the SRS-documented limits (docs/AI-Editorial-Agent-SRS-v1.0.md lines 1099,
+        // 1103 and 1143). verify.py re-reads those lines and rejects any drift, so this is a transcription of the
+        // requirement, not a fixture the code is free to invent. OQ-09 (line 1281) keeps them 示例值 pending
+        // Owner approval and real API pricing tests.
+        BudgetPolicy policy = BudgetPolicyConfig.from(statedBeyondSrs());
         assertEquals("20.000000", policy.dailyLimit().text());
         assertEquals(30, policy.cap(BudgetPolicy.Counter.SEARCH_QUERY));
         assertEquals(40_000, policy.cap(BudgetPolicy.Counter.MODEL_OUTPUT_TOKENS));
@@ -348,7 +355,6 @@ class CostPricingTest {
         assertEquals(2, policy.cap(BudgetPolicy.Counter.IMAGE_GENERATION_SLOT));
         assertEquals(4, policy.cap(BudgetPolicy.Counter.IMAGE_GENERATION_ARTICLE));
         assertEquals(80, policy.alertPercent());
-        assertEquals(30, policy.staleReconciliationMinutes());
         // A counter with no configured limit is a refusal, never an implicit "unlimited".
         BudgetPolicy bare = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(), 80, 30);
         assertFalse(bare.hasCap(BudgetPolicy.Counter.CALLS));
@@ -369,10 +375,40 @@ class CostPricingTest {
         assertTrue(policy.reachedAlert(Money.ZERO, Money.ZERO), "a zero ceiling is already exhausted");
     }
 
+    /**
+     * Two ceilings appear in no SRS line: the per-article call cap and the reconciliation window. They have no
+     * fallback, so leaving them unset refuses the build on the configuration path — which is also the only
+     * production route to 503 QUOTA_NOT_CONFIGURED, and why that branch is reachable rather than decorative.
+     */
+    @Test
+    @DisplayName("A ceiling the SRS does not state has no default and refuses the build")
+    void undocumentedCeilingsHaveNoDefault() {
+        PublicFailure nothing = failure(() -> BudgetPolicyConfig.from(new MockEnvironment()));
+        assertEquals(503, nothing.status());
+        assertEquals("QUOTA_NOT_CONFIGURED", nothing.code());
+        // Stating one of the two still refuses: a call cap does not make the reconciliation window configured.
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+                .withProperty("editorial.cost.max-calls-per-article", "64"))).code());
+        BudgetPolicy stated = BudgetPolicyConfig.from(statedBeyondSrs());
+        assertEquals(64, stated.cap(BudgetPolicy.Counter.CALLS));
+        assertEquals(30, stated.staleReconciliationMinutes());
+        // A stated but unusable ceiling is the other refusal, not a silent default.
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+                .withProperty("editorial.cost.max-calls-per-article", "-1")
+                .withProperty("editorial.cost.reconciliation-stale-minutes", "30"))).code());
+    }
+
+    /** An environment stating the two ceilings the SRS leaves open, so the documented defaults can be read. */
+    private static MockEnvironment statedBeyondSrs() {
+        return new MockEnvironment()
+                .withProperty("editorial.cost.max-calls-per-article", "64")
+                .withProperty("editorial.cost.reconciliation-stale-minutes", "30");
+    }
+
     @Test
     @DisplayName("A configured ceiling is honoured and a bad one is refused at boot")
     void budgetPolicyOverrides() {
-        MockEnvironment env = new MockEnvironment()
+        MockEnvironment env = statedBeyondSrs()
                 .withProperty("editorial.cost.daily-budget", "12.500000")
                 .withProperty("editorial.cost.search-queries-per-article", "5")
                 .withProperty("editorial.cost.alert-percent", "70")
@@ -386,16 +422,29 @@ class CostPricingTest {
         assertEquals(5, policy.staleReconciliationMinutes());
         assertEquals(3, policy.providerQuota("mock", "any").orElseThrow().maxConcurrent());
         assertEquals(17, policy.providerQuota("mock", "any").orElseThrow().callsPerDay());
-        assertEquals("INVALID_AMOUNT", failure(() -> BudgetPolicyConfig.from(
-                new MockEnvironment().withProperty("editorial.cost.daily-budget", "12.5"))).code());
-        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+        assertEquals("INVALID_AMOUNT", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.daily-budget", "12.5"))).code());
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.search-queries-per-article", "-1"))).code());
-        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.alert-percent", "0"))).code());
-        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "-1"))).code());
-        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.provider-quota.max-concurrent", "1"))).code());
+    }
+
+    @Test
+    @DisplayName("An unbound execution scope refuses rather than inventing an execution")
+    void executionScopeIsFailClosed() {
+        // rc.3 requires an execution id, agent_execution/tool_execution arrive with T09/T10, and the only honest
+        // answer until the composition root binds a resolver is a refusal that writes nothing.
+        CostPorts.Executions unbound = CostPorts.unavailableExecutions();
+        PublicFailure failure = failure(() -> unbound.resolve(
+                com.example.editorial.shared.ActorContext.forWorker(UUID.randomUUID(), UUID.randomUUID(),
+                        UUID.randomUUID()), UUID.randomUUID(), UUID.randomUUID()));
+        assertEquals(503, failure.status());
+        assertEquals("EXECUTION_SCOPE_NOT_READY", failure.code());
     }
 
     @Test

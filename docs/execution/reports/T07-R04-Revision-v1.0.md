@@ -36,9 +36,11 @@
 
 | # | 命令 | 退出码 | 结果 |
 |---|---|---|---|
-| 1 | `$py tests/engineering/T03/check_session_cookie.py` | 0 | 五源全等 `EDITORIAL_SESSION`；**6/6 反向控制被拒**（config 删名、config 改名、契约改名、增量契约删 scheme、增量契约加多余键、常量漂移）；`JSESSIONID` 命中 0 |
+| 1 | `$py tests/engineering/T03/check_session_cookie.py` | 0 | 整改当时只有**相对相等**检查，五源全等 `EDITORIAL_SESSION`；6/6 反向控制被拒。**第五轮复审判为不足**（F02/F03/F04/F07：闸门对守卫本身盲视、配置扫描无路径锚定、五源协同改名仍通过、dev/mock profile 未扫），已加固为绝对锚 `APPROVED_NAME` + 缩进路径匹配 `server.servlet.session.cookie.name` + 按 `---` 分段 + 扫全部 `application*.yml` + 把启动守卫与运行时自证断言纳入受控源，现 **14/14 反向控制被拒**（见第 8 项） |
 | 2 | `$py tests/engineering/T02/check_contracts.py` | 0 | `Approved T00 rc.3: 27 hashes verified, no regeneration`；`openapi.yaml` sha `e285471760a5dce4…` 与第四轮复审记录一致 |
-| 3 | `$py tests/engineering/integration/formal.py --include-review-regressions --evidence-name r04-core-post-change` | **0** | 真实 PostgreSQL + 真实 HTTP Session/CSRF，12 个测试类 **75 项全通过、0 失败 0 错误 0 跳过**；`paidCalls=0`；复审回归 4 项包含在内 |
+| 3 | `$py tests/engineering/integration/formal.py --include-review-regressions --evidence-name r04-core-post-change` | **0** | 真实 PostgreSQL + 真实 HTTP Session/CSRF，12 个测试类 75 项全通过、0 失败 0 错误 0 跳过；`paidCalls=0`。**更正（第五轮 F01）**：本行原先被当作"改名生效"的证据是错的——该套件的 `-Dtest` 白名单**不含 `T03PostgresTest`**（`fixationRotationAndLogout` 命中 0），它只证明改名没有破坏 core 组合根；改名的直接证据是第 4 行与第 10 行 |
+| 10 | `$py tests/engineering/integration/formal.py --suite identity --evidence-name r05-head-bytes`（HEAD 字节，含 T08 集成后的 `application.yml`） | 1 | `T03PostgresTest` 15 项 6 失败，失败集与第 4、5 行**同一既有 6 项**；`fixationRotationAndLogout` **不在失败集**（逐方法解析 surefire XML 得出）→ 运行时确实发出 `EDITORIAL_SESSION=`。第五轮 F05 指出台账原先绑的 `application.yml` 指纹 `fff6a718…` 已被 T08 提交刷新为 `42acb385…`，本行即 HEAD 字节的补证 |
+| 11 | `$py tests/engineering/T03/check_session_cookie.py --output tests/engineering/T03/evidence/session-cookie-r05.json` | 0 | 加固后闸门：绝对锚 `APPROVED_NAME`、缩进路径匹配 `server.servlet.session.cookie.name` 且按 `---` 分段、扫 `application-dev/mock/prod.yml` 全四个 profile（`profileOverrides={}`）、启动守卫行与运行时自证断言成为受控源；**14/14 反向控制被拒**（新增：守卫行删除、守卫 `if(false)` 阉割、守卫读错属性键、cookie 名挪到 `spring.datasource` 下、追加 `---` 文档藏第二个名、profile 覆盖成 `JSESSIONID`、运行时断言删除、五源协同改回 `JSESSIONID`） |
 | 4 | `$py tests/engineering/integration/formal.py --suite identity --evidence-name r04-session-cookie` | 1 | `T03PostgresTest` 15 项中 6 失败（见 §4 归因） |
 | 5 | 同上，在**未改动的基线工作树** `dc95736`（`git worktree add --detach`，含 3 处 `JSESSIONID` 字面量） | 1 | 失败的 6 个方法名与第 4 项**逐字相同，`Compare-Object` 差集为 0** |
 | 6 | `$py tests/engineering/integration/formal.py --suite all --evidence-name r04-all-with-identity` | 1 | 120 项中 16 失败（9 failures + 7 errors） |

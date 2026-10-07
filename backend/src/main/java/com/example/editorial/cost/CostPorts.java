@@ -52,8 +52,13 @@ public final class CostPorts {
 
     /**
      * Budget alert delivery (SRS 34: budget past the alert percent, quota reached, reservations waiting on an
-     * outcome). The default implementation records nothing: alert data is always queryable through the usage
-     * service, so an unwired sink is a notification gap that must be reported, never a lost accounting fact.
+     * outcome). The accounting facts behind every alert are always queryable — through the usage service or
+     * {@code BudgetService.pendingReconciliations} — so this sink only carries the notification.
+     *
+     * <p>The default drops the alert silently. That is a known gap, not a finished feature: the composition
+     * root binds it only once a notification domain exists (T10/T11), and a deployment that enables cost with
+     * this default gets budget data it can pull but never a message pushed. Registered as a prerequisite; no
+     * alert delivery may be claimed until a real sink is bound.</p>
      */
     public interface AlertSink { void emit(ActorContext actor, BudgetAlert alert); }
 
@@ -63,7 +68,11 @@ public final class CostPorts {
 
     public static AlertSink noAlerts() { return (actor, alert) -> {}; }
 
-    public static Audit noAudit() { return (a, action, article, entity, before, after) -> {}; }
+    /**
+     * There is deliberately no {@code noAudit()} factory: an audit trail that swallows every entry would make a
+     * charge untraceable, which is worse than refusing to start. The composition root must bind {@link Audit} to
+     * the append-only audit table (bootstrap's cost audit bean), and a build that cannot do so fails at startup.
+     */
 
     /**
      * Occupancy of one accounting scope, read in a single statement under the scope lock. {@code unknown} is a

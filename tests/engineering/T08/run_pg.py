@@ -36,6 +36,9 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 MIGRATIONS = ROOT / 'backend/src/main/resources/db/migration'
 TESTS_DEFAULT = 'CostPricingTest,T08PostgresTest'
+# The delivered self-test shape, asserted by --expect-tests: 16 Money/price/policy unit cases plus 28 cases
+# against the real cluster. Deliberately a number the script enforces, so a silent skip cannot exit 0.
+EXPECTED_TESTS = 44
 DATABASE = 'editorial'
 ADMIN_ROLE = 'editorial_admin'
 
@@ -86,8 +89,16 @@ def main() -> int:
                         help='scratch root for the cluster and the build copy (default: tests/engineering/T08/.work, '
                              'which is git-ignored; point elsewhere when the shell denies writes under tests/)')
     parser.add_argument('--timeout', type=int, default=900)
+    parser.add_argument('--expect-tests', type=int, default=EXPECTED_TESTS,
+                        help='fail (non-zero, no evidence) unless Surefire reports exactly this many executed cases')
+    parser.add_argument('--expect-skipped', type=int, default=0,
+                        help='fail unless exactly this many cases were skipped (a silently skipped real-PG suite '
+                             'must not be able to exit 0)')
+    parser.add_argument('--skip-tests', action='store_true',
+                        help='build the cluster and apply the installed migrations, but run no tests (diagnosis only)')
     parser.add_argument('--keep-cluster', action='store_true',
-                        help='leave the cluster running (never used for delivered evidence)')
+                        help='leave the cluster running and drop credentials.txt in the ignored run directory '
+                             '(never used for delivered evidence)')
     args = parser.parse_args()
     if Path(args.evidence_name).name != args.evidence_name:
         parser.error('--evidence-name must be a filename stem')
@@ -237,6 +248,11 @@ def main() -> int:
             " information_schema.role_table_grants where table_schema='editorial' and table_name in"
             " ('cost_ledger','cost_pricing_version','audit_log') group by grantee order by grantee")
 
+        if args.skip_tests:
+            evidence['testsSkipped'] = '--skip-tests: cluster and installed migrations only'
+            exit_code = 0
+            return exit_code
+
         run([args.maven, '-B', '-ntp', '-o', '-f', work / 'backend/pom.xml',
              '-Dmaven.repo.local=' + str(args.m2), 'test', '-Dtest=' + args.tests,
              '-Dsurefire.failIfNoSpecifiedTests=false'], timeout=args.timeout)
@@ -260,6 +276,24 @@ def main() -> int:
         evidence['totals'] = {'tests': sum(s['tests'] for s in suites),
                               'failures': sum(s['failures'] + s['errors'] for s in suites),
                               'skipped': sum(s['skipped'] for s in suites)}
+        # The count is a gate, not a caption: an empty run, a gated-off real-PG suite or a missing class must not
+        # be able to exit 0. Defaults are the delivered self-test shape; --expect-tests overrides deliberately.
+        problems = []
+        if evidence['totals']['failures']:
+            problems.append(f"failures/errors={evidence['totals']['failures']}")
+        if evidence['totals']['tests'] != args.expect_tests:
+            problems.append(f"executed {evidence['totals']['tests']} cases, expected {args.expect_tests}")
+        if evidence['totals']['skipped'] != args.expect_skipped:
+            problems.append(f"skipped {evidence['totals']['skipped']}, expected {args.expect_skipped}")
+        wanted = [t.strip() for t in args.tests.split(',') if t.strip()]
+        reported = [s['suite'].rsplit('.', 1)[-1] for s in suites]
+        missing = [name for name in wanted if name not in reported]
+        if missing:
+            problems.append('no Surefire report for ' + ', '.join(missing))
+        evidence['expectations'] = {'tests': args.expect_tests, 'skipped': args.expect_skipped,
+                                    'suitesRequested': wanted, 'problems': problems}
+        if problems:
+            raise RuntimeError('test totals rejected the run: ' + '; '.join(problems))
         target = HERE / 'evidence' / (args.evidence_name + '-test-results')
         try:
             shutil.copytree(reports, target)
@@ -276,6 +310,20 @@ def main() -> int:
         if server is not None:
             if args.keep_cluster:
                 evidence['clusterLeftRunning'] = server.pid
+                # A kept cluster is for diagnosis, so hand back the throwaway credentials. They live in the
+                # ignored run directory beside a cluster that holds nothing but fixtures.
+                (work / 'credentials.txt').write_text(
+                    f"port={port}\nadmin={ADMIN_ROLE}\nadmin_password={passwords['admin']}\n"
+                    f"runtime_password={passwords['runtime']}\nmigration_password={passwords['migration']}\n",
+                    encoding='utf-8', newline='\n')
+                evidence['credentialsFile'] = str((work / 'credentials.txt').relative_to(ROOT)).replace('\\', '/')
+                print(f"kept cluster: port={port} credentials={work / 'credentials.txt'}", flush=True)
+                # A throwaway local cluster with throwaway passwords, so a diagnosis session can attach.
+                (work / 'credentials.txt').write_text(
+                    f'port={port}\ndatabase={DATABASE}\n'
+                    + '\n'.join(f'{role}={passwords[role]}' for role in ('admin', 'runtime', 'migration')) + '\n',
+                    encoding='utf-8', newline='\n')
+                evidence['credentialsFile'] = str((work / 'credentials.txt').relative_to(ROOT)).replace('\\', '/')
             else:
                 server.terminate()
                 server.wait(timeout=60)

@@ -10,6 +10,8 @@ import com.example.editorial.shared.PublicFailure;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,10 +25,12 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.StreamSupport;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -64,6 +68,7 @@ class T08PostgresTest {
     private static final Money IMAGE_UNIT = Money.of("1.000000");
 
     private static Connection admin;
+    private static PGSimpleDataSource runtimeSource;
     private static JdbcTemplate runtime;
     private static DataSourceTransactionManager manager;
     private static TransactionTemplate tx;
@@ -92,6 +97,7 @@ class T08PostgresTest {
         dataSource.setUrl(url);
         dataSource.setUser("editorial_runtime");
         dataSource.setPassword(System.getenv().getOrDefault("T08_RUNTIME_PASSWORD", ""));
+        runtimeSource = dataSource;
         runtime = new JdbcTemplate(dataSource);
         manager = new DataSourceTransactionManager(dataSource);
         tx = new TransactionTemplate(manager);
@@ -231,13 +237,18 @@ class T08PostgresTest {
 
     /** Binds the services to one exact policy, so a deliberate configuration gap can be exercised. */
     private void service(BudgetPolicy used) {
-        activePolicy = used;
-        ledger = new CostLedger(runtime, JSON);
-        budget = new BudgetService(ledger, tx, used, (actor, article, execution) -> {
+        service(used, (actor, article, execution) -> {
             CostPorts.Executions.Scope scope = scopes.get(execution);
             if (scope == null) throw new PublicFailure(404, "EXECUTION_NOT_FOUND");
             return scope;
-        }, auditPort, (actor, alert) -> emitted.add(alert));
+        });
+    }
+
+    /** Binds the services with a chosen execution resolver, so an unwired assembly can be exercised too. */
+    private void service(BudgetPolicy used, CostPorts.Executions executions) {
+        activePolicy = used;
+        ledger = new CostLedger(runtime, JSON);
+        budget = new BudgetService(ledger, tx, used, executions, auditPort, (actor, alert) -> emitted.add(alert));
         usage = new UsageService(ledger, JSON, used, "t08-cursor-secret-value-for-tests-0001");
     }
 
@@ -250,22 +261,37 @@ class T08PostgresTest {
     }
 
     /**
-     * Port bound to the production audit writer. {@code bootstrap/CostIntegration} is the authoritative guard and
-     * {@code bootstrap/CostAuditWiringTest} tests it; this mirror exists only to reach the same real
-     * {@code audit.JdbcAuditSink} INSERT from the cost side, because {@code audit_log.before_hash}/{@code
-     * after_hash} are {@code char(64)} with a {@code ^[a-f0-9]{64}$} CHECK and {@code detail} is pinned to
-     * {@code '{}'}: a money string there is a runtime 23514 inside a live request. The rejected value is never
-     * echoed, since the message can reach a log.
+     * The audit guard under test is the one the deployed application runs: {@code
+     * bootstrap/CostIntegration#costAudit}, reached reflectively because the composition root keeps that bean
+     * method package-private. Round-1 finding F-03/M14 was that a test-built mirror of the check proves nothing
+     * about production — disabling the real guard left every static gate green — so the mirror is gone: switch
+     * off {@code requireHashShape} and this suite turns red.
+     *
+     * <p>The sink handed to the production adapter records what it was given and then delegates to the real
+     * {@code audit.JdbcAuditSink} INSERT, because {@code audit_log.before_hash}/{@code after_hash} are
+     * {@code char(64)} with a {@code ^[a-f0-9]{64}$} CHECK and {@code detail} is pinned to {@code '{}'}: a money
+     * string there is a runtime 23514 inside a live request. The rejected value is never echoed, since the
+     * message can reach a log.</p>
      */
-    private CostPorts.Audit realAuditSinkPort() {
-        return (actor, action, article, entity, beforeHash, afterHash) -> {
-            auditPayloads.add(action + "|" + beforeHash + "|" + afterHash);
-            for (String hash : new String[] {beforeHash, afterHash})
-                if (hash != null && !hash.matches("^[a-f0-9]{64}$"))
-                    throw new IllegalStateException("COST_AUDIT: hash field must be null or 64 lowercase hex, got "
-                            + hash.length() + " characters");
-            sink.append(actor, new AuditSink.Event(action, article, "COST", entity, beforeHash, afterHash));
+    private CostPorts.Audit productionAuditPort() {
+        AuditSink recording = (actor, event) -> {
+            auditPayloads.add(event.action() + "|" + event.beforeHash() + "|" + event.afterHash());
+            return sink.append(actor, event);
         };
+        Method bean;
+        try {
+            bean = com.example.editorial.bootstrap.CostIntegration.class
+                    .getDeclaredMethod("costAudit", AuditSink.class);
+        } catch (NoSuchMethodException moved) {
+            throw new IllegalStateException("bootstrap no longer builds CostPorts.Audit from costAudit(AuditSink), "
+                    + "so the audit guard this suite claims is not the one that ships", moved);
+        }
+        bean.setAccessible(true);
+        try {
+            return (CostPorts.Audit) bean.invoke(new com.example.editorial.bootstrap.CostIntegration(), recording);
+        } catch (IllegalAccessException | InvocationTargetException shape) {
+            throw new IllegalStateException("the production audit bean could not be constructed", shape);
+        }
     }
 
     private static Map<BudgetPolicy.Counter, Long> wideCaps() {
@@ -327,40 +353,57 @@ class T08PostgresTest {
     // ------------------------------------------------------------------ atomic pre-occupancy
 
     @Test
-    @DisplayName("AC-28: the last of a balance is won by exactly one task")
+    @DisplayName("AC-28: the last of a balance is won by exactly one task, round after round")
     void lastBalanceSingleWinner() throws Exception {
-        UUID article = article("1.000000");
-        assertTrue(ledger.occupancy("l.article_id=?", article).occupied().isZero());
-        UUID one = execution(article, null, null), two = execution(article, null, null);
-        UUID keyOne = UUID.randomUUID(), keyTwo = UUID.randomUUID();
+        // Ten rounds, because one lucky interleave proves nothing about lock ordering: a writer that arrives
+        // before the other's advisory lock is granted is the case the ceiling has to survive.
         ExecutorService pool = Executors.newFixedThreadPool(2);
-        CountDownLatch ready = new CountDownLatch(2), start = new CountDownLatch(1);
-        List<String> outcomes;
         try {
-            Future<String> first = pool.submit(() -> attempt(article, one, keyOne));
-            Future<String> second = pool.submit(() -> attempt(article, two, keyTwo));
-            ready.await(10, TimeUnit.SECONDS);
-            start.countDown();
-            outcomes = List.of(first.get(30, TimeUnit.SECONDS), second.get(30, TimeUnit.SECONDS));
+            for (int round = 1; round <= 10; round++) {
+                execute("DELETE FROM editorial.cost_ledger");
+                emitted.clear();
+                audited.clear();
+                UUID article = article("1.000000");
+                assertTrue(ledger.occupancy("l.article_id=?", article).occupied().isZero());
+                UUID one = execution(article, null, null), two = execution(article, null, null);
+                CountDownLatch ready = new CountDownLatch(2), start = new CountDownLatch(1);
+                List<String> outcomes;
+                try {
+                    Future<String> first = pool.submit(() -> attempt(article, one, UUID.randomUUID(), ready, start));
+                    Future<String> second = pool.submit(() -> attempt(article, two, UUID.randomUUID(), ready, start));
+                    assertTrue(ready.await(10, TimeUnit.SECONDS), "both callers reached the gate");
+                    start.countDown();
+                    outcomes = List.of(first.get(30, TimeUnit.SECONDS), second.get(30, TimeUnit.SECONDS));
+                } finally {
+                    pool.shutdownNow();
+                }
+                pool = Executors.newFixedThreadPool(2);
+                long winners = outcomes.stream().filter(outcome -> outcome.startsWith("reserved")).count();
+                assertEquals(1, winners, "round " + round + ": exactly one caller may take the last unit: " + outcomes);
+                assertTrue(outcomes.contains("BUDGET_EXCEEDED"),
+                        "round " + round + ": the other stops on the budget: " + outcomes);
+                CostPorts.Occupancy after = ledger.occupancy("l.article_id=?", article);
+                assertEquals("1.000000", after.reserved().text(), "holds never exceed the user budget");
+                assertEquals(1, rows());
+                assertTrue(emitted.stream().anyMatch(a -> a.code() == BudgetAlert.Code.ARTICLE_BUDGET_EXCEEDED),
+                        "round " + round + ": the refusal is reported as budget alert data");
+                assertEquals(1, audited.stream().filter(a -> a.startsWith("COST_RESERVED")).count());
+            }
         } finally {
             pool.shutdownNow();
         }
-        long winners = outcomes.stream().filter(outcome -> outcome.startsWith("reserved")).count();
-        assertEquals(1, winners, "exactly one caller may take the last unit: " + outcomes);
-        assertTrue(outcomes.contains("BUDGET_EXCEEDED"), "the other stops on the budget: " + outcomes);
-        CostPorts.Occupancy after = ledger.occupancy("l.article_id=?", article);
-        assertEquals("1.000000", after.reserved().text(), "holds never exceed the user budget");
-        assertEquals(1, rows());
-        assertTrue(emitted.stream().anyMatch(a -> a.code() == BudgetAlert.Code.ARTICLE_BUDGET_EXCEEDED),
-                "the refusal is reported as budget alert data");
-        assertEquals(1, audited.stream().filter(a -> a.startsWith("COST_RESERVED")).count());
     }
 
-    private String attempt(UUID article, UUID execution, UUID key) {
+    private String attempt(UUID article, UUID execution, UUID key, CountDownLatch ready, CountDownLatch start) {
+        ready.countDown();
         try {
+            if (!start.await(10, TimeUnit.SECONDS)) return "LATCH_TIMEOUT";
             return "reserved:" + budget.reserve(actor(), image(article, execution, key, 1)).id();
         } catch (PublicFailure refused) {
             return refused.code();
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            return "INTERRUPTED";
         }
     }
 
@@ -382,6 +425,96 @@ class T08PostgresTest {
         assertTrue(refused.getMessage().contains("cost budget ceiling"), refused.getMessage());
         assertEquals("1.000000", ledger.occupancy("l.article_id=?", article).occupied().text(),
                 "the rejected insert left nothing behind");
+    }
+
+    @Test
+    @DisplayName("The ceiling also holds when two writers skip the service at the same moment")
+    void concurrentBypassWritersCannotOversubscribe() throws Exception {
+        // Serial bypass is covered by admissionCeilingIsADatabaseRule; this is the case that finding F-02 said
+        // was unproven: two sessions that know nothing about BudgetService race for the last unit, so a ceiling
+        // that re-reads occupancy from a stale snapshot lets both rows in and oversubscribes the article.
+        UUID article = article("1.000000");
+        CyclicBarrier barrier = new CyclicBarrier(2);
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        List<String> outcomes;
+        try {
+            Future<String> first = pool.submit(() -> bypassInsert(article, barrier));
+            Future<String> second = pool.submit(() -> bypassInsert(article, barrier));
+            outcomes = List.of(first.get(60, TimeUnit.SECONDS), second.get(60, TimeUnit.SECONDS));
+        } finally {
+            pool.shutdownNow();
+        }
+        long committed = outcomes.stream().filter("committed"::equals).count();
+        assertEquals(1, committed, "at most one bypassing writer may take the last unit: " + outcomes);
+        assertTrue(outcomes.contains("23514"), "the other is refused by the ceiling trigger: " + outcomes);
+        assertEquals("1.000000", ledger.occupancy("l.article_id=?", article).occupied().text());
+        assertEquals(1, rows());
+    }
+
+    /**
+     * One direct INSERT as {@code editorial_runtime}, triggers in {@code origin} mode (a replica session would
+     * disable the very trigger under test), released on a shared barrier and holding its transaction open past
+     * the other's read. Returns {@code committed} or the SQLSTATE the database chose.
+     */
+    private String bypassInsert(UUID article, CyclicBarrier barrier) {
+        try (Connection session = runtimeSource.getConnection()) {
+            session.setAutoCommit(false);
+            try (var probe = session.createStatement(); var mode = probe.executeQuery("SHOW session_replication_role")) {
+                assertTrue(mode.next(), "the session must report its trigger mode");
+                assertEquals("origin", mode.getString(1),
+                        "a replica-mode session disables triggers, which would test nothing here");
+            }
+            barrier.await(10, TimeUnit.SECONDS);
+            try (PreparedStatement statement = session.prepareStatement(
+                    "INSERT INTO editorial.cost_ledger (id,article_id,owner_id,execution_id,execution_kind,"
+                            + "reservation_id,kind,status,amount,currency,pricing_version,pricing_hash,"
+                            + "idempotency_key,provider,model,capability,bucket_day,usage,counters,created_by,"
+                            + "updated_by,trace_id) "
+                            + "SELECT k.g,?,?,'00000000-0000-4000-8000-000000000009','AGENT',k.g,'ESTIMATED',"
+                            + "'RESERVED',1.0,'USD',p.id,p.hash,k.g,?,?,'GENERATION',current_date,'{}'::jsonb,"
+                            + "'{}'::jsonb,?,?,? "
+                            + "FROM (SELECT gen_random_uuid() AS g) k, editorial.cost_pricing_version p "
+                            + "WHERE p.status='PUBLISHED' LIMIT 1")) {
+                statement.setObject(1, article);
+                statement.setObject(2, OWNER);
+                statement.setObject(3, PROVIDER);
+                statement.setObject(4, MODEL);
+                statement.setObject(5, OWNER);
+                statement.setObject(6, OWNER);
+                statement.setObject(7, UUID.randomUUID());
+                statement.executeUpdate();
+            } catch (SQLException refused) {
+                session.rollback();
+                return refused.getSQLState();
+            }
+            // Hold the write long enough that the other session's aggregate read is certainly in flight.
+            try (var hold = session.createStatement()) {
+                hold.execute("SELECT pg_sleep(0.4)");
+            }
+            session.commit();
+            return "committed";
+        } catch (SQLException | java.util.concurrent.BrokenBarrierException | TimeoutException racing) {
+            return "race-failed:" + racing.getClass().getSimpleName();
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            return "INTERRUPTED";
+        }
+    }
+
+    @Test
+    @DisplayName("An assembly without the execution scope refuses and books nothing")
+    void unboundExecutionScopeWritesNothing() {
+        // rc.3 demands an execution id and agent_execution/tool_execution are T09/T10 work, so the shipped
+        // composition root leaves CostPorts.Executions unbound. That default must fail closed on the real
+        // database path, not only in the unit test: no ledger row, no audit entry, no invented charge.
+        UUID article = article("5.000000");
+        service(activePolicy, CostPorts.unavailableExecutions());
+        PublicFailure refused = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                image(article, UUID.randomUUID(), UUID.randomUUID(), 1)));
+        assertEquals(503, refused.status());
+        assertEquals("EXECUTION_SCOPE_NOT_READY", refused.code());
+        assertEquals(0, rows(), "a charge against an invented execution is never booked");
+        assertTrue(audited.isEmpty(), "and nothing is audited either");
     }
 
     @Test
@@ -1046,9 +1179,9 @@ class T08PostgresTest {
     }
 
     @Test
-    @DisplayName("Cost audit lands in audit_log and the table itself refuses money payloads")
+    @DisplayName("The shipped audit adapter lands in audit_log and the table refuses money payloads")
     void auditRowsLandInTheAuditTableThroughTheRealSink() {
-        auditPort = realAuditSinkPort();
+        auditPort = productionAuditPort();
         service(activePolicy);
         UUID article = article("5.000000");
         UUID execution = execution(article, null, null);
@@ -1083,10 +1216,13 @@ class T08PostgresTest {
                 + "'SYSTEM_WORKER','COST_SETTLED','COST',gen_random_uuid(),"
                 + "'{\"amount\":\"0.034200\"}'::jsonb,gen_random_uuid())", OWNER));
         assertEquals("23514", detailRejected.getSQLState());
-        // The shape rule is applied before any SQL runs, and a rejected value is not echoed into the message.
+        // The shape rule is applied by the shipped adapter before any SQL runs, names the column and hides the value.
         IllegalStateException guarded = assertThrows(IllegalStateException.class, () -> auditPort.append(actor(),
                 "COST_RESERVED", article, held.id(), "0.034200", null));
-        assertFalse(guarded.getMessage() != null && guarded.getMessage().contains("0.034200"));
+        assertTrue(guarded.getMessage().contains("before_hash"), guarded.getMessage());
+        assertFalse(guarded.getMessage().contains("0.034200"), "the rejected value must not reach a log");
+        assertEquals(0, runtime.queryForObject("SELECT count(*) FROM editorial.audit_log WHERE before_hash IS NOT NULL",
+                Integer.class).intValue(), "the refused append wrote nothing");
         // Audit is append-only for the runtime role: it may write the trail but never rewrite or erase it.
         assertEquals(2, runtime.queryForObject("SELECT count(*) FROM editorial.audit_log", Integer.class).intValue());
         assertEquals("42501", sqlFailure(() -> runtime.update("DELETE FROM editorial.audit_log")).getSQLState());

@@ -24,8 +24,12 @@ import org.springframework.transaction.support.TransactionTemplate;
  * the new estimate is checked against it. Because a lock is held until commit, two callers racing for the last
  * of a balance serialize: the first writes its hold and the second reads that hold and is refused with
  * {@code BUDGET_EXCEEDED}. A single-winner race is therefore a property of the lock and the read, not of a
- * Java-side check, and the draft migration repeats the same ceiling as a database constraint so a writer that
- * skipped the lock still cannot oversubscribe an article.</p>
+ * Java-side check, and the installed migration repeats the article ceiling as a database rule: the admission
+ * trigger locks the {@code article_job} row before it aggregates occupancy, so a writer that skipped these
+ * advisory locks cannot oversubscribe an article even concurrently — which {@code T08PostgresTest} measures by
+ * racing two direct INSERTs, not by reasoning about it. The daily ceiling, the count caps and the provider
+ * quotas are enforced on this service path only: their limits live in configuration rather than in a row the
+ * database could lock, so a bypassing writer meets the article ceiling and nothing else.</p>
  *
  * <p>Settlement is idempotent by {@code settlementKey}: the same key replays the stored answer, while the row
  * move itself is guarded by the status and lock version read under the lock, so a concurrent second settlement
@@ -91,6 +95,11 @@ public final class BudgetService {
         for (Ceiling ceiling : ceilings) ledger.lockScope(ceiling.lockKey());
 
         // Replay before anything else: the same reservation key returns the hold already made, never a second one.
+        // Recorded asymmetry (round-1 finding F-10): settlement compares a canonical request digest and answers
+        // SETTLEMENT_CONFLICT when the same key arrives with different content, while reservation replay
+        // deliberately ignores changed content — rc.3's BudgetReservation carries no request-digest field to
+        // compare against, so the first hold wins. A caller that needs conflict detection must derive
+        // idempotencyKey from its own request digest; closing the gap needs a contract field, not a guess here.
         Optional<Reservation> replay = ledger.byReservationKey(article.article(), request.idempotencyKey());
         if (replay.isPresent()) return replay.get();
         if (!article.billable()) throw new PublicFailure(409, article.refusal());

@@ -1,0 +1,151 @@
+{
+  "task": "T08 round-1 independent review - machine-readable evidence",
+  "reviewer": "independent-review-agent-1",
+  "reviewedCommit": "b3a909d0200769ac1940838849702a5f9bd258ad",
+  "head": "b3a909d0200769ac1940838849702a5f9bd258ad",
+  "modifiedTrackedFiles": [],
+  "untrackedFiles": ["?? docs/execution/reviews/T08-round1/"],
+  "reviewerDiscipline": "no git add/commit/push, no full mvn build, no tracked-file edit, no whole-file snapshots in evidence",
+  "gates": {
+    "t08_pg_suite": {
+      "argv": ["python", "tests/engineering/T08/run_pg.py", "--evidence-name", "t08-r1-reviewer1"],
+      "exitCode": 1,
+      "expectedExit": 0,
+      "totals": null,
+      "evidenceWritten": false,
+      "reproduced": false,
+      "failureSummary": "PermissionError [WinError 5] at work.mkdir(parents=True) for tests/engineering/T08/.work/<uuid> (run_pg.py line 106, after the tool-existence checks on lines 101-103 passed, so initdb/psql/pg_ctl/createdb/java/maven all exist)",
+      "environmentLimitation": "reviewer child processes run at Low mandatory integrity (S-1-16-4096) with only BUILTIN\\Users + Authenticated Users; every write was denied, inside and outside the workspace (probe: mkdir and file create -> WinError 5 in tests/engineering/T08/.work, tests/engineering/T08, docs/execution/reviews, E:\\temp-probe-t08-r1, %TEMP%). run_pg.py's own --work-root escape hatch cannot help. Approval prompts are disabled for this session, so the reviewer could not escalate and the 40/40 real-PostgreSQL suite is NOT independently reproduced."
+    },
+    "t08_static_verify": {
+      "argv": ["python", "tests/engineering/T08/verify.py"],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "counts": ["11", "11"],
+      "outputLine": "T08 static checks: 11/11 passed (contract self-check only, not an approval)",
+      "reproduced": true
+    },
+    "t02_contract_hashes": {
+      "argv": ["python", "tests/engineering/T02/check_contracts.py"],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "counts": ["27"],
+      "outputLine": "Approved T00 rc.3: 27 hashes verified, no regeneration",
+      "reproduced": true
+    },
+    "reviewer_boundary_proof": {
+      "argv": ["python", "docs/execution/reviews/T08-round1/check_boundary.py"],
+      "exitCode": 0,
+      "allBoundaryAssertionsHold": true
+    },
+    "reviewer_reverse_control": {
+      "argv": ["python", "docs/execution/reviews/T08-round1/check_reverse_control.py"],
+      "exitCode": 0,
+      "effectiveness": "11/11 targeted weakenings rejected by their target check",
+      "blindSpots": "4/4 weakenings unnoticed",
+      "diskUnchanged": true
+    }
+  },
+  "boundaryProof": {
+    "commitFilesTotal": 122,
+    "commitAdded": 120,
+    "commitModified": ["backend/src/main/resources/application.yml", "docs/execution/STATE.json"],
+    "commitOther": {},
+    "v5Committed": {"bytes": 13125, "sha256": "f71f7a49afa80d56feef6940e92c5382a6193b30be8a2100a6289d560d3f4806", "first3Bytes": "2d2d20", "bom": false, "crBytes": 0, "crlf": 0, "lf": 176, "trailingNewline": true},
+    "draftCommitted": {"bytes": 13108, "sha256": "b6ae88ba3f01a53518e420c540d431ef29bb8f004210c18f5bda12016b040014", "first3Bytes": "2d2d20", "bom": false, "crBytes": 0, "crlf": 0, "lf": 176, "trailingNewline": true},
+    "worktreeMatchesCommit": true,
+    "v4ReferenceFirst3Bytes": "2d2d20",
+    "v4ReferenceCrlf": 0,
+    "bodyAfterHeader3Lines": {
+      "v5Bytes": 12774,
+      "draftBytes": 12774,
+      "identical": true,
+      "sha256v5": "80df46523fa878a23fe908d53d9d913e65a0f79501976fac389762dea53f0226",
+      "sha256draft": "80df46523fa878a23fe908d53d9d913e65a0f79501976fac389762dea53f0226",
+      "identicalAfterNewlineNormalisation": true
+    },
+    "versionedMigrations": ["V1__identity_audit_idempotency.sql", "V2__skill_prompt_policy.sql", "V3__article_job_version.sql", "V4__change_proposal.sql", "V5__cost_ledger_pricing.sql"],
+    "exactlyFiveVersioned": true,
+    "costMentionsPerMigrationFile": {"V5__cost_ledger_pricing.sql": 42},
+    "v5CreateTable": ["cost_ledger", "cost_pricing_version"],
+    "v5OnlyCostTables": true,
+    "v5CreateIndex": 9,
+    "v5CreateFunction": ["t08_admit_estimate", "t08_guard_ledger", "t08_guard_pricing", "t08_ledger_consistent"],
+    "v5Triggers": ["cost_ledger_admit", "cost_ledger_consistent", "cost_ledger_guard", "cost_pricing_guard"],
+    "v5TriggerShapesReadByReview": {
+      "cost_ledger": ["BEFORE INSERT (admit ceiling)", "BEFORE UPDATE OR DELETE (guard)", "AFTER INSERT OR UPDATE constraint trigger, DEFERRABLE INITIALLY DEFERRED (consistency)"],
+      "cost_pricing_version": ["BEFORE UPDATE OR DELETE (guard)"]
+    },
+    "v5AlterOrDrop": [],
+    "v5WritesToNonCostTables": [],
+    "v5Grants": [
+      "REVOKE ALL ON editorial.cost_ledger,editorial.cost_pricing_version FROM PUBLIC,editorial_runtime,editorial_retention",
+      "GRANT SELECT ON editorial.cost_pricing_version TO editorial_runtime",
+      "GRANT SELECT,INSERT,UPDATE ON editorial.cost_ledger TO editorial_runtime",
+      "REVOKE ALL ON FUNCTION editorial.t08_admit_estimate(),editorial.t08_guard_ledger(),editorial.t08_ledger_consistent(...)"
+    ],
+    "applicationYmlDiff": {"addedLines": ["  cost:", "    enabled: ${EDITORIAL_COST_ENABLED:false}"], "removedLines": [], "addedCount": 2, "removedCount": 0},
+    "applicationYmlInventedBudgetKeys": [],
+    "budgetPolicyConfigFallbackDefaults": [
+      ["editorial.cost.max-calls-per-article", "64"],
+      ["editorial.cost.search-queries-per-article", "30"],
+      ["editorial.cost.model-output-tokens-per-article", "40_000"],
+      ["editorial.cost.queries-per-claim", "3"],
+      ["editorial.cost.auto-edit-loops-per-article", "1"],
+      ["editorial.cost.image-units-per-slot", "2"],
+      ["editorial.cost.image-units-per-article", "4"],
+      ["editorial.cost.daily-budget", "20.000000"],
+      ["editorial.cost.alert-percent", "80"],
+      ["editorial.cost.reconciliation-stale-minutes", "30"]
+    ],
+    "costPricingTestLocksInDefaults": true,
+    "noAuditStillDefined": true,
+    "auditSinkOnlyProvider": "identity/T03Configuration:27 behind @ConditionalOnProperty(editorial.identity.enabled=true)",
+    "allBoundaryAssertionsHold": true
+  },
+  "reverseControl": {
+    "gate": "tests/engineering/T08/verify.py (11 checks)",
+    "baselineAllPass": true,
+    "mutationMethod": "pathlib read hooks in this process only; every mutated file re-hashed after the run and unchanged (diskUnchanged=true)",
+    "controls": [
+      {"id": "M01-usage-summary-field-added", "expect": "REJECTS", "target": "frozen_usage_surface", "checksThatFailed": ["frozen_usage_surface"], "verdict": "REJECTED"},
+      {"id": "M02-usage-summary-field-renamed", "expect": "REJECTS", "target": "frozen_usage_surface", "checksThatFailed": ["frozen_usage_surface"], "verdict": "REJECTED"},
+      {"id": "M03-v5-ceiling-check-weakened", "expect": "REJECTS", "target": "installed_migration", "checksThatFailed": ["installed_migration"], "verdict": "REJECTED"},
+      {"id": "M04-v5-third-cost-table", "expect": "REJECTS", "target": "installed_migration", "checksThatFailed": ["installed_migration"], "verdict": "REJECTED"},
+      {"id": "M05-draft-grants-delete", "expect": "REJECTS", "target": "grants", "checksThatFailed": ["grants", "installed_migration"], "verdict": "REJECTED"},
+      {"id": "M06-money-uses-double", "expect": "REJECTS", "target": "decimal_only", "checksThatFailed": ["decimal_only"], "verdict": "REJECTED"},
+      {"id": "M07-audit-carries-amount", "expect": "REJECTS", "target": "audit_payload_shape", "checksThatFailed": ["audit_payload_shape"], "verdict": "REJECTED"},
+      {"id": "M08-silent-audit-fallback-returns", "expect": "REJECTS", "target": "audit_payload_shape", "note": "only detected because the fallback was added to CostConfiguration; the same fallback in another file is invisible (see F-06a)", "checksThatFailed": ["audit_payload_shape"], "verdict": "REJECTED"},
+      {"id": "M09-cost-imports-audit", "expect": "REJECTS", "target": "module_boundary", "checksThatFailed": ["audit_payload_shape", "module_boundary"], "verdict": "REJECTED"},
+      {"id": "M10-yml-invents-daily-budget", "expect": "REJECTS", "target": "configuration_ownership", "checksThatFailed": ["configuration_ownership"], "verdict": "REJECTED"},
+      {"id": "M11-anchor-test-renamed", "expect": "REJECTS", "target": "acceptance_anchors", "checksThatFailed": ["acceptance_anchors"], "verdict": "REJECTED"},
+      {"id": "M12-invented-budget-defaults-changed", "expect": "BLIND_SPOT", "file": "cost/BudgetPolicyConfig.java", "mutation": "daily-budget default 20.000000 -> 999.000000; search-queries-per-article default 30 -> 1000000", "checksThatFailed": [], "verdict": "BLIND-SPOT-CONFIRMED", "finding": "F-01"},
+      {"id": "M13-paid-call-guard-neutralised", "expect": "BLIND_SPOT", "file": "bootstrap/StartupPolicy.java", "mutation": "require(!env.getProperty(\"editorial.providers.paid-calls-enabled\", Boolean.class, false) || true, ...)", "checksThatFailed": [], "verdict": "BLIND-SPOT-CONFIRMED", "finding": "F-07", "note": "verify.py check 10 only greps the property name: near-tautological assertion"},
+      {"id": "M14-audit-shape-guard-disabled", "expect": "BLIND_SPOT", "file": "bootstrap/CostIntegration.java", "mutation": "if (value != null && !value.matches(HASH_SHAPE)) -> if (false && value != null)", "checksThatFailed": [], "verdict": "BLIND-SPOT-CONFIRMED", "finding": "F-06b"},
+      {"id": "M15-ac28-assertion-hollowed", "expect": "BLIND_SPOT", "file": "cost/T08PostgresTest.java", "mutation": "assertEquals(1, winners, ...) -> assertTrue(true, ...)", "checksThatFailed": [], "verdict": "BLIND-SPOT-CONFIRMED", "finding": "F-07", "note": "acceptance-anchor check verifies method-name presence only"}
+    ]
+  },
+  "findings": [
+    {"id": "F-01", "severity": "P1", "title": "hard-coded production budget defaults contradict the no-invented-limits ledger", "evidence": "check_boundary.py exit 0 (budgetPolicyConfigFallbackDefaults), CostPricingTest:342-351, verify.py item 9 + M12 BLIND-SPOT", "requiredFix": "remove fallbacks or obtain Owner approval and correct STATE.json/T08.md/T08-Integration; extend verify.py item 9 to scan BudgetPolicyConfig.java"},
+    {"id": "F-02", "severity": "P1", "title": "AC-28 database ceiling is not a concurrency guard; race proof is a single run with dead latches", "evidence": "V5:85-88 aggregate without FOR UPDATE/advisory lock; BudgetService:90-91 sorted keys (no cycle); T08PostgresTest:337-343 latches never counted down/awaited", "requiredFix": "lock inside t08_admit_estimate or downgrade the claim; add a two-session bypass race test; fix the latches and repeat"},
+    {"id": "F-03", "severity": "P2", "title": "service vs DB ceiling coverage split (article agrees, day/counts/provider DB-free)", "evidence": "V5 admit trigger reads only article_job.budget_limit; CostLedger:33-34 vs V5:85-86 identical COUNTED formula; no CHECK for daily/count ceilings", "requiredFix": "extend the trigger to the owner/day aggregate or document that the DB only backstops the article ceiling"},
+    {"id": "F-04", "severity": "P2", "title": "over_run is written but has no external report path", "evidence": "V5:54, CostLedger:174-178, Reservation.wire 10 frozen fields, UsageSummary 11 fields, reportedAmount:46-48, M01 gate behaviour", "requiredFix": "carry overRun in alert/queue payloads consumed by T09/T10 and open a ledger item, or correct the AC-28 wording"},
+    {"id": "F-05", "severity": "P2", "title": "alerts and reconciliation queue have no production caller; AlertSink default is silent", "evidence": "grep backend/src/main: pendingReconciliations/UsageService.alerts called only from tests; CostConfiguration:46-48 noAlerts", "requiredFix": "name the caller in T09/T10 cards; record the notification gap in STATE.json; make noAlerts at least countable"},
+    {"id": "F-06", "severity": "P2", "title": "audit decision acceptable, but noAudit() survives, the PG proof uses a test mirror, and the required binding couples cost to identity", "evidence": "CostPorts:66; T08PostgresTest:260-269 mirror guard; M14 blind spot; T03Configuration:27 sole AuditSink provider; M08 scope limit", "requiredFix": "delete CostPorts.noAudit(); drive the DB test through new CostIntegration().costAudit(sink); document the identity/cursor-key prerequisites"},
+    {"id": "F-07", "severity": "P2", "title": "verify.py has no self reverse control; four weakenings go unnoticed", "evidence": "check_reverse_control.py exit 0: 11/11 rejected, 4/4 unnoticed, diskUnchanged true", "requiredFix": "add --reverse-control (in-memory) covering M12/M13/M15 and a structural paid-calls assertion"},
+    {"id": "F-08", "severity": "P3", "title": "run_pg.py records totals but never enforces 40/0/0", "evidence": "run_pg.py:240-271 with failIfNoSpecifiedTests=false and T08_REAL_PG gating", "requiredFix": "add --expect-tests/--expect-skipped and non-zero exit on mismatch"},
+    {"id": "F-09", "severity": "P3", "title": "unavailableExecutions fail-closed behaviour is untested", "evidence": "grep backend/src/test: zero hits for unavailableExecutions / EXECUTION_SCOPE_NOT_READY; CostPorts:60-62 and BudgetService:79 verified by reading only", "requiredFix": "unit assert 503 code, plus a wiring test that reserve cannot write a ledger row while unbound"},
+    {"id": "F-10", "severity": "P3", "title": "reservation replay ignores request content while settlement compares a canonical hash", "evidence": "BudgetService:94-95; T08PostgresTest:389-398; Settlement:89-100", "requiredFix": "compare a canonical request hash (409 IDEMPOTENCY_CONFLICT) or document that the key must be derived from the request"},
+    {"id": "F-11", "severity": "P3", "title": "two stale statements still describe the pre-fix bytes", "evidence": "T08.md §3/§5 CRLF/12,947B/173 CR vs measured CR=0 and 12774=12774 raw-identical; verify.py:92-93 docstring; Money bound is 12 integer digits not int32", "requiredFix": "refresh the wording to the current bytes and fix the int32 claim"},
+    {"id": "F-12", "severity": "P3", "title": "implementation and integration squashed into one commit, so the boundary invariant cannot be attributed per author", "evidence": "git show --name-status b3a909d: 120 A + 2 M (application.yml, STATE.json); integration evidence trees included", "requiredFix": "split implement vs integration commits, or list file ownership in the integration report"}
+  ],
+  "verdict": "CHANGES_REQUIRED",
+  "verdictCounts": {"P1": 2, "P2": 5, "P3": 5, "total": 12},
+  "notProvenByReviewer": [
+    "40/40 real PostgreSQL suite (blocked by write-denied low-integrity child processes; totals from main-repro-2.json not trusted)",
+    "empirical demonstration of the concurrent bypass oversubscription in F-02 (reasoned from READ COMMITTED statement snapshots; needs a live cluster)",
+    "mvn clean verify 265 and formal.py core suite (forbidden: shared backend/target contention)",
+    "GET /api/v1/usage real HTTP end to end and the enabled-state composition root startup",
+    "clause-by-clause rc.3 reserve/settle port conformance (relied on check_contracts.py 27 hashes and verify.py DTO gates)"
+  ]
+}

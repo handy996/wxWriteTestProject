@@ -73,14 +73,17 @@ CREATE INDEX cost_ledger_claim ON editorial.cost_ledger(claim_id) WHERE claim_id
 CREATE INDEX cost_ledger_slot ON editorial.cost_ledger(slot_id) WHERE slot_id IS NOT NULL;
 CREATE INDEX cost_ledger_counters ON editorial.cost_ledger USING gin (counters jsonb_path_ops);
 
--- Admission: the estimate ceiling is a database rule, not only an application check. A writer that skipped the
--- service's scope lock still cannot oversubscribe the article budget, which is the AC-28 invariant.
+-- Admission: the article ceiling is a database rule, not only an application check. The article row is locked
+-- before the occupancy aggregate runs, so a writer that skipped the service's scope locks still cannot
+-- oversubscribe an article — serially, or with two INSERTs in flight at once. This repeats the article ceiling
+-- and nothing else, because it is the single limit stored in a table (article_job.budget_limit): the daily
+-- budget, the count caps and the provider quota live in configuration, so those bind the service path alone.
 CREATE FUNCTION editorial.t08_admit_estimate() RETURNS trigger LANGUAGE plpgsql
 SET search_path=pg_catalog,editorial AS $$
 DECLARE limit_amount numeric(18,6); occupied numeric(18,6);
 BEGIN
   IF NEW.kind<>'ESTIMATED' THEN RETURN NEW; END IF;
-  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id;
+  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id FOR UPDATE;
   IF NOT FOUND THEN RAISE EXCEPTION 'reservation without an article' USING ERRCODE='23503'; END IF;
   SELECT coalesce(sum(l.amount) FILTER (WHERE (l.kind='ESTIMATED' AND l.status IN ('RESERVED','UNKNOWN'))
       OR (l.kind='ACTUAL' AND l.status='SETTLED')),0) INTO occupied
