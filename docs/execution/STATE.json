@@ -352,13 +352,13 @@
     }
   ],
   "next": [
-    "1. T08 第三轮独立复审：等实施方整改 F2-01（provider-quota model 级 scope 统一 + 去掉查不到即不限的静默 fail-open + model 级配置路径测试 + reverse-control 补覆盖）与 F2-02/F2-05 之后派；活库项由主 agent 代跑并入库",
-    "2. T03 第七轮独立复审：复核主 agent 第六轮整改（剥注释匹配、20 条控制、守卫提为 static、7 项离线负向测试）。T03-APPROVAL 与 G1 只能由人类签署，复审方与主 agent 均不得代宣",
-    "3. 产品 Owner 待决（COST-BUDGET-LIMITS）：SRS OQ-09 的示例值是否正式批准为生产值（日 20 USD、每篇 5 USD、30/40000/3/1/2/4、80% 告警线——代码回退值现即为这些），以及 max-calls-per-article 与 reconciliation-stale-minutes 两个必需键的取值；另需价格发布的受控运维写入口",
-    "4. COST-HTTP-E2E：启用态组合根启动 + GET /api/v1/usage 真实 HTTP 端到端（需 identity 启用与 AUDIT_CURSOR_KEY）",
-    "5. T09（AI 调用与成本追踪）现已可派：cost 域已集成，真实收费调用仍由 editorial.providers.paid-calls-enabled=false 拦",
-    "6. T10/T11 装配完成后跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
-    "7. 缺人工输入或外部条件：T01 人工金标、T02 第 3 轮返工复审、B01/T04 真实私有 S3、COMPAT-INVENTORY"
+    "1) 收两份在跑的独立复审：bd808c0c（T08 第三轮，验 F2-01 整改与含点模型 id 后果）、220c8350（T03 第八轮，验第七轮整改，重点是剥离器还能否被 \\u0022 之类错位、每条检查是否承重、binding JSON 的可信边界）。判决到手后按处置顺序：先改自己写的东西，再自证，再派下一轮。",
+    "2) T03 若第八轮无新 P0-P2：把结论提交人类签署（T03-APPROVAL，G1 的前置）。主 agent 与任何子 agent 不得自签。",
+    "3) T08 若第三轮 PASS：tasks.T08 转 PASS 由人类或复审记录决定；activationPreconditions 五条进入运维启用清单；随后解 COST-HTTP-E2E（真实 GET /api/v1/usage + 启用态组合根）。",
+    "4) 欠一项独立复审：T02 第三轮（第二轮整改后未再复审）。G0 关闭前必须补。",
+    "5) T09 暂不派。卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 自写依赖 T03、T04、T05、T08：T03 未过第八轮且未获人类批准、T08 第三轮在跑、T04 的真实私有桶仍阻塞（B01）。原先 next 里“T09 现已可派”是主 agent 的乐观陈述，与卡片依赖行不符，已撤回。可做的前置工作：Flyway V6 版本号规划、CostPorts.Executions 绑定设计（刻意推迟到 T09，不得提前塞进 T08）。",
+    "6) COST-BUDGET-LIMITS 等 Owner：8 个 SRS 示例值批准 + 2 个必需配额键 + alert-percent，另加本轮新增的含点模型 id 限制（T08-R3-DOTMODEL）归谁裁定。",
+    "7) MULTI-DOMAIN-SUITE：T10/T11 之后用 formal.py --suite all 关闭；COMPAT-INVENTORY 与 T01 人工金标签仍欠。"
   ],
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
