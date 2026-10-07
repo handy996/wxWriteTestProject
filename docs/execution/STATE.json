@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "待独立复审：T08 第三轮整改 fb62212 + 报告 v2 c21e681（agent-84592013 第四轮在跑；前一次 agent-c62923dd 启动即失败、零工件）；T02 R02c 与主 agent 跨域两项 deca2a1+0b2a6f8（agent-5c03f262 **续跑**中——它上次失败但留下了骨架与两个脚本，我要求它自证字节继承；更早的 agent-04cf7fc5 零工件）；T03 第八轮整改 1a1f433+8385a13（agent-6c491b4a 第九轮在跑）。已复审入库：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）、976e8ee+91c789b（T08 第三轮复审记录）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
+  "pendingReviewCommit": "待独立复审：T03 第十轮整改（agent-95794bd8 在跑，可用 maven 与 backend/target，主 agent 期间不跑 maven），落地后待第十轮复审；T08 第三轮整改 fb62212 + 报告 v2 c21e681 待第四轮（agent-8149640e **续跑**中，前三次派单零工件）；T02 R02c 与主 agent 跨域两项 deca2a1+0b2a6f8 待第四轮（agent-5c03f262 **续跑**中）。已复审入库：2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）、1a1f433+8385a13（T03 第八轮整改）、d733b3f（T03 第九轮判决与 41 个原件）、b3a909d/849d784（T08 一二轮）、976e8ee+91c789b（T08 第三轮复审记录）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -18,7 +18,8 @@
     "T08-3rd": "第三轮独立复审（agent-ad779f7e，从零重做，未采信上一段中断会话 bd808c0c 的任何结论；docs/execution/reviews/T08-round3/review.md sha256 1b6611f8…6ed23 + evidence/checks.json sha256 13d3fb5c…65aa）→ CHANGES_REQUIRED：8 条发现 = P2×3 + P3×5。复审方自跑并复现：run_pg --expect-tests 49 exit 0（49/0/0）、verify 14/14 exit 0、--reverse-control exit 0（30 条，blind/misplaced 均 none）、check_contracts exit 0（27 哈希）、44→49 的 +5 已按用例名逐项对齐（2 单元 + 3 活库，无删除）；mvn clean verify 的 281/0/143 它按禁跑边界未复现，由主 agent 复现 exit 0。P2：F-01 **环境变量渠道静默丢配额**（EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT=2 能被 getProperty 读到 2，但 BudgetPolicyConfig.from(env) 只按原始键名枚举 ⇒ providers={} 且 unconfigured=UNLIMITED，启动成功、所有 provider 静默不限）；F-02 **绑定证据可无声拆掉**（loader 挪进永不调用的 helper + 手搓平铺键，第 11 项仍绿；活库用例在 service(from(env)) 之后再 service(手搓策略)，第 11/14 项仍绿且该可编译版真实集群 49/49 全绿——verify.py:498-499 是整文件 substring，只有 :505 的体内形状承重）；F-03 **分层语义未定且已实测越界**（provider 级 max-concurrent=2 与 model 级=5 时同一 model 连开 3 个 live holds 被放行；两级取较严的 V1 变体同样 49 全绿 ⇒ 现有用例分不清 overlay 与覆盖）。P3：F-04 含点 model id 裁定请求、F-05 竖线未列入 id 形状约束（provider p|q 与 p+model q 撞成同键互覆盖）、F-06 第 11 项全模块唯一 join 只扫两文件且良性等价改写（indexOf 代 contains、拆局部变量）会误红、F-07 **主 agent 派单的命令形状本身有问题**（--work-root 传相对路径时 14 条子命令全 0、49 全绿，但 run_pg.py:343 在 finally 抛 ValueError ⇒ 整体 exit 1 且不落证据）、F-08 非数字叶值以 ConversionFailedException 冒爆（未归一 503）且 0 值叶被静默接受",
     "T02-3rd-remediation": "R02c 整改（实施方 agent-abbe86de 编写，主 agent 集成入库 deca2a1）：gitleaks.toml 的 paths 出现次数改为 0，4 条只按值例外覆盖 11 个字面量；revision_integrity.py 与 integration.py 的 path 与 sha256 **分行**输出（生成的 271 条指纹清单在**不加任何 allowlist** 下 0 命中，证明分行本身就是足够干净的形状，无需豁免），并拒绝覆写冻结的 r01 记录（exit 1 明确拒绝）；scan_secrets.py 新增可选 --report 而默认行为不变；新增 digest_records.py 与 check_gitleaks_allowlists.py（结构 16 项 + 含控制 88 项断言全 PASS、exit 0）。实测：scan_secrets 同一可见文件集 exit 0 / 0 命中 / scanned ~37,081,945 字节，整改前 exit 1 / 7 命中 / 36,927,475 字节，差额 150,604 恰为三份被整文件豁免文件的字节和；三份副本各植入合成 github-pat 与 private-key ⇒ 6/6 抓到且无多余命中；重建旧形状（塞回 3 条 paths）⇒ 0 命中且工具自报 scanned ~0 bytes，盲区机制被复现而非声称。**实施方反驳了主 agent 的建议并给出更好方案**：我建议「首尾定长 + 中段通配」，它指出中段改一位仍会被抑制、正好废掉关键控制，故改用完整 64-hex 字面量并实测配置不自触发——该反驳被采纳并记入协议。被证伪的原表述在 docs/execution/reports/T02.md 的**原位置**（现 :113 与 :135）就地标注撤回，未另起一段假装没说过。主 agent 的跨域两项（提交 0b2a6f8）：secret_scan.py 增加 EXEMPT_VALUES（**只按匹配字节值**，无路径/目录/后缀）与 --self-test 十夹具（清空豁免表后必须报出 S3 测试、STATE.json 与本文件自身；植入近邻 AKIA 必须被抓）；T07 verify_delivery.py 的「命中恰 6 条且全在 r01-integrity.json」改为不变式「任何命中即失败」，实测同一扫描结果下旧期望判 FAIL、新不变式判 PASS，且任意路径植入单条命中皆红；ci.yml 的密钥扫描步骤现在跑secret_scan --self-test、check_gitleaks_allowlists 结构模式与含控制模式。check_contracts.py 仍 exit 0（27 哈希）。整改不构成本卡采纳，第四轮独立复审 agent-04cf7fc5 已在跑",
     "T08-3rd-remediation": "第三轮整改（实施方 agent-ef396972 编写，主 agent 集成入库 fb62212，35 个文件）。F-01：BudgetPolicyConfig 改为枚举 property-source 名并用 Binder.get 按规范点号名取值，javadoc 记下了决定形状的探针（Binder.mapOf 在虚线前缀下**看不见** env 形状键，所以朴素 binder 调用会把缺陷换个皮再带回来）。F-03 的实现**优于我的裁定**：不是比较两个数，而是把一次调用触及的**每一条 ceiling** 排进同一锁序列逐条检查（BudgetService 的 ceilings(...) 按 lockKey 排序后取 pg_advisory_xact_lock），分层因此成为一条代码路径的性质而非特判，并从两侧钉住（并发 looserModelEntryCannotLiftTheProviderCeiling、日窗口 providerDayWindowClosesBeforeTheLooserModelDayWindow）。F-02 绑定证据进**断言所在方法体**（loader 调用 + 文档字节 + from(env) + 被断言 service 的来源须同在一体内，java_method_body 做字面量感知的括号配对）；F-06 join 扫描按 cost 包枚举，反向控制把第二处 provider+model join 藏进 BudgetService 即 REJECT（两文件扫描会漏）；F-05 segment 必须匹配 [A-Za-z0-9._-]+ 否则装配期响亮拒绝；F-08 叶值装载期归一（max-concurrent 0 是楔死、拒；calls-per-day 0 关当天但不关启动、有用例；负数拒）；F-07（我派单的错）--work-root 启动即 resolve 成绝对路径，另有 --path-selftest 分别走相对与默认两种形态。实测（主 agent 复核）：mvn -B -ntp -o clean verify **exit 0、289 项 / 0 失败 / 147 跳过**（281+8 恰为本轮 8 个新用例，+4 跳过是其中活库那半）；run_pg --expect-tests 57 exit 0（单元 22 + 活库 35）；verify.py 14/14 exit 0；--reverse-control 44 条削弱全 REJECT、blind=none、misplaced=none，**新增 5 条良性等价重写全绿**、brittle=none；check_contracts.py 27 哈希。运行时控制三件（只在 .work 副本回退）：C1 回退枚举 ⇒ exit 1 且只红 quotaSuppliedThroughEnvironmentStyleNamesBinds；C2 回退单窗口 ⇒ 只红那两条分层用例；C3 重新接受 max-concurrent 0 ⇒ 只红 quotaLeavesAreNormalisedAtAssembly。用例 49→57、0 删除 0 改名。如实保留的失败：本轮第一次整轮 exit 1（35 项 1 失败，nestedYamlQuotaIsEnforcedByTheService 先撞 SRS 批准的 image-units-per-article=4），该工件与 surefire 原件一并入库（r10-pg-selftest.json），修法是**只在该测试的 YAML 文档里**把上限声明为 100——是否属于迁就测试而非修正默认值，已交第四轮复审判定并另开条目",
-    "T08-3rd-docs": "整改报告 v2（提交 c21e681，纯文档，代码与证据字节与 fb62212 相同；我在其后复跑 verify.py exit 0（14/14）与 --reverse-control exit 0（44 削弱全拒、5 良性全绿、blind/misplaced/brittle 三者皆 none））。要点：全量 verify 的 289/0/147 在报告里**明确记为集成方实测、非本卡亲跑**（我按文本核对而非听交付说明，见 :17、§7-1、§8）；反向对照 30→44 的算术写成 57−8 新−5 同名改写=44 而非含糊带过；T08-SRS-DEFAULT-CLASH 被如实留在开放面（在该测试自己的 YAML 里声明 image-units-per-article:100 属改测试前提，产品默认值是否恰当它明说没有证据回答）。另记两条我自己造成的偏差：PowerShell 5.1 的 Set-Content -Encoding UTF8 给提交说明加了 BOM（标题首码点 0xfeff），已用 python 重写并 --amend 复核为 0x64；两路复审会话（agent-04cf7fc5、agent-c62923dd）启动即失败且**零工件**"
+    "T08-3rd-docs": "整改报告 v2（提交 c21e681，纯文档，代码与证据字节与 fb62212 相同；我在其后复跑 verify.py exit 0（14/14）与 --reverse-control exit 0（44 削弱全拒、5 良性全绿、blind/misplaced/brittle 三者皆 none））。要点：全量 verify 的 289/0/147 在报告里**明确记为集成方实测、非本卡亲跑**（我按文本核对而非听交付说明，见 :17、§7-1、§8）；反向对照 30→44 的算术写成 57−8 新−5 同名改写=44 而非含糊带过；T08-SRS-DEFAULT-CLASH 被如实留在开放面（在该测试自己的 YAML 里声明 image-units-per-article:100 属改测试前提，产品默认值是否恰当它明说没有证据回答）。另记两条我自己造成的偏差：PowerShell 5.1 的 Set-Content -Encoding UTF8 给提交说明加了 BOM（标题首码点 0xfeff），已用 python 重写并 --amend 复核为 0x64；两路复审会话（agent-04cf7fc5、agent-c62923dd）启动即失败且**零工件**",
+    "T03-9th": "第九轮独立复审（agent-6c491b4a，docs/execution/reviews/T03-round9/review.md 35 KB + evidence/ 41 个自跑原件 185 KB，无 .work、无二进制）→ CHANGES_REQUIRED：P1×5 + P2×4 + P3×3，每条附「期望红→实际绿」最小复现。基线由它自己重跑而非抄录：闸门 exit 0 / 49 反证全拒 / 12 良性全过 / 8 绑定输入 / 4 配置，闸门 sha256 前缀 a86f64dd3f59（主 agent 已复核为当前字节），check_contracts.py exit 0（27 哈希）；HEAD 从 fb62212 漂到 9f1df7e 后它复测绑定的 9 个字节逐一未变。F-01（P1）可达性判据实质是**花括号算术且双向失效**：无括号 if (false)、Boolean.FALSE.booleanValue()、static final false、调用前无条件 return、\\u002a\\u002a 转义注释包裹 ⇒ javac 证明守卫不执行而闸门 ACCEPT，while(false) 连编译都不过仍 ACCEPT；反向真执行的 try{}finally{} 与 switch{default:} 却被 REJECT ⇒ 台账 T03-R8-DEPTH1-STRICTNESS 写的「只是有意过严」被证伪，真相是先不严。F-02/F-05（P1）配置普查只看 resources 根下 application*.yml：多行 flow、flow+注释、块别名 *anchor、合并键 <<:、.properties/.yaml、classpath:/config/ 全部不可见，而它用仓库内 JDK21 + spring-boot 3.5.16 真跑 YamlPropertySourceLoader+Binder 证明这些位置**确实绑出错误名并盖过合规名**；反向把合规名写成多行 flow 反而假红。F-04（P1）守卫测试可「合规掏空」：7 个 @Test 体换成含全部 needles 的文本块散文 ⇒ 闸门 exit 0、javac 通过、junit-platform 实跑 found=7 succeeded=7 failed=0 与原件逐字段相同 ⇒ record_guard_binding.py 会**合法刷新** 8 指纹与 7/0/0，第八轮 F-03 通道原样重开。F-05/F-08（P1/P2）转义族只松不严：JSESSION\\u0049D 的 javap 常量池即 JSESSIONID 却被 ACCEPT、\\\\u000a 注释包裹（javap 里无该调用）被 ACCEPT、非法 \\uZZZZ 与编不过的 x\\u000ay 也被 ACCEPT；而注释或 prod.yml 里提及 JSESSIONID 反而假红 ⇒ 第 71 行未实现 JLS 3.3 偶数反斜杠规则，且禁名扫描作用在未剥注释原文上。F-06（P2）CI 判定只钉文本：continue-on-error、步骤级 if:、作业级 if: workflow_dispatch、搬进 schedule-only 作业四例全绿；加 shell: bash / 改步骤名 / 写 python3 全红，且红因是内置控件 ci-drops-cookie-gate 的两行锚碎裂。F-07（P2）绑定可徒手伪造：command=echo pretend 配自洽 XML ⇒ exit 0；surefireJarSha256、surefireJar、jdk 三字段**从不复核**，而 note 写「the gate re-hashes every input listed here」属过度声称。F-09/F-10/F-11（P3）两个词法器 mask_literals 与 literal_spans 对文本块答案不同（模糊 6000 例分歧 1548、纯文本块 3000 例分歧 2308，76.9%，方向恒为 spanOnly）；needles 钉措辞不钉行为（参数顺序调换、List.of、受钉 helper 改名、加 throws Exception 全红，未受钉的 env( 改名与全限定 assertThrows 反而绿）；新维度普遍缺良性半边。承重审计（它把每条新检查换成宽容桩后重跑 49+12）：红侧承重的是 guard_is_reachable、depth_at、decode_unicode_escapes、expand_flow、binding_inputs 的 profile 覆盖；**红侧不承重的是** mask_literals 遮罩、live_pattern/in_literal、method_span、逐体 needles、CI_GATE_NEEDLE 具体性——且 live_pattern 致盲后它手制的散文变异被 ACCEPT。第八轮闭合判定：F-01 未闭合（原样重开）、F-02 部分、F-03 未闭合（重开）、F-04 部分、F-05 部分、F-06 闭合（仅现状层面）、F-07 部分、F-08 部分（形参遮蔽已修，数字更正只落到叙述层）。诚实性：49/12/8/4 与 sha 前缀无虚报；r08(48/11) 与 r09(49/12) 并存、--output 拒绝覆盖 ⇒「不覆盖历史证据」成立；identity 守卫 7 例确在 mvn verify 中跑属实（pom 无 surefire 选择）。它另查出三条**记账缺陷**（见本轮整改）：T03-R6-GATE 同时 OPEN 与 closedAt；「9 次」仍留在 T03-R7-GATE.evidence（artefact 实为 10 次）；r09 记的 sha256.ci=098b6bb8 已被 0b2a6f8 淘汰（当前 ci.yml 为 2f651cb7）。它未证明：真实条件恒假的可达性、GitHub Actions 上作业真红、多来源 spring.config.location 完整优先级、mvn 那次记录是否真发生过、YAML 形状穷尽、identity.enabled=false 下谁接住错名；全量 verify、record_guard_binding、formal.py 注入反证、r10 重录四条因禁则原样交回主 agent，未冒充跑过"
   },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -65,8 +66,8 @@
       "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论"
     },
     "T03": {
-      "verdict": "INTEGRATED_UNREVIEWED",
-      "basis": "第八轮判 CHANGES_REQUIRED（P1 文本在场≠可达 + 4×P2 + 3×P3）；第八轮整改由主 agent 本人完成并入库 1a1f433/8385a13，含可达性判定、转义/字面量/flow 三条扫描前置、guardTest 逐体钉形、绑定字段互证与 CI 接线。主 agent 不得自判采纳 ⇒ 待第九轮独立复审；T03-APPROVAL 仍只能由人类签署",
+      "verdict": "CHANGES_REQUIRED",
+      "basis": "第九轮判 CHANGES_REQUIRED（P1×5 + P2×4 + P3×3，全部附最小复现与 javac/javap/JUnit 实跑证据）。核心结论：**我写的静态文本闸门证明不了行为，且多条检查在红侧不承重**。整改派 agent-95794bd8，主 agent 裁定把承重从文本分析移到执行证明（R1 离线装配抛异常用例 + R2 用 Spring 自己的 loader/Binder 普查配置）。第八轮的 F-01/F-03 由它判定原样重开",
       "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录。T07-R04 整改（Cookie 名常量 + 启动断言 + 测试改名 + 新闸门）由主 agent 本人实施，属 T03 域且未经复审，T03 独立批准必须覆盖它"
     },
     "T04": {
@@ -148,7 +149,7 @@
         "tests/engineering/T03/check_session_cookie.py：31 条内存内反向控制全拒 + 5 条良性探针全过（绝对锚、缩进路径匹配、按 --- 分段、扫全部 4 个 application*.yml、剥注释后匹配且文本块独立成态、守卫调用在 identitySecurity 体内、prod 三子句与两条消息逐条钉住、guardTest 为受控源）",
         "tests/engineering/T03/evidence/session-cookie-r07.json（当前字节 PASS；r05/r06 的 14/14、20/20 只适用于各自字节——第七轮指出台账曾以旧计数描述新文件，已纠正）",
         "tests/engineering/T03/evidence/guard-test-binding.json 与 T03SessionCookieGuardTest.xml：7 项离线负向运行（缺名/JSESSIONID/第三名字/prod 三属性各自削弱必抛 T03_COOKIE，合契约则放行），绑定四个输入 sha256",
-        "tests/engineering/integration/evidence/r07-wrong-cookie-must-not-boot.json：装配态反证，错名后 15/15 失败、T03_COOKIE 出现 9 次、基线 6 项为其子集",
+        "tests/engineering/integration/evidence/r07-wrong-cookie-must-not-boot.json：装配态反证，错名后 15/15 失败、T03_COOKIE 出现 10 次（主 agent 在当前字节实测 count=10；旧文 9 系我笔误）、基线 6 项为其子集",
         "tests/engineering/integration/evidence/r06-head-bytes.json：正名字时失败集与 r05 逐字相同、fixationRotationAndLogout 通过；指纹 application.yml=42acb385…、T03Configuration.java=dc0bb777…、T03PostgresTest.java=ecc2eaed…"
       ],
       "attribution": "identity 单域 6 项失败与未改动基线工作树（git worktree @ dc95736）差集为 0；--suite all 的 16 项失败与基线差集为 0，且与仓库既有 formal-all-domains-01-test-results（先前已入库，exitCode=1）集合完全相同 → 非本次引入",
@@ -303,14 +304,14 @@
       "id": "T03-R6-GATE",
       "task": "T03",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "会话 Cookie 闸门的 Java 模式作用于含注释原文：把 verifySessionCookieContract 调用行或名字检查整行 // 注释掉、或 /* */ 包裹，evaluate() 仍通过并在证据里印 startupGuardLive/runtimeAssertionLive=true；引号化 YAML 键 \"name\": X 不在路径匹配内而对扫描器隐形（重复键的 Spring 行为仍未证明）；第七轮证明未闭合：文本块奇偶使剥离器错位、GUARD_CALL 未验调用是否在被装配的方法体内、prod 段仅查字符串在场可无声阉割",
       "requiredFix": "Java 模式改在剥注释后的源码上匹配（字符串/字符字面量内的 // 不得误剥）；调用点、名字检查、prod 检查、消息前缀四段分别受控；YAML 键去引号归一；补注释类与引号类反向控制",
       "evidence": "tests/engineering/T03/check_session_cookie.py（20/20 控制）+ tests/engineering/T03/evidence/session-cookie-r06.json；两条 Cookie 守卫从 @Bean 方法体提为 package-visible static verifySessionCookieContract，新增 backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java 7 项离线负向测试：缺名/JSESSIONID/第三名字必抛 T03_COOKIE，prod 的 secure、http-only、same-site 各自削弱必抛，符合契约则放行。此前从 R04 起无人证明“错名真的会拒绝启动”，因为守卫埋在需要 HttpSecurity 的 bean 方法里；7 项负向测试的 surefire 计数已提升为跟踪证据 tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml（tests=7 failures=0 errors=0 skipped=0，全量聚合 276/0/140）",
       "openedAt": "2026-10-07",
       "closedAt": "2026-10-07",
       "foundBy": "docs/execution/reviews/T03-round6/review.md F-01/F-02",
-      "closure": "由 T03-R7-GATE 接续闭环"
+      "closure": "由 T03-R7-GATE 接续闭环 第九轮复审指出本项 OPEN 与 closedAt 并存；T03-R7-GATE 既已 CLOSED，接续闭环成立，故本项转为 CLOSED（issue 字段保留不动）"
     },
     {
       "id": "T03-R7-GATE",
@@ -319,7 +320,7 @@
       "status": "CLOSED",
       "issue": "剥离器可被文本块打穿；守卫调用只需源码存在即可过关；prod 三子句与两条拒绝消息可无声削弱；guardTest 不在受控源内；负向测试的跟踪 surefire 无输入指纹且时间戳早于引入提交，无法自证跑的是当前字节",
       "requiredFix": "文本块独立词法状态；GUARD_CALL 必须在 identitySecurity 括号配对方法体内；prod 三属性子句各带比较值 + matchesProfiles(\"prod\") 字面量 + 两条消息原文逐条在场；guardTest 入受控源并断言 7 个负向方法与 assertThrows 仍在；复现证据与当前字节 sha256 绑定；再加良性探针半边",
-      "evidence": "tests/engineering/T03/check_session_cookie.py：31/31 反向控制被拒 + 5/5 良性探针通过（文本块奇引号、串内 //、字符字面量、合法重排版、块注释含 // 与引号）；tests/engineering/T03/evidence/session-cookie-r07.json；tests/engineering/T03/evidence/guard-test-binding.json（四个输入 sha256 + 计数 7/0/0 + 命令，闸门反查当前字节）；tests/engineering/integration/evidence/r07-wrong-cookie-must-not-boot.json：环境变量 SERVER_SERVLET_SESSION_COOKIE_NAME=JSESSIONID 走真实 relaxed binding，identity 套件 15 项全失败（基线 6 项为其子集、无测试转绿），逐条为 identitySecurity 的 BeanCreationException，T03_COOKIE 出现 9 次——首次装配态反证",
+      "evidence": "tests/engineering/T03/check_session_cookie.py：31/31 反向控制被拒 + 5/5 良性探针通过（文本块奇引号、串内 //、字符字面量、合法重排版、块注释含 // 与引号）；tests/engineering/T03/evidence/session-cookie-r07.json；tests/engineering/T03/evidence/guard-test-binding.json（四个输入 sha256 + 计数 7/0/0 + 命令，闸门反查当前字节）；tests/engineering/integration/evidence/r07-wrong-cookie-must-not-boot.json：环境变量 SERVER_SERVLET_SESSION_COOKIE_NAME=JSESSIONID 走真实 relaxed binding，identity 套件 15 项全失败（基线 6 项为其子集、无测试转绿），逐条为 identitySecurity 的 BeanCreationException，T03_COOKIE 出现 10 次（主 agent 在当前字节实测 count=10；旧文 9 系我笔误）——首次装配态反证",
       "openedAt": "2026-10-07",
       "closedAt": "2026-10-07",
       "foundBy": "docs/execution/reviews/T03-round7/review.md F-01/F-02/F-03/F-05/F-06"
@@ -438,12 +439,14 @@
       "id": "T03-REVIEW-9TH",
       "task": "T03",
       "severity": "P1（门禁前置）",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "第八轮整改（可达性判定、转义/字面量/flow 三条扫描前置、guardTest 逐体钉形、绑定字段互证、CI 接线）全部由主 agent 本人编写，未经独立验证",
       "requiredFix": "第九轮独立复审至少要做：(a) 用 javac 或真实启动交叉证明第一层语句判定不是新的“看起来像代码”检验——构造 javac 认为不可达而闸门认为可达（或反之）的样本；(b) 继续攻击剥离器（\\uXXXX 家族、文本块、flow YAML、大小写宽松键、注解与签名间插行）；(c) 逐条问每条检查是否承重，并给新维度配良性半边；(d) 审绑定字段互证的可伪造边界；(e) 确认 CI 步骤真在跑本闸门，以及不设 identity 开关时 CI 与本地证据的覆盖差异",
-      "closure": "第九轮无新 P0-P2 后，T03 才可提交人类签署 T03-APPROVAL（G1 前置）",
+      "closure": "已执行：agent-6c491b4a 判 CHANGES_REQUIRED（P1×5 + P2×4 + P3×3），并完成我要求的承重审计（逐条把新检查换成宽容桩重跑 49+12），结论是我第八轮的可达性判定、配置普查与逐体 needles 都未真正承重；整改派 agent-95794bd8，转入 T03-REVIEW-10TH 验证",
       "openedAt": "2026-10-07",
-      "foundBy": "主 agent 按协议实施/集成者不得自判采纳开立"
+      "foundBy": "主 agent 按协议实施/集成者不得自判采纳开立",
+      "closedAt": "2026-10-08",
+      "evidence": "docs/execution/reviews/T03-round9/review.md（35 KB）+ evidence/ 41 个自跑原件（185 KB）；提交 d733b3f"
     },
     {
       "id": "T03-R8-DEPTH1-STRICTNESS",
@@ -623,16 +626,86 @@
       "requiredFix": "补一条断言（或对标签序的直接单测），使新增 scope 时若字典序被破坏即红；第四轮复审判定是否升格为缺陷",
       "openedAt": "2026-10-08",
       "foundBy": "agent-ef396972 §7-7 自报"
+    },
+    {
+      "id": "T03-R9-EXECUTION-PROOF",
+      "task": "T03",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "静态可达性判定是花括号算术，双向失效：6 类常量假分支（含无括号 if (false)、Boolean.FALSE.booleanValue()、static final false、调用前 return、\\u002a\\u002a 包裹、while(false)）下守卫不执行而闸门 ACCEPT；真执行的 try-finally 与 switch-default 反被拒。守卫测试 7 个体可换成含全部 needles 的文本块散文，junit 实跑仍 7/0/0，绑定被合法刷新",
+      "requiredFix": "主 agent 裁定 R1：新增**离线可执行**用例，装配 identitySecurity 时调用点真跑起来并在错名下抛出含 T03_COOKIE 的异常、正名下不抛；闸门以该用例的 surefire 名字与计数承重。静态判定降为辅助，须不再误杀真实执行结构、仍拒绝 6 类假分支，且**文案不得超出它实际证明的范围**。已派 agent-95794bd8",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-01/F-04"
+    },
+    {
+      "id": "T03-R9-CONFIG-CENSUS",
+      "task": "T03",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "配置普查只看 resources 根下 application*.yml；多行 flow、flow+注释、块别名、合并键、.properties/.yaml、classpath:/config/ 全不可见，而复审用真 YamlPropertySourceLoader+Binder 证明这些位置确实绑出错误 cookie 名并盖过合规名；反向把合规名写成多行 flow 却假红",
+      "requiredFix": "裁定 R2：停止手写 YAML 普查，改由测试用 Spring 自己的 loader/Binder 真加载真绑定并覆盖上述全部位置；出现闸门看不见的 spring.config.location / optional: 声明必须**响亮失败而非静默跳过**。已派 agent-95794bd8",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-02/F-05"
+    },
+    {
+      "id": "T03-R9-ESCAPE-LEXER",
+      "task": "T03",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "decode_unicode_escapes 未实现 JLS 3.3 偶数反斜杠规则：JSESSION\\u0049D（javap 常量池即 JSESSIONID）、\\\\u000a 注释包裹、非法 \\uZZZZ 与编不过的 x\\u000ay 全部 ACCEPT；同时注释/prod.yml 注释里提及 JSESSIONID 反而假红。两个词法器 mask_literals 与 literal_spans 在文本块上 76.9% 分歧",
+      "requiredFix": "裁定 R3+R6：实现偶数反斜杠规则；禁名判定作用在剥注释并解码之后的文本，允许散文提及；两词法器合并为单一分词器。已派 agent-95794bd8",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-05/F-08/F-09"
+    },
+    {
+      "id": "T03-R9-CI-STRUCTURE",
+      "task": "T02/T03",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "CI 判定只钉文本：continue-on-error、步骤级 if:、作业级 if: workflow_dispatch、搬进 schedule-only 作业四例全绿；而加 shell: bash、改步骤名、写 python3 全红（红因是 ci-drops-cookie-gate 的两行锚碎裂，不是判定失败）",
+      "requiredFix": "裁定 R4：解析 ci.yml 结构，要求步骤位于 push/PR 触发的 job 且步骤与 job 均无 continue-on-error / 可跳过条件的 if:；配良性半边（shell、改名、python3 不得红）。写 ci.yml 归主 agent，实施方只做内存变异",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-06"
+    },
+    {
+      "id": "T03-R9-BINDING-FORGERY",
+      "task": "T03",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "绑定工件可徒手伪造：command=echo pretend 配自洽 XML ⇒ exit 0；surefireJarSha256、surefireJar、jdk 三字段从不复核，note 却写 the gate re-hashes every input listed here（过度声称）。record_guard_binding.py 只缓解陈旧、不缓解伪造",
+      "requiredFix": "裁定 R5：三字段要么变成真复核（对 .tools/t02/m2 的 surefire jar 与 vendored JDK 实际比对），要么改掉措辞并显式写局限；伪造件必须红",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-07"
+    },
+    {
+      "id": "T03-R9-DECORATIVE-CHECKS",
+      "task": "T03",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "复审承重审计实测：把 mask_literals 遮罩、live_pattern/in_literal、method_span、逐体 needles、CI_GATE_NEEDLE 具体性换成宽容桩后，49 条反向控制**照旧全拒**（红侧不承重）；live_pattern 致盲后其散文变异被 ACCEPT",
+      "requiredFix": "每条要么改造成真承重、要么删除；每条新判定自带一条内置反向控制 + 一条良性半边。留一条没人看守的检查比删掉更糟",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md F-10/F-11 + 承重审计表"
+    },
+    {
+      "id": "T03-R10-EVIDENCE-STALE",
+      "task": "T03",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "session-cookie-r09.json 记的 sha256.ci=098b6bb8 已被 0b2a6f8 淘汰（当前 ci.yml=2f651cb7），即已入库的闸门产物不再描述当前 CI 字节；r08/r09 的并存与不覆盖本身经复审确认合规",
+      "requiredFix": "整改后按 record 顺序重录 r10（不得覆盖 r08/r09），并让 ci.yml 指纹进绑定或明确写下它只是信息项",
+      "openedAt": "2026-10-08",
+      "foundBy": "docs/execution/reviews/T03-round9/review.md 记账缺陷第 3 条"
     }
   ],
   "next": [
-    "1) 三路复审在跑：agent-6c491b4a（T03 第九轮）、agent-5c03f262（T02 第四轮**续跑**，它上次失败但留下骨架与两个脚本）、agent-8149640e（T08 第四轮，改用短派单——前两次 agent-c62923dd、agent-84592013 启动即失败且零工件）。主上下文不碰它们各自的 reviews/ 目录，backend/target 由我独占、全量 verify 只由我跑。",
-    "2) T02 第四轮若 PASS：正式产出 evidence/r02-integrity.json（R02-INTEGRITY-OUTPUT），并按 GITLEAKS-RULE-COVERAGE 决定补不补裸 AKIA 与明文口令规则；仍不绿则继续整改，G0 不签。",
-    "3) T08 第四轮重点：跨 model 汇总、宽松绑定的新静默路径、体内证据可否再摘、SRS 默认 4 单位那处改动是修测试还是产品语义（T08-SRS-DEFAULT-CLASH）。PASS 后 activationPreconditions 五条才进运维启用清单，随后解 COST-HTTP-E2E。",
-    "4) T03 第九轮若无新 P0-P2：提交人类签署 T03-APPROVAL（G1 前置）。主 agent 与任何子 agent 不得自签。",
-    "5) T07-BASELINE-STALE 需要一个决定：重录 input-baseline 与三个 patch，还是在门里区分基线漂移与真实回归；现状是除扫描项外常态红 4 项，会让退出码失去意义。",
-    "6) 需 Owner/人类：COST-BUDGET-LIMITS（8 个 SRS 示例值 + 2 个必需配额键 + alert-percent）、含点 model id 是否需要 model 级上限、T08-SRS-DEFAULT-CLASH 的默认单位、T03-APPROVAL、B01 真实私有桶、T01-HUMAN 金标签、COMPAT-INVENTORY、WAITING_MANUAL 归属。",
-    "7) T09 仍不派：卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 自写依赖 T03/T04/T05/T08；T03 待第九轮且无人类批准、T08 待第四轮、T04 真实私有桶仍阻塞。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all。"
+    "1) 三路在跑：agent-95794bd8（T03 第十轮整改，独占 maven/backend/target）、agent-5c03f262（T02 第四轮续跑）、agent-8149640e（T08 第四轮续跑）。我期间不跑 maven，避免与 T03 实施方争 target。",
+    "2) T03 整改回来后由我代跑复审交回的四条：全量 mvn clean verify、record_guard_binding.py、formal.py --suite identity --inject 错名反证、check_session_cookie.py --output r10（不得覆盖 r08/r09），再派第十轮复审。",
+    "3) 第九轮的 F-01…F-11 逐条要在整改报告里有对应「改了什么 + 实测退出码 + 反向控制 + 良性半边」，并由我在集成时复跑核对；不承重的那几条（mask_literals/live_pattern/method_span/逐体 needles/CI 针）要么真改造要么删除。",
+    "4) T02 第四轮若 PASS：正式产出 evidence/r02-integrity.json（R02-INTEGRITY-OUTPUT），并定 GITLEAKS-RULE-COVERAGE 的补规则取舍；T02 未 PASS ⇒ G0 不签。",
+    "5) T08 第四轮若 PASS：activationPreconditions 五条进运维启用清单，随后解 COST-HTTP-E2E；分层裁定、entries[] 形状、env 歧义即拒边界仍需 Owner 批准。",
+    "6) 需 Owner/人类：COST-BUDGET-LIMITS（8 个 SRS 示例值 + 2 个必需配额键 + alert-percent）、含点 model id 是否需 model 级上限、T08-SRS-DEFAULT-CLASH 的默认单位、T03-APPROVAL（十轮复审之后）、B01 真实私有桶、T01-HUMAN 金标签、COMPAT-INVENTORY、WAITING_MANUAL 归属、T07-BASELINE-STALE 的处置方向。",
+    "7) T09 仍不派：卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 自写依赖 T03/T04/T05/T08；T03 待第十轮且无人类批准、T08 第四轮未跑、T04 真实私有桶阻塞。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all。"
   ],
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
@@ -675,7 +748,10 @@
     "判断目录是否为空必须用全量列举（os.listdir），不能拿带后缀过滤的 glob 下结论：我据 'TEST-*.xml'+'*.txt' 的零命中断言某证据目录是空的，实际里面有 C1/C2/C3 三个子目录。测量工具本身要过一遍，别让它替我说话",
     "派单里的清理动作必须先核这些路径**是否已被跟踪**：本次我让实施方把已入库的复审工件（R3Probe.java、r3-review.json 等）移到 legacy 目录，那等于删除别人的证据。实施方拒绝并指出它们已成为跟踪文件，是对的；要移就得由我 git mv。清理指令一律写成「仅未跟踪残留」，并给出 git ls-files 的核验命令",
     "提交说明与 UTF-8 文件一律用 python 写，不用 PowerShell 5.1 的 Set-Content -Encoding UTF8：它会给文件加 BOM，我因此把 U+FEFF 写进了提交标题。提交后复核 git log -1 --format=%B 的首码点应为可见字符",
-    "长简报的复审派单必须要求**先落 review.md 骨架、每节跑完即写盘**：我连续两次收到零工件的失败会话（agent-04cf7fc5、agent-c62923dd），一无所获等于白派。反之若失败会话**留下了工件**（agent-5c03f262 写了骨架与两个脚本），正确做法是 send_message 续跑并要求它自证继承（字节对上才算），而不是从零重派丢掉已有测量"
+    "长简报的复审派单必须要求**先落 review.md 骨架、每节跑完即写盘**：我连续两次收到零工件的失败会话（agent-04cf7fc5、agent-c62923dd），一无所获等于白派。反之若失败会话**留下了工件**（agent-5c03f262 写了骨架与两个脚本），正确做法是 send_message 续跑并要求它自证继承（字节对上才算），而不是从零重派丢掉已有测量",
+    "静态文本分析**不得声称它证明了行为**。我第八轮的可达性判定、配置普查、逐体 needles 被第九轮用 javac/javap/JUnit 实跑逐条证伪（常量假分支全绿、真执行结构全红、文本块散文掏空仍 7/0/0）。承重证明要落在**执行**上：装配真跑、错名下真抛、抛出文案进 surefire 原件；静态检查只能是辅助，且文案不得超过它证明的范围",
+    "凡涉及框架语义的普查（YAML 加载、属性绑定、profile 覆盖）一律调用框架自己的 loader/Binder 去真加载，不要手写解析器再宣称覆盖；手写解析器的覆盖面就是盲区（复审用真 Boot 3.5.16 证明 flow/别名/合并键/.properties/classpath:/config/ 都能绑出错误名，而我的普查全看不见）。看不见时**响亮失败**，不得静默跳过",
+    "复审派单一律要求「先落 review.md 骨架 + 每节跑完立刻写盘」：长简报会话连续三次启动即失败且零工件（agent-04cf7fc5、agent-c62923dd、agent-84592013），改成骨架优先后 agent-8149640e 留下了 72 行骨架与已启动的隔离集群，于是可续跑而不丢测量。续跑时必须要求它**重新核对继承的字节**才算成立"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
@@ -700,10 +776,11 @@
     "python tests/engineering/T02/check_gitleaks_allowlists.py [--with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe]   # 结构模式钉 paths 出现次数=0；含控制模式实测 88 项断言",
     "python tests/engineering/T07/verify_delivery.py --run revision-v1-first --upgrade upgrade-final --evidence-name <新名>   # 注意：除扫描项外仍有 4 项失败源于基线陈旧（见 T07-BASELINE-STALE），引用其退出码必须同时说明该性质；文档里出现的 reviewer-run/reviewer-upgrade 是当年留给复审方的待建名字，并不存在",
     "python tests/engineering/T08/run_pg.py --work-root <绝对路径> --evidence-name <新名> --expect-tests 57   # 期望 exit 0、57/57（22 单元 + 35 活库）",
-    "python tests/engineering/T08/verify.py --reverse-control   # 实测 44 条削弱全 REJECT + 5 条良性等价重写全绿；blind/misplaced/brittle 三个 none 缺任何一个都不算通过"
+    "python tests/engineering/T08/verify.py --reverse-control   # 实测 44 条削弱全 REJECT + 5 条良性等价重写全绿；blind/misplaced/brittle 三个 none 缺任何一个都不算通过",
+    "python tests/engineering/T03/check_session_cookie.py --output tests/engineering/T03/evidence/session-cookie-r10.json   # 整改后在当前 HEAD 重录；不得覆盖 r08(48/11) 与 r09(49/12)"
   ],
   "budget": {
-    "sessionBootstrap": "只读状态文件实测约 10k tok（21 顶层键、tasks 9、openItems 41、protocol 41、rounds 14）；整单读 SRS+计划+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 10k tok（21 顶层键、tasks 9、openItems 48、protocol 44、rounds 15）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",
@@ -711,6 +788,6 @@
       "openapi.yaml 全文": "~170k tok（禁止）",
       "editorial.schema.json 全文": "~59k tok（禁止）"
     },
-    "note": "本轮（T08 集成）主上下文只做了：读实施方交付说明、自跑 4 道静态门与全量 verify、指针与归属审计、代码关键处定点核读（未整文件通读 5 个 java）、提交与台账。两路复审与一次重跑均为隔离上下文"
+    "note": "本轮（第九轮判决入账）主上下文只做了四件事：读复审交回的消息（**没有**整份读那 35 KB review.md，其 P1 细节由交回消息与条目文本承载，需要精确复现时第十轮复审与整改方各自会读自己的副本）、复核它引用的三个锚点（闸门 sha 前缀 a86f64dd3f59 确为当前字节、ci.yml 现为 2f651cb7 而非记录的 098b6bb8、T03-R6-GATE 的 OPEN+closedAt 矛盾与「9 次」残留）、提交它的 41 个原件、派第十轮整改并续跑两路失败的复审。全部 P1 证据来自子 agent 的 javac/javap/JUnit 实跑，我不重复支付"
   }
 }
