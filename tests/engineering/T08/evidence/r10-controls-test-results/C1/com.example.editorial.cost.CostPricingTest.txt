@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.cost.CostPricingTest
+-------------------------------------------------------------------------------
+Tests run: 22, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.474 s <<< FAILURE! -- in com.example.editorial.cost.CostPricingTest
+com.example.editorial.cost.CostPricingTest.quotaSuppliedThroughEnvironmentStyleNamesBinds -- Time elapsed: 0.008 s <<< ERROR!
+java.util.NoSuchElementException: No value present
+	at java.base/java.util.Optional.orElseThrow(Optional.java:377)
+	at com.example.editorial.cost.CostPricingTest.quotaSuppliedThroughEnvironmentStyleNamesBinds(CostPricingTest.java:656)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

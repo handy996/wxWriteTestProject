@@ -1,0 +1,93 @@
+[
+  {
+    "control": "C1",
+    "label": "revert the quota enumeration to literal dotted key names (finding F-01's exact shape)",
+    "exitCode": 1,
+    "mustRed": [
+      "quotaSuppliedThroughEnvironmentStyleNamesBinds"
+    ],
+    "actuallyRed": [
+      "quotaSuppliedThroughEnvironmentStyleNamesBinds"
+    ],
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "22",
+        "failures": "0",
+        "errors": "1",
+        "skipped": "0"
+      }
+    ],
+    "redDetail": [
+      {
+        "case": "quotaSuppliedThroughEnvironmentStyleNamesBinds",
+        "kind": "error",
+        "message": "No value present"
+      }
+    ],
+    "pass": true
+  },
+  {
+    "control": "C2",
+    "label": "revert the service to measuring a single window (ruling F-03's exact defect)",
+    "exitCode": 1,
+    "mustRed": [
+      "looserModelEntryCannotLiftTheProviderCeiling",
+      "providerDayWindowClosesBeforeTheLooserModelDayWindow"
+    ],
+    "actuallyRed": [
+      "looserModelEntryCannotLiftTheProviderCeiling",
+      "providerDayWindowClosesBeforeTheLooserModelDayWindow"
+    ],
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "35",
+        "failures": "2",
+        "errors": "0",
+        "skipped": "0"
+      }
+    ],
+    "redDetail": [
+      {
+        "case": "looserModelEntryCannotLiftTheProviderCeiling",
+        "kind": "failure",
+        "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+      },
+      {
+        "case": "providerDayWindowClosesBeforeTheLooserModelDayWindow",
+        "kind": "failure",
+        "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+      }
+    ],
+    "pass": true
+  },
+  {
+    "control": "C3",
+    "label": "accept max-concurrent zero again (ruling F-08 wedge)",
+    "exitCode": 1,
+    "mustRed": [
+      "quotaLeavesAreNormalisedAtAssembly"
+    ],
+    "actuallyRed": [
+      "quotaLeavesAreNormalisedAtAssembly"
+    ],
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "22",
+        "failures": "1",
+        "errors": "0",
+        "skipped": "0"
+      }
+    ],
+    "redDetail": [
+      {
+        "case": "quotaLeavesAreNormalisedAtAssembly",
+        "kind": "failure",
+        "message": "expected a PublicFailure"
+      }
+    ],
+    "pass": true
+  }
+]

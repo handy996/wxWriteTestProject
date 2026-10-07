@@ -142,24 +142,29 @@ public final class BudgetService {
     /**
      * Provider-side quota (SRS 32.2: the provider's own limits are configured separately from the article
      * budget). Concurrency counts live holds; the daily call count counts everything already admitted today.
-     * A provider with no entry is not read as "no limit": {@code editorial.cost.provider-quota.unconfigured}
+     * Both configured levels are enforced together (round-3 ruling F-03): the model entry caps that model's
+     * window, the provider-wide entry caps the provider summed across its models, and a call has to pass every
+     * window whose entry exists — a model entry looser than its provider entry lifts nothing. Every window here
+     * is one {@link #ceilings} already locked, so the reads serialize with racing admissions. A provider/model
+     * with no entry at either level is not read as "no limit": {@code editorial.cost.provider-quota.unconfigured}
      * states whether the deployment means UNLIMITED or REFUSE, and REFUSE stops the call before it is booked.
      */
     private void checkProviderQuota(ActorContext actor, Request request, CostPorts.Executions.Scope scope, LocalDate day,
                                     List<Ceiling> ceilings) {
-        BudgetPolicy.ProviderQuota quota = policy.providerQuota(request.provider(), request.model()).orElse(null);
-        if (quota == null) {
+        List<Ceiling> windows = ceilings.stream().filter(ceiling -> ceiling.quota() != null).toList();
+        if (windows.isEmpty()) {
             if (policy.unconfigured() == BudgetPolicy.UnconfiguredQuota.REFUSE) {
                 throw new PublicFailure(503, "PROVIDER_QUOTA_NOT_CONFIGURED");
             }
             return;
         }
-        Ceiling ceiling = ceilings.stream().filter(c -> c.scope().equals("PROVIDER")).findFirst().orElseThrow();
-        CostPorts.Occupancy used = ledger.occupancy(ceiling.where(), ceiling.args().toArray());
-        if (quota.maxConcurrent() >= 0 && used.holds() >= quota.maxConcurrent())
-            throw new PublicFailure(429, "PROVIDER_QUOTA_EXCEEDED");
-        if (quota.callsPerDay() >= 0 && used.counter(BudgetPolicy.Counter.CALLS) + 1 > quota.callsPerDay())
-            throw new PublicFailure(429, "PROVIDER_QUOTA_EXCEEDED");
+        for (Ceiling window : windows) {
+            BudgetPolicy.ProviderQuota quota = window.quota();
+            CostPorts.Occupancy used = ledger.occupancy(window.where(), window.args().toArray());
+            if (used.holds() >= quota.maxConcurrent()) throw new PublicFailure(429, "PROVIDER_QUOTA_EXCEEDED");
+            if (used.counter(BudgetPolicy.Counter.CALLS) + 1 > quota.callsPerDay())
+                throw new PublicFailure(429, "PROVIDER_QUOTA_EXCEEDED");
+        }
     }
 
     private void refuse(ActorContext actor, Ceiling ceiling, CostPorts.Occupancy used, Money estimate, Request request,
@@ -284,36 +289,41 @@ public final class BudgetService {
         List<Ceiling> ceilings = new ArrayList<>();
         ceilings.add(new Ceiling("ARTICLE", article.article().toString(), "T08|ARTICLE|" + article.article(),
                 "l.article_id=?", List.of(article.article()), article.limit(),
-                BudgetAlert.Code.ARTICLE_BUDGET_EXCEEDED, articleCaps()));
+                BudgetAlert.Code.ARTICLE_BUDGET_EXCEEDED, articleCaps(), null));
         ceilings.add(new Ceiling("DAY", article.owner() + "|" + day, "T08|DAY|" + article.owner() + "|" + day,
                 "l.owner_id=? AND l.bucket_day=?", List.of(article.owner(), day), policy.dailyLimit(),
-                BudgetAlert.Code.DAILY_BUDGET_EXCEEDED, Map.of()));
-        // The provider ceiling is measured, and locked, over the window the answering entry speaks about: a
-        // provider|model override limits that one model, a provider-wide entry limits the provider across its
-        // models. Reusing the model window for a provider-wide number would silently divide the ceiling by the
-        // number of models, which is the same class of defect as an unreachable scope key.
-        String quotaScope = policy.quotaScope(provider, model);
-        boolean perModel = quotaScope != null && quotaScope.contains("|");
-        ceilings.add(perModel
-                ? new Ceiling("PROVIDER", article.owner() + "|" + provider + "|" + model + "|" + day,
-                        "T08|PROVIDER|" + article.owner() + "|" + provider + "|" + model + "|" + day,
-                        "l.owner_id=? AND l.provider=? AND l.model=? AND l.bucket_day=?",
-                        List.of(article.owner(), provider, model, day), null,
-                        BudgetAlert.Code.PROVIDER_QUOTA_EXCEEDED, Map.of())
-                : new Ceiling("PROVIDER", article.owner() + "|" + provider + "|" + day,
-                        "T08|PROVIDER|" + article.owner() + "|" + provider + "|" + day,
-                        "l.owner_id=? AND l.provider=? AND l.bucket_day=?",
-                        List.of(article.owner(), provider, day), null,
-                        BudgetAlert.Code.PROVIDER_QUOTA_EXCEEDED, Map.of()));
+                BudgetAlert.Code.DAILY_BUDGET_EXCEEDED, Map.of(), null));
+        // Provider ceilings are two-level and both levels bind (round-3 ruling F-03): the model entry caps the
+        // window of that one model, the provider-wide entry caps the provider summed across every model it
+        // serves, and a window is locked and measured exactly when its entry exists — reusing one window for
+        // both numbers is how a provider ceiling got silently divided by the number of models. Lock labels go
+        // through String.join so provider + "|" + model stays a concatenation only BudgetPolicy.scope performs.
+        Optional<BudgetPolicy.ProviderQuota> modelEntry = policy.modelQuota(provider, model);
+        Optional<BudgetPolicy.ProviderQuota> wideEntry = policy.providerWideQuota(provider);
+        if (modelEntry.isPresent())
+            ceilings.add(new Ceiling("PROVIDER-MODEL",
+                    String.join("|", article.owner().toString(), provider, model, day.toString()),
+                    String.join("|", "T08|PROVIDER-MODEL", article.owner().toString(), provider, model,
+                            day.toString()),
+                    "l.owner_id=? AND l.provider=? AND l.model=? AND l.bucket_day=?",
+                    List.of(article.owner(), provider, model, day), null,
+                    BudgetAlert.Code.PROVIDER_QUOTA_EXCEEDED, Map.of(), modelEntry.get()));
+        if (wideEntry.isPresent())
+            ceilings.add(new Ceiling("PROVIDER", String.join("|", article.owner().toString(), provider,
+                            day.toString()),
+                    String.join("|", "T08|PROVIDER", article.owner().toString(), provider, day.toString()),
+                    "l.owner_id=? AND l.provider=? AND l.bucket_day=?",
+                    List.of(article.owner(), provider, day), null,
+                    BudgetAlert.Code.PROVIDER_QUOTA_EXCEEDED, Map.of(), wideEntry.get()));
         if (scope.claim() != null)
             ceilings.add(new Ceiling("CLAIM", scope.claim().toString(), "T08|CLAIM|" + scope.claim(), "l.claim_id=?",
                     List.of(scope.claim()), null, BudgetAlert.Code.QUOTA_EXCEEDED,
-                    Map.of(BudgetPolicy.Counter.CLAIM_QUERY, policy.cap(BudgetPolicy.Counter.CLAIM_QUERY))));
+                    Map.of(BudgetPolicy.Counter.CLAIM_QUERY, policy.cap(BudgetPolicy.Counter.CLAIM_QUERY)), null));
         if (scope.slot() != null)
             ceilings.add(new Ceiling("SLOT", scope.slot().toString(), "T08|SLOT|" + scope.slot(), "l.slot_id=?",
                     List.of(scope.slot()), null, BudgetAlert.Code.QUOTA_EXCEEDED,
                     Map.of(BudgetPolicy.Counter.IMAGE_GENERATION_SLOT,
-                            policy.cap(BudgetPolicy.Counter.IMAGE_GENERATION_SLOT))));
+                            policy.cap(BudgetPolicy.Counter.IMAGE_GENERATION_SLOT)), null));
         return ceilings;
     }
 
@@ -354,7 +364,12 @@ public final class BudgetService {
 
     private void emit(ActorContext actor, BudgetAlert alert) { alerts.emit(actor, alert); }
 
-    /** One ceiling as the admission check sees it: a lock key, an aggregate read, and the limits it carries. */
+    /**
+     * One ceiling as the admission check sees it: a lock key, an aggregate read, the limits it carries, and —
+     * when it is one of the provider-quota windows — the quota entry that ceiling enforces. The other ceilings
+     * carry {@code null} there and never enter the quota pass.
+     */
     private record Ceiling(String scope, String label, String lockKey, String where, List<Object> args, Money limit,
-                           BudgetAlert.Code exceededCode, Map<BudgetPolicy.Counter, Long> caps) {}
+                           BudgetAlert.Code exceededCode, Map<BudgetPolicy.Counter, Long> caps,
+                           BudgetPolicy.ProviderQuota quota) {}
 }

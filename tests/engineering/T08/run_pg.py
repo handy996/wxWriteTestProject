@@ -36,16 +36,43 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 MIGRATIONS = ROOT / 'backend/src/main/resources/db/migration'
 TESTS_DEFAULT = 'CostPricingTest,T08PostgresTest'
-# The delivered self-test shape, asserted by --expect-tests: 17 Money/price/policy unit cases plus 30 cases
+# The delivered self-test shape, asserted by --expect-tests: 22 Money/price/policy unit cases plus 35 cases
 # against the real cluster. Deliberately a number the script enforces, so a silent skip cannot exit 0. Round 2
 # added modelLevelQuotaReachesTheLookupThatReadsIt (config path -> scope -> lookup), the two service-path quota
 # cases modelAndProviderQuotaScopesEachBindTheirWindow / unlistedProviderFollowsTheStatedQuotaPolicy, then round 3
 # added one quota case per side that binds through a real nested YAML document (CostPricingTest
 # quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads, T08PostgresTest nestedYamlQuotaIsEnforcedByTheService),
-# because flat fixture keys cannot show what Spring's own loader produces.
-EXPECTED_TESTS = 49
+# because flat fixture keys cannot show what Spring's own loader produces. The round-3 remediation added four
+# more per side, one per finding: CostPricingTest quotaSuppliedThroughEnvironmentStyleNamesBinds (F-01),
+# quotaLeavesAreNormalisedAtAssembly (F-08), bothQuotaLevelsAnswerTheirOwnEntries (F-03 ruling, V4 prefix guard,
+# F-04(b) boundary), separatorBearingIdsAreRefusedNotCollided (F-05); T08PostgresTest
+# looserModelEntryCannotLiftTheProviderCeiling and providerDayWindowClosesBeforeTheLooserModelDayWindow (F-03
+# both-levels enforcement), zeroCallsPerDayClosesTheDayButNotTheBoot (F-08 behaviour half), and
+# dottedModelIdIsMeteredInTheProviderWindow (F-04(b) on the service path).
+EXPECTED_TESTS = 57
 DATABASE = 'editorial'
 ADMIN_ROLE = 'editorial_admin'
+
+
+def resolve_work_root(raw, here: Path) -> Path:
+    """The run scratch root, absolute at startup whatever form --work-root arrived in.
+
+    Round-3 finding F-07: with a relative root every one of the 14 recorded commands exited 0 and Surefire
+    reported the suite green, and only then did the finally block call ``relative_to(ROOT)`` on the relative
+    run directory — exit 1 and no evidence for a run that had actually succeeded. Resolving up front makes the
+    recorded outcome and the evidence write see the same absolute path. ``--path-selftest`` exercises exactly
+    this function."""
+    return Path(raw).resolve() if raw else (here / '.work').resolve()
+
+
+def inside_repo(path: Path) -> str:
+    """Evidence path display: repository-relative when the run lives inside the repository, absolute when an
+    operator deliberately pointed --work-root somewhere else. Never raises on the shape of a scratch path —
+    the run outcome is already decided by the time evidence is written (round-3 finding F-07)."""
+    try:
+        return str(path.relative_to(ROOT)).replace('\\', '/')
+    except ValueError:
+        return path.as_posix()
 
 
 def version_key(name: str) -> tuple[int, str]:
@@ -104,21 +131,39 @@ def main() -> int:
     parser.add_argument('--keep-cluster', action='store_true',
                         help='leave the cluster running and drop credentials.txt in the ignored run directory '
                              '(never used for delivered evidence)')
+    parser.add_argument('--path-selftest', action='store_true',
+                        help='exit after proving the F-07 fix without booting anything: a relative --work-root '
+                             'resolves to an absolute run directory inside the repository before any cluster exists')
     args = parser.parse_args()
     if Path(args.evidence_name).name != args.evidence_name:
         parser.error('--evidence-name must be a filename stem')
-    if (HERE / 'evidence' / (args.evidence_name + '.json')).exists():
-        raise RuntimeError(f"evidence '{args.evidence_name}.json' already exists; choose a new name")
     for stream in (sys.stdout, sys.stderr):
         try:
             stream.reconfigure(encoding='utf-8', errors='replace')
         except Exception:
             pass
+    work_root = resolve_work_root(args.work_root, HERE)
+    if args.path_selftest:
+        # The dispatch's relative command shape must resolve like the absolute one; this is the self-check for
+        # finding F-07, and it deliberately shares resolve_work_root with the real run path.
+        probe = work_root / uuid.uuid4().hex
+        problems = []
+        if not probe.is_absolute():
+            problems.append('run directory is not absolute: ' + str(probe))
+        if ROOT not in probe.parents:
+            problems.append('run directory does not resolve inside the repository root ' + str(ROOT)
+                            + ': ' + str(probe))
+        print(json.dumps({'workRoot': work_root.as_posix(), 'runDirectoryShape': probe.as_posix(),
+                          'relativeInput': str(args.work_root) if args.work_root else '(default)',
+                          'problems': problems}, ensure_ascii=False))
+        return 1 if problems else 0
+    if (HERE / 'evidence' / (args.evidence_name + '.json')).exists():
+        raise RuntimeError(f"evidence '{args.evidence_name}.json' already exists; choose a new name")
     for required in (args.pg_bin / 'postgres', args.pg_bin / 'psql', args.pg_bin / 'initdb',
                      args.pg_bin / 'pg_ctl', args.pg_bin / 'createdb', args.java_home / 'bin/java', args.maven):
         executable(required)
 
-    work = (args.work_root if args.work_root else HERE / '.work') / uuid.uuid4().hex
+    work = work_root / uuid.uuid4().hex
     work.mkdir(parents=True)
     passwords = {role: secrets.token_urlsafe(24) for role in ('admin', 'runtime', 'migration')}
     with socket.socket() as probe:
@@ -302,11 +347,11 @@ def main() -> int:
         target = HERE / 'evidence' / (args.evidence_name + '-test-results')
         try:
             shutil.copytree(reports, target)
-            evidence['testResults'] = str(target.relative_to(ROOT)).replace('\\', '/')
+            evidence['testResults'] = inside_repo(target)
         except OSError as blocked:
             # A restricted shell may refuse writes under tests/; the reports still live in the ignored work dir.
             evidence['testResultsCopyBlocked'] = f'{type(blocked).__name__}: {blocked}'
-            evidence['testResults'] = str(reports.relative_to(ROOT)).replace('\\', '/')
+            evidence['testResults'] = inside_repo(reports)
         exit_code = 0
     except Exception as failure:
         evidence['failure'] = type(failure).__name__ + ': ' + str(failure)
@@ -321,14 +366,14 @@ def main() -> int:
                     f"port={port}\nadmin={ADMIN_ROLE}\nadmin_password={passwords['admin']}\n"
                     f"runtime_password={passwords['runtime']}\nmigration_password={passwords['migration']}\n",
                     encoding='utf-8', newline='\n')
-                evidence['credentialsFile'] = str((work / 'credentials.txt').relative_to(ROOT)).replace('\\', '/')
+                evidence['credentialsFile'] = inside_repo(work / 'credentials.txt')
                 print(f"kept cluster: port={port} credentials={work / 'credentials.txt'}", flush=True)
                 # A throwaway local cluster with throwaway passwords, so a diagnosis session can attach.
                 (work / 'credentials.txt').write_text(
                     f'port={port}\ndatabase={DATABASE}\n'
                     + '\n'.join(f'{role}={passwords[role]}' for role in ('admin', 'runtime', 'migration')) + '\n',
                     encoding='utf-8', newline='\n')
-                evidence['credentialsFile'] = str((work / 'credentials.txt').relative_to(ROOT)).replace('\\', '/')
+                evidence['credentialsFile'] = inside_repo(work / 'credentials.txt')
             else:
                 server.terminate()
                 server.wait(timeout=60)
@@ -340,7 +385,7 @@ def main() -> int:
             except Exception as stop:
                 evidence['clusterStopIssue'] = str(stop)
         evidence['exitCode'] = exit_code
-        evidence['isolatedWork'] = str(work.relative_to(ROOT)).replace('\\', '/')
+        evidence['isolatedWork'] = inside_repo(work)
         out = HERE / 'evidence' / (args.evidence_name + '.json')
         try:
             out.parent.mkdir(exist_ok=True)

@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.example.editorial.cost.T08PostgresTest
+-------------------------------------------------------------------------------
+Tests run: 35, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 15.23 s <<< FAILURE! -- in com.example.editorial.cost.T08PostgresTest
+com.example.editorial.cost.T08PostgresTest.nestedYamlQuotaIsEnforcedByTheService -- Time elapsed: 0.510 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: one hold on the first model plus three here fill the provider-wide ceiling of four; the model entry of one would have refused this second model's first call ==> expected: <PROVIDER_QUOTA_EXCEEDED> but was: <QUOTA_EXCEEDED>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1156)
+	at com.example.editorial.cost.T08PostgresTest.nestedYamlQuotaIsEnforcedByTheService(T08PostgresTest.java:708)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

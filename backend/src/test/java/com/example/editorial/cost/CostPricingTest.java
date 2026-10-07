@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mock.env.MockEnvironment;
 
@@ -364,14 +365,19 @@ class CostPricingTest {
         assertFalse(bare.hasCap(BudgetPolicy.Counter.CALLS));
         assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> bare.cap(BudgetPolicy.Counter.SEARCH_QUERY)).code());
         assertEquals(503, failure(() -> bare.cap(BudgetPolicy.Counter.SEARCH_QUERY)).status());
-        // Provider quota resolves "provider|model" first, then the provider, then no provider-side cap at all.
+        // Provider quota is two-level and BOTH levels bind (round-3 ruling F-03): the model entry caps that
+        // model's window, the provider entry caps the provider summed across its models. The map answers each
+        // level on its own — an entry is never "resolved away" by a wider one; the service measures both windows
+        // and the stricter answer wins.
         BudgetPolicy scoped = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(
                 "mock", new BudgetPolicy.ProviderQuota(2, 40),
                 "mock|mock-model", new BudgetPolicy.ProviderQuota(5, 9)), 80, 30,
                 BudgetPolicy.UnconfiguredQuota.UNLIMITED);
-        assertEquals(5, scoped.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
-        assertEquals(2, scoped.providerQuota("mock", "other").orElseThrow().maxConcurrent());
-        assertTrue(scoped.providerQuota("other", "x").isEmpty());
+        assertEquals(5, scoped.modelQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(2, scoped.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "the provider entry keeps binding even while the model entry exists");
+        assertTrue(scoped.modelQuota("mock", "other").isEmpty(), "sibling models have no model-level entry");
+        assertTrue(scoped.providerWideQuota("other").isEmpty(), "an unlisted provider has no entry at all");
         assertEquals(BudgetPolicy.UnconfiguredQuota.UNLIMITED, scoped.unconfigured());
         // Finding F2-01: a scope spelled any other way is unreachable, so the type refuses it instead of storing
         // a ceiling that silently never applies. "mock.mock-model" is exactly what the config builder used to do.
@@ -438,10 +444,12 @@ class CostPricingTest {
                 .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "17")
                 .withProperty("editorial.cost.provider-quota.mock.mock-model.max-concurrent", "1")
                 .withProperty("editorial.cost.provider-quota.mock.mock-model.calls-per-day", "2"));
-        assertEquals(1, policy.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
-        assertEquals(2, policy.providerQuota("mock", "mock-model").orElseThrow().callsPerDay());
-        assertEquals(3, policy.providerQuota("mock", "other-model").orElseThrow().maxConcurrent());
-        assertEquals(17, policy.providerQuota("mock", "other-model").orElseThrow().callsPerDay());
+        assertEquals(1, policy.modelQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(2, policy.modelQuota("mock", "mock-model").orElseThrow().callsPerDay());
+        assertEquals(3, policy.providerWideQuota("mock").orElseThrow().maxConcurrent());
+        assertEquals(17, policy.providerWideQuota("mock").orElseThrow().callsPerDay());
+        assertTrue(policy.modelQuota("mock", "other-model").isEmpty(),
+                "a sibling model is capped by the provider entry — the model entry answers its own model only");
         assertEquals(java.util.Set.of("mock", "mock|mock-model"), policy.providers().keySet());
         assertTrue(policy.providers().keySet().stream().noneMatch(key -> key.contains(".")),
                 "a dotted scope is unreachable by definition: " + policy.providers().keySet());
@@ -476,16 +484,19 @@ class CostPricingTest {
     }
 
     /**
-     * Finding F2-01, from the shape an operator actually writes. The flat property names above could have been
-     * right while the nested YAML document bound to something else entirely, and the test would still have been
-     * green: the whole point of the defect was two spellings that never met. So this goes through Spring's own
-     * YAML loader and asserts what the lookup answers, and it asserts that the wrong shapes fail out loud
-     * instead of landing where nothing reads them.
+     * Finding F2-01, from the shape an operator actually writes, and finding F-02's evidence rule: the loader
+     * runs inside this case body, on the document this case body carries, and the policy the assertions read
+     * is the one {@code BudgetPolicyConfig.from(env)} returned from that environment — "the file mentions a
+     * loader somewhere" is not binding evidence, because a hand-built flat-key environment can decorate a
+     * document nobody loaded. The flat property names above could have been right while the nested YAML
+     * document bound to something else entirely, and the test would still have been green: the whole point of
+     * the defect was two spellings that never met. And the wrong shapes fail out loud instead of landing where
+     * nothing reads them.
      */
     @Test
     @DisplayName("Nested YAML quota keys bind the scopes the quota lookup reads")
     void quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads() throws java.io.IOException {
-        BudgetPolicy policy = BudgetPolicyConfig.from(yaml("""
+        String document = """
                 editorial:
                   cost:
                     max-calls-per-article: 64
@@ -498,12 +509,19 @@ class CostPricingTest {
                         mock-model:
                           max-concurrent: 1
                           calls-per-day: 2
-                """));
+                """;
+        MockEnvironment env = new MockEnvironment();
+        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",
+                new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))) {
+            env.getPropertySources().addLast(source);
+        }
+        BudgetPolicy policy = BudgetPolicyConfig.from(env);
         assertEquals(java.util.Set.of("mock", "mock|mock-model"), policy.providers().keySet(),
                 "the document nests a model under its provider; the map has to hold both scopes, not a path");
-        assertEquals(1, policy.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
-        assertEquals(2, policy.providerQuota("mock", "mock-model").orElseThrow().callsPerDay());
-        assertEquals(3, policy.providerQuota("mock", "another-model").orElseThrow().maxConcurrent());
+        assertEquals(1, policy.modelQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(2, policy.modelQuota("mock", "mock-model").orElseThrow().callsPerDay());
+        assertEquals(3, policy.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "both levels the document declares are enforced; neither shadows the other");
         assertEquals(BudgetPolicy.UnconfiguredQuota.REFUSE, policy.unconfigured());
         assertEquals(64L, policy.cap(BudgetPolicy.Counter.CALLS), "the stated non-default came from the document");
 
@@ -596,8 +614,8 @@ class CostPricingTest {
         assertEquals(5, policy.cap(BudgetPolicy.Counter.SEARCH_QUERY));
         assertEquals(70, policy.alertPercent());
         assertEquals(5, policy.staleReconciliationMinutes());
-        assertEquals(3, policy.providerQuota("mock", "any").orElseThrow().maxConcurrent());
-        assertEquals(17, policy.providerQuota("mock", "any").orElseThrow().callsPerDay());
+        assertEquals(3, policy.providerWideQuota("mock").orElseThrow().maxConcurrent());
+        assertEquals(17, policy.providerWideQuota("mock").orElseThrow().callsPerDay());
         assertEquals("INVALID_AMOUNT", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.daily-budget", "12.5"))).code());
         assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
@@ -608,6 +626,122 @@ class CostPricingTest {
                 .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "-1"))).code());
         assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
                 .withProperty("editorial.cost.provider-quota.max-concurrent", "1"))).code());
+    }
+
+    /** A property source shaped the way the OS environment reaches Spring: raw UPPER_SNAKE keys. */
+    private static MockEnvironment environmentShaped(java.util.Map<String, Object> os) {
+        MockEnvironment env = new MockEnvironment();
+        env.getPropertySources().addFirst(new SystemEnvironmentPropertySource("systemEnv", os));
+        return env;
+    }
+
+    /**
+     * Round-3 finding F-01: {@code SystemEnvironmentPropertySource} answers the canonical
+     * {@code editorial.cost.provider-quota.…} names for its {@code EDITORIAL_COST_…} keys, but the quota
+     * enumeration matched literal dotted names only — so quotas configured through the environment booted
+     * green with every provider silently unlimited ("配了不生效", new channel). The enumeration now walks the
+     * subtree through Spring's own relaxed binding, and a shape the environment channel cannot read with ONE
+     * answer (its {@code _} stands for both {@code .} and {@code -}) is refused at load instead of guessed.
+     */
+    @Test
+    @DisplayName("A quota supplied through environment-style names binds instead of vanishing")
+    void quotaSuppliedThroughEnvironmentStyleNamesBinds() {
+        java.util.Map<String, Object> os = new java.util.LinkedHashMap<>();
+        os.put("EDITORIAL_COST_MAX_CALLS_PER_ARTICLE", "64");
+        os.put("EDITORIAL_COST_RECONCILIATION_STALE_MINUTES", "30");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_UNCONFIGURED", "unlimited");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY", "30");
+        BudgetPolicy policy = BudgetPolicyConfig.from(environmentShaped(os));
+        assertEquals(2, policy.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "the env-shaped key configured the provider-wide ceiling instead of silently vanishing");
+        assertEquals(30, policy.providerWideQuota("mock").orElseThrow().callsPerDay());
+        assertEquals(BudgetPolicy.UnconfiguredQuota.UNLIMITED, policy.unconfigured());
+        // Half a scope stated through the environment is still half a scope: refused, never read as unlimited.
+        java.util.Map<String, Object> half = new java.util.LinkedHashMap<>(os);
+        half.remove("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY");
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(environmentShaped(half))).code());
+        // MOCK_MODEL_* is provider "mock" model "model" OR provider "mock-model": two readings, zero trust.
+        java.util.Map<String, Object> ambiguous = new java.util.LinkedHashMap<>(os);
+        ambiguous.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MODEL_MAX_CONCURRENT", "1");
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(ambiguous))).code());
+    }
+
+    /**
+     * Round-3 finding F-08: every leaf value is normalized into the structured 503 — "three" used to escape as
+     * a ConversionFailedException stack (loud to a terminal, not a PUBLIC_FAILURE code) — and the two zeros
+     * mean different things: {@code max-concurrent: 0} is a permanent wedge (refused as misconfiguration) and
+     * {@code calls-per-day: 0} is a stated closed day (accepted here;
+     * {@code T08PostgresTest#zeroCallsPerDayClosesTheDayButNotTheBoot} pins what it refuses).
+     */
+    @Test
+    @DisplayName("Quota leaves refuse the boot structurally; only a wedge is misconfiguration")
+    void quotaLeavesAreNormalisedAtAssembly() {
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "three")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "5"))).code());
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "2")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "-1"))).code());
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "0")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "5"))).code());
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> new BudgetPolicy.ProviderQuota(0, 5)).code());
+        BudgetPolicy closedDay = BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "2")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "0"));
+        assertEquals(0, closedDay.providerWideQuota("mock").orElseThrow().callsPerDay(),
+                "a closed day is a stated choice, not a typo to refuse");
+    }
+
+    /**
+     * Round-3 ruling F-03 as data: the two levels answer their own entries and neither erases the other —
+     * the service measures both windows and the stricter binds. Model keys match by equality only (variant
+     * probe V4: a prefix match would silently widen {@code mock-model} onto every {@code mock-model-*}), and
+     * the ruled F-04 boundary is pinned here too: a dotted model id has no model-level entry while the
+     * provider-wide entry still caps it.
+     */
+    @Test
+    @DisplayName("Both quota levels answer their own entry, exact scope equality only")
+    void bothQuotaLevelsAnswerTheirOwnEntries() {
+        BudgetPolicy layered = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(
+                "mock", new BudgetPolicy.ProviderQuota(2, 40),
+                "mock|mock-model", new BudgetPolicy.ProviderQuota(5, 9)), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.UNLIMITED);
+        assertEquals(5, layered.modelQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(9, layered.modelQuota("mock", "mock-model").orElseThrow().callsPerDay());
+        assertEquals(2, layered.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "the looser model entry erases the provider entry from nobody's window");
+        assertTrue(layered.modelQuota("mock", "mock-model-v2").isEmpty(),
+                "a prefix match would answer mock-model for a model that never declared it");
+        assertTrue(layered.modelQuota("mock", "gpt-4.1").isEmpty(),
+                "a dotted model id has no model-level key (ruled boundary), so nothing is guessed here");
+        assertEquals(40, layered.providerWideQuota("mock").orElseThrow().callsPerDay(),
+                "and the dotted model's rows are still capped by the provider entry");
+    }
+
+    /**
+     * Round-3 finding F-05: the scope key joins provider and model with {@code |}, so an id containing the
+     * separator makes {@code p|q} (one provider) and {@code p}+{@code q} (a model override) the same map key,
+     * silently overwriting one another — the reviewer's mixed {@code {p|q, p.q}} document demonstrated it.
+     * Ids are restricted to {@code [A-Za-z0-9._-]}; violations fail the same load-time refusal, and a stored
+     * key that would parse two ways is refused by the record too.
+     */
+    @Test
+    @DisplayName("An id containing the scope separator is refused at load, not collided")
+    void separatorBearingIdsAreRefusedNotCollided() {
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicy.scope("p|q", null)).code());
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicy.scope("p", "q|r")).code());
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicy.scope("p", "q r")).code());
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.p|q.max-concurrent", "9")
+                .withProperty("editorial.cost.provider-quota.p|q.calls-per-day", "9")
+                .withProperty("editorial.cost.provider-quota.p.q.max-concurrent", "1")
+                .withProperty("editorial.cost.provider-quota.p.q.calls-per-day", "1"))).code());
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> new BudgetPolicy(Money.of("20.000000"), Map.of(),
+                Map.of("p||q", new BudgetPolicy.ProviderQuota(1, 1)), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.REFUSE)).code());
     }
 
     @Test

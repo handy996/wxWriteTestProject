@@ -306,7 +306,7 @@ def check_acceptance_anchors() -> tuple[str, bool, str]:
                                  ['assertEquals(30, policy.cap', 'assertEquals(40_000, policy.cap',
                                   'assertEquals("20.000000", policy.dailyLimit']),
         "model quota scope reaches its lookup": ("CostPricingTest", "modelLevelQuotaReachesTheLookupThatReadsIt",
-                                                 ['assertEquals(1, policy.providerQuota("mock", "mock-model")',
+                                                 ['assertEquals(1, policy.modelQuota("mock", "mock-model")',
                                                   'Set.of("mock", "mock|mock-model")']),
         "model and provider windows each bind": ("T08PostgresTest",
                                                  "modelAndProviderQuotaScopesEachBindTheirWindow",
@@ -316,15 +316,56 @@ def check_acceptance_anchors() -> tuple[str, bool, str]:
                                                         ["PROVIDER_QUOTA_NOT_CONFIGURED", "assertEquals(0, rows()"]),
         "quota case binds a real YAML document": ("CostPricingTest",
                                                  "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads",
-                                                 ["BudgetPolicyConfig.from(yaml(",
-                                                  'policy.providerQuota("mock", "mock-model")',
+                                                 ["new YamlPropertySourceLoader()",
+                                                  "BudgetPolicyConfig.from(env)",
+                                                  'policy.modelQuota("mock", "mock-model")',
+                                                  'policy.providerWideQuota("mock")',
                                                   "INVALID_PROVIDER_QUOTA_KEY",
                                                   "BudgetPolicy.UnconfiguredQuota.REFUSE"]),
         "live quota case is fed by the bound environment": ("T08PostgresTest",
                                                             "nestedYamlQuotaIsEnforcedByTheService",
-                                                            ["YamlPropertySourceLoader",
-                                                             "service(BudgetPolicyConfig.from(env))",
+                                                            ["new YamlPropertySourceLoader()",
+                                                             "BudgetPolicyConfig.from(env)",
+                                                             "activePolicy.providerWideQuota(PROVIDER)",
                                                              "PROVIDER_QUOTA_EXCEEDED"]),
+        "env-shaped quota binds instead of vanishing": ("CostPricingTest",
+                                                        "quotaSuppliedThroughEnvironmentStyleNamesBinds",
+                                                        ['os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2")',
+                                                         'policy.providerWideQuota("mock")',
+                                                         "INVALID_PROVIDER_QUOTA_KEY"]),
+        "the env-shaped test source really is env-shaped": ("CostPricingTest", "environmentShaped",
+                                                            ["SystemEnvironmentPropertySource",
+                                                             "getPropertySources().addFirst"]),
+        "quota leaves are normalised at assembly": ("CostPricingTest",
+                                                    "quotaLeavesAreNormalisedAtAssembly",
+                                                    ['"three"', "INVALID_BUDGET_POLICY",
+                                                     "new BudgetPolicy.ProviderQuota(0, 5)",
+                                                     'closedDay.providerWideQuota("mock")']),
+        "both levels answer their own entry": ("CostPricingTest", "bothQuotaLevelsAnswerTheirOwnEntries",
+                                               ['layered.modelQuota("mock", "mock-model-v2").isEmpty()',
+                                                'layered.modelQuota("mock", "gpt-4.1").isEmpty()',
+                                                "layered.providerWideQuota(\"mock\")"]),
+        "separator ids refused not collided": ("CostPricingTest", "separatorBearingIdsAreRefusedNotCollided",
+                                               ['BudgetPolicy.scope("p|q", null)', '"p||q"',
+                                                "INVALID_PROVIDER_QUOTA_KEY"]),
+        "a looser model entry cannot lift the provider ceiling": ("T08PostgresTest",
+                                                                  "looserModelEntryCannotLiftTheProviderCeiling",
+                                                                  ["ProviderQuota(2, 30)", "ProviderQuota(5, 30)",
+                                                                   "PROVIDER_QUOTA_EXCEEDED",
+                                                                   "assertEquals(2, holds()"]),
+        "the provider day window closes first": ("T08PostgresTest",
+                                                 "providerDayWindowClosesBeforeTheLooserModelDayWindow",
+                                                 ["ProviderQuota(3, 2)", "ProviderQuota(5, 5)",
+                                                  "PROVIDER_QUOTA_EXCEEDED"]),
+        "zero calls-per-day is a closed day, not a wedged boot": ("T08PostgresTest",
+                                                                  "zeroCallsPerDayClosesTheDayButNotTheBoot",
+                                                                  ["ProviderQuota(2, 0)",
+                                                                   "PROVIDER_QUOTA_EXCEEDED",
+                                                                   "assertEquals(0, rows()"]),
+        "a dotted model id is metered provider-wide": ("T08PostgresTest",
+                                                       "dottedModelIdIsMeteredInTheProviderWindow",
+                                                       ['hold(article, "gpt-4.1")', "ProviderQuota(2, 30)",
+                                                        "PROVIDER_QUOTA_EXCEEDED"]),
         "unstated ceilings refuse": ("CostPricingTest", "undocumentedCeilingsHaveNoDefault",
                                      ['assertEquals("QUOTA_NOT_CONFIGURED"', "editorial.cost.max-calls"]),
         "unbound executions refuse": ("CostPricingTest", "executionScopeIsFailClosed",
@@ -453,21 +494,36 @@ def check_admission_ceiling() -> tuple[str, bool, str]:
 
 
 def check_quota_scope_spelling() -> tuple[str, bool, str]:
-    """Finding F2-01: a provider quota that is spelled differently by its writer and its reader is a ceiling that
-    silently never applies. One method owns the scope spelling, both sides go through it, an unreachable key is
-    refused by the record, and the case for a provider nobody configured is a stated choice rather than absence."""
+    """Finding F2-01 and the round-3 findings stacked on it. One method owns the scope spelling and both sides go
+    through it — scanned across the whole cost module now, because a scan of two files was a scan that missed
+    (F-06). The two configured levels are enforced side by side and each answers only its own exact key (ruling
+    F-03; variant probe V4's prefix widening is refused by construction). Ids outside [A-Za-z0-9._-] cannot reach
+    the separator and collide (F-05). The OS-environment channel binds like the file channel instead of silently
+    producing an empty provider map (F-01). Unreadable leaf values arrive as the structured 503, not a conversion
+    stack, and the two zeros keep their distinct meanings (F-08). And the binding evidence lives inside the method
+    bodies of the cases that assert on it, not in the files' general vicinity (F-02)."""
     policy = read(COST_MAIN / "BudgetPolicy.java")
     config = read(COST_MAIN / "BudgetPolicyConfig.java")
     service = read(COST_MAIN / "BudgetService.java")
+    module = "".join(read(source) for source in cost_sources())
     definition = re.search(r"public static String scope\(String provider, String model\)", policy)
     scope_body = java_method_body(policy, "scope")
     canonical = bool(re.search(r'provider \+ "\|" \+ model', scope_body))
-    # Exactly one join of a provider and a model into a scope may exist in the module: the one inside scope(). A
-    # second one anywhere is a second spelling, and a second spelling is how a configured ceiling reads as none.
-    joined = re.findall(r'provider\s*\+\s*"([._|])"\s*\+\s*model', policy + config)
+    # Exactly one join of a provider and a model into a scope may exist in the module: the one inside scope().
+    # A second one anywhere — ledger, service, a future file — is a second spelling, and a second spelling is how
+    # a configured ceiling silently reads as none (round-3 finding F-06 extended the two-file scan to the module).
+    # Comments are stripped first: the gate judges the code, not the prose that explains the code.
+    module = "".join(strip_java_comments(read(source)) for source in cost_sources())
+    joined = re.findall(r'provider\s*\+\s*"([._|])"\s*\+\s*model', module)
     writers = len(re.findall(r"BudgetPolicy\.scope\(", config))
     readers = len(re.findall(r"\bscope\(provider, (?:model|null)\)", policy))
-    malformed_refused = "INVALID_PROVIDER_QUOTA_KEY" in policy and 'scope.contains(".")' in policy
+    # indexOf is accepted alongside contains on purpose: the verdict is "the dotted shape is refused", not the
+    # spelling of the check (a benign re-typing must keep this gate green — see --reverse-control's probes).
+    malformed_refused = "INVALID_PROVIDER_QUOTA_KEY" in policy and bool(
+        re.search(r'stored\.(?:contains|indexOf)\("\."\)', policy))
+    segment_shape = bool(re.search(r'Pattern\.compile\("\[A-Za-z0-9\._-\]\+"\)', policy)) \
+        and "SEGMENT_SHAPE.matcher(provider).matches()" in policy \
+        and "SEGMENT_SHAPE.matcher(model).matches()" in policy
     # The reserved switch leaf shares the namespace with provider names, so a provider called unconfigured has to
     # be refused where its quota leaves live, not skipped the way the switch itself is.
     reserved_switch_refused = bool(re.search(
@@ -479,46 +535,103 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
         and 'getProperty("editorial.cost.provider-quota.unconfigured"' not in config
     unlisted_refused = "PROVIDER_QUOTA_NOT_CONFIGURED" in service \
         and "UnconfiguredQuota.REFUSE" in service
-    # The window a provider-wide entry is measured over has to be chosen by the scope that answered, not hardcoded
-    # to the model window: otherwise a provider ceiling of 3 silently becomes 3 per model.
-    per_model_choice = bool(re.search(r'boolean perModel = quotaScope != null && quotaScope\.contains\("\|"\);',
-                                      service))
-    window_branch = bool(re.search(r"ceilings\.add\(perModel\s*\?", service))
-    wide_window = bool(re.search(r"l\.owner_id=\? AND l\.provider=\? AND l\.bucket_day=\?", service)) \
-        and "policy.quotaScope(provider, model)" in service and per_model_choice and window_branch
+    # Round-3 ruling F-03 in the shapes that carry it: each level answers its own entry (containsKey on the two
+    # scopes built by scope()), the service keeps EVERY window whose entry exists — the exact expression, so
+    # .limit(1) "first entry only" cannot paraphrase it away — and measures the provider-wide rows across models
+    # with the model window kept separate. Both where-clauses must be present, not one reused for both numbers.
+    two_tier = [
+        bool(re.search(r"Optional<ProviderQuota>\s+modelQuota\(String provider, String model\)", policy))
+        and bool(re.search(r"Optional<ProviderQuota>\s+providerWideQuota\(String provider\)", policy)),
+        "providers.containsKey(exact)" in policy and "providers.containsKey(wide)" in policy,
+        "policy.modelQuota(provider, model)" in service and "policy.providerWideQuota(provider)" in service,
+        "filter(ceiling -> ceiling.quota() != null).toList()" in service
+        and "for (Ceiling window : windows)" in service,
+        "l.owner_id=? AND l.provider=? AND l.model=? AND l.bucket_day=?" in service
+        and "l.owner_id=? AND l.provider=? AND l.bucket_day=?" in service,
+        # Each window is built exactly when its entry answered — the conditions are load-bearing text, because
+        # an `if (false)` keeps the SQL string present while never adding the window the ruling requires.
+        "if (modelEntry.isPresent())" in service and "if (wideEntry.isPresent())" in service,
+    ]
+    # Variant probe V4: a prefix match would answer mock-model to mock-model-v2 and silently widen a ceiling.
+    model_exact = "startsWith" not in java_method_body(policy, "modelQuota")
+    # F2-01's original defect was a config-side key built by string surgery. "writers >= 2" alone could still
+    # pass with only one channel keying through scope() while the other hand-built the dotted path again —
+    # reverse control caught that blind spot, so every key-building site is pinned by name.
+    config_keys_by_scope = bool(re.search(r"case 2 -> BudgetPolicy\.scope\(path\[0\], null\);", config)) \
+        and bool(re.search(r"case 3 -> BudgetPolicy\.scope\(path\[0\], path\[1\]\);", config)) \
+        and "String scope = BudgetPolicy.scope(provider, null);" in config
+    # Finding F-01: the environment channel is recognised, enumerated like any other source, and every leaf read
+    # through Spring's own Binder; and the one shape that channel cannot disambiguate (A_B_C reading two ways)
+    # is refused rather than guessed.
+    env_channel = [
+        "instanceof SystemEnvironmentPropertySource" in config
+        and '"editorial_cost_provider_quota_"' in config
+        and bool(re.search(r"Binder\.get\(configurable\)", config)),
+        "environmentQuotaName(binder, name" in config and "canonicalQuotaName(binder, name" in config,
+        "tail.length - leafParts != 1" in config,
+    ]
+    # Finding F-08: the conversion failure is normalized, and the zeros keep their distinct meanings.
+    leaf_normalised = bool(re.search(r"catch \(BindException \| org\.springframework\.core\.convert\."
+                                     r"ConversionFailedException", config))
+    zero_semantics = "maxConcurrent < 1" in policy and "callsPerDay < 0" in policy
     report = read(ROOT / "docs/execution/reports/T08.md")
     documented = ["max-concurrent" in config, "calls-per-day" in config,
                   "provider-quota.unconfigured" in config, "[_<model>]" not in config,
                   "max-concurrency" not in report, "daily-calls" not in report]
     # The same defect can hide one layer up: the cases above could bind flat test keys while the real YAML document
-    # produced a different shape. So the quota cases have to load a nested document through Spring's own loader,
-    # and the live case has to build the policy it hands the service from that environment.
+    # produced a different shape. Round-3 finding F-02 moved the verdict INTO the case bodies: the loader call,
+    # the document bytes and BudgetPolicyConfig.from(env) must sit inside the method that asserts the result, the
+    # live service must be fed the policy that from(env) produced (inline or via a local — both benign spellings
+    # of the same claim), and the unit body may not smuggle flat hand-fed quota keys past the loader.
     unit = read(COST_TEST / "CostPricingTest.java")
     live = read(PG_TEST)
-    loads_yaml = [unit.count("new YamlPropertySourceLoader()") == 1 and "ByteArrayResource(document.getBytes" in unit,
-                  "new YamlPropertySourceLoader()" in live, "BudgetPolicyConfig.from(env)" in live]
+    unit_body = java_method_body(unit, "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads")
+    live_body = java_method_body(live, "nestedYamlQuotaIsEnforcedByTheService")
+
+    def bound_in(body: str) -> bool:
+        return (bool(re.search(r"new\s+YamlPropertySourceLoader\s*\(\s*\)", body))
+                and "document.getBytes" in body and "new ByteArrayResource(" in body
+                and bool(re.search(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)", body)))
+
+    def service_fed_from_bound(body: str) -> bool:
+        if body.count("service(") != 1 or "new BudgetPolicy(" in body or "policy(wideCaps" in body:
+            return False
+        if re.search(r"service\(\s*BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)\s*\)", body):
+            return True
+        bound = re.search(r"(?:BudgetPolicy|var)\s+(\w+)\s*=\s*BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)",
+                          body)
+        return bool(bound) and re.search(r"service\(\s*" + bound.group(1) + r"\s*\)", body) is not None
+
     document = re.compile(r"provider-quota:\s*\n\s+unconfigured:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
                           r"\s*\n\s+calls-per-day:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
                           r"\s*\n\s+calls-per-day:\s*\S+")
     # Look for the document inside the two cases that claim to bind one, not anywhere in the file: the other
     # fixtures quote the same keys for different reasons.
-    nested = [bool(document.search(java_method_body(unit, "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads"))),
-              bool(document.search(java_method_body(live, "nestedYamlQuotaIsEnforcedByTheService")))]
+    nested = [bool(document.search(unit_body)), bool(document.search(live_body))]
+    binding = [bound_in(unit_body), bound_in(live_body), service_fed_from_bound(live_body),
+               "editorial.cost.provider-quota." not in unit_body]
     flat_fixtures = re.findall(r"\n\s+editorial\.cost\.provider-quota\.[\w-]+\.[\w-]+:", unit + live)
     ok = (bool(definition) and canonical and joined == ["|"] and writers >= 2 and readers >= 2
-          and malformed_refused and reserved_switch_refused and both_leaves and no_invented_open
-          and unconfigured_required and unlisted_refused and wide_window and all(documented)
-          and all(loads_yaml) and all(nested) and not flat_fixtures)
+          and config_keys_by_scope and malformed_refused and segment_shape and reserved_switch_refused
+          and both_leaves
+          and no_invented_open and unconfigured_required and unlisted_refused and all(two_tier)
+          and model_exact and all(env_channel) and leaf_normalised and zero_semantics
+          and all(documented) and all(binding) and all(nested) and not flat_fixtures)
     return ("provider quota scopes are spelled one way and absence is a stated choice", ok,
             f"scope() defined={bool(definition)}, canonical '|' join inside it={canonical}, "
-            f"provider-model joins in the module={joined or 'none'}, "
+            f"provider-model joins in the whole cost module={joined or 'none'}, "
             f"BudgetPolicy.scope( call sites in config={writers}, scope( reads in policy={readers}, "
-            f"malformed key refused={malformed_refused}, reserved switch name refused as provider="
-            f"{reserved_switch_refused}, both leaves required={both_leaves}, "
-            f"no invented unlimited default={no_invented_open}, unconfigured key required={unconfigured_required}, "
-            f"unlisted refused on the service path={unlisted_refused}, provider-wide window measured per "
-            f"provider={wide_window}, keys documented as coded={documented}, "
-            f"quota cases bind a nested YAML document={loads_yaml + nested}, "
+            f"config keys built via scope() at every site={config_keys_by_scope}, "
+            f"malformed key refused={malformed_refused}, id charset refused at scope={segment_shape}, "
+            f"reserved switch name refused as provider={reserved_switch_refused}, "
+            f"both leaves required={both_leaves}, no invented unlimited default={no_invented_open}, "
+            f"unconfigured key required={unconfigured_required}, unlisted refused on the service path="
+            f"{unlisted_refused}, two levels each answer their own window={two_tier}, "
+            f"model keys exact-only={model_exact}, env channel bound like the file channel={env_channel}, "
+            f"conversion failure normalised={leaf_normalised}, zero semantics kept={zero_semantics}, "
+            f"keys documented as coded={documented}, "
+            f"binding evidence inside the asserting case bodies={binding}, "
+            f"quota cases bind a nested YAML document={nested}, "
             f"flat dotted fixtures in the cases={flat_fixtures or 'none'}")
 
 
@@ -632,8 +745,8 @@ def reversals() -> list[dict]:
          "old": 'BudgetPolicy.scope(path[0], path[1])', "new": 'path[0] + "." + path[1]',
          "red": [quotas]},
         {"name": "the reader joins the scope itself instead of asking the one definition", "path": quota_policy,
-         "old": 'return model == null || model.isBlank() ? provider : provider + "|" + model;',
-         "new": 'return model == null || model.isBlank() ? provider : provider + "_" + model;',
+         "old": 'return provider + "|" + model;',
+         "new": 'return provider + "_" + model;',
          "red": [quotas]},
         {"name": "a half-declared quota scope silently opens the other side", "path": CONFIG_JAVA,
          "old": "if (held == null || calls == null) {", "new": "if (false) {", "red": [quotas]},
@@ -645,8 +758,11 @@ def reversals() -> list[dict]:
         {"name": "an unlisted provider stops being refused", "path": quota_service,
          "old": 'throw new PublicFailure(503, "PROVIDER_QUOTA_NOT_CONFIGURED");', "new": "return;",
          "red": [quotas]},
-        {"name": "a provider-wide quota is measured per model again", "path": quota_service,
-         "old": 'boolean perModel = quotaScope != null && quotaScope.contains("|");', "new": "boolean perModel = true;",
+        {"name": "both levels collapse back to the first entry that answered (single-level regression)",
+         "path": quota_service,
+         "old": "List<Ceiling> windows = ceilings.stream().filter(ceiling -> ceiling.quota() != null).toList();",
+         "new": "List<Ceiling> windows = ceilings.stream().filter(ceiling -> ceiling.quota() != null)"
+                ".limit(1).toList();",
          "red": [quotas]},
         {"name": "the report renames the quota leaves", "path": ROOT / "docs/execution/reports/T08.md",
          "old": "max-concurrent", "new": "max-concurrency", "red": [quotas]},
@@ -670,6 +786,86 @@ def reversals() -> list[dict]:
         {"name": "a provider named after the reserved switch stops being refused", "path": CONFIG_JAVA,
          "edits": [("if (path.length < 2 || UNCONFIGURED_LEAF.equals(path[0])) {", "if (path.length < 2) {")],
          "red": [quotas]},
+        # The round-3 findings, one weakening each: the gate has to see the exact regression it was written for.
+        {"name": "the OS-environment channel stops being recognised (finding F-01 rebuilt)", "path": CONFIG_JAVA,
+         "edits": [("boolean environmentShaped = source instanceof SystemEnvironmentPropertySource;",
+                    "boolean environmentShaped = false;")],
+         "red": [quotas]},
+        {"name": "the quota enumeration matches literal dotted names only again", "path": CONFIG_JAVA,
+         "edits": [("if (environmentShaped) environmentQuotaName(binder, name, concurrent, perDay);\n"
+                    "                    else canonicalQuotaName(binder, name, concurrent, perDay);",
+                    "canonicalQuotaName(binder, name, concurrent, perDay);")],
+         "red": [quotas]},
+        {"name": "an ambiguous env name is guessed instead of refused", "path": CONFIG_JAVA,
+         "edits": [("if (tail.length - leafParts != 1 || UNCONFIGURED_LEAF.equals(tail[0])) {",
+                    "if (UNCONFIGURED_LEAF.equals(tail[0])) {")],
+         "red": [quotas]},
+        {"name": "an unreadable quota leaf escapes as the raw conversion failure (finding F-08)",
+         "path": CONFIG_JAVA,
+         "edits": [("} catch (BindException | org.springframework.core.convert.ConversionFailedException"
+                    " unreadable) {",
+                    "} catch (org.springframework.core.convert.ConversionFailedException raw) { throw raw;")],
+         "red": [quotas]},
+        {"name": "max-concurrent zero is accepted and wedges the provider forever", "path": quota_policy,
+         "edits": [("if (maxConcurrent < 1 || callsPerDay < 0) throw", "if (maxConcurrent < 0 || callsPerDay < 0) throw")],
+         "red": [quotas]},
+        {"name": "a model key starts answering by prefix again (variant probe V4)", "path": quota_policy,
+         "edits": [("return providers.containsKey(exact) ? Optional.of(providers.get(exact)) : Optional.empty();",
+                    "return providers.keySet().stream().anyMatch(key -> key.startsWith(exact))"
+                    " ? Optional.of(providers.get(exact)) : Optional.empty();")],
+         "red": [quotas]},
+        {"name": "a provider-wide entry stops building its own window (ruling F-03 half)", "path": quota_service,
+         "edits": [("if (wideEntry.isPresent())", "if (false)")],
+         "red": [quotas]},
+        {"name": "a model entry stops building its own window (ruling F-03 half)", "path": quota_service,
+         "edits": [("if (modelEntry.isPresent())", "if (false)")],
+         "red": [quotas]},
+        {"name": "a second provider+model join appears in the service (finding F-06's blind spot)",
+         "path": quota_service,
+         "edits": [("Optional<BudgetPolicy.ProviderQuota> modelEntry = policy.modelQuota(provider, model);",
+                    "Optional<BudgetPolicy.ProviderQuota> modelEntry = policy.modelQuota(provider, model);\n"
+                    "        String shadowScope = provider + \"|\" + model;")],
+         "red": [quotas]},
+        {"name": "a stored scope key stops being checked for the dotted shape", "path": quota_policy,
+         "edits": [("if (stored.isBlank() || stored.contains(\".\") || stored.startsWith(\"|\")"
+                    " || stored.endsWith(\"|\")",
+                    "if (stored.isBlank() || stored.startsWith(\"|\") || stored.endsWith(\"|\")")],
+         "red": [quotas]},
+        {"name": "the loader call leaves the unit case body that claims to bind it (finding F-02's A probe)",
+         "path": COST_TEST / "CostPricingTest.java",
+         "edits": [("MockEnvironment env = new MockEnvironment();\n"
+                    "        for (PropertySource<?> source : new YamlPropertySourceLoader().load(\"t08-quota\",\n"
+                    "                new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))) {\n"
+                    "            env.getPropertySources().addLast(source);\n"
+                    "        }\n"
+                    "        BudgetPolicy policy = BudgetPolicyConfig.from(env);",
+                    "BudgetPolicy policy = BudgetPolicyConfig.from(quotaDocument(document));")],
+         "red": [quotas]},
+        {"name": "the unit case feeds flat hand-built keys again", "path": COST_TEST / "CostPricingTest.java",
+         "edits": [("MockEnvironment env = new MockEnvironment();\n"
+                    "        for (PropertySource<?> source : new YamlPropertySourceLoader().load(\"t08-quota\",\n"
+                    "                new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))) {\n"
+                    "            env.getPropertySources().addLast(source);\n"
+                    "        }\n"
+                    "        BudgetPolicy policy = BudgetPolicyConfig.from(env);",
+                    "BudgetPolicy policy = BudgetPolicyConfig.from(statedBeyondSrs()\n"
+                    "                .withProperty(\"editorial.cost.provider-quota.mock.max-concurrent\", \"3\")"
+                    "\n                .withProperty(\"editorial.cost.provider-quota.mock.calls-per-day\", \"17\")"
+                    "\n                .withProperty(\"editorial.cost.provider-quota.mock.mock-model"
+                    ".max-concurrent\", \"1\")\n                .withProperty(\"editorial.cost.provider-quota"
+                    ".mock.mock-model.calls-per-day\", \"2\"));")],
+         "red": [quotas]},
+        {"name": "the live case grows a second, hand-built service handover (finding F-02's B probe)",
+         "path": PG_TEST,
+         "edits": [("service(BudgetPolicyConfig.from(env));",
+                    "service(BudgetPolicyConfig.from(env));\n"
+                    '        service(policy(wideCaps(), "20.000000", 80, Map.of()));')],
+         "red": [quotas]},
+        {"name": "the env-shaped test source stops being env-shaped at all", "path": COST_TEST / "CostPricingTest.java",
+         "edits": [('env.getPropertySources().addFirst(new SystemEnvironmentPropertySource("systemEnv", os));',
+                    'env.getPropertySources().addFirst(new org.springframework.core.env.MapPropertySource('
+                    '"plain", os));')],
+         "red": [anchors]},
         {"name": "a decoy FOR UPDATE comment stands where the lock should be", "path": V5,
          "old": "  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id"
                 " FOR UPDATE;\n  IF NOT FOUND",
@@ -685,8 +881,40 @@ def reversals() -> list[dict]:
     ]
 
 
+def benign_probes() -> list[dict]:
+    """Equivalent rewrites the gates must survive, the mirror image of reversals(): a gate that fires on the
+    SPELLING of a decision instead of the decision is brittle, and brittle gates train people to route around
+    them. Round-3 finding F-02's remedy says binding evidence must live in the case body; these probes pin that
+    the remedy accepts re-typings of the same evidence — indexOf for contains, a local variable for an inline
+    call, argument wraps, comment rewordings — and still only rejects what actually changes the claim."""
+    quota_policy = COST_MAIN / "BudgetPolicy.java"
+    quota_service = COST_MAIN / "BudgetService.java"
+    unit_test = COST_TEST / "CostPricingTest.java"
+    return [
+        {"name": "indexOf instead of contains for the stored dot check", "path": quota_policy,
+         "edits": [('stored.contains(".")', 'stored.indexOf(".") >= 0')]},
+        {"name": "the live service handover goes through one local variable", "path": PG_TEST,
+         "edits": [("service(BudgetPolicyConfig.from(env));",
+                    "BudgetPolicy fromDocument = BudgetPolicyConfig.from(env);\n"
+                    "        service(fromDocument);")]},
+        {"name": "the unit loader loop wraps one argument per line", "path": unit_test,
+         "edits": [('new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))) {',
+                    'new ByteArrayResource(\n                document.getBytes(StandardCharsets.UTF_8))) {')]},
+        {"name": "the F-03 comment rewords itself", "path": quota_service,
+         "edits": [("// Provider ceilings are two-level and both levels bind (round-3 ruling F-03): the model "
+                    "entry caps the",
+                    "// Two levels, both enforced (ruling F-03): the model entry caps the")]},
+        {"name": "the activePolicy assertion chain wraps a line", "path": PG_TEST,
+         "edits": [("assertEquals(4, activePolicy.providerWideQuota(PROVIDER).orElseThrow().maxConcurrent(),",
+                    "assertEquals(4, activePolicy.providerWideQuota(PROVIDER)\n"
+                    "                .orElseThrow().maxConcurrent(),")]},
+    ]
+
+
 def reverse_control() -> int:
-    """Run every gate against each weakening, in memory only: no file is written, no cluster is touched."""
+    """Run every gate against each weakening, in memory only: no file is written, no cluster is touched.
+    Benign-equivalent probes run in the same pass: a weakening that goes unseen means the gate does not exist,
+    and a re-typing that goes red means the gate exists for the wrong reason."""
     baseline = run_checks()
     red = [name for name, ok, _ in baseline if not ok]
     if red:
@@ -718,8 +946,28 @@ def reverse_control() -> int:
             print(f"[WRONG ] {spec['name']} -> {sorted(failed)}")
         else:
             print(f"[REJECT] {spec['name']} -> {sorted(expected & failed)}")
-    print(f"reverse control: {len(reversals())} weakenings, blind={blind or 'none'}, misplaced={misplaced or 'none'}")
-    return 1 if blind or misplaced else 0
+    brittle = []
+    for spec in benign_probes():
+        path = Path(spec["path"])
+        edits = spec["edits"]
+        source = path.read_text(encoding="utf-8", errors="replace")
+        if any(old not in source for old, _ in edits):
+            brittle.append(f"{spec['name']}: the probe target is gone (the gate hardened around a spelling)")
+            print(f"[BRITTLE] {spec['name']}: probe target no longer present")
+            continue
+        MUTATIONS[str(path)] = edits
+        try:
+            failed = {name for name, ok, _ in run_checks() if not ok}
+        finally:
+            MUTATIONS.clear()
+        if failed:
+            brittle.append(f"{spec['name']}: red were {sorted(failed)}")
+            print(f"[BRITTLE] {spec['name']} -> {sorted(failed)}")
+        else:
+            print(f"[benign ] {spec['name']} stayed green")
+    print(f"reverse control: {len(reversals())} weakenings, {len(benign_probes())} benign probes, "
+          f"blind={blind or 'none'}, misplaced={misplaced or 'none'}, brittle={brittle or 'none'}")
+    return 1 if blind or misplaced or brittle else 0
 
 
 def main() -> int:

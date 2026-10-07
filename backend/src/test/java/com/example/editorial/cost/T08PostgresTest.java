@@ -656,7 +656,11 @@ class T08PostgresTest {
      * The other half of F2-01: an unlisted provider/model must not read as "no provider-side limit". And the half
      * F2-02/F2-05 could not reach: the policy is assembled here from a real nested YAML document through Spring's
      * own loader, not from flat test keys, because the flat keys are what made the original two spellings look
-     * consistent. What is asserted is the service refusing, not a key string matching.
+     * consistent. Round-3 finding F-02 tightened this case to its own method body: the loader call, the
+     * {@code BudgetPolicyConfig.from(env)} call and the single {@code service(...)} handover all live inside it,
+     * and the numbers below (4/26 and 1/9) exist in no hand-built policy in this file — the two entries
+     * {@code activePolicy} answers with are only reachable by having loaded this document. What is asserted is
+     * the service refusing on both levels, not a key string matching.
      */
     @Test
     @DisplayName("A quota read from a nested YAML document is refused by the service that uses it")
@@ -665,15 +669,16 @@ class T08PostgresTest {
                 editorial:
                   cost:
                     max-calls-per-article: 1000
+                    image-units-per-article: 100
                     reconciliation-stale-minutes: 30
                     provider-quota:
                       unconfigured: refuse
                       mock-provider:
-                        max-concurrent: 3
-                        calls-per-day: 30
+                        max-concurrent: 4
+                        calls-per-day: 26
                         mock-gpt:
                           max-concurrent: 1
-                          calls-per-day: 30
+                          calls-per-day: 9
                 """;
         MockEnvironment env = new MockEnvironment();
         for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",
@@ -681,6 +686,12 @@ class T08PostgresTest {
             env.getPropertySources().addLast(source);
         }
         service(BudgetPolicyConfig.from(env));
+        assertEquals(4, activePolicy.providerWideQuota(PROVIDER).orElseThrow().maxConcurrent(),
+                "the provider-wide entry came from this document: no hand-built policy in this file states a four");
+        assertEquals(26, activePolicy.providerWideQuota(PROVIDER).orElseThrow().callsPerDay());
+        assertEquals(1, activePolicy.modelQuota(PROVIDER, MODEL).orElseThrow().maxConcurrent(),
+                "and the model entry nested under its provider bound as its own entry, not as an override");
+        assertEquals(9, activePolicy.modelQuota(PROVIDER, MODEL).orElseThrow().callsPerDay());
         UUID article = article("10.000000");
         assertNotNull(budget.reserve(actor(), image(article, execution(article, null, null), UUID.randomUUID(), 1)),
                 "the YAML model ceiling of one leaves room for exactly this hold");
@@ -688,16 +699,17 @@ class T08PostgresTest {
                 image(article, execution(article, null, null), UUID.randomUUID(), 1)));
         assertEquals("PROVIDER_QUOTA_EXCEEDED", override.code(),
                 "the model entry nested under its provider in the document is the entry that bound");
-        // Both levels of the same document bind their own window: the provider-wide three counts across models.
+        // Both levels of the same document bind their own window: the provider-wide four counts across models.
         publish(PROVIDER, "second-model", generation());
+        assertNotNull(budget.reserve(actor(), hold(article, "second-model")));
         assertNotNull(budget.reserve(actor(), hold(article, "second-model")));
         assertNotNull(budget.reserve(actor(), hold(article, "second-model")));
         PublicFailure wide = assertThrows(PublicFailure.class,
                 () -> budget.reserve(actor(), hold(article, "second-model")));
         assertEquals("PROVIDER_QUOTA_EXCEEDED", wide.code(),
-                "one hold on the first model plus two here fill the provider-wide ceiling of three; the model "
+                "one hold on the first model plus three here fill the provider-wide ceiling of four; the model "
                         + "entry of one would have refused this second model's first call");
-        assertEquals(3, holds(), "the refusals booked nothing");
+        assertEquals(4, holds(), "the refusals booked nothing");
         // The switch this document states is refuse, so a provider it never mentions cannot spend at all.
         publish("other-provider", MODEL, generation());
         PublicFailure unlisted = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
@@ -705,13 +717,92 @@ class T08PostgresTest {
                         Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false,
                         UUID.randomUUID())));
         assertEquals("PROVIDER_QUOTA_NOT_CONFIGURED", unlisted.code());
-        assertEquals(3, holds(), "and that refusal booked nothing either");
+        assertEquals(4, holds(), "and that refusal booked nothing either");
     }
 
     /** The reservation the quota cases place: one image unit on a model of the configured provider. */
     private BudgetService.Request hold(UUID article, String model) {
         return new BudgetService.Request(article, execution(article, null, null), PROVIDER, model,
                 Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false, UUID.randomUUID());
+    }
+
+    /**
+     * Round-3 finding F-03, the direction no case pinned: the layers are not an override. A model entry LOOSER
+     * than its provider entry lifts nothing — the provider entry caps the provider summed across its models,
+     * so the third live hold on the very model that declared five still meets the provider's two. (Before the
+     * ruling was implemented, the reviewer's probe let all three through, and no existing case could see it.)
+     */
+    @Test
+    @DisplayName("A looser model entry cannot lift the provider-wide ceiling")
+    void looserModelEntryCannotLiftTheProviderCeiling() {
+        policy(wideCaps(), "20.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 30),
+                BudgetPolicy.scope(PROVIDER, MODEL), new BudgetPolicy.ProviderQuota(5, 30)));
+        UUID article = article("10.000000");
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        PublicFailure third = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals(429, third.status());
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", third.code(),
+                "the model's five would admit a third live hold; the provider's two does not");
+        assertEquals(2, holds(), "and the refusal booked nothing");
+    }
+
+    /**
+     * The same ruling on the other axis: each level's daily call count counts ITS OWN window (round-3 ruling
+     * F-03), so a provider that spent its two calls today is closed even while the model's five has room.
+     */
+    @Test
+    @DisplayName("The provider's day window closes before a looser model day count opens")
+    void providerDayWindowClosesBeforeTheLooserModelDayWindow() {
+        policy(wideCaps(), "20.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(3, 2),
+                BudgetPolicy.scope(PROVIDER, MODEL), new BudgetPolicy.ProviderQuota(5, 5)));
+        UUID article = article("10.000000");
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        PublicFailure third = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", third.code(),
+                "the provider-wide window counted two calls although the model window still has three left");
+        assertEquals(2, holds());
+        assertEquals(2, rows(), "the refusals wrote nothing");
+    }
+
+    /**
+     * Round-3 ruling F-08's behavioural half: {@code calls-per-day: 0} is a legal entry that means "the day is
+     * closed" (assembly accepted it — {@code CostPricingTest#quotaLeavesAreNormalisedAtAssembly}), and the very
+     * first call of the day meets it, booking nothing.
+     */
+    @Test
+    @DisplayName("A calls-per-day of zero closes the day without closing the boot")
+    void zeroCallsPerDayClosesTheDayButNotTheBoot() {
+        policy(wideCaps(), "20.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 0)));
+        UUID article = article("10.000000");
+        PublicFailure refused = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals(429, refused.status());
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", refused.code(), "a closed day refuses the very first call");
+        assertEquals(0, rows(), "and the refusal books nothing");
+    }
+
+    /**
+     * Round-3 finding F-04(b) as delivered code, not a reviewer probe: a dotted model id has no model-level
+     * configuration key (ruled boundary), while a provider-wide entry still answers for it and meters its rows
+     * in the provider window — here capping the third live hold of {@code gpt-4.1} at two.
+     */
+    @Test
+    @DisplayName("A dotted model id is metered in its provider-wide window")
+    void dottedModelIdIsMeteredInTheProviderWindow() {
+        policy(wideCaps(), "20.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 30)));
+        publish(PROVIDER, "gpt-4.1", generation());
+        UUID article = article("10.000000");
+        assertNotNull(budget.reserve(actor(), hold(article, "gpt-4.1")),
+                "the provider entry answers for a model no model-level key could name");
+        assertNotNull(budget.reserve(actor(), hold(article, "gpt-4.1")));
+        PublicFailure third = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, "gpt-4.1")));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", third.code(), "and its rows land in the provider-wide window");
+        assertEquals(2, holds());
     }
 
     // ------------------------------------------------------------------ settlement, release, UNKNOWN
