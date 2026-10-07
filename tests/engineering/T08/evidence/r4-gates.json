@@ -1,0 +1,124 @@
+{
+  "provenance": {
+    "task": "T08 round-4 remediation (docs/execution/reviews/T08-round4/review.md)",
+    "writtenBy": "implementation side (T08); a record of my own commands, not an approval",
+    "capturedAt": "2026-10-07T20:42:44Z",
+    "note": "Static gates and runner self-checks only; no cluster was booted for these entries. The real PostgreSQL runs live in r4-baseline-57.json (pre-remediation baseline), r4fix-65.json (first 65-case attempt, exit 1: one of my own new assertions was wrong) and r4fix-65-retry.json (the same command green).",
+    "outputsKept": "full verify.py and --reverse-control transcripts are inside this file"
+  },
+  "commands": [
+    {
+      "argv": "python tests/engineering/T08/verify.py",
+      "exitCode": 0,
+      "summary": "T08 static checks: 16/16 passed (contract self-check only, not an approval); run --reverse-control to test the gates themselves",
+      "output": "[PASS] frozen contract files unchanged: 24 manifest files match, drifted=none, missing=none\n[PASS] cost module depends only on shared: declared=['shared'], cross-domain imports=none\n[PASS] cost package complete: 19 sources, absent=none, bad package=none\n[PASS] installed V5 equals the reviewed draft: raw body 13119B vs 13119B, byte-identical=True, CR in draft=0, CR in V5=0, draft marked DRAFT=True, versioned files=['V1__identity_audit_idempotency.sql', 'V2__skill_prompt_policy.sql', 'V3__article_job_version.sql', 'V4__change_proposal.sql', 'V5__cost_ledger_pricing.sql'], V5 tables=['cost_ledger', 'cost_pricing_version'], other versions mentioning cost=none\n[PASS] runtime grants are minimal: ledger rw=True, pricing read=True, baseline revoke=True, delete grants=none\n[PASS] amounts are decimal, never binary floats: floating-point usages=none, six-decimal wire pattern=True\n[PASS] frozen GET /usage surface, no field drift: operations=['get'], controller=[('Get', '/usage')], summary 11/11, reservation 10/10, settlement 6/6\n[PASS] audit trail carries identifiers, not amounts: bootstrap adapter wired=True, columns pinned=True, audit calls=2 all null-hashed=True, silent audit factories=none, guard tests the value=True, the suite drives the shipped adapter=True, test-built mirror present=False, audit imports inside cost=none\n[PASS] ceilings are the documented SRS numbers or required outright: SRS counts={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'queries-per-claim': 3, 'auto-edit-loops-per-article': 1, 'image-units-per-slot': 2, 'image-units-per-article': 4}, code fallbacks={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'queries-per-claim': 3, 'auto-edit-loops-per-article': 1, 'image-units-per-slot': 2, 'image-units-per-article': 4}, drifted=none, undocumented fallbacks=none, daily 20.000000=True, alert 80=True, required-without-default=['editorial.cost.max-calls-per-article', 'editorial.cost.reconciliation-stale-minutes'], refuses 503=True, OQ-09 open=True, yml invented=none\n[PASS] article ceiling is a locked database rule: article row locked=True, lock statement precedes aggregate=True, stray FOR UPDATE text in the function=none, missing-row guard follows the lock=True, ceiling 23514=True, V5 comment scoped to the article=True, concurrent bypass case=True, overstated claims=none\n[PASS] provider quota scopes are spelled one way and absence is a stated choice: scope() defined=True, canonical '|' join inside it=True, provider-model joins in the whole cost module=['|'], BudgetPolicy.scope( call sites in config=3, scope( reads in policy=2, config keys built via scope() at every site=True, malformed key refused=True, id charset refused at scope=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default=True, unconfigured key required=True, unlisted refused on the service path=True, two levels each answer their own window=[True, True, True, True, True, True], model keys exact-only=True, env channel bound like the file channel=[True, True, True], conversion failure normalised=True, zero semantics kept=True, keys documented as coded=[True, True, True, True, True, True], binding evidence inside the asserting case bodies=[True, True, True, True] (unit slice 5147 chars, live slice 3688 chars), quota cases bind a nested YAML document=[True, True], flat dotted keys inside the case bodies=none, flat dotted fixtures in the cases=none, silent quota paths refused by shape=[True, True, True, True, True], ceilings measured before the quota pass=True (measure@2792, quota@3630), behavior stated where a reader meets it=[True, True, True, True, True]\n[PASS] the advisory lock sequence is decided once and watched: sorted by the key it locks=True, inLockOrder applied before lockScope=True, lock call sites in reserve=1, lockScope given lockKey=True, windows built=['ARTICLE', 'DAY', 'PROVIDER-MODEL', 'PROVIDER', 'CLAIM', 'SLOT'], each key prefixed by its own scope=[True, True, True, True, True, True], sequence asserted at runtime=True, order claimed in the report=True\n[PASS] the runner writes where it was told to and judges suites by class: evidence default is scratch under --work-root=True, controlled directory named explicitly=True, unchosen landing is refused and recorded=True, collision check follows the chosen directory=True, method filters stripped before the presence check=True, outside-repo work root is a note not a defect=True\n[PASS] feature gate only, no invented limits, reproducible runner: gate=True, invented keys=none, bound beans=[('CostPorts.Audit', 'costAudit')], executions/alert left unbound=True, runner tracked=True\n[PASS] startup still refuses paid provider calls: flag guarded by require()=True, require() throws IllegalStateException=True\n[PASS] acceptance cases still assert what they claim: weakened=none\nT08 static checks: 16/16 passed (contract self-check only, not an approval); run --reverse-control to test the gates themselves"
+    },
+    {
+      "argv": "python tests/engineering/T08/verify.py --reverse-control",
+      "exitCode": 0,
+      "summary": "reverse control: 66 weakenings, 8 benign probes, blind=none, misplaced=none, brittle=none",
+      "output": "[REJECT] SRS daily example replaced by an invented 999 USD -> ['ceilings are the documented SRS numbers or required outright']\n[REJECT] alert line moved off the documented 80 percent -> ['ceilings are the documented SRS numbers or required outright']\n[REJECT] one documented token ceiling re-typed -> ['ceilings are the documented SRS numbers or required outright']\n[REJECT] a documented ceiling quietly dropped -> ['ceilings are the documented SRS numbers or required outright']\n[REJECT] the unstated call cap gets an invented default -> ['ceilings are the documented SRS numbers or required outright']\n[REJECT] application.yml starts inventing a budget -> ['feature gate only, no invented limits, reproducible runner']\n[REJECT] admission stops locking the article row -> ['article ceiling is a locked database rule', 'installed V5 equals the reviewed draft']\n[REJECT] the reviewed draft drifts from the installed file -> ['installed V5 equals the reviewed draft']\n[REJECT] a third cost table appears in V5 -> ['installed V5 equals the reviewed draft']\n[REJECT] a frozen wire field is renamed -> ['frozen GET /usage surface, no field drift']\n[REJECT] an audit import leaks into the cost module -> ['cost module depends only on shared']\n[REJECT] the silent audit factory comes back -> ['audit trail carries identifiers, not amounts']\n[REJECT] the production hash-shape guard is switched off -> ['audit trail carries identifiers, not amounts']\n[REJECT] the audit case builds a mirror instead of the shipped adapter -> ['audit trail carries identifiers, not amounts']\n[REJECT] the bypass assertion is emptied -> ['acceptance cases still assert what they claim']\n[REJECT] the single-winner latches are unwired again -> ['acceptance cases still assert what they claim']\n[REJECT] the paid-call refusal is neutered -> ['startup still refuses paid provider calls']\n[REJECT] the comment overclaims the database again -> ['article ceiling is a locked database rule']\n[REJECT] a model-level quota is keyed by the dotted property path again -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the reader joins the scope itself instead of asking the one definition -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a half-declared quota scope silently opens the other side -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the unconfigured-provider switch grows a default -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] an unlisted provider stops being refused -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] both levels collapse back to the first entry that answered (single-level regression) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report renames the quota leaves -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the quota case feeds dotted keys instead of the nested document -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the live quota case builds the policy by hand instead of from the bound environment -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a provider named after the reserved switch stops being refused -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the OS-environment channel stops being recognised (finding F-01 rebuilt) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the quota enumeration matches literal dotted names only again -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] an ambiguous env name is guessed instead of refused -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] an unreadable quota leaf escapes as the raw conversion failure (finding F-08) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] max-concurrent zero is accepted and wedges the provider forever -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a model key starts answering by prefix again (variant probe V4) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a provider-wide entry stops building its own window (ruling F-03 half) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a model entry stops building its own window (ruling F-03 half) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a second provider+model join appears in the service (finding F-06's blind spot) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a stored scope key stops being checked for the dotted shape -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the loader call leaves the unit case body that claims to bind it (finding F-02's A probe) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the unit case feeds flat hand-built keys again -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the live case grows a second, hand-built service handover (finding F-02's B probe) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the env-shaped test source stops being env-shaped at all -> ['acceptance cases still assert what they claim']\n[REJECT] a decoy FOR UPDATE comment stands where the lock should be -> ['article ceiling is a locked database rule']\n[REJECT] the lock moves after the aggregate while a decoy mentions it first -> ['article ceiling is a locked database rule']\n[REJECT] the live case's binding survives only as a comment quoting it (round-4 control A5) -> ['acceptance cases still assert what they claim', 'provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the live case binds flat dotted keys through a real loader (round-4 control E4) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the lock-order sort is deleted (round-4 control B1, unseen across 14 gates and 57 cases) -> ['the advisory lock sequence is decided once and watched']\n[REJECT] the sequence is decided by the display label instead of the key that is locked -> ['the advisory lock sequence is decided once and watched']\n[REJECT] ceilings are locked in the order they were built in -> ['the advisory lock sequence is decided once and watched']\n[REJECT] the advisory lock is taken on the label, not on the key -> ['the advisory lock sequence is decided once and watched']\n[REJECT] a window joins the set with a lock key that drops its own scope name -> ['the advisory lock sequence is decided once and watched']\n[REJECT] the provider quota window is measured before the article and day ceilings (F-R4-11a) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a near-miss env quota name is skipped in silence again (F-R4-02) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] a canonical dotted name inside an environment-shaped source is dropped again (F-R4-05) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] an unrecognised quota leaf falls through silently again (round-4 control B3) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the day leaf is read through the int channel again (F-R4-04) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] an unspellable canonical name escapes as a raw Spring stack again (F-R4-03) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the runner's evidence default points back into the tracked evidence directory (F-R4-12) -> ['the runner writes where it was told to and judges suites by class']\n[REJECT] the suite-presence check compares raw --tests values again (F-R4-13) -> ['the runner writes where it was told to and judges suites by class']\n[REJECT] --path-selftest refuses an absolute work root outside the repository again (F-R4-13) -> ['the runner writes where it was told to and judges suites by class']\n[REJECT] the report claims the provider window is global across Owners (F-R4-01) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report says the env channel ignores case (F-R4-03) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report says the provider quota speaks before the article ceiling (F-R4-11a) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report widens the ambiguity refusal to duplicate keys across sources (F-R4-14) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report drops the two refused silent paths (F-R4-02 / F-R4-04) -> ['provider quota scopes are spelled one way and absence is a stated choice']\n[REJECT] the report says the locks follow construction order again (F-R4-09's claim without a watchman) -> ['the advisory lock sequence is decided once and watched']\n[benign ] indexOf instead of contains for the stored dot check stayed green\n[benign ] the live service handover goes through one local variable stayed green\n[benign ] the unit loader loop wraps one argument per line stayed green\n[benign ] the F-03 comment rewords itself stayed green\n[benign ] the activePolicy assertion chain wraps a line stayed green\n[benign ] braces inside a literal and inside a comment join the live quota case stayed green\n[benign ] the same brace literal joins the unit quota case stayed green\n[benign ] the report adds a clause beside the owner-partition marker stayed green\nreverse control: 66 weakenings, 8 benign probes, blind=none, misplaced=none, brittle=none"
+    },
+    {
+      "argv": "python tests/engineering/T02/check_contracts.py",
+      "exitCode": 0,
+      "summary": "Approved T00 rc.3: 27 hashes verified, no regeneration"
+    },
+    {
+      "argv": "python tests/engineering/T08/run_pg.py --path-selftest",
+      "exitCode": 0,
+      "summary": "{\"workRoot\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work\", \"runDirectoryShape\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work/1ae54f6124714815a2df9e917d1bcb4f\", \"relativeInput\": \"(default)\", \"evidenceDir\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence\", \"evidenceDirChosen\": false, \"controlledEvidenceDir\": \"E:/project/codex/wxAgent/tests/engineering/T08/evidence\", \"methodFilterStripped\": [\"CostPricingTest\", \"T08PostgresTest\"], \"notes\": [], \"problems\": []}"
+    },
+    {
+      "argv": "python tests/engineering/T08/run_pg.py --path-selftest --work-root C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot",
+      "exitCode": 0,
+      "summary": "{\"workRoot\": \"C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot\", \"runDirectoryShape\": \"C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot/4f967ec2f962465581bf1701400572c6\", \"relativeInput\": \"C:\\\\Users\\\\eie04\\\\AppData\\\\Local\\\\Temp\\\\t08r4fix\\\\outroot\", \"evidenceDir\": \"C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot/evidence\", \"evidenceDirChosen\": false, \"controlledEvidenceDir\": \"E:/project/codex/wxAgent/tests/engineering/T08/evidence\", \"methodFilterStripped\": [\"CostPricingTest\", \"T08PostgresTest\"], \"notes\": [\"run directory resolves outside the repository root E:\\\\project\\\\codex\\\\wxAgent: C:\\\\Users\\\\eie04\\\\AppData\\\\Local\\\\Temp\\\\t08r4fix\\\\outroot\\\\4f967ec2f962465581bf1701400572c6 (a deliberate --work-root, not a defect: the run simply cannot be described by a repository-relative path)\"], \"problems\": []}"
+    },
+    {
+      "argv": "python tests/engineering/T08/run_pg.py --tests CostPricingTest#environmentChannelAddressesProvidersInLowerCaseOnly --path-selftest",
+      "exitCode": 0,
+      "summary": "{\"workRoot\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work\", \"runDirectoryShape\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work/a34b8971a00c4e8e88c3ed997f1da956\", \"relativeInput\": \"(default)\", \"evidenceDir\": \"E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence\", \"evidenceDirChosen\": false, \"controlledEvidenceDir\": \"E:/project/codex/wxAgent/tests/engineering/T08/evidence\", \"methodFilterStripped\": [\"CostPricingTest\", \"T08PostgresTest\"], \"notes\": [], \"problems\": []}"
+    },
+    {
+      "argv": "python tests/engineering/T08/run_pg.py --work-root C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot --evidence-name r4fix-landing-check --skip-tests",
+      "exitCode": 0,
+      "summary": "evidence written to the scratch default (the run printed its landing place); the controlled tests/engineering/T08/evidence directory gained no file"
+    }
+  ],
+  "counts": {
+    "staticGates": 16,
+    "staticGatesBefore": 14,
+    "reverseControls": 66,
+    "reverseControlsBefore": 44,
+    "benignProbes": 8,
+    "benignProbesBefore": 5,
+    "blind": "none",
+    "misplaced": "none",
+    "brittle": "none",
+    "stale": "none",
+    "unitCases": 28,
+    "liveCases": 37,
+    "totalCases": 65,
+    "totalCasesBefore": 57,
+    "deletedCases": 0,
+    "silentlyRenamedCases": 0,
+    "acceptanceAnchors": 39,
+    "acceptanceAnchorsBefore": 31
+  },
+  "runnerSelfChecks": {
+    "relativeWorkRoot": {
+      "workRoot": "E:/project/codex/wxAgent/tests/engineering/T08/.work",
+      "runDirectoryShape": "E:/project/codex/wxAgent/tests/engineering/T08/.work/1ae54f6124714815a2df9e917d1bcb4f",
+      "relativeInput": "(default)",
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence",
+      "evidenceDirChosen": false,
+      "controlledEvidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "notes": [],
+      "problems": []
+    },
+    "outsideRepositoryAbsoluteRoot": {
+      "workRoot": "C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot",
+      "runDirectoryShape": "C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot/4f967ec2f962465581bf1701400572c6",
+      "relativeInput": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot",
+      "evidenceDir": "C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot/evidence",
+      "evidenceDirChosen": false,
+      "controlledEvidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "notes": [
+        "run directory resolves outside the repository root E:\\project\\codex\\wxAgent: C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4fix\\outroot\\4f967ec2f962465581bf1701400572c6 (a deliberate --work-root, not a defect: the run simply cannot be described by a repository-relative path)"
+      ],
+      "problems": []
+    },
+    "methodFilterStripped": {
+      "workRoot": "E:/project/codex/wxAgent/tests/engineering/T08/.work",
+      "runDirectoryShape": "E:/project/codex/wxAgent/tests/engineering/T08/.work/a34b8971a00c4e8e88c3ed997f1da956",
+      "relativeInput": "(default)",
+      "evidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/.work/evidence",
+      "evidenceDirChosen": false,
+      "controlledEvidenceDir": "E:/project/codex/wxAgent/tests/engineering/T08/evidence",
+      "methodFilterStripped": [
+        "CostPricingTest",
+        "T08PostgresTest"
+      ],
+      "notes": [],
+      "problems": []
+    },
+    "evidenceLandingDefault": "C:/Users/eie04/AppData/Local/Temp/t08r4fix/outroot/evidence (scratch)",
+    "controlledEvidenceDirectoryTouchedByTheScratchRun": false
+  },
+  "round4Findings": {
+    "F-R4-06": "body evidence is judged on comment-stripped code and requires a real construction call handing the document variable to load(); A5 (loader, bytes and from(env) moved into comments) and E4 (flat dotted YAML through a real loader) are built-in controls now",
+    "F-R4-07": "java_mask / strip_java_comments / java_method_body rewritten to skip comments, string and char literals and text blocks; the two one-line repros are benign probes here",
+    "F-R4-08": "the disproved claims in verify.py's slicer comment and in BudgetPolicyConfig's javadoc (capitals addressable on the file channel) were corrected in place, the latter after the real PostgreSQL run refused the assertion",
+    "F-R4-09": "the lock sequence is decided in BudgetService.inLockOrder, applied before the first lockScope call and asserted at runtime; deleting the sort is a reverse control, not a double-blind entry, and no deadlock is claimed",
+    "F-R4-12": "the evidence default is scratch under --work-root; the controlled directory takes an explicit --evidence-dir and every run records its landing place in the JSON",
+    "F-R4-13": "wanted_suites strips #method filters before the presence check, and --path-selftest treats an outside-repository absolute root as a note"
+  }
+}

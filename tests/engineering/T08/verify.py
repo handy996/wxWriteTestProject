@@ -249,22 +249,117 @@ def check_paid_calls_still_refused() -> tuple[str, bool, str]:
             f"flag guarded by require()={bool(guard)}, require() throws IllegalStateException={bool(throws)}")
 
 
+def java_mask(source: str) -> tuple[list[bool], list[bool]]:
+    """Position-by-position masks over a Java source, both the length of the source: (is code, is outside a
+    literal). Each entry says what the character at that offset IS — True means a caller may trust it as code or
+    as structure; a character inside a comment or inside a literal is marked False in the matching mask.
+
+    One lexical walk, because the gates have to tell three kinds of text apart and a naive reader conflates them:
+    code, comments (whose prose quotes the very tokens a gate searches for), and string / char / text-block
+    literals (whose braces, slashes and dashes are data). Round-4 finding F-R4-06 caught the first confusion — a
+    case whose loader call survived only as a comment still passed the substring gate — and F-R4-07 caught the
+    second: brace counting over the raw text collapsed a method body from 3688 characters to 32 when
+    ``String r4Fragment = "}";`` was added, and widened the same body to 54666 when one ``{`` appeared.
+    """
+    code, literal = [True] * len(source), [True] * len(source)
+    index, state = 0, "code"
+    while index < len(source):
+        char = source[index]
+        pair = source[index:index + 2]
+        if state == "code":
+            if pair == "//":
+                state = "line"
+            elif pair == "/*":
+                state = "block"
+            elif source[index:index + 3] == '"""':
+                state = "block-string"
+                literal[index] = literal[index + 1] = literal[index + 2] = False
+                index += 2
+            elif char == '"':
+                state = "string"
+                literal[index] = False
+            elif char == "'":
+                state = "char"
+                literal[index] = False
+            code[index] = True
+        elif state == "line":
+            code[index] = False
+            if char == "\n":
+                state = "code"
+        elif state == "block":
+            code[index] = False
+            if pair == "*/":
+                code[index] = False
+                index += 1
+                state = "code"
+        elif state == "block-string":
+            literal[index] = False
+            if source[index:index + 3] == '"""':
+                literal[index + 1] = literal[index + 2] = False
+                index += 2
+                state = "code"
+            elif char == "\\":
+                literal[index + 1] = False
+                index += 1
+        elif state in ("string", "char"):
+            literal[index] = False
+            if char == "\\":
+                if index + 1 < len(source):
+                    literal[index + 1] = False
+                    index += 1
+            elif char == ('"' if state == "string" else "'"):
+                literal[index] = False
+                state = "code"
+        index += 1
+    return code, literal
+
+
+def strip_java_comments(source: str) -> str:
+    """Java with every comment blanked out, character for character, so a slice taken before or after still lines
+    up. Literals survive — the nested YAML a case loads IS a literal, and it is evidence, not decoration.
+
+    The round-3 version deleted ``//…`` and ``/*…*/`` with two regexes, which also deleted everything after ``//``
+    inside a string (an address like ``jdbc:postgresql://127.0.0.1``) and shifted every offset behind it; the
+    replacement is a single pass over :func:`java_mask`."""
+    code, _ = java_mask(source)
+    return "".join(char if keep else " " if char not in "\r\n" else char
+                   for char, keep in zip(source, code))
+
+
 def java_method_body(text: str, name: str) -> str:
-    """The body of a Java method by brace matching. Balanced braces inside string literals (the fixture JSON)
-    keep the count honest; an unbalanced literal would only widen the slice, never narrow it."""
-    match = re.search(r"\b" + re.escape(name) + r"\s*\([^)]*\)\s*(?:throws [^{]+)?\{", text)
+    """The body of a Java method, sliced by brace matching over the code mask.
+
+    Braces inside a comment, a string or char literal, or a text block are data: they do not move the depth.
+    Round-3's version counted them and its docstring claimed two things that measurement disproved (finding
+    F-R4-08, corrected here rather than restated elsewhere): that an unbalanced literal "only widens the slice,
+    never narrows it" — ``String r4Fragment = "}";`` narrowed a 3688-character body to 32 — and that the walk
+    "skips string literals" — it did not. The signature search runs on the comment-stripped text too, so a
+    javadoc that quotes a method name cannot become the method. The returned slice is the original text with
+    comments and literals intact: a gate that judges EVIDENCE has to call :func:`strip_java_comments` itself.
+    """
+    stripped = strip_java_comments(text)
+    _, outside_literal = java_mask(stripped)
+    match = re.search(r"\b" + re.escape(name) + r"\s*\([^)]*\)\s*(?:throws [^{]+)?\{", stripped)
     if not match:
         return ""
     start, depth, index = match.end() - 1, 0, match.end() - 1
-    while index < len(text):
-        if text[index] == "{":
-            depth += 1
-        elif text[index] == "}":
-            depth -= 1
-            if depth == 0:
-                return text[start:index + 1]
+    while index < len(stripped):
+        if outside_literal[index]:
+            if stripped[index] == "{":
+                depth += 1
+            elif stripped[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[start:index + 1]
         index += 1
     return text[start:]
+
+
+def java_slice(body: str) -> str:
+    """The comment-free code of a sliced method body, plus what the slice actually covers — in the failure detail
+    of every body-evidence anchor, because a body that fails the check and a body that was never sliced correctly
+    look identical otherwise (round-4 findings F-R4-06 and F-R4-07 both hid behind that ambiguity)."""
+    return strip_java_comments(body)
 
 
 def check_acceptance_anchors() -> tuple[str, bool, str]:
@@ -370,23 +465,57 @@ def check_acceptance_anchors() -> tuple[str, bool, str]:
                                      ['assertEquals("QUOTA_NOT_CONFIGURED"', "editorial.cost.max-calls"]),
         "unbound executions refuse": ("CostPricingTest", "executionScopeIsFailClosed",
                                       ["EXECUTION_SCOPE_NOT_READY", "503"]),
+        # Round 4: one anchor per finding that moved from prose to a case, so the case cannot be hollowed out
+        # behind the claim that the finding was addressed.
+        "a misspelled env quota prefix ends the boot": ("CostPricingTest",
+                                                        "environmentQuotaPrefixTypoRefusesTheBoot",
+                                                        ["EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_MAX_CONCURRENT",
+                                                         '"INVALID_PROVIDER_QUOTA_KEY"',
+                                                         "EDITORIAL_COST_PROVIDER_CLUSTER_SHARDS"]),
+        "the env channel addresses lowercase ids only": ("CostPricingTest",
+                                                         "environmentChannelAddressesProvidersInLowerCaseOnly",
+                                                         ['providerWideQuota("MOCK").isEmpty()',
+                                                          'providerWideQuota("mock").orElseThrow()',
+                                                          '"editorial.cost.provider-quota.MOCK.max-concurrent"',
+                                                          '"INVALID_BUDGET_POLICY"']),
+        "the day leaf keeps the record's width": ("CostPricingTest", "dayCountLeafCarriesTheLongTheRecordStores",
+                                                  ['"99999999999"', "99999999999L", '"2147483648"',
+                                                   '"INVALID_BUDGET_POLICY"']),
+        "canonical names inside an env source bind": ("CostPricingTest",
+                                                      "canonicalQuotaNamesInsideAnEnvironmentShapedSourceAreBound",
+                                                      ['"editorial.cost.provider-quota.mock.max-concurrent"',
+                                                       "environmentShaped(os)", 'providerWideQuota("mock")']),
+        "an unknown quota leaf refuses on both channels": ("CostPricingTest", "everyUnknownQuotaLeafRefusesTheBoot",
+                                                           ["EDITORIAL_COST_PROVIDER_QUOTA_MOCK_AVERAGE_LATENCY",
+                                                            '"INVALID_PROVIDER_QUOTA_KEY"',
+                                                            '"QUOTA_NOT_CONFIGURED"']),
+        "the lock sequence is the dictionary order": ("CostPricingTest",
+                                                      "advisoryLockOrderIsTheDictionaryOrderOfLockKeys",
+                                                      ["BudgetService.inLockOrder(", ".sorted().toList()",
+                                                       'window("PROVIDER-MODEL"', 'window("PROVIDER"']),
+        "two Owners do not share one provider window today": ("T08PostgresTest",
+                                                              "providerWideQuotaWindowIsPartitionedByOwnerToday",
+                                                              ["OTHER_OWNER", "PROVIDER_QUOTA_EXCEEDED",
+                                                              "assertEquals(4, holds()"]),
+        "the article ceiling speaks before the quota window": ("T08PostgresTest",
+                                                               "theArticleCeilingSpeaksBeforeTheProviderQuotaWindow",
+                                                               ["IMAGE_GENERATION_ARTICLE, 4L", '"QUOTA_EXCEEDED"',
+                                                                '"PROVIDER_QUOTA_EXCEEDED"', "assertEquals(409"]),
     }
     weak: list[str] = []
     for label, (suite, method, tokens) in anchors.items():
-        body = java_method_body(tests[suite], method)
+        # Round-4 finding F-R4-06: the token search ran over the raw body, so a case whose assertions had been
+        # replaced by a COMMENT quoting those same tokens still passed. Evidence is judged on code — comments are
+        # stripped first, and the slice length travels into the detail because "the case lost its assertions" and
+        # "the slicer never found the case" look identical otherwise (findings F-R4-06 and F-R4-07 together).
+        body = java_slice(java_method_body(tests[suite], method))
         if not body:
             weak.append(f"{label}: no method {method}")
             continue
         missing = [token for token in tokens if token not in body]
         if missing:
-            weak.append(f"{label}/{method}: {missing}")
+            weak.append(f"{label}/{method}: {missing} (slice {len(body)} chars)")
     return ("acceptance cases still assert what they claim", not weak, f"weakened={weak or 'none'}")
-
-
-def strip_java_comments(source: str) -> str:
-    """Bean wiring must be judged on code, not on the javadoc that explains why a port stays unbound."""
-    without_blocks = re.sub(r"/\*.*?\*/", " ", source, flags=re.S)
-    return re.sub(r"//.*", "", without_blocks)
 
 
 def srs_lines() -> list[str]:
@@ -582,16 +711,30 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
     # produced a different shape. Round-3 finding F-02 moved the verdict INTO the case bodies: the loader call,
     # the document bytes and BudgetPolicyConfig.from(env) must sit inside the method that asserts the result, the
     # live service must be fed the policy that from(env) produced (inline or via a local — both benign spellings
-    # of the same claim), and the unit body may not smuggle flat hand-fed quota keys past the loader.
+    # of the same claim), and the unit body may not smuggle flat hand-fed quota keys past the loader. Round-4
+    # finding F-R4-06 measured that this was still only a SUBSTRING SEARCH over the raw text: a case whose loader
+    # call, document bytes and from(env) call survived only as PROSE quoting them kept all 14 gates and all 57
+    # delivered cases green (the reviewer's repro, kept at docs/execution/reviews/T08-round4/evidence/
+    # r4-gutted-A5.json), and an environment filled with flat hand-fed keys then
+    # satisfied the claim anyway. So evidence is judged on comment-free code, the bytes handed to load() must be
+    # those of the variable that carries the nested document, and the flat dotted spelling is refused in both
+    # shapes it can appear in — YAML in a fixture and a Java string literal.
     unit = read(COST_TEST / "CostPricingTest.java")
     live = read(PG_TEST)
-    unit_body = java_method_body(unit, "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads")
-    live_body = java_method_body(live, "nestedYamlQuotaIsEnforcedByTheService")
+    unit_body = java_slice(java_method_body(unit, "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads"))
+    live_body = java_slice(java_method_body(live, "nestedYamlQuotaIsEnforcedByTheService"))
+    document = re.compile(r"provider-quota:\s*\n\s+unconfigured:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
+                          r"\s*\n\s+calls-per-day:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
+                          r"\s*\n\s+calls-per-day:\s*\S+")
 
     def bound_in(body: str) -> bool:
-        return (bool(re.search(r"new\s+YamlPropertySourceLoader\s*\(\s*\)", body))
-                and "document.getBytes" in body and "new ByteArrayResource(" in body
-                and bool(re.search(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)", body)))
+        if not re.search(r"new\s+YamlPropertySourceLoader\s*\(\s*\)", body):
+            return False
+        fed = re.search(r"\.load\(\s*\"[^\"]*\",\s*new\s+ByteArrayResource\(\s*(\w+)\s*\.\s*getBytes", body)
+        declared = re.search(r"String\s+(\w+)\s*=\s*\"\"\"", body)
+        return bool(fed and declared and fed.group(1) == declared.group(1) and document.search(body)
+                    and "getPropertySources().add" in body
+                    and bool(re.search(r"BudgetPolicyConfig\s*\.\s*from\s*\(\s*env\s*\)", body)))
 
     def service_fed_from_bound(body: str) -> bool:
         if body.count("service(") != 1 or "new BudgetPolicy(" in body or "policy(wideCaps" in body:
@@ -602,21 +745,66 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
                           body)
         return bool(bound) and re.search(r"service\(\s*" + bound.group(1) + r"\s*\)", body) is not None
 
-    document = re.compile(r"provider-quota:\s*\n\s+unconfigured:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
-                          r"\s*\n\s+calls-per-day:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
-                          r"\s*\n\s+calls-per-day:\s*\S+")
     # Look for the document inside the two cases that claim to bind one, not anywhere in the file: the other
     # fixtures quote the same keys for different reasons.
     nested = [bool(document.search(unit_body)), bool(document.search(live_body))]
+    flat_dotted_in_bodies = [which for which, body in (("unit", unit_body), ("live", live_body))
+                             if "editorial.cost.provider-quota." in body]
     binding = [bound_in(unit_body), bound_in(live_body), service_fed_from_bound(live_body),
-               "editorial.cost.provider-quota." not in unit_body]
+               not flat_dotted_in_bodies]
     flat_fixtures = re.findall(r"\n\s+editorial\.cost\.provider-quota\.[\w-]+\.[\w-]+:", unit + live)
+    # Round-4 findings F-R4-02 / F-R4-04 / F-R4-05 / F-R4-10: four paths that read a quota name and decided
+    # nothing. Each is now refused in a shape this gate can see, because "loud now, watched by nothing" is exactly
+    # how the round-3 lock-order claim turned out (finding F-R4-09) — a refusal with no witness is a rumour.
+    quota_names = java_slice(java_method_body(config, "environmentQuotaName"))
+    silent_paths = [
+        # F-R4-02: a name in our namespace that says quota and is not on the prefix ends the boot.
+        bool(re.search(r"if \(lowered\.startsWith\(ENVIRONMENT_NAMESPACE\)"
+                       r" && lowered\.contains\(ENVIRONMENT_QUOTA_MARKER\)\) \{\s*\n"
+                       r"\s*throw new PublicFailure\(503, \"INVALID_PROVIDER_QUOTA_KEY\"\);", quota_names)),
+        # F-R4-05: a canonical dotted name inside an environment-shaped source reaches the canonical reader.
+        bool(re.search(r"if \(name\.startsWith\(QUOTA_PREFIX\)\) \{\s*\n\s*canonicalQuotaName\(", quota_names)),
+        # F-R4-10: an unrecognised leaf is a refusal, never a fall-through into the next name.
+        bool(re.search(r"\}\s*else \{\s*\n\s*throw new PublicFailure\(503, \"INVALID_PROVIDER_QUOTA_KEY\"\);",
+                       quota_names)),
+        # F-R4-04: each leaf binds the width the record stores it in, and the two widths are not the same.
+        'case "calls-per-day" -> perDay.put(scope, dayCountLeaf(binder, canonical));' in config
+        and bool(re.search(r"binder\.bind\(name, Long\.class\)", config))
+        and bool(re.search(r"binder\.bind\(name, Integer\.class\)", config)),
+        # F-R4-03's measurement: a canonical name the binder cannot spell (an uppercase segment) is refused with
+        # the same structured 503 as any other unreadable leaf, on BOTH readers — not as a framework stack trace
+        # escaping the boot, and not by quietly folding the capital into a lowercase key.
+        config.count("org.springframework.boot.context.properties.source"
+                     ".InvalidConfigurationPropertyNameException") >= 2,
+    ]
+    # Round-4 finding F-R4-11a: which ceiling speaks first picks the error code a caller sees, so the order is
+    # read out of the transaction instead of retold. The quota pass has to sit after the pass that measures the
+    # article and day ceilings — moving it up, or deleting either pass, turns this red.
+    reserve_body = java_slice(java_method_body(service, "reserveInTransaction"))
+    measure_pass = reserve_body.find("for (Ceiling ceiling : ceilings) {")
+    quota_pass = reserve_body.find("checkProviderQuota(")
+    rejection_order = measure_pass >= 0 and quota_pass > measure_pass
+    # Round-4 findings F-R4-01 / F-R4-03 / F-R4-04 / F-R4-11a / F-R4-14: five statements a reader could only
+    # learn from prose. Each is pinned twice — in the code that behaves that way, and in the report that
+    # describes it — with the marker written so a reversal that re-words the claim back into the over-broad or
+    # missing version turns this gate red rather than quietly leaving the claim to the javadoc.
+    honesty = [
+        "partitioned by {@code owner_id}" in service and "(owner, provider, day)" in service
+        and "(owner, provider, day)" in report and "openedBy: T08-REVIEW-4TH" in report
+        and "providerWideQuotaWindowIsPartitionedByOwnerToday" in report,
+        "all-lowercase provider ids only" in config and 'providerWideQuota("MOCK")' in report,
+        "文章/日帽先测量，provider 配额后测量" in report
+        and "theArticleCeilingSpeaksBeforeTheProviderQuotaWindow" in report,
+        "跨源同名键不拒" in report,
+        "EDITORIAL_COST_PROVIDER_QUOTAS" in report and "99999999999" in report,
+    ]
     ok = (bool(definition) and canonical and joined == ["|"] and writers >= 2 and readers >= 2
           and config_keys_by_scope and malformed_refused and segment_shape and reserved_switch_refused
           and both_leaves
           and no_invented_open and unconfigured_required and unlisted_refused and all(two_tier)
           and model_exact and all(env_channel) and leaf_normalised and zero_semantics
-          and all(documented) and all(binding) and all(nested) and not flat_fixtures)
+          and all(documented) and all(binding) and all(nested) and not flat_fixtures
+          and all(silent_paths) and rejection_order and all(honesty))
     return ("provider quota scopes are spelled one way and absence is a stated choice", ok,
             f"scope() defined={bool(definition)}, canonical '|' join inside it={canonical}, "
             f"provider-model joins in the whole cost module={joined or 'none'}, "
@@ -630,9 +818,95 @@ def check_quota_scope_spelling() -> tuple[str, bool, str]:
             f"model keys exact-only={model_exact}, env channel bound like the file channel={env_channel}, "
             f"conversion failure normalised={leaf_normalised}, zero semantics kept={zero_semantics}, "
             f"keys documented as coded={documented}, "
-            f"binding evidence inside the asserting case bodies={binding}, "
+            f"binding evidence inside the asserting case bodies={binding} "
+            f"(unit slice {len(unit_body)} chars, live slice {len(live_body)} chars), "
             f"quota cases bind a nested YAML document={nested}, "
-            f"flat dotted fixtures in the cases={flat_fixtures or 'none'}")
+            f"flat dotted keys inside the case bodies={flat_dotted_in_bodies or 'none'}, "
+            f"flat dotted fixtures in the cases={flat_fixtures or 'none'}, "
+            f"silent quota paths refused by shape={silent_paths}, "
+            f"ceilings measured before the quota pass={rejection_order} (measure@{measure_pass}, quota@{quota_pass}), "
+            f"behavior stated where a reader meets it={honesty}")
+
+
+def check_advisory_lock_order() -> tuple[str, bool, str]:
+    """Round-4 finding F-R4-09, upgraded from a claim with no witness to a watched invariant.
+
+    The delivery said the advisory locks are taken in a fixed order so two racing admissions cannot hold each
+    other's keys in opposite hands, and nothing anywhere checked it: deleting the sort left all 14 static gates
+    and all 57 delivered cases green (the reviewer's control B1, reproduced here before this gate existed). What
+    this gate claims is NOT that a deadlock exists today — none was observed and none is claimed. It claims the
+    sequence is decided in exactly one place, keyed by the string actually handed to
+    {@code pg_advisory_xact_lock}, applied before the first lock is taken, that every window's key carries its
+    own scope name so a window added later cannot slip in sideways, and that the sequence itself is asserted at
+    runtime by {@code CostPricingTest#advisoryLockOrderIsTheDictionaryOrderOfLockKeys}."""
+    service = read(COST_MAIN / "BudgetService.java")
+    code = java_slice(service)
+    helper = java_slice(java_method_body(service, "inLockOrder"))
+    reserve = java_slice(java_method_body(service, "reserveInTransaction"))
+    windows = java_slice(java_method_body(service, "ceilings"))
+    decided_in_one_place = bool(re.search(r"static List<Ceiling> inLockOrder\(List<Ceiling> ceilings\)", code)) \
+        and bool(re.search(r"\.sort\(Comparator\.comparing\(Ceiling::lockKey\)\)", helper)) \
+        and "return List.copyOf(ordered);" in helper
+    applied_before_the_first_lock = 0 <= reserve.find("inLockOrder(ceilings)") < reserve.find("ledger.lockScope(")
+    one_lock_site = reserve.count("ledger.lockScope(") == 1
+    lock_takes_the_key = "ledger.lockScope(ceiling.lockKey());" in reserve \
+        and "ledger.lockScope(ceiling.label())" not in reserve
+    built = windows.split("new Ceiling(")[1:]
+    scopes_named = [(re.match(r'"([A-Z-]+)"', part).group(1) if re.match(r'"([A-Z-]+)"', part) else "?")
+                    for part in built]
+    key_prefixed = [name != "?" and f'"T08|{name}' in part for name, part in zip(scopes_named, built)]
+    watched_at_runtime = "BudgetService.inLockOrder" in read(COST_TEST / "CostPricingTest.java")
+    # The report has to carry the claim in the shape the code carries it: a marker unique enough that re-wording
+    # the sentence to "locks follow construction order" leaves this gate without a witness.
+    documented = "按 `Ceiling.lockKey` 的**字典序**排序" in read(ROOT / "docs/execution/reports/T08.md")
+    sorted_by_key = bool(re.search(r"\.sort\(Comparator\.comparing\(Ceiling::lockKey\)\)", helper))
+    ok = (decided_in_one_place and applied_before_the_first_lock and one_lock_site and lock_takes_the_key
+          and len(built) >= 6 and len(set(scopes_named)) == len(built) and all(key_prefixed)
+          and watched_at_runtime and documented)
+    return ("the advisory lock sequence is decided once and watched", ok,
+            f"sorted by the key it locks={sorted_by_key}, "
+            f"inLockOrder applied before lockScope={applied_before_the_first_lock}, "
+            f"lock call sites in reserve={reserve.count('ledger.lockScope(')}, "
+            f"lockScope given lockKey={lock_takes_the_key}, windows built={scopes_named or 'none'}, "
+            f"each key prefixed by its own scope={key_prefixed}, "
+            f"sequence asserted at runtime={watched_at_runtime}, order claimed in the report={documented}")
+
+
+def check_runner_paths() -> tuple[str, bool, str]:
+    """Round-4 findings F-R4-12 / F-R4-13, both on the delivery tooling rather than the product.
+
+    The runner wrote its evidence into the tracked, review-relevant ``tests/engineering/T08/evidence`` directory
+    by DEFAULT (the path was hardcoded to the script's own ``HERE``), so an exploratory run added files to the
+    controlled directory without anyone choosing it, and a file that was meant to be kept looked exactly like one
+    that was not. The default is now scratch under ``--work-root``; writing into the tracked directory takes an
+    explicit ``--evidence-dir``, and the run records where it landed. Second finding: the suite-presence check
+    compared raw ``--tests`` values to reported class names, so a method filter — the shape a reviewer types to
+    rerun one case — failed a green execution, and ``--path-selftest`` treated an absolute ``--work-root``
+    outside the repository as a defect instead of a choice. Both are checked as written code, because the only
+    witness for a runner bug is the runner's own source."""
+    runner = read(ROOT / "tests/engineering/T08/run_pg.py")
+    default_is_scratch = ("'--evidence-dir'" in runner
+                          and "(work_root / 'evidence').resolve(), False" in runner
+                          and "HERE / 'evidence' /" not in runner)
+    controlled_dir_named = "CONTROLLED_EVIDENCE = HERE / 'evidence'" in runner \
+        and "evidence_dir == CONTROLLED_EVIDENCE.resolve()" in runner
+    refuses_unchosen_landing = ("without an explicit --evidence-dir" in runner
+                                and "evidenceLanding" in runner and "insideControlledDirectory" in runner)
+    exists_check_follows_the_dir = "(evidence_dir / (args.evidence_name + '.json')).exists()" in runner
+    method_filters = ("def wanted_suites(" in runner and "wanted = wanted_suites(args.tests)" in runner
+                      and "[t.strip() for t in args.tests.split(',') if t.strip()]" not in runner)
+    outside_repo_is_a_choice = ("notes.append('run directory resolves outside the repository root" in runner
+                                and "problems.append('run directory does not resolve inside the repository root"
+                                not in runner)
+    ok = (default_is_scratch and controlled_dir_named and refuses_unchosen_landing and exists_check_follows_the_dir
+          and method_filters and outside_repo_is_a_choice)
+    return ("the runner writes where it was told to and judges suites by class", ok,
+            f"evidence default is scratch under --work-root={default_is_scratch}, "
+            f"controlled directory named explicitly={controlled_dir_named}, "
+            f"unchosen landing is refused and recorded={refuses_unchosen_landing}, "
+            f"collision check follows the chosen directory={exists_check_follows_the_dir}, "
+            f"method filters stripped before the presence check={method_filters}, "
+            f"outside-repo work root is a note not a defect={outside_repo_is_a_choice}")
 
 
 def check_configuration_ownership() -> tuple[str, bool, str]:
@@ -660,7 +934,8 @@ def check_configuration_ownership() -> tuple[str, bool, str]:
 CHECKS = [check_frozen_contracts, check_module_boundary, check_package_contents, check_installed_migration,
           check_grants, check_decimal_only, check_frozen_usage_surface, check_audit_payload_shape,
           check_documented_ceilings, check_admission_ceiling, check_quota_scope_spelling,
-          check_configuration_ownership, check_paid_calls_still_refused, check_acceptance_anchors]
+          check_advisory_lock_order, check_runner_paths, check_configuration_ownership,
+          check_paid_calls_still_refused, check_acceptance_anchors]
 
 
 def run_checks() -> list[tuple[str, bool, str]]:
@@ -680,6 +955,8 @@ def reversals() -> list[dict]:
     admission = "article ceiling is a locked database rule"
     anchors = "acceptance cases still assert what they claim"
     quotas = "provider quota scopes are spelled one way and absence is a stated choice"
+    ordering = "the advisory lock sequence is decided once and watched"
+    landing = "the runner writes where it was told to and judges suites by class"
     quota_policy = COST_MAIN / "BudgetPolicy.java"
     quota_service = COST_MAIN / "BudgetService.java"
     return [
@@ -802,9 +1079,14 @@ def reversals() -> list[dict]:
          "red": [quotas]},
         {"name": "an unreadable quota leaf escapes as the raw conversion failure (finding F-08)",
          "path": CONFIG_JAVA,
-         "edits": [("} catch (BindException | org.springframework.core.convert.ConversionFailedException"
-                    " unreadable) {",
-                    "} catch (org.springframework.core.convert.ConversionFailedException raw) { throw raw;")],
+         "edits": [("        } catch (BindException | org.springframework.core.convert.ConversionFailedException\n"
+                    "                | org.springframework.boot.context.properties.source"
+                    ".InvalidConfigurationPropertyNameException\n"
+                    "                unreadable) {",
+                    "        } catch (BindException\n"
+                    "                | org.springframework.boot.context.properties.source"
+                    ".InvalidConfigurationPropertyNameException\n"
+                    "                unreadable) {")],
          "red": [quotas]},
         {"name": "max-concurrent zero is accepted and wedges the provider forever", "path": quota_policy,
          "edits": [("if (maxConcurrent < 1 || callsPerDay < 0) throw", "if (maxConcurrent < 0 || callsPerDay < 0) throw")],
@@ -878,6 +1160,151 @@ def reversals() -> list[dict]:
                     "  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id"
                     " FOR UPDATE;")],
          "red": [admission]},
+        # Round 4: the weakenings the fourth review measured as invisible, added as built-in controls so they
+        # cannot stay invisible twice. A5 and E4 are the reviewer's own minimal repros; B1 and B3 are entries of
+        # the review's double-blind table promoted into the harness; the rest are the four silent quota paths,
+        # the rejection order, the landing place of the evidence, and the sentences that overclaimed.
+        {"name": "the live case's binding survives only as a comment quoting it (round-4 control A5)",
+         "path": PG_TEST,
+         "edits": [('        MockEnvironment env = new MockEnvironment();\n'
+                    '        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",\n'
+                    '                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {\n'
+                    '            env.getPropertySources().addLast(source);\n'
+                    '        }\n'
+                    '        service(BudgetPolicyConfig.from(env));',
+                    '        // The binding evidence round 3 asked for, kept as prose: new YamlPropertySourceLoader()\n'
+                    '        // .load("t08-quota", new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))\n'
+                    '        // fed BudgetPolicyConfig.from(env), which is what the assertions below are about.\n'
+                    '        MockEnvironment env = new MockEnvironment();\n'
+                    '        env.setProperty("editorial.cost.provider-quota.mock-provider.max-concurrent", "4");\n'
+                    '        env.setProperty("editorial.cost.provider-quota.mock-provider.calls-per-day", "26");\n'
+                    '        service(BudgetPolicyConfig.from(env));')],
+         "red": [quotas, anchors]},
+        {"name": "the live case binds flat dotted keys through a real loader (round-4 control E4)",
+         "path": PG_TEST,
+         "edits": [('                editorial:\n'
+                    '                  cost:\n'
+                    '                    max-calls-per-article: 1000\n'
+                    '                    image-units-per-article: 100\n'
+                    '                    reconciliation-stale-minutes: 30\n'
+                    '                    provider-quota:\n'
+                    '                      unconfigured: refuse\n'
+                    '                      mock-provider:\n'
+                    '                        max-concurrent: 4\n'
+                    '                        calls-per-day: 26\n'
+                    '                        mock-gpt:\n'
+                    '                          max-concurrent: 1\n'
+                    '                          calls-per-day: 9\n',
+                    '                editorial.cost.provider-quota.unconfigured: refuse\n'
+                    '                editorial.cost.provider-quota.mock-provider.max-concurrent: 4\n'
+                    '                editorial.cost.provider-quota.mock-provider.calls-per-day: 26\n'
+                    '                editorial.cost.provider-quota.mock-provider.mock-gpt.max-concurrent: 1\n'
+                    '                editorial.cost.provider-quota.mock-provider.mock-gpt.calls-per-day: 9\n'
+                    '                editorial.cost.max-calls-per-article: 1000\n'
+                    '                editorial.cost.image-units-per-article: 100\n'
+                    '                editorial.cost.reconciliation-stale-minutes: 30\n')],
+         "red": [quotas, anchors]},
+        {"name": "the lock-order sort is deleted (round-4 control B1, unseen across 14 gates and 57 cases)",
+         "path": quota_service,
+         "edits": [("        ordered.sort(Comparator.comparing(Ceiling::lockKey));\n", "")],
+         "red": [ordering]},
+        {"name": "the sequence is decided by the display label instead of the key that is locked",
+         "path": quota_service,
+         "edits": [("ordered.sort(Comparator.comparing(Ceiling::lockKey));",
+                    "ordered.sort(Comparator.comparing(Ceiling::label));")],
+         "red": [ordering]},
+        {"name": "ceilings are locked in the order they were built in", "path": quota_service,
+         "edits": [("        ceilings = inLockOrder(ceilings);\n", "")],
+         "red": [ordering]},
+        {"name": "the advisory lock is taken on the label, not on the key", "path": quota_service,
+         "edits": [("for (Ceiling ceiling : ceilings) ledger.lockScope(ceiling.lockKey());",
+                    "for (Ceiling ceiling : ceilings) ledger.lockScope(ceiling.label());")],
+         "red": [ordering]},
+        {"name": "a window joins the set with a lock key that drops its own scope name", "path": quota_service,
+         "edits": [('                    String.join("|", "T08|PROVIDER-MODEL", article.owner().toString(), provider, model,',
+                    '                    String.join("|", "T08|PM", article.owner().toString(), provider, model,')],
+         "red": [ordering]},
+        {"name": "the provider quota window is measured before the article and day ceilings (F-R4-11a)",
+         "path": quota_service,
+         "edits": [("        for (Ceiling ceiling : ceilings) {\n"
+                    "            CostPorts.Occupancy used = ledger.occupancy(ceiling.where(), ceiling.args().toArray());",
+                    "        checkProviderQuota(actor, request, scope, day, ceilings);\n"
+                    "        for (Ceiling ceiling : ceilings) {\n"
+                    "            CostPorts.Occupancy used = ledger.occupancy(ceiling.where(), ceiling.args().toArray());"),
+                    ("        checkProviderQuota(actor, request, scope, day, ceilings);\n\n"
+                     "        Reservation reservation = new Reservation(",
+                     "        Reservation reservation = new Reservation(")],
+         "red": [quotas, anchors]},
+        {"name": "a near-miss env quota name is skipped in silence again (F-R4-02)", "path": CONFIG_JAVA,
+         "edits": [('            if (lowered.startsWith(ENVIRONMENT_NAMESPACE)'
+                    ' && lowered.contains(ENVIRONMENT_QUOTA_MARKER)) {\n'
+                    '                throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");\n'
+                    '            }\n', '')],
+         "red": [quotas]},
+        {"name": "a canonical dotted name inside an environment-shaped source is dropped again (F-R4-05)",
+         "path": CONFIG_JAVA,
+         "edits": [("        if (name.startsWith(QUOTA_PREFIX)) {\n"
+                    "            canonicalQuotaName(binder, name, concurrent, perDay);\n"
+                    "            return;\n"
+                    "        }\n", "")],
+         "red": [quotas]},
+        {"name": "an unrecognised quota leaf falls through silently again (round-4 control B3)", "path": CONFIG_JAVA,
+         "edits": [('        } else {\n'
+                    '            throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");\n',
+                    '        } else {\n            return;\n')],
+         "red": [quotas]},
+        {"name": "the day leaf is read through the int channel again (F-R4-04)", "path": CONFIG_JAVA,
+         "edits": [('case "calls-per-day" -> perDay.put(scope, dayCountLeaf(binder, canonical));',
+                    'case "calls-per-day" -> perDay.put(scope, (long) quotaLeaf(binder, canonical));')],
+         "red": [quotas]},
+        {"name": "an unspellable canonical name escapes as a raw Spring stack again (F-R4-03)", "path": CONFIG_JAVA,
+         "edits": [("        } catch (BindException | org.springframework.core.convert.ConversionFailedException\n"
+                    "                | org.springframework.boot.context.properties.source"
+                    ".InvalidConfigurationPropertyNameException\n"
+                    "                unreadable) {",
+                    "        } catch (BindException | org.springframework.core.convert.ConversionFailedException\n"
+                    "                unreadable) {")],
+         "red": [quotas]},
+        {"name": "the runner's evidence default points back into the tracked evidence directory (F-R4-12)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("return (work_root / 'evidence').resolve(), False",
+                    "return (HERE / 'evidence').resolve(), False")],
+         "red": [landing]},
+        {"name": "the suite-presence check compares raw --tests values again (F-R4-13)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("wanted = wanted_suites(args.tests)",
+                    "wanted = [t.strip() for t in args.tests.split(',') if t.strip()]")],
+         "red": [landing]},
+        {"name": "--path-selftest refuses an absolute work root outside the repository again (F-R4-13)",
+         "path": ROOT / "tests/engineering/T08/run_pg.py",
+         "edits": [("notes.append('run directory resolves outside the repository root '",
+                    "problems.append('run directory does not resolve inside the repository root '")],
+         "red": [landing]},
+        {"name": "the report claims the provider window is global across Owners (F-R4-01)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("**但这个合并窗口按 `(owner, provider, day)` 划分**", "**这个合并窗口跨所有 Owner 全局生效**")],
+         "red": [quotas]},
+        {"name": "the report says the env channel ignores case (F-R4-03)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [('`providerWideQuota("MOCK")` 为空', '寻址不分大小写，`MOCK` 与 `mock` 落进同一个条目')],
+         "red": [quotas]},
+        {"name": "the report says the provider quota speaks before the article ceiling (F-R4-11a)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("文章/日帽先测量，provider 配额后测量", "provider 配额先测量，文章/日帽后测量")],
+         "red": [quotas]},
+        {"name": "the report widens the ambiguity refusal to duplicate keys across sources (F-R4-14)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("跨源同名键不拒", "跨源同名键一律 503 拒装配")],
+         "red": [quotas]},
+        {"name": "the report drops the two refused silent paths (F-R4-02 / F-R4-04)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_MAX_CONCURRENT", "一个拼错前缀的环境变量名"),
+                   ("99999999999", "一个很大的日调用数")],
+         "red": [quotas]},
+        {"name": "the report says the locks follow construction order again (F-R4-09's claim without a watchman)",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("按 `Ceiling.lockKey` 的**字典序**排序", "按 `ceilings()` 的构造顺序")],
+         "red": [ordering]},
     ]
 
 
@@ -908,6 +1335,25 @@ def benign_probes() -> list[dict]:
          "edits": [("assertEquals(4, activePolicy.providerWideQuota(PROVIDER).orElseThrow().maxConcurrent(),",
                     "assertEquals(4, activePolicy.providerWideQuota(PROVIDER)\n"
                     "                .orElseThrow().maxConcurrent(),")]},
+        # Round-4 finding F-R4-07: the comment stripper and the brace walk were proved wrong by two one-line
+        # repros (a string holding "}" cut a 3688-char slice to 32; a "{" in a comment grew it to 54666). The
+        # fix is only trustworthy if those shapes are shown to be HARMLESS now, so they are probes here: the
+        # same gates must stay green over them, and the slice that describes them must be the case, not a stub.
+        {"name": "braces inside a literal and inside a comment join the live quota case", "path": PG_TEST,
+         "edits": [('""";\n        MockEnvironment env = new MockEnvironment();',
+                    '""";\n        // A brace in prose must not move the slice boundary: { and } both here.\n'
+                    '        String r4Closing = "}";\n'
+                    '        String r4Opening = "{";\n'
+                    '        MockEnvironment env = new MockEnvironment();')]},
+        {"name": "the same brace literal joins the unit quota case", "path": COST_TEST / "CostPricingTest.java",
+         "edits": [('""";\n        MockEnvironment env = new MockEnvironment();',
+                    '""";\n        // The document above is nested YAML, not a block of braces: }\n'
+                    '        String r4Closing = "}";\n'
+                    '        MockEnvironment env = new MockEnvironment();')]},
+        {"name": "the report adds a clause beside the owner-partition marker",
+         "path": ROOT / "docs/execution/reports/T08.md",
+         "edits": [("**但这个合并窗口按 `(owner, provider, day)` 划分**",
+                    "**但这个合并窗口按 `(owner, provider, day)` 划分（第四轮只登记，不改行为）**")]},
     ]
 
 

@@ -66,6 +66,33 @@ import org.springframework.core.env.SystemEnvironmentPropertySource;
  * unambiguously — Spring itself resolves both {@code open-ai.max-concurrent} and {@code open.ai.max-concurrent}
  * against the same key — so such names are refused at load, loudly, never guessed.</p>
  *
+ * <p>Three boundaries of that same environment channel, each measured in round 4 rather than assumed. A
+ * {@code EDITORIAL_COST_…} name that says {@code quota} but is not on the quota prefix is this subtree misspelled
+ * ({@code …PROVIDER_QUOTAS_MOCK_MAX_CONCURRENT}, one letter) and now refuses the boot instead of enumerating
+ * nothing (finding F-R4-02). A canonical dotted name found <em>inside</em> an environment-shaped source goes to
+ * the canonical reader rather than being skipped, so one source cannot be half-visible to {@code getProperty()}
+ * and invisible to the provider map (finding F-R4-05). And because the flattened name reaches us upper-cased and
+ * is stored lower-cased, the environment addresses <strong>all-lowercase provider ids only</strong>:
+ * {@code …QUOTA_MOCK_MAX_CONCURRENT} binds the key {@code mock}, and a real id spelled {@code MOCK} is not
+ * reachable through this channel at all — under {@code unconfigured=refuse} that is a 503 at the call, under
+ * {@code unlimited} it is a ceiling quietly not applying, which is why the shape is pinned by
+ * {@code CostPricingTest#environmentChannelAddressesProvidersInLowerCaseOnly} rather than smoothed over
+ * (finding F-R4-03). The measurement closed a sentence this class used to carry: capitals are not reachable
+ * through the canonical channel either. {@code editorial.cost.provider-quota.MOCK.max-concurrent} is a name the
+ * binder itself refuses ({@code InvalidConfigurationPropertyNameException}, raised before any value is read), so
+ * the id charset {@link BudgetPolicy#scope} allows is wider than what configuration can address — an id carrying
+ * capitals can be metered once something else hands it over, but it cannot be capped from a file. That refusal
+ * reached us as a raw stack trace, outside the normalization round-3 finding F-08 established for unreadable
+ * leaves, so {@link #quotaLeaf} and {@link #dayCountLeaf} take it in and answer the same structured 503
+ * {@code INVALID_BUDGET_POLICY}: loud on both channels, and never a capital quietly becoming a lowercase key.</p>
+ *
+ * <p>The two leaves are read as the types the record stores them in (finding F-R4-04):
+ * {@code max-concurrent} binds an {@code Integer} because {@link BudgetPolicy.ProviderQuota} declares one, and
+ * {@code calls-per-day} binds a {@code Long} because that field is a {@code long} — reading it as an
+ * {@code Integer} made the configuration surface narrower than the value it fills, so a legal
+ * {@code 99999999999} was refused with 503. Either side normalizes a value it cannot read into the same
+ * structured 503 {@code INVALID_BUDGET_POLICY}.</p>
+ *
  * <p>Capability boundary, ruled in round 3 and deliberately not widened here: a model id containing a dot has
  * no model-level configuration key — nested YAML flattens the dot into a path segment the scope cannot name,
  * and the environment channel is ambiguous for it too — while provider-level configuration still meters those
@@ -76,6 +103,18 @@ public final class BudgetPolicyConfig {
     private static final String QUOTA_PREFIX = "editorial.cost.provider-quota.";
     /** The OS-environment spelling of {@link #QUOTA_PREFIX} as {@code SystemEnvironmentPropertySource} names it. */
     private static final String ENVIRONMENT_QUOTA_PREFIX = "editorial_cost_provider_quota_";
+    /**
+     * Round-4 finding F-R4-02 measured what a silent miss costs here: {@code EDITORIAL_COST_PROVIDER_QUOTAS_…}
+     * (this prefix with one letter added) is not an unrelated variable, it is the quota subtree misspelled, and it
+     * booted green with {@code providers={}} — every provider uncapped, no warning anywhere. The typo of a prefix
+     * always lands inside our own namespace and keeps the word that says what it configures, so the neighbourhood
+     * is spelled that way: any {@code EDITORIAL_COST_…} name carrying "quota" that is not on
+     * {@link #ENVIRONMENT_QUOTA_PREFIX} refuses assembly, the same way an unknown quota LEAF does. A name in the
+     * namespace without that word ({@code EDITORIAL_COST_MAX_CALLS_PER_ARTICLE}) is a different ceiling and stays
+     * none of this channel's business.
+     */
+    private static final String ENVIRONMENT_NAMESPACE = "editorial_cost_";
+    private static final String ENVIRONMENT_QUOTA_MARKER = "quota";
     /**
      * The reserved leaf under the quota prefix that states what an unlisted provider means. It shares the namespace
      * with provider names, so the name is reserved: a provider actually called {@code unconfigured} — a path like
@@ -174,11 +213,41 @@ public final class BudgetPolicyConfig {
      * would be a guess, and a guess here is the round-3 defect rebuilt with the polarity flipped: refuse the
      * boot instead. Quotas that need those shapes belong in YAML or a properties file, where the name is the
      * value it claims to be.
+     *
+     * <p>One boundary this channel cannot cross, pinned by a case rather than fixed (round-4 finding F-R4-03):
+     * the environment's own convention upper-cases names, and the provider segment is stored <em>lower-cased</em>,
+     * so this channel addresses <strong>all-lowercase provider ids only</strong>. A provider whose real id
+     * carries capitals ({@code MOCK}) configured as {@code EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT}
+     * binds the key {@code mock} and {@code providerWideQuota("MOCK")} is then empty — under
+     * {@code unconfigured=refuse} that surfaces as 503 {@code PROVIDER_QUOTA_NOT_CONFIGURED} rather than an
+     * uncapped call, under {@code unlimited} it is the ceiling quietly not applying. Refusing every upper-cased
+     * segment instead would refuse the convention itself, so the shape is documented and pinned by
+     * {@code CostPricingTest#environmentChannelAddressesProvidersInLowerCaseOnly}. Capitals are not rescued by
+     * the other channel either: {@code editorial.cost.provider-quota.MOCK.max-concurrent} is a name Spring's
+     * binder refuses before reading it, and {@link #quotaLeaf} answers that refusal as the structured 503 too —
+     * so an id carrying capitals can be metered but cannot be capped from configuration at all, which is the
+     * boundary the round-4 review asked to have written down instead of discovered.
      */
     private static void environmentQuotaName(Binder binder, String name, Map<String, Integer> concurrent,
                                              Map<String, Long> perDay) {
+        // Round-4 finding F-R4-05: an environment-shaped source answers canonical dotted names through
+        // getProperty() like any other source, so this channel may not enumerate around them. Both spellings
+        // inside one source now arrive at the same provider map; the class comment on the two channels holds.
+        if (name.startsWith(QUOTA_PREFIX)) {
+            canonicalQuotaName(binder, name, concurrent, perDay);
+            return;
+        }
         String lowered = name.toLowerCase(Locale.ROOT);
-        if (!lowered.startsWith(ENVIRONMENT_QUOTA_PREFIX)) return;
+        if (!lowered.startsWith(ENVIRONMENT_QUOTA_PREFIX)) {
+            // Round-4 finding F-R4-02: EDITORIAL_COST_PROVIDER_QUOTAS_… is this subtree misspelled by one letter,
+            // and skipping it booted green with every provider uncapped. A name in our namespace that says "quota"
+            // therefore refuses the boot unless it is on the exact prefix; a name without that word is a different
+            // ceiling and stays none of this method's business.
+            if (lowered.startsWith(ENVIRONMENT_NAMESPACE) && lowered.contains(ENVIRONMENT_QUOTA_MARKER)) {
+                throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
+            }
+            return;
+        }
         String[] tail = lowered.substring(ENVIRONMENT_QUOTA_PREFIX.length()).split("_");
         if (tail.length == 1 && UNCONFIGURED_LEAF.equals(tail[0])) return;
         String leaf;
@@ -208,7 +277,10 @@ public final class BudgetPolicyConfig {
                                       Map<String, Integer> concurrent, Map<String, Long> perDay) {
         switch (leaf) {
             case "max-concurrent" -> concurrent.put(scope, quotaLeaf(binder, canonical));
-            case "calls-per-day" -> perDay.put(scope, (long) quotaLeaf(binder, canonical));
+            // Round-4 finding F-R4-04: the day count is a long in the record, so it binds as one. Read as an
+            // Integer it refused 99999999999 — a value BudgetPolicy.ProviderQuota carries — with 503, which is
+            // loud but wrong: the configuration surface may not be narrower than the field it fills.
+            case "calls-per-day" -> perDay.put(scope, dayCountLeaf(binder, canonical));
             default -> throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
         }
     }
@@ -217,15 +289,43 @@ public final class BudgetPolicyConfig {
      * One quota leaf, read through the binder. An unreadable value is a configuration failure, not a stack
      * trace: a non-numeric leaf arrives from Spring as {@code BindException}/{@code ConversionFailedException}
      * and is normalized into the same structured 503 every other malformed quota raises (round-3 finding
-     * F-08). A negative leaf is refused here; {@code max-concurrent: 0} is refused by {@link
-     * BudgetPolicy.ProviderQuota} as the wedge it is, and {@code calls-per-day: 0} passes as the closed day
-     * it means.
+     * F-08). The third shape that arrives as a stack trace is a NAME Spring cannot spell — an uppercase
+     * segment in a canonical dotted key is refused by the binder before any value is read
+     * ({@code InvalidConfigurationPropertyNameException}), which round-4 finding F-R4-03 pinned as the price of
+     * the environment channel's lowercase convention: capitals are not addressable on either channel, and the
+     * refusal is loud in both. A negative leaf is refused here; {@code max-concurrent: 0} is refused by
+     * {@link BudgetPolicy.ProviderQuota} as the wedge it is, and {@code calls-per-day: 0} passes as the closed
+     * day it means.
      */
     private static int quotaLeaf(Binder binder, String name) {
         Integer value;
         try {
             value = binder.bind(name, Integer.class).orElse(null);
-        } catch (BindException | org.springframework.core.convert.ConversionFailedException unreadable) {
+        } catch (BindException | org.springframework.core.convert.ConversionFailedException
+                | org.springframework.boot.context.properties.source.InvalidConfigurationPropertyNameException
+                unreadable) {
+            throw new PublicFailure(503, "INVALID_BUDGET_POLICY");
+        }
+        if (value == null || value < 0) throw new PublicFailure(503, "INVALID_BUDGET_POLICY");
+        return value;
+    }
+
+    /**
+     * The {@code calls-per-day} leaf, read as the {@code long} {@link BudgetPolicy.ProviderQuota} actually stores
+     * it in (round-4 finding F-R4-04: this side went through {@link #quotaLeaf}, so a legal
+     * {@code 99999999999} was refused with 503 by a surface narrower than its own field). Same normalization as
+     * {@link #quotaLeaf} — an unreadable or negative value, or a name the binder cannot parse, is the structured
+     * 503 and never a conversion stack — and the same boundary in the other direction: {@code max-concurrent}
+     * stays an {@code int} because that field is an {@code int}, so a concurrency ceiling beyond
+     * {@code 2147483647} is a refusal, not a truncation.
+     */
+    private static long dayCountLeaf(Binder binder, String name) {
+        Long value;
+        try {
+            value = binder.bind(name, Long.class).orElse(null);
+        } catch (BindException | org.springframework.core.convert.ConversionFailedException
+                | org.springframework.boot.context.properties.source.InvalidConfigurationPropertyNameException
+                unreadable) {
             throw new PublicFailure(503, "INVALID_BUDGET_POLICY");
         }
         if (value == null || value < 0) throw new PublicFailure(503, "INVALID_BUDGET_POLICY");

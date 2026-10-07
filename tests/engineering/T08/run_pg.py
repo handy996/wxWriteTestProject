@@ -48,8 +48,16 @@ TESTS_DEFAULT = 'CostPricingTest,T08PostgresTest'
 # F-04(b) boundary), separatorBearingIdsAreRefusedNotCollided (F-05); T08PostgresTest
 # looserModelEntryCannotLiftTheProviderCeiling and providerDayWindowClosesBeforeTheLooserModelDayWindow (F-03
 # both-levels enforcement), zeroCallsPerDayClosesTheDayButNotTheBoot (F-08 behaviour half), and
-# dottedModelIdIsMeteredInTheProviderWindow (F-04(b) on the service path).
-EXPECTED_TESTS = 57
+# dottedModelIdIsMeteredInTheProviderWindow (F-04(b) on the service path). The round-4 remediation added eight
+# more, one per finding that was measured as a silent path or an unwatched claim — unit:
+# environmentQuotaPrefixTypoRefusesTheBoot (F-R4-02), environmentChannelAddressesProvidersInLowerCaseOnly
+# (F-R4-03), dayCountLeafCarriesTheLongTheRecordStores (F-R4-04),
+# canonicalQuotaNamesInsideAnEnvironmentShapedSourceAreBound (F-R4-05),
+# advisoryLockOrderIsTheDictionaryOrderOfLockKeys (F-R4-09), everyUnknownQuotaLeafRefusesTheBoot (F-R4-10);
+# live: providerWideQuotaWindowIsPartitionedByOwnerToday (F-R4-01, pinned as today's behavior pending the
+# Owner decision) and theArticleCeilingSpeaksBeforeTheProviderQuotaWindow (F-R4-11b, the rejection order).
+# Nothing was deleted and nothing was silently renamed: 22+35=57 became 28+37=65.
+EXPECTED_TESTS = 65
 DATABASE = 'editorial'
 ADMIN_ROLE = 'editorial_admin'
 
@@ -109,14 +117,51 @@ def clip(text: str, limit: int = 2200) -> str:
     return text[:head] + f' …[{len(text) - limit} chars elided, full log kept in the run directory]… ' + text[-tail:]
 
 
+CONTROLLED_EVIDENCE = HERE / 'evidence'
+
+
+def resolve_evidence_dir(raw, work_root: Path) -> tuple[Path, bool]:
+    """Where this run's evidence lands, and whether the operator asked for that place on purpose.
+
+    Round-4 finding F-R4-12: the default was the tracked, review-relevant directory under
+    ``tests/engineering/T08/evidence``, so every exploratory run dropped files there without anyone choosing
+    it — the controlled directory accumulated scratch artifacts, and "an operator persisted my evidence for
+    me" became indistinguishable from "this run was always meant to be kept". The default is now the work root
+    (scratch, git-ignored like everything else under it); pointing at the tracked directory is a deliberate
+    ``--evidence-dir``. The second return value says which of the two happened, so the self-check can refuse a
+    run that landed in the controlled directory that nobody chose."""
+    if raw is None:
+        return (work_root / 'evidence').resolve(), False
+    return Path(raw).resolve(), True
+
+
+def wanted_suites(raw: str) -> list[str]:
+    """The class names Surefire is asked to run, with any ``#method`` filter stripped off.
+
+    Round-4 finding F-R4-13: the suite-presence check compared the RAW ``--tests`` values to the class names the
+    reports carry, so ``--tests CostPricingTest#dayCountLeafCarriesTheLongTheRecordStores`` — a deliberately
+    narrowed rerun a reviewer or operator types to exercise one case in isolation — named a suite no report can
+    ever be called, and a green execution exited non-zero with ``no Surefire report for …``. The method filter
+    is still honoured by Surefire; only the presence check ignores it."""
+    return [part.split('#', 1)[0].strip() for part in raw.split(',') if part.strip()]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--pg-bin', type=Path, default=ROOT / '.tools/t02/postgresql-full/pgsql/bin')
     parser.add_argument('--java-home', type=Path, default=ROOT / '.tools/t02/jdk-21.0.12.1+1')
     parser.add_argument('--maven', type=Path, default=ROOT / '.tools/t02/apache-maven-3.9.11/bin/mvn.cmd')
     parser.add_argument('--m2', type=Path, default=ROOT / '.tools/t02/m2')
-    parser.add_argument('--tests', default=TESTS_DEFAULT, help='comma separated Surefire test classes')
+    parser.add_argument('--tests', default=TESTS_DEFAULT, help='comma separated Surefire test classes '
+                                                              '(method filters such as CostPricingTest#foo are '
+                                                              'honoured by the suite-presence check)')
     parser.add_argument('--evidence-name', default='pg-selftest')
+    parser.add_argument('--evidence-dir', type=Path, default=None,
+                        help='directory the evidence JSON and the Surefire copies are written to. Deliberately '
+                             'no default inside the repository: unset means <work-root>/evidence, so an '
+                             'exploratory run cannot quietly add files to the tracked evidence directory '
+                             '(round-4 finding F-R4-12). Pass tests/engineering/T08/evidence to persist a run '
+                             'as delivered evidence.')
     parser.add_argument('--work-root', type=Path, default=None,
                         help='scratch root for the cluster and the build copy (default: tests/engineering/T08/.work, '
                              'which is git-ignored; point elsewhere when the shell denies writes under tests/)')
@@ -143,22 +188,42 @@ def main() -> int:
         except Exception:
             pass
     work_root = resolve_work_root(args.work_root, HERE)
+    evidence_dir, chosen = resolve_evidence_dir(args.evidence_dir, work_root)
     if args.path_selftest:
         # The dispatch's relative command shape must resolve like the absolute one; this is the self-check for
-        # finding F-07, and it deliberately shares resolve_work_root with the real run path.
+        # finding F-07, and it deliberately shares resolve_work_root with the real run path. Round-4 finding
+        # F-R4-13 adds the other two shapes this script has to get right without booting anything: an absolute
+        # --work-root outside the repository is a deliberate operator choice, not a problem to refuse, and the
+        # evidence landing place is reported so a run cannot quietly write into the tracked directory.
         probe = work_root / uuid.uuid4().hex
         problems = []
+        notes = []
         if not probe.is_absolute():
             problems.append('run directory is not absolute: ' + str(probe))
         if ROOT not in probe.parents:
-            problems.append('run directory does not resolve inside the repository root ' + str(ROOT)
-                            + ': ' + str(probe))
+            notes.append('run directory resolves outside the repository root ' + str(ROOT) + ': ' + str(probe)
+                         + ' (a deliberate --work-root, not a defect: the run simply cannot be described by a '
+                         'repository-relative path)')
+        if evidence_dir == CONTROLLED_EVIDENCE.resolve() and not chosen:
+            problems.append('evidence would land in the controlled directory '
+                            + str(CONTROLLED_EVIDENCE) + ' without an explicit --evidence-dir')
+        filtered = wanted_suites('CostPricingTest#dayCountLeafCarriesTheLongTheRecordStores,T08PostgresTest')
+        if filtered != ['CostPricingTest', 'T08PostgresTest']:
+            problems.append(f'a method filter would break the suite-presence check: {filtered}')
         print(json.dumps({'workRoot': work_root.as_posix(), 'runDirectoryShape': probe.as_posix(),
                           'relativeInput': str(args.work_root) if args.work_root else '(default)',
-                          'problems': problems}, ensure_ascii=False))
+                          'evidenceDir': evidence_dir.as_posix(),
+                          'evidenceDirChosen': chosen,
+                          'controlledEvidenceDir': CONTROLLED_EVIDENCE.as_posix(),
+                          'methodFilterStripped': filtered,
+                          'notes': notes, 'problems': problems}, ensure_ascii=False))
         return 1 if problems else 0
-    if (HERE / 'evidence' / (args.evidence_name + '.json')).exists():
-        raise RuntimeError(f"evidence '{args.evidence_name}.json' already exists; choose a new name")
+    if not chosen:
+        print(f'evidence will land in {evidence_dir} (scratch, under --work-root); '
+              'pass --evidence-dir tests/engineering/T08/evidence to persist it', flush=True)
+    if (evidence_dir / (args.evidence_name + '.json')).exists():
+        raise RuntimeError(f"evidence '{args.evidence_name}.json' already exists in {evidence_dir}; "
+                           'choose a new name')
     for required in (args.pg_bin / 'postgres', args.pg_bin / 'psql', args.pg_bin / 'initdb',
                      args.pg_bin / 'pg_ctl', args.pg_bin / 'createdb', args.java_home / 'bin/java', args.maven):
         executable(required)
@@ -335,7 +400,7 @@ def main() -> int:
             problems.append(f"executed {evidence['totals']['tests']} cases, expected {args.expect_tests}")
         if evidence['totals']['skipped'] != args.expect_skipped:
             problems.append(f"skipped {evidence['totals']['skipped']}, expected {args.expect_skipped}")
-        wanted = [t.strip() for t in args.tests.split(',') if t.strip()]
+        wanted = wanted_suites(args.tests)
         reported = [s['suite'].rsplit('.', 1)[-1] for s in suites]
         missing = [name for name in wanted if name not in reported]
         if missing:
@@ -344,7 +409,7 @@ def main() -> int:
                                     'suitesRequested': wanted, 'problems': problems}
         if problems:
             raise RuntimeError('test totals rejected the run: ' + '; '.join(problems))
-        target = HERE / 'evidence' / (args.evidence_name + '-test-results')
+        target = evidence_dir / (args.evidence_name + '-test-results')
         try:
             shutil.copytree(reports, target)
             evidence['testResults'] = inside_repo(target)
@@ -386,9 +451,16 @@ def main() -> int:
                 evidence['clusterStopIssue'] = str(stop)
         evidence['exitCode'] = exit_code
         evidence['isolatedWork'] = inside_repo(work)
-        out = HERE / 'evidence' / (args.evidence_name + '.json')
+        # 证据落点 self-check (round-4 finding F-R4-12): the JSON records where it was written and whether the
+        # operator chose that place, so a tracked-evidence file can be told apart from a run that merely used the
+        # scratch default — and a landing in the controlled directory that nobody asked for is a problem, printed
+        # before the write and recorded after it.
+        evidence['evidenceLanding'] = {'directory': inside_repo(evidence_dir), 'absolute': evidence_dir.as_posix(),
+                                       'explicitlyChosen': chosen,
+                                       'insideControlledDirectory': evidence_dir == CONTROLLED_EVIDENCE.resolve()}
+        out = evidence_dir / (args.evidence_name + '.json')
         try:
-            out.parent.mkdir(exist_ok=True)
+            out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(json.dumps(evidence, indent=2, ensure_ascii=False) + '\n', encoding='utf-8',
                            newline='\n')
             print('evidence: ' + str(out), flush=True)

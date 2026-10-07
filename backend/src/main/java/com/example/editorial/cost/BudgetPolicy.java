@@ -20,7 +20,10 @@ import java.util.regex.Pattern;
  * {@code provider} entry caps the provider summed across every model it serves, and a call has to fit every
  * window whose entry exists. A model entry looser than its provider entry therefore never lifts the
  * provider-wide ceiling above itself; the stricter answer wins. Which window each entry speaks about is
- * {@code BudgetService}'s job, measured through the scope this record exposes.</p>
+ * {@code BudgetService}'s job, measured through the scope this record exposes — and the window it measures is
+ * partitioned by Owner and UTC day as well, so "summed across every model" is summed inside one Owner's window,
+ * not across every Owner (round-4 finding F-R4-01; {@code BudgetService}'s class comment states the consequence
+ * and the Owner decision that owns it). This record stores limits; it does not decide the measurement window.</p>
  */
 public record BudgetPolicy(Money dailyLimit, Map<BudgetPolicy.Counter, Long> caps, Map<String, ProviderQuota> providers,
                            int alertPercent, int staleReconciliationMinutes, UnconfiguredQuota unconfigured) {

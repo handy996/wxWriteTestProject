@@ -31,6 +31,16 @@ import org.springframework.transaction.support.TransactionTemplate;
  * quotas are enforced on this service path only: their limits live in configuration rather than in a row the
  * database could lock, so a bypassing writer meets the article ceiling and nothing else.</p>
  *
+ * <p>One shape the reader has to see plainly (round-4 finding F-R4-01): every window this service locks and
+ * measures is partitioned by {@code owner_id}, the provider-wide quota window included. A
+ * {@code provider-quota.<provider>.max-concurrent: 2} is therefore enforced per
+ * {@code (owner, provider, day)}, not globally per provider — two Owners using one provider credential hold four
+ * calls between them. SRS 32.2 asks for the provider's own limit and forbids routing around it with extra keys;
+ * whether that limit is one global window or one window per Owner is <strong>the Owner's open decision</strong>,
+ * registered against this card as {@code openedBy: T08-REVIEW-4TH}. This implementation states the second
+ * reading, {@code T08PostgresTest#providerWideQuotaWindowIsPartitionedByOwnerToday} pins it as data, and neither
+ * the window nor the lock key is to be reinterpreted here.</p>
+ *
  * <p>Settlement is idempotent by {@code settlementKey}: the same key replays the stored answer, while the row
  * move itself is guarded by the status and lock version read under the lock, so a concurrent second settlement
  * reports {@code SETTLEMENT_CONFLICT} instead of overwriting the outcome that was really billed. An
@@ -91,7 +101,12 @@ public final class BudgetService {
         if (!price.known(request.capability())) throw price.unknown(request.capability());
 
         List<Ceiling> ceilings = ceilings(article, request.provider(), request.model(), scope, day);
-        ceilings.sort(Comparator.comparing(Ceiling::lockKey));
+        // The order is the invariant, not the sort call: every transaction that admits a call takes the same
+        // ascending sequence of advisory locks, so no two writers can hold each other's keys in opposite hands.
+        // inLockOrder is the one place that sequence is decided — round-4 finding F-R4-09 measured that the
+        // claim had no watchman (deleting the sort left every static gate and every delivered case green), so
+        // the sequence is now pinned by CostPricingTest and the call site by verify.py.
+        ceilings = inLockOrder(ceilings);
         for (Ceiling ceiling : ceilings) ledger.lockScope(ceiling.lockKey());
 
         // Replay before anything else: the same reservation key returns the hold already made, never a second one.
@@ -148,6 +163,13 @@ public final class BudgetService {
      * is one {@link #ceilings} already locked, so the reads serialize with racing admissions. A provider/model
      * with no entry at either level is not read as "no limit": {@code editorial.cost.provider-quota.unconfigured}
      * states whether the deployment means UNLIMITED or REFUSE, and REFUSE stops the call before it is booked.
+     *
+     * <p>Where this sits in the order matters and is stated rather than inferred (round-4 finding F-R4-11a): the
+     * article and day ceilings, with their count caps, are measured FIRST, and only then does this quota pass
+     * run. A call that breaches both the article's own count ceiling and a provider window is therefore refused
+     * as {@code QUOTA_EXCEEDED} (409, the article-side ceiling) and never as {@code PROVIDER_QUOTA_EXCEEDED}
+     * (429); {@code T08PostgresTest#theArticleCeilingSpeaksBeforeTheProviderQuotaWindow} pins that rejection
+     * order, and {@code verify.py} pins that the pass stays after the loop.</p>
      */
     private void checkProviderQuota(ActorContext actor, Request request, CostPorts.Executions.Scope scope, LocalDate day,
                                     List<Ceiling> ceilings) {
@@ -283,6 +305,22 @@ public final class BudgetService {
         return Map.copyOf(counters);
     }
 
+    /**
+     * The one place the admission lock sequence is decided: ceilings in the dictionary order of their
+     * {@code lockKey}, whatever order {@link #ceilings} built them in. Sorting is not cosmetic — with a
+     * construction-order sequence the set of keys two racing transactions hold depends on the request shape
+     * (a claim window present or absent), which is the classic shape of a cross-transaction wait cycle.
+     * Round-4 finding F-R4-09: deleting this sort changed no exit code anywhere in the delivery, so the
+     * invariant existed only as prose in this class comment until {@code CostPricingTest} pinned the sequence
+     * for two differently shaped ceiling lists and {@code verify.py} pinned the call site. No deadlock has
+     * been observed today and none is claimed — the claim is only that the order is fixed and now watched.
+     */
+    static List<Ceiling> inLockOrder(List<Ceiling> ceilings) {
+        List<Ceiling> ordered = new ArrayList<>(ceilings);
+        ordered.sort(Comparator.comparing(Ceiling::lockKey));
+        return List.copyOf(ordered);
+    }
+
     /** Every ceiling a call touches: the article row, the owner's UTC day, the provider window, and any claim/slot. */
     private List<Ceiling> ceilings(CostPorts.ArticleBudget article, String provider, String model,
                                    CostPorts.Executions.Scope scope, LocalDate day) {
@@ -298,6 +336,9 @@ public final class BudgetService {
         // serves, and a window is locked and measured exactly when its entry exists — reusing one window for
         // both numbers is how a provider ceiling got silently divided by the number of models. Lock labels go
         // through String.join so provider + "|" + model stays a concatenation only BudgetPolicy.scope performs.
+        // Both provider windows carry l.owner_id in their WHERE clause and their lock key: "the provider summed
+        // across every model" is summed per Owner and per UTC day, not across the planet (round-4 F-R4-01; the
+        // class comment states the consequence and the Owner decision that owns it).
         Optional<BudgetPolicy.ProviderQuota> modelEntry = policy.modelQuota(provider, model);
         Optional<BudgetPolicy.ProviderQuota> wideEntry = policy.providerWideQuota(provider);
         if (modelEntry.isPresent())
@@ -367,9 +408,11 @@ public final class BudgetService {
     /**
      * One ceiling as the admission check sees it: a lock key, an aggregate read, the limits it carries, and —
      * when it is one of the provider-quota windows — the quota entry that ceiling enforces. The other ceilings
-     * carry {@code null} there and never enter the quota pass.
+     * carry {@code null} there and never enter the quota pass. Package-private rather than private so
+     * {@code CostPricingTest} can feed a real ceiling list to {@link #inLockOrder} and assert the lock sequence
+     * itself (round-4 finding F-R4-09); nothing outside this package constructs one.
      */
-    private record Ceiling(String scope, String label, String lockKey, String where, List<Object> args, Money limit,
-                           BudgetAlert.Code exceededCode, Map<BudgetPolicy.Counter, Long> caps,
-                           BudgetPolicy.ProviderQuota quota) {}
+    record Ceiling(String scope, String label, String lockKey, String where, List<Object> args, Money limit,
+                   BudgetAlert.Code exceededCode, Map<BudgetPolicy.Counter, Long> caps,
+                   BudgetPolicy.ProviderQuota quota) {}
 }

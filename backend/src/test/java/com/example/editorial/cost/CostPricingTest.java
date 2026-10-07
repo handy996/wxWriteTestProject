@@ -783,4 +783,229 @@ class CostPricingTest {
         assertEquals(new BigDecimal("0.036900"), Money.of("0.036900").decimal());
         assertEquals(64, CanonicalRequest.digest(CanonicalRequest.canonical(node)).length());
     }
+
+    /** The environment variables the quota cases share: two stated ceilings and the required switch. */
+    private static java.util.Map<String, Object> environmentBase() {
+        java.util.Map<String, Object> os = new java.util.LinkedHashMap<>();
+        os.put("EDITORIAL_COST_MAX_CALLS_PER_ARTICLE", "64");
+        os.put("EDITORIAL_COST_RECONCILIATION_STALE_MINUTES", "30");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_UNCONFIGURED", "unlimited");
+        return os;
+    }
+
+    /**
+     * Round-4 finding F-R4-02, measured as a silent path: {@code EDITORIAL_COST_PROVIDER_QUOTAS_…} — the quota
+     * prefix with one letter added — is not an unrelated variable, it is this subtree misspelled, and the channel
+     * used to return quietly on it. The deployment booted green with {@code providers={}}: every provider
+     * uncapped, no warning in any log, exit code 0. A name in our own namespace that says "quota" and is not on
+     * the exact prefix therefore stops the boot; a name in the namespace that does not say quota is a different
+     * ceiling and stays untouched, which the last assertion pins from the other side.
+     */
+    @Test
+    @DisplayName("An environment quota prefix misspelled by one letter refuses the boot")
+    void environmentQuotaPrefixTypoRefusesTheBoot() {
+        java.util.Map<String, Object> typo = environmentBase();
+        typo.put("EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_MAX_CONCURRENT", "2");
+        typo.put("EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_CALLS_PER_DAY", "30");
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(typo))).code(),
+                "PROVIDER_QUOTAS_ is PROVIDER_QUOTA_ misspelled: it has to end the boot, not uncapp providers");
+        java.util.Map<String, Object> adjacent = environmentBase();
+        adjacent.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENCY", "2");
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(adjacent))).code(),
+                "on the exact prefix with a leaf nobody knows is the same class of mistake (finding F-R4-10)");
+        java.util.Map<String, Object> unrelated = environmentBase();
+        unrelated.put("EDITORIAL_COST_PROVIDER_CLUSTER_SHARDS", "4");
+        assertEquals(64, BudgetPolicyConfig.from(environmentShaped(unrelated)).cap(BudgetPolicy.Counter.CALLS),
+                "a name in the namespace without the word quota is not about provider ceilings and stays readable");
+    }
+
+    /**
+     * Round-4 finding F-R4-03, pinned as real behavior rather than "fixed": the environment name reaches this
+     * channel upper-cased — that is the environment's own convention, not a typo — and the provider segment is
+     * stored lower-cased, which is exactly what made the delivered F-01 case bind. So the channel addresses
+     * all-lowercase provider ids only, and a provider whose real id carries capitals is unreachable through it:
+     * {@code providerWideQuota("MOCK")} is empty even though the operator believes they capped it. Refusing every
+     * upper-cased segment would refuse the convention itself, so the boundary is written into the class comment
+     * and pinned here, file channel included, to show which side of the two channels keeps capitals.
+     */
+    @Test
+    @DisplayName("The environment channel addresses lowercase provider ids; capitals are refused, never guessed")
+    void environmentChannelAddressesProvidersInLowerCaseOnly() {
+        java.util.Map<String, Object> os = environmentBase();
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY", "30");
+        BudgetPolicy bound = BudgetPolicyConfig.from(environmentShaped(os));
+        assertEquals(2, bound.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "the lower-cased spelling is the one that binds — that is round-3 finding F-01 working");
+        assertTrue(bound.providerWideQuota("MOCK").isEmpty(),
+                "and the same name cannot address a provider whose id really carries capitals (F-R4-03)");
+        assertEquals(java.util.Set.of("mock"), bound.providers().keySet(),
+                "stored lower-cased, so an uppercase id is not merely invisible: the key it holds is mock");
+        // The other half, measured rather than assumed: writing the capital down literally in the canonical
+        // channel does not survive either. Spring's binder refuses a name it cannot spell, and the first draft
+        // of this case asserted the opposite — that {@code provider-quota.MOCK.…} kept its capitals — which the
+        // real PostgreSQL run disproved with InvalidConfigurationPropertyNameException escaping the assembly. So
+        // the boundary is stated once, in one direction: a provider id carrying capitals has no channel that
+        // addresses it, and the miss is a structured refusal (503 INVALID_BUDGET_POLICY), not a raw stack and
+        // not a silently lower-cased key.
+        PublicFailure capitals = assertThrows(PublicFailure.class, () -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.MOCK.max-concurrent", "2")
+                .withProperty("editorial.cost.provider-quota.MOCK.calls-per-day", "30")));
+        assertEquals(503, capitals.status());
+        assertEquals("INVALID_BUDGET_POLICY", capitals.code(),
+                "an unspellable canonical name is refused like any other unreadable leaf, and it is NOT folded "
+                        + "to lowercase on this channel: no cap silently lands on mock instead of MOCK");
+        java.util.Map<String, Object> strict = new java.util.LinkedHashMap<>(os);
+        strict.put("EDITORIAL_COST_PROVIDER_QUOTA_UNCONFIGURED", "refuse");
+        assertEquals(BudgetPolicy.UnconfiguredQuota.REFUSE,
+                BudgetPolicyConfig.from(environmentShaped(strict)).unconfigured(),
+                "under refuse the miss above surfaces as 503 PROVIDER_QUOTA_NOT_CONFIGURED at the call instead of "
+                        + "an uncapped call: the loud half of this boundary is T08PostgresTest's case");
+    }
+
+    /**
+     * Round-4 finding F-R4-04: {@link BudgetPolicy.ProviderQuota} stores {@code calls-per-day} as a {@code long}
+     * while the configuration surface read it through the same {@code Integer} binding as {@code max-concurrent},
+     * so a legal {@code 99999999999} was refused with 503 — a surface narrower than the field it fills. The day
+     * leaf binds a {@code Long} now, on both channels; the other side of that boundary is stated in the same
+     * breath, because {@code max-concurrent} <em>is</em> an {@code int} and a value past it stays a refusal rather
+     * than becoming a wrapped ceiling.
+     */
+    @Test
+    @DisplayName("The daily call leaf carries the long the record stores")
+    void dayCountLeafCarriesTheLongTheRecordStores() {
+        BudgetPolicy file = BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "2")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "99999999999"));
+        assertEquals(99999999999L, file.providerWideQuota("mock").orElseThrow().callsPerDay(),
+                "the record holds a long, so the configuration surface may not stop at Integer's ceiling");
+        java.util.Map<String, Object> os = environmentBase();
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY", "99999999999");
+        assertEquals(99999999999L,
+                BudgetPolicyConfig.from(environmentShaped(os)).providerWideQuota("mock").orElseThrow().callsPerDay(),
+                "and the environment channel reads the same field with the same width");
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "2147483648")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "9"))).code(),
+                "the asymmetry is deliberate: an int field does not accept a wider number, and says so");
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "2")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "-1"))).code());
+    }
+
+    /**
+     * Round-4 finding F-R4-05: {@code SystemEnvironmentPropertySource} answers a canonical dotted name exactly
+     * like any other source does — {@code getProperty()} saw the value while the enumeration only walked the
+     * UPPER_SNAKE spelling of that source, so one source was half visible and the provider map stayed empty with
+     * no complaint. A canonical name found in an environment-shaped source now goes to the canonical reader, and
+     * the two spellings inside one source land on one entry instead of two readings of one leaf.
+     */
+    @Test
+    @DisplayName("A canonical quota name inside an environment-shaped source binds like the flattened spelling")
+    void canonicalQuotaNamesInsideAnEnvironmentShapedSourceAreBound() {
+        java.util.Map<String, Object> os = environmentBase();
+        os.put("editorial.cost.provider-quota.mock.max-concurrent", "3");
+        os.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY", "41");
+        BudgetPolicy policy = BudgetPolicyConfig.from(environmentShaped(os));
+        assertEquals(3, policy.providerWideQuota("mock").orElseThrow().maxConcurrent(),
+                "getProperty() saw this name; the enumeration used to walk past it (finding F-R4-05)");
+        assertEquals(41, policy.providerWideQuota("mock").orElseThrow().callsPerDay(),
+                "the flattened spelling of the other leaf still binds, so one source feeds one entry");
+        java.util.Map<String, Object> both = new java.util.LinkedHashMap<>(os);
+        both.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "7");
+        assertEquals(3, BudgetPolicyConfig.from(environmentShaped(both)).providerWideQuota("mock").orElseThrow()
+                .maxConcurrent(), "two spellings of one leaf resolve to the value the binder resolves, not to "
+                        + "whichever enumeration happened to reach the entry first");
+        assertEquals(java.util.Set.of("mock"), BudgetPolicyConfig.from(environmentShaped(both)).providers().keySet(),
+                "and they land in one provider map, not in two half-populated scopes");
+    }
+
+    /**
+     * Round-4 finding F-R4-10, the fourth silent path: an unknown leaf under the quota prefix fell through the
+     * leaf test into a bare {@code return}, so {@code …_MOCK_AVERAGE_LATENCY} — or a leaf glued wrong — left the
+     * boot green with the provider uncapped. Both channels refuse it now, and the mirror mistake (one leaf of a
+     * pair missing) is refused for the reason that fits it.
+     */
+    @Test
+    @DisplayName("An unknown quota leaf refuses the boot on both channels, never a quiet skip")
+    void everyUnknownQuotaLeafRefusesTheBoot() {
+        java.util.Map<String, Object> unknownLeaf = environmentBase();
+        unknownLeaf.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");
+        unknownLeaf.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_AVERAGE_LATENCY", "250");
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(unknownLeaf))).code(),
+                "a leaf this subtree does not have is a typo about provider ceilings, not an unrelated variable");
+        java.util.Map<String, Object> glued = environmentBase();
+        glued.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAXCONCURRENT", "2");
+        glued.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_CALLS_PER_DAY", "30");
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(glued))).code(),
+                "and gluing the leaf's hyphen away is the same refusal, not a provider nobody capped");
+        java.util.Map<String, Object> oneLeaf = environmentBase();
+        oneLeaf.put("EDITORIAL_COST_PROVIDER_QUOTA_MOCK_MAX_CONCURRENT", "2");
+        assertEquals("QUOTA_NOT_CONFIGURED",
+                failure(() -> BudgetPolicyConfig.from(environmentShaped(oneLeaf))).code(),
+                "a scope that states only half of itself is the other refusal, with the code that says so");
+    }
+
+    /**
+     * Round-4 finding F-R4-09: the delivery claimed the advisory locks are taken in one fixed order so two
+     * racing admissions cannot hold each other's keys in opposite hands, and nothing watched the claim — deleting
+     * the sort in {@code BudgetService.reserveInTransaction} left all 14 static gates and all 57 delivered cases
+     * green (the reviewer's B1, and the same measurement here before this case existed). No deadlock is being
+     * claimed today and none is claimed by this case: what is pinned is that the sequence is decided in one
+     * place, that it is the dictionary order of the key actually locked, and that it does not depend on which
+     * windows a given request happens to shape.
+     */
+    @Test
+    @DisplayName("Advisory locks are taken in the dictionary order of the key, whatever order they were built in")
+    void advisoryLockOrderIsTheDictionaryOrderOfLockKeys() {
+        java.util.List<BudgetService.Ceiling> articleFirst = java.util.List.of(
+                window("ARTICLE", "T08|ARTICLE|" + ARTICLE),
+                window("DAY", "T08|DAY|" + OWNER + "|2024-05-01"),
+                window("PROVIDER", "T08|PROVIDER|" + OWNER + "|mock|2024-05-01"),
+                window("PROVIDER-MODEL", "T08|PROVIDER-MODEL|" + OWNER + "|mock|gpt|2024-05-01"),
+                window("CLAIM", "T08|CLAIM|" + CLAIM),
+                window("SLOT", "T08|SLOT|" + SLOT));
+        java.util.List<BudgetService.Ceiling> scrambled = java.util.List.of(
+                window("SLOT", "T08|SLOT|" + SLOT),
+                window("PROVIDER", "T08|PROVIDER|" + OWNER + "|mock|2024-05-01"),
+                window("CLAIM", "T08|CLAIM|" + CLAIM),
+                window("PROVIDER-MODEL", "T08|PROVIDER-MODEL|" + OWNER + "|mock|gpt|2024-05-01"),
+                window("DAY", "T08|DAY|" + OWNER + "|2024-05-01"),
+                window("ARTICLE", "T08|ARTICLE|" + ARTICLE));
+        java.util.List<String> forward = keys(BudgetService.inLockOrder(articleFirst));
+        assertEquals(forward, keys(BudgetService.inLockOrder(scrambled)),
+                "two requests shaping their windows in different orders must reach the same lock sequence");
+        assertEquals(forward.stream().sorted().toList(), forward, "and that sequence is the dictionary order of "
+                + "the keys the transaction actually names in pg_advisory_xact_lock");
+        assertTrue(forward.indexOf("T08|PROVIDER-MODEL|" + OWNER + "|mock|gpt|2024-05-01")
+                        < forward.indexOf("T08|PROVIDER|" + OWNER + "|mock|2024-05-01"),
+                "the model window precedes the provider window it adds up into — the ordering fact the round-3 "
+                        + "review measured, now watched instead of asserted in prose");
+        assertEquals(6, forward.size(), "one entry per ceiling, so a window cannot be dropped on the way to the lock");
+        java.util.List<BudgetService.Ceiling> withANewWindow = new java.util.ArrayList<>(articleFirst);
+        withANewWindow.add(window("SEARCH", "T08|SEARCH|" + OWNER + "|2024-05-01"));
+        java.util.List<String> extended = keys(BudgetService.inLockOrder(withANewWindow.reversed()));
+        assertEquals(extended.stream().sorted().toList(), extended,
+                "a scope added later joins the same order: the invariant is the sort, not the six keys it knows");
+    }
+
+    private static final UUID ARTICLE = UUID.fromString("cccccccc-0000-4000-8000-000000000001");
+    private static final UUID OWNER = UUID.fromString("aaaaaaaa-0000-4000-8000-000000000001");
+    private static final UUID CLAIM = UUID.fromString("dddddddd-0000-4000-8000-000000000001");
+    private static final UUID SLOT = UUID.fromString("eeeeeeee-0000-4000-8000-000000000001");
+
+    /** One ceiling carrying only a lock key: enough to exercise the sequence the admission transaction takes. */
+    private static BudgetService.Ceiling window(String scope, String lockKey) {
+        return new BudgetService.Ceiling(scope, lockKey, lockKey, "l.owner_id=?", java.util.List.of(), null,
+                BudgetAlert.Code.QUOTA_EXCEEDED, Map.of(), null);
+    }
+
+    private static java.util.List<String> keys(java.util.List<BudgetService.Ceiling> ceilings) {
+        return ceilings.stream().map(BudgetService.Ceiling::lockKey).toList();
+    }
 }

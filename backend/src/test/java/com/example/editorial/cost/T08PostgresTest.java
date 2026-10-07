@@ -661,6 +661,12 @@ class T08PostgresTest {
      * and the numbers below (4/26 and 1/9) exist in no hand-built policy in this file — the two entries
      * {@code activePolicy} answers with are only reachable by having loaded this document. What is asserted is
      * the service refusing on both levels, not a key string matching.
+     *
+     * <p>Why this fixture lifts {@code image-units-per-article} to 100 (round-4 finding F-R4-11a): the shipped
+     * default is 4, and at 4 the fifth call here is answered by the article's own count ceiling —
+     * {@code QUOTA_EXCEEDED}, 409 — before the provider window gets measured, so the assertions below would be
+     * describing a ceiling this document does not configure. The order that lifting hides is not left
+     * unasserted: {@link #theArticleCeilingSpeaksBeforeTheProviderQuotaWindow} pins it as behavior.</p>
      */
     @Test
     @DisplayName("A quota read from a nested YAML document is refused by the service that uses it")
@@ -724,6 +730,124 @@ class T08PostgresTest {
     private BudgetService.Request hold(UUID article, String model) {
         return new BudgetService.Request(article, execution(article, null, null), PROVIDER, model,
                 Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false, UUID.randomUUID());
+    }
+
+    /** A second Owner, so a window reported as provider-wide can be measured across two of them. */
+    private static final UUID OTHER_OWNER = UUID.fromString("aaaaaaaa-0000-4000-8000-000000000002");
+
+    /** An article owned by a chosen Owner: the summary carries the owner the article trigger compares against. */
+    private UUID articleOwnedBy(UUID owner, String budgetLimit) {
+        UUID id = UUID.randomUUID();
+        execute("INSERT INTO editorial.app_user(id,username,display_name,actor_type,password_hash,enabled) VALUES ('"
+                + owner + "','t08-other-owner','T08 Second Owner','OWNER','x',true) ON CONFLICT (id) DO NOTHING");
+        adminUpdate("INSERT INTO editorial.article_job"
+                + "(id,owner_id,name,skill_version_id,target_length,budget_limit,currency,status,summary,"
+                + "style_snapshot,original_rights_basis,created_by,updated_by) VALUES (?,?,?,'" + SKILL_VERSION
+                + "',1500,?::numeric,'USD',?,?::jsonb,'{}'::jsonb,"
+                + "'[{\"basis\":\"OWNER_AUTHORIZED\",\"note\":\"t08 fixture\"}]'::jsonb,?,?)",
+                id, owner, "t08-other-owner-article", budgetLimit, "ANALYZING",
+                "{\"id\":\"" + id + "\",\"ownerId\":\"" + owner + "\",\"budget\":\"" + budgetLimit + "\"}",
+                owner, owner);
+        return id;
+    }
+
+    /** The same reservation placed for a chosen Owner, so the window it fills is that Owner's and nobody else's. */
+    private BudgetService.Request hold(UUID owner, UUID article, String model) {
+        UUID execution = UUID.randomUUID();
+        scopes.put(execution, new CostPorts.Executions.Scope(execution, CostPorts.Executions.Kind.AGENT, article,
+                owner, null, null));
+        return new BudgetService.Request(article, execution, PROVIDER, model, Capability.GENERATION,
+                new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false, UUID.randomUUID());
+    }
+
+    private ActorContext actor(UUID owner) { return ActorContext.forWorker(owner, owner, UUID.randomUUID()); }
+
+    /**
+     * Round-4 finding F-R4-01, recorded as measured rather than as intended: the provider-wide window this service
+     * locks and measures carries {@code l.owner_id} in its WHERE clause and in its lock key, so a
+     * {@code max-concurrent: 2} entry is two live calls <em>per Owner per UTC day</em>, not two for the provider.
+     * Two Owners who share one provider credential therefore hold four calls between them, which is what this case
+     * shows as data. SRS 32.2 asks for the provider's own limit and forbids routing around it with extra keys, and
+     * whether that limit means one global window or one window per Owner is not this card's to decide: the
+     * question is registered against it as {@code openedBy: T08-REVIEW-4TH}, {@code T08.md} states the current
+     * behavior in its own words, and until the Owner answers, changing the key or the window here would replace
+     * one unread claim with another.
+     */
+    @Test
+    @DisplayName("Today's provider-wide window is partitioned by Owner — pinned pending the Owner decision")
+    void providerWideQuotaWindowIsPartitionedByOwnerToday() {
+        policy(wideCaps(), "200.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 30)));
+        UUID mine = article("10.000000");
+        UUID theirs = articleOwnedBy(OTHER_OWNER, "10.000000");
+        assertNotNull(budget.reserve(actor(), hold(mine, MODEL)), "the first two calls fill this Owner's window");
+        assertNotNull(budget.reserve(actor(), hold(mine, MODEL)));
+        PublicFailure third = assertThrows(PublicFailure.class,
+                () -> budget.reserve(actor(), hold(mine, MODEL)));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", third.code(), "and the third meets the provider-wide two");
+        assertNotNull(budget.reserve(actor(OTHER_OWNER), hold(OTHER_OWNER, theirs, MODEL)),
+                "the window that just filled was not this Owner's: nothing about the second Owner's first call "
+                        + "consults the first Owner's holds");
+        assertNotNull(budget.reserve(actor(OTHER_OWNER), hold(OTHER_OWNER, theirs, MODEL)));
+        assertEquals(4, holds(), "four live holds configured as max-concurrent: 2 — the partition is the behavior");
+        PublicFailure secondOwnerThird = assertThrows(PublicFailure.class,
+                () -> budget.reserve(actor(OTHER_OWNER), hold(OTHER_OWNER, theirs, MODEL)));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", secondOwnerThird.code(),
+                "each Owner does have its own full window, which is exactly the reading the Owner has to confirm");
+        assertEquals(java.util.Set.of(OWNER, OTHER_OWNER),
+                runtime.queryForList("SELECT owner_id FROM editorial.cost_ledger WHERE status='RESERVED'",
+                        UUID.class).stream().collect(java.util.stream.Collectors.toSet()),
+                "and the split is visible in the rows the ceiling counted, not only in the counts");
+    }
+
+    /**
+     * Round-4 findings F-R4-11a / F-R4-11b: the order in which the ceilings speak was narrated in the rework
+     * table and watched by nothing — the reviewer's controls B1 and B7 changed that order and left all 14 static
+     * gates green, and the shipped default {@code image-units-per-article=4} sits under most provider entries, so
+     * which code a caller actually sees was inference. It is data now: the article and day ceilings, with their
+     * count caps, are measured first and {@code checkProviderQuota} runs after that loop, so a call breaching both
+     * is refused as {@code QUOTA_EXCEEDED} (409) and never as {@code PROVIDER_QUOTA_EXCEEDED} (429). The middle
+     * block keeps the provider window live, so the assertion below cannot pass because the quota never spoke.
+     */
+    @Test
+    @DisplayName("The article ceiling speaks before the provider quota window")
+    void theArticleCeilingSpeaksBeforeTheProviderQuotaWindow() {
+        Map<BudgetPolicy.Counter, Long> loose = wideCaps();
+        loose.put(BudgetPolicy.Counter.IMAGE_GENERATION_ARTICLE, 4L);
+        policy(loose, "200.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(10, 30)));
+        UUID article = article("10.000000");
+        for (int call = 1; call <= 4; call++)
+            assertNotNull(budget.reserve(actor(), hold(article, MODEL)), "call " + call + " of the article's four");
+        PublicFailure fifth = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals(409, fifth.status());
+        assertEquals("QUOTA_EXCEEDED", fifth.code(),
+                "the shipped per-article count of four is what the fifth call meets (F-R4-11b, first half)");
+
+        Map<BudgetPolicy.Counter, Long> wide = wideCaps();
+        policy(wide, "200.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 30)));
+        execute("DELETE FROM editorial.cost_ledger");
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        PublicFailure byQuota = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals(429, byQuota.status());
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", byQuota.code(),
+                "with the article cap out of the way the provider window does speak, so the code asserted below "
+                        + "cannot be right for the wrong reason");
+
+        Map<BudgetPolicy.Counter, Long> both = wideCaps();
+        both.put(BudgetPolicy.Counter.IMAGE_GENERATION_ARTICLE, 2L);
+        policy(both, "200.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(2, 30)));
+        execute("DELETE FROM editorial.cost_ledger");
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        assertNotNull(budget.reserve(actor(), hold(article, MODEL)));
+        PublicFailure tie = assertThrows(PublicFailure.class, () -> budget.reserve(actor(), hold(article, MODEL)));
+        assertEquals("QUOTA_EXCEEDED", tie.code(),
+                "one call breaching the article's count cap and the provider window at once is answered by the "
+                        + "ceiling measured first — that is the rejection order T08.md now states as behavior");
+        assertEquals(2, holds(), "and the refusal booked nothing, whichever code named it");
     }
 
     /**
