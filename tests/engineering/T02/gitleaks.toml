@@ -7,43 +7,57 @@ useDefault = true
 # value test never runs and a real credential committed into that file is invisible. This file
 # therefore carries no file-condition entry at all; every exception below is an exact value, and
 # the file holding that value stays scanned. Ban asserted by the check script and by CI.
-# Reproduce the semantics: docs/execution/reports/T02-Revision-R02.md.
+# Reproduce the semantics: docs/execution/reports/T02-Revision-R05.md.
+#
+# `condition = "AND"` is measured to act BETWEEN dimensions (paths / commits / regexes): a block
+# suppresses only if every present dimension matches. WITHIN one block, several `regexes` are an
+# OR: a finding on the line is suppressed if ANY regex in that block matches it (the six r01
+# fingerprints share one block and each value on its own suppresses its line). The scanner never
+# requires all regexes in a block to match the same finding.
+#
+# Each exception is anchored with a word boundary so value-allowlisting is NOT substring-
+# allowlisting: `\b<value>\b` suppresses the exact token but lets a longer secret that merely
+# CONTAINS the value (prefix+value, value+suffix, embedded) be reported again. The truncated
+# prose digest (19 chars, ends in literal `...`) cannot take a trailing `\b` because `.` is a
+# non-word char, so it is guarded by a RE2-safe `[^0-9a-f]` after the dots. Lookaround
+# (`(?<!...)`/`(?!...)`) is NOT used: gitleaks 8.30.1 embeds RE2 and panics with
+# "invalid perl operator" on it, aborting the whole config (measured in R05).
 
 [[allowlists]]
-description = "SRS public example request identifier (fixture), exact value only"
+description = "SRS public example request identifier (fixture), exact value only, word-boundary anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''397c4e7a\-d8f0\-4d83\-b885\-342f8248d8e2''',
+  '''\b397c4e7a\-d8f0\-4d83\-b885\-342f8248d8e2\b''',
 ]
 
 [[allowlists]]
-description = "UUID of a deleted T04 integration test object quoted in frozen evidence, exact value only"
+description = "UUID of a deleted T04 integration test object quoted in frozen evidence, exact value only, word-boundary anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''55565d49\-a894\-42ec\-8a42\-df7e2dc50a86''',
+  '''\b55565d49\-a894\-42ec\-8a42\-df7e2dc50a86\b''',
 ]
 
 [[allowlists]]
-description = "Six R01 delivery fingerprints quoted in the frozen r01-integrity record, exact values only"
+description = "Six R01 delivery fingerprints quoted in the frozen r01-integrity record, exact values only, word-boundary anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99''',
-  '''ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea''',
-  '''ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4''',
-  '''408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9''',
-  '''394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc''',
-  '''568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1''',
+  '''\b775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99\b''',
+  '''\becfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea\b''',
+  '''\bac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4\b''',
+  '''\b408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9\b''',
+  '''\b394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc\b''',
+  '''\b568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1\b''',
 ]
 
 [[allowlists]]
-description = "Two frozen 1.0.0-rc.3 contract file digests, plus one 16-character prefix quoted in prose, exact values only"
+description = "Two frozen 1.0.0-rc.3 contract file digests (word-boundary anchored), plus one 16-character truncated-prose digest (literal dots, RE2-safe non-hex guard), exact values only"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b''',
-  '''0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd''',
-  '''e285471760a5dce4\.\.\.''',
+  '''\be285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b\b''',
+  '''\b0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd\b''',
+  '''\be285471760a5dce4\.\.\.[^0-9a-f]''',
 ]

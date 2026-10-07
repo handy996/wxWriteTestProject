@@ -45,7 +45,7 @@ tests/engineering/T02/scan_secrets.py
 | `.tools/t02/gitleaks/gitleaks.exe version` | 0 | `8.30.1` |
 | `$py tests/engineering/T02/check_contracts.py` | 0 | `Approved T00 rc.3: 27 hashes verified, no regeneration`（rc.3 冻结契约未触碰） |
 | `$py tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe`（**整改前**，HEAD 配置） | 1 | 7 条 `generic-api-key`（文件/行号见 3.6 表，与判决 F-01 一致）；同输入集对照字节数见 3.2 |
-| `$py tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe`（**整改后**，同一输入集，报告写默认已跟踪路径） | 0 | `no leaks found`，报告体为 `[]`，`scanned ~37,078,079 bytes`；与上一行的字节差恰为 150,604。同命令后续复跑为 37,080,919、37,081,595 字节——增量只是这两份报告自身文本变大，退出码 0 / 0 命中稳定 |
+| `$py tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe`（**整改后**，同一输入集，报告写默认已跟踪路径） | 0 | `no leaks found`，报告体为 `[]`；**稳定量**为「交付配置 0 命中、无任何 allowlist 15 命中、历史 `paths` 配置 7 命中」与整文件跳过量 150,604。绝对 `scanned` 字节是运行时量（随并发会话的未跟踪文件集变动，本卡当时记 `~37,078,079`，复跑为 37,080,919、37,081,595；R05 复跑为 38,673,372）——**不作结论数字**（A-5）。退出码 0 / 0 命中稳定 |
 | `$py tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe --report tests/engineering/T02/.work/r02-exp/final-report.json` | 0 | 同上，且不触碰已跟踪证据（F-05 复现路径） |
 | `$py tests/engineering/T02/check_gitleaks_allowlists.py`（结构模式，无需 gitleaks） | 0 | 16 项断言全 PASS，`GITLEAKS ALLOWLIST POLICY: PASSED (structure only)` |
 | `$py tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe` | 0 | 88 项断言：88 PASS / 0 FAIL，`GITLEAKS ALLOWLIST POLICY: PASSED` |
@@ -77,7 +77,7 @@ tests/engineering/T02/scan_secrets.py
 
 - 退出 0、**0 条命中**，gitleaks 自报 `scanned ~0 bytes (0)`；
 - 即：三份文件（128,810 + 7,011 + 14,783 = **150,604 字节**）在旧配置下完全不被读取，追加真实格式的 GitHub PAT 与 PEM 私钥也不会报——配不配 `regexes` 都一样；
-- 全仓同输入集对照（2,411 个 git 可见文件）：HEAD 配置 `36,927,475 bytes / 7 命中 / 退出 1`，交付配置 `37,078,079 bytes / 0 命中 / 退出 0`，**字节差恰为 150,604**，即旧配置的盲区大小。
+- 全仓同输入集对照（`git ls-files --cached --others --exclude-standard`，文件数随并发会话变动，故不记为结论）：历史配置 **7 命中 / 退出 1**，交付配置 **0 命中 / 退出 0**，无任何 allowlist **15 命中 / 退出 1**；**字节差恰为 150,604**（交付 scanned − 历史 scanned = 旧配置的整文件盲区大小，与 gitleaks.toml 自身字节无关）。绝对 scanned 字节为运行时量，不作结论（A-5）。
 
 结论写进报告与配置注释：Gitleaks 8.30.1 的 allowlist 带文件条件（`paths`）时是**整文件退出扫描**，不是「该值仅在该文件豁免」；因此 `paths` 在本仓配置中被禁用，并由脚本断言出现次数为 0。
 
@@ -87,14 +87,14 @@ tests/engineering/T02/scan_secrets.py
 
 - 先以「无例外」的默认规则扫描，确认 11 个原值**全部真能触发**规则（控制非空转）；
 - 11/11 原值在交付配置下被抑制（退出 0）；
-- 每个值改 1 个字符（首 / 中 / 末位，共 33 个变异体）在交付配置下**全部重新被报**（退出 1，规则 `generic-api-key`）；本轮 0 个变异体落入「规则本身不报」的空转情形（脚本会显式列出并剔除，避免用空转充数）。
+- 每个值改 1 个字符（首 / 中 / 末位，R02 记为共 33 个变异体）在交付配置下**全部重新被报**（退出 1，规则 `generic-api-key`）；本轮 0 个变异体落入「规则本身不报」的空转情形（脚本会显式列出并剔除，避免用空转充数）。**R05 加固**：例外改用 `\b` 词边界锚定，同一门重跑为**首 / 中两点 / 末共 44 个单字符变异全部重新变红**，并新增**子串超串控制**（前缀 / 后缀 / 内嵌 3×11=33 条超串也全部重新被报），见 [T02-Revision-R05.md](T02-Revision-R05.md) A-2。
 
 **与主 agent 建议的偏差及理由**：建议中对两个契约文件摘要用 `775fb0764e03432b.*ec65ec99` 式「首尾定长 + 中间通配」。实测放弃该写法，改用**完整字面量**，原因两条：
 
 1. 通配会把摘要中段变成任意文本，中段改一位仍被抑制 → 直接废掉 3.3 的反向控制；
 2. 变体 A 实验出现的配置自身命中（`gitleaks.toml` L10/L17）来源不是长十六进制本身，而是值前的关键词形态（`Idempotency-Key: …`、`key=…`）；把例外拆成独立 `regexes` 行、行内不含关键词后，实测**自身 0 命中**：把交付配置复制成中性文件名（避开 gitleaks 对 `gitleaks.toml` 文件名的处理差异）用「默认规则、无任何例外」扫描 → `2,076 bytes / 0 命中 / 退出 0`；同一方式扫描 HEAD 配置副本 → `1,327 bytes / 2 命中 / 退出 1`（正是 L10/L17）。
 
-现配置的 11 个值：SRS 示例 UUID 1 个、T04 已删除测试对象 1 个、`r01-integrity.json` 摘要 6 个、两个冻结契约文件摘要 2 个，外加 1 个短形态 `e285471760a5dce4...`——它是 `docs/execution/reviews/T03-round5/evidence/checks.json:20` 叙述行里的**截断散文摘要**（19 字符，含字面 `...`，配置里写作 `e285471760a5dce4\.\.\.`），不是通配。
+现配置的 11 个值：SRS 示例 UUID 1 个、T04 已删除测试对象 1 个、`r01-integrity.json` 摘要 6 个、两个冻结契约文件摘要 2 个，外加 1 个短形态 `e285471760a5dce4...`——它是 `docs/execution/reviews/T03-round5/evidence/checks.json:20` 叙述行里的**截断散文摘要**（19 字符，含字面 `...`，配置里 R02 写作 `e285471760a5dce4\.\.\.`；R05 加锚为 `\be285471760a5dce4\.\.\.[^0-9a-f]`，因 RE2 拒收环视），不是通配。
 
 ### 3.4 良性控制（正常哈希清单不得被染红）
 
@@ -113,11 +113,11 @@ tests/engineering/T02/scan_secrets.py
 - `[extend] useDefault = true` 存在、`[[rules]]` 不存在（默认规则只扩展不替换）；
 - 4 个 allowlist 块全部含 `condition = "AND"`、`regexTarget = "match"`、`regexes = [`；
 - 豁免值数量钉为 11（新增例外必须显式改常量并接受复审）；
-- 每个例外是**单个字面量**：去掉 `\.` 式转义后不含任何正则元字符（禁止 `*`/`.*`/字符类通配），且长度 ≥ 16。
+- 每个例外是**单个字面量**，分两类标注（R05 A-8，名实相符）：10 条**完整字面量**——去掉 `\.` / `\-` 式转义后不含任何正则元字符（禁 `*`/`.*`/字符类通配）、且用 `\b` 词边界锚定；第 11 条是**含字面 `...` 的截断散文摘要**（19 字符），R02 曾笼统称其为「no wildcard」，R05 更正：它不是通配、也不套 `\b`（尾字符是点，`\b` 不成立），改用 RE2 安全的 `[^0-9a-f]` 尾守卫。断言据此拆成两条不同标签。
 
 ### 3.6 全量命中账目（抑制了多少、抑制在哪、是不是空转）
 
-同一输入集（2,411 个 git 可见文件副本，`.work` 内）在**完全不加任何 allowlist** 的默认规则下实测 **15 条**命中，全部为 `generic-api-key`，逐条如下（本卡不修改这些文件，只按值抑制）：
+同一输入集（`git ls-files` 可见文件副本，`.work` 内；文件数为运行时量，本卡当时约 2,411）在**完全不加任何 allowlist** 的默认规则下实测 **15 条**命中（R05 在同一口径复现仍为 15），全部为 `generic-api-key`，逐条如下（本卡不修改这些文件，只按值抑制）：
 
 | 命中位置 | 条数 | 此前状态 | 本轮处理 |
 |---|---:|---|---|
@@ -130,7 +130,7 @@ tests/engineering/T02/scan_secrets.py
 
 账目闭合：旧配置的 7 条显形命中 + 被 `paths` 藏起来的 8 条 = 15 条；15 条由 11 个字面量值覆盖（同一摘要在多行重复出现）；交付配置下全仓 0 命中、退出 0。判决 F-01 报出的 7 条文件/行号与本表逐一对齐，复现基线一致。
 
-配置自身命中的注意点：gitleaks 会跳过**文件名恰为 `gitleaks.toml`** 的输入（其内置全局例外），所以「配置自身 0 命中」不能用原名扫描来证明。本轮做法是把配置复制成中性名（`snapshot-of-delivered-config.toml`）后在**无任何 allowlist** 的规则下扫描：交付配置 2,076 字节 / 0 命中 / 退出 0；同法扫描 HEAD 配置副本得 1,327 字节 / 2 命中 / 退出 1（L10 `Idempotency-Key: …`、L17 `key=…`），即变体 A 实验出现的自身命中来源是值前的关键词形态，不是长十六进制本身。
+配置自身命中的注意点：gitleaks 会跳过**路径含 `gitleaks.toml` 子串**的输入（其内置全局例外；R05 实测：`sub-gitleaks.toml`、`.gitleaks.toml`、`gitleaks.toml.bak` 与目录名含该子串者一律自报 `scanned ~0 bytes (0)`，同样字节改名 `plain.txt` 即被读取并命中）——**不是**「文件名恰为 `gitleaks.toml`」。所以「配置自身 0 命中」不能用任何含该子串的名字扫描来证明。本轮做法是把配置复制成中性名（`snapshot-of-delivered-config.toml`）后在**无任何 allowlist** 的规则下扫描：交付配置 2,076 字节 / 0 命中 / 退出 0；同法扫描 HEAD 配置副本得 1,327 字节 / 2 命中 / 退出 1（L10 `Idempotency-Key: …`、L17 `key=…`），即变体 A 实验出现的自身命中来源是值前的关键词形态，不是长十六进制本身。
 
 ---
 
@@ -161,7 +161,7 @@ tests/engineering/T02/scan_secrets.py
 
 1. **远端 CI 从未运行**：所有结论来自本地 PowerShell 5.1 + 真实 gitleaks 8.30.1 复现；GitHub Actions 未跑过，不能宣称 CI 通过。
 2. **`secret_scan.py` 仍退出 1**（本卡不改此文件）：命中在 `S3ProtocolRegressionTest.java:16` 的 AWS 官方文档示例访问键（`AKIA` 开头的 20 字符示例 ID + 示例 secret）与 `docs/execution/STATE.json:387`（主 agent 记录同一示例键的文本）；门是否放行、改成注释形态还是加白，由主 agent 决定。本报告刻意不复制该示例键全文，否则本卡自己的文档会变成同一扫描的命中对象——这正是「模式串落在文档里」的一类残余风险，需要主 agent 在门禁口径上明确。
-3. **规则覆盖缺口未闭合**：本卡只修「例外宽度/盲区」，没有扩展规则集。评审者实测 gitleaks 8.30.1 默认规则会漏掉裸 `AKIA[0-9A-Z]{16}`（无关键词上下文）与 `password=` / `DB_PASSWORD=` 明文；因此「0 命中」不等于「无密钥」，`secret_scan.py` 与 gitleaks 都不能证明不存在性。
+3. **规则覆盖缺口未闭合**：本卡只修「例外宽度/盲区」，没有扩展规则集。关于 gitleaks 8.30.1 默认规则对裸 AWS 访问键 id 的行为，前几轮（第三轮正向控制段与本条旧文）记为「漏裸 `AKIA`+16 位」——该「漏」与反过来断言「能抓」都是错的，实测口径见 `docs/execution/reports/T02-Revision-R05.md` §0：`aws-access-token` 会抓裸 `AKIA`+16 位，**当且仅当**这 16 位既全部落在 base32 字母表 `A-Z2-7`（即不含 `0/1/8/9`，也不含小写）、**且**其香农熵 ≥ 约 3.0（规则里 `entropy = 3`，RE2 无环视）。真实 AWS key id 正是 base32，故规则对**真实形状**可靠；但纯 base32 却低熵的后缀（如 `AAAAAAAA...`，熵 1.0）同样被漏。旧「漏裸 AKIA」是把**模式串**`AKIA[0-9A-Z]{16}` 当**实例串**测出的假阴性——`A-Z0-9` 造的 canary 多半含 `0/1/8/9`，本就落在字母表外。`password=` / `DB_PASSWORD=` 明文短口令确无任何默认规则覆盖（此点不变）。因此「0 命中」不等于「无密钥」，`secret_scan.py` 与 gitleaks 都不能证明不存在性；`check_gitleaks_allowlists.py --with-controls` 现内置一条 base32 活体 AKIA canary（必须被抓）与一条含 `1` 的近邻样本（必须不被抓，作为「越界形状不保证」的特性说明）。
 4. **T07 下游期望必然失败**：`tests/engineering/T07/verify_delivery.py:52-53` 硬编码「恰好 6 条命中且全在 `r01-integrity.json`」；本卡改配置后该集合为 0 条。该文件不由本卡修改，需主 agent 同步更新期望（见第 6 节）。
 5. **例外值不可能覆盖未来新密钥**：只按值的例外意味着任何**新**凭证形态都会正常报；但也意味着若有人把同一示例 UUID 复制进新文件，它会被同样抑制——这是按值例外的固有边界，属可接受风险（该 UUID 非真实凭证），需复审确认接受。
 6. **`scan_secrets.py` 的输入集合仍由 `git ls-files --cached --others --exclude-standard` 决定**：被 `.gitignore` 排除的文件不在扫描范围（如 `.work/`、构建产物）；本卡未扩大该集合，只增加 `--report`。
