@@ -278,7 +278,7 @@
       "status": "CLOSED",
       "issue": "会话 Cookie 闸门的 Java 模式作用于含注释原文：把 verifySessionCookieContract 调用行或名字检查整行 // 注释掉、或 /* */ 包裹，evaluate() 仍通过并在证据里印 startupGuardLive/runtimeAssertionLive=true；引号化 YAML 键 \"name\": X 不在路径匹配内而对扫描器隐形（重复键的 Spring 行为仍未证明）",
       "requiredFix": "Java 模式改在剥注释后的源码上匹配（字符串/字符字面量内的 // 不得误剥）；调用点、名字检查、prod 检查、消息前缀四段分别受控；YAML 键去引号归一；补注释类与引号类反向控制",
-      "evidence": "tests/engineering/T03/check_session_cookie.py（20/20 控制）+ tests/engineering/T03/evidence/session-cookie-r06.json；两条 Cookie 守卫从 @Bean 方法体提为 package-visible static verifySessionCookieContract，新增 backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java 7 项离线负向测试：缺名/JSESSIONID/第三名字必抛 T03_COOKIE，prod 的 secure、http-only、same-site 各自削弱必抛，符合契约则放行。此前从 R04 起无人证明“错名真的会拒绝启动”，因为守卫埋在需要 HttpSecurity 的 bean 方法里",
+      "evidence": "tests/engineering/T03/check_session_cookie.py（20/20 控制）+ tests/engineering/T03/evidence/session-cookie-r06.json；两条 Cookie 守卫从 @Bean 方法体提为 package-visible static verifySessionCookieContract，新增 backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java 7 项离线负向测试：缺名/JSESSIONID/第三名字必抛 T03_COOKIE，prod 的 secure、http-only、same-site 各自削弱必抛，符合契约则放行。此前从 R04 起无人证明“错名真的会拒绝启动”，因为守卫埋在需要 HttpSecurity 的 bean 方法里；7 项负向测试的 surefire 计数已提升为跟踪证据 tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml（tests=7 failures=0 errors=0 skipped=0，全量聚合 276/0/140）",
       "openedAt": "2026-10-07",
       "closedAt": "2026-10-07",
       "foundBy": "docs/execution/reviews/T03-round6/review.md F-01/F-02"
@@ -312,7 +312,8 @@
     "复现用的证据必须落在跟踪路径：跑在 .work 里的成功或失败记录对复审方不存在；失败前置证据（修前跑红）同样要提升到跟踪 evidence，否则“修前会坏”只是口头主张",
     "守卫自身也要有守卫：白名单/清单在被使用前面必须断言其结构（如“每一项都是字符串”）。本轮两次因 PowerShell 语法静默弱化判定而差点放行错误结论——同一续行写两个数组元素会产生嵌套数组，使 StartsWith 与 -contains 全部失效；给原生程序传参时消息内含引号字符会被重新分词。守卫只能失败关闭、不得默认放行",
     "反向控制必须自证改变了字节：变异若产出与原文相同的字节，控制就是装饰。本轮内置的空操作检测器抓到两条自家缺陷——一条把字符串替换成它自己，一条只替换首次出现而目标串在文件中出现两次（被注释掉的是另一条无关断言）。局部变异必须覆盖全部出现点，或说明为何只需一处",
-    "状态台账用结构化编辑而非手改文本：python 读入—断言—写回，断言白名单外的顶层键必须逐字相等、点名键必须确实变化、写回后重新解析再比一次；任何断言失败即在写盘前中止。本轮该自检两次拦下脚本自身的错误（白名单比较用点号子路径却按顶层键比对、虚构的 contractsFrozen 键），台账未被误写一次"
+    "状态台账用结构化编辑而非手改文本：python 读入—断言—写回，断言白名单外的顶层键必须逐字相等、点名键必须确实变化、写回后重新解析再比一次；任何断言失败即在写盘前中止。本轮该自检两次拦下脚本自身的错误（白名单比较用点号子路径却按顶层键比对、虚构的 contractsFrozen 键），台账未被误写一次",
+    "git add 是整批原子操作：任一 pathspec 不存在会让整批失败，而 stderr 常被重定向吞掉，看起来像“成功但暂存 0 项”。提交守卫必须有暂存数下限断言，0 项或低于预期一律中止并 reset，不得把空索引当成通过"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
@@ -325,7 +326,7 @@
     "node tests/contracts/T00/hash-vector-js.cjs",
     "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe",
     "python tests/engineering/T02/dependency_scan.py",
-    "mvn -B -ntp -f backend/pom.xml clean verify",
+    "mvn -B -ntp -f backend/pom.xml clean verify\n    mvn -B -ntp -o -f backend/pom.xml \"-Dmaven.repo.local=.tools/t02/m2\" -Dtest=T03SessionCookieGuardTest test   # 会话 Cookie 契约的离线负向运行时证明（7 项，不需 PG；结果跟踪在 tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml）",
     "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix frontend audit",
     "python tests/engineering/T02/integration.py --pg-bin <pgsql/bin> --java <jdk/bin>   # 真实 PostgreSQL，无 Docker 时",
     "python tests/engineering/T02/compose_smoke.py --entrypoint   # 需 Docker；两个容器测试都用本机 18080，须顺序运行"
