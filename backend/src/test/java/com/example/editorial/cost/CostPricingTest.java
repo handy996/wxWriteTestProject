@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.env.YamlPropertySourceLoader;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mock.env.MockEnvironment;
 
 /**
@@ -356,21 +359,36 @@ class CostPricingTest {
         assertEquals(4, policy.cap(BudgetPolicy.Counter.IMAGE_GENERATION_ARTICLE));
         assertEquals(80, policy.alertPercent());
         // A counter with no configured limit is a refusal, never an implicit "unlimited".
-        BudgetPolicy bare = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(), 80, 30);
+        BudgetPolicy bare = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.REFUSE);
         assertFalse(bare.hasCap(BudgetPolicy.Counter.CALLS));
         assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> bare.cap(BudgetPolicy.Counter.SEARCH_QUERY)).code());
         assertEquals(503, failure(() -> bare.cap(BudgetPolicy.Counter.SEARCH_QUERY)).status());
         // Provider quota resolves "provider|model" first, then the provider, then no provider-side cap at all.
         BudgetPolicy scoped = new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(
                 "mock", new BudgetPolicy.ProviderQuota(2, 40),
-                "mock|mock-model", new BudgetPolicy.ProviderQuota(5, 9)), 80, 30);
+                "mock|mock-model", new BudgetPolicy.ProviderQuota(5, 9)), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.UNLIMITED);
         assertEquals(5, scoped.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
         assertEquals(2, scoped.providerQuota("mock", "other").orElseThrow().maxConcurrent());
         assertTrue(scoped.providerQuota("other", "x").isEmpty());
+        assertEquals(BudgetPolicy.UnconfiguredQuota.UNLIMITED, scoped.unconfigured());
+        // Finding F2-01: a scope spelled any other way is unreachable, so the type refuses it instead of storing
+        // a ceiling that silently never applies. "mock.mock-model" is exactly what the config builder used to do.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> new BudgetPolicy(Money.of("20.000000"), Map.of(),
+                Map.of("mock.mock-model", new BudgetPolicy.ProviderQuota(1, 1)), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.REFUSE)).code());
+        // The single spelling both the builder and the lookup use, asserted as data so a second form cannot be
+        // introduced quietly: provider-wide is the provider, model-level is provider|model.
+        assertEquals("mock|mock-model", BudgetPolicy.scope("mock", "mock-model"));
+        assertEquals("mock", BudgetPolicy.scope("mock", null));
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> new BudgetPolicy(Money.of("20.000000"), Map.of(),
+                Map.of(), 80, 30, null)).code());
         // The alert line is the configured percent of the ceiling, on exact decimals.
         assertTrue(policy.reachedAlert(Money.of("16.000000"), Money.of("20.000000")));
         assertFalse(policy.reachedAlert(Money.of("15.999999"), Money.of("20.000000")));
-        assertTrue(new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(), 99, 30)
+        assertTrue(new BudgetPolicy(Money.of("20.000000"), Map.of(), Map.of(), 99, 30,
+                BudgetPolicy.UnconfiguredQuota.UNLIMITED)
                 .reachedAlert(Money.of("19.999999"), Money.of("20.000000")));
         assertTrue(policy.reachedAlert(Money.ZERO, Money.ZERO), "a zero ceiling is already exhausted");
     }
@@ -398,17 +416,175 @@ class CostPricingTest {
                 .withProperty("editorial.cost.reconciliation-stale-minutes", "30"))).code());
     }
 
-    /** An environment stating the two ceilings the SRS leaves open, so the documented defaults can be read. */
+    /** An environment stating the ceilings and choices the SRS leaves open, so the defaults can be read. */
     private static MockEnvironment statedBeyondSrs() {
         return new MockEnvironment()
                 .withProperty("editorial.cost.max-calls-per-article", "64")
-                .withProperty("editorial.cost.reconciliation-stale-minutes", "30");
+                .withProperty("editorial.cost.reconciliation-stale-minutes", "30")
+                .withProperty("editorial.cost.provider-quota.unconfigured", "refuse");
+    }
+
+    /**
+     * Finding F2-01. The config builder used to key the scope map with the dotted property path
+     * ({@code mock.mock-model}) while the lookup asked for {@code mock|mock-model}: a model-level quota could be
+     * configured perfectly and still never apply, because the entry sat where nothing ever looked. So the whole
+     * trip — property path, scope string, lookup, service — is asserted here from real configuration.
+     */
+    @Test
+    @DisplayName("A model-level provider quota survives the trip through configuration")
+    void modelLevelQuotaReachesTheLookupThatReadsIt() {
+        BudgetPolicy policy = BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "3")
+                .withProperty("editorial.cost.provider-quota.mock.calls-per-day", "17")
+                .withProperty("editorial.cost.provider-quota.mock.mock-model.max-concurrent", "1")
+                .withProperty("editorial.cost.provider-quota.mock.mock-model.calls-per-day", "2"));
+        assertEquals(1, policy.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(2, policy.providerQuota("mock", "mock-model").orElseThrow().callsPerDay());
+        assertEquals(3, policy.providerQuota("mock", "other-model").orElseThrow().maxConcurrent());
+        assertEquals(17, policy.providerQuota("mock", "other-model").orElseThrow().callsPerDay());
+        assertEquals(java.util.Set.of("mock", "mock|mock-model"), policy.providers().keySet());
+        assertTrue(policy.providers().keySet().stream().noneMatch(key -> key.contains(".")),
+                "a dotted scope is unreachable by definition: " + policy.providers().keySet());
+        assertEquals(BudgetPolicy.UnconfiguredQuota.REFUSE, policy.unconfigured());
+        // The switch has to be stated; an absent one would mean unlimited by accident.
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(new MockEnvironment()
+                .withProperty("editorial.cost.max-calls-per-article", "64")
+                .withProperty("editorial.cost.reconciliation-stale-minutes", "30"))).code());
+        assertEquals("INVALID_BUDGET_POLICY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.unconfigured", "sometimes"))).code());
+        // Half a scope is a gap, not one open side: both leaves are required once a scope is declared.
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.max-concurrent", "1"))).code());
+        // And a path with nowhere to be looked up is refused rather than filed where nothing reads it.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(statedBeyondSrs()
+                .withProperty("editorial.cost.provider-quota.mock.mock-model.beta.max-concurrent", "1")
+                .withProperty("editorial.cost.provider-quota.mock.mock-model.beta.calls-per-day", "1"))).code());
+    }
+
+    /** A deployment environment built the way the application builds one: from a YAML document, by Spring. */
+    private static MockEnvironment yaml(String document) {
+        MockEnvironment env = new MockEnvironment();
+        try {
+            for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",
+                    new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)))) {
+                env.getPropertySources().addLast(source);
+            }
+        } catch (java.io.IOException unreadable) {
+            throw new IllegalStateException("the fixture document could not be read", unreadable);
+        }
+        return env;
+    }
+
+    /**
+     * Finding F2-01, from the shape an operator actually writes. The flat property names above could have been
+     * right while the nested YAML document bound to something else entirely, and the test would still have been
+     * green: the whole point of the defect was two spellings that never met. So this goes through Spring's own
+     * YAML loader and asserts what the lookup answers, and it asserts that the wrong shapes fail out loud
+     * instead of landing where nothing reads them.
+     */
+    @Test
+    @DisplayName("Nested YAML quota keys bind the scopes the quota lookup reads")
+    void quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads() throws java.io.IOException {
+        BudgetPolicy policy = BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock:
+                        max-concurrent: 3
+                        calls-per-day: 17
+                        mock-model:
+                          max-concurrent: 1
+                          calls-per-day: 2
+                """));
+        assertEquals(java.util.Set.of("mock", "mock|mock-model"), policy.providers().keySet(),
+                "the document nests a model under its provider; the map has to hold both scopes, not a path");
+        assertEquals(1, policy.providerQuota("mock", "mock-model").orElseThrow().maxConcurrent());
+        assertEquals(2, policy.providerQuota("mock", "mock-model").orElseThrow().callsPerDay());
+        assertEquals(3, policy.providerQuota("mock", "another-model").orElseThrow().maxConcurrent());
+        assertEquals(BudgetPolicy.UnconfiguredQuota.REFUSE, policy.unconfigured());
+        assertEquals(64L, policy.cap(BudgetPolicy.Counter.CALLS), "the stated non-default came from the document");
+
+        // A camelCase leaf is a typo, not a key Spring relaxed-binds into max-concurrent for us to enumerate.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock:
+                        maxConcurrency: 3
+                        calls-per-day: 17
+                """))).code());
+        // One nesting level too deep is the unreachable-key class of bug: refused at boot.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock:
+                        mock-model:
+                          beta:
+                            max-concurrent: 1
+                            calls-per-day: 1
+                """))).code());
+        // A model id containing a dot flattens into an extra segment, so it cannot name a scope: loud failure.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock:
+                        gpt-5.1:
+                          max-concurrent: 1
+                          calls-per-day: 1
+                """))).code());
+        // Half a declared scope is a gap in the document, not one side left open.
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock:
+                        max-concurrent: 3
+                """))).code());
+        // The reserved switch shares the namespace with provider names, so a provider called unconfigured has to
+        // fail the boot rather than be quietly read as the switch or quietly dropped.
+        assertEquals("INVALID_PROVIDER_QUOTA_KEY", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured:
+                        max-concurrent: 2
+                        calls-per-day: 5
+                """))).code());
+        // And a document that states no switch at all is refused: absence is not a policy.
+        assertEquals("QUOTA_NOT_CONFIGURED", failure(() -> BudgetPolicyConfig.from(yaml("""
+                editorial:
+                  cost:
+                    max-calls-per-article: 64
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      mock:
+                        max-concurrent: 3
+                        calls-per-day: 17
+                """))).code());
     }
 
     @Test
     @DisplayName("A configured ceiling is honoured and a bad one is refused at boot")
-    void budgetPolicyOverrides() {
-        MockEnvironment env = statedBeyondSrs()
+    void budgetPolicyOverrides() {        MockEnvironment env = statedBeyondSrs()
                 .withProperty("editorial.cost.daily-budget", "12.500000")
                 .withProperty("editorial.cost.search-queries-per-article", "5")
                 .withProperty("editorial.cost.alert-percent", "70")

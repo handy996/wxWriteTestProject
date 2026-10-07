@@ -32,11 +32,30 @@ import org.springframework.core.env.PropertySource;
  *
  * <p>Keys are all under {@code editorial.cost.}. Amounts are configured as canonical strings, never floats.
  * Nothing here reads a rate card: prices live in published price versions, and a missing price is unknown,
- * not free. Provider quotas are optional and keyed {@code editorial.cost.provider-quota.<provider>[_<model>]}
- * with {@code .max-concurrent} and {@code .calls-per-day}.</p>
+ * not free.</p>
+ *
+ * <p>Provider ceilings are configured nested under
+ * {@code editorial.cost.provider-quota.<provider>.<leaf>} for a provider-wide ceiling and
+ * {@code editorial.cost.provider-quota.<provider>.<model>.<leaf>} for a per-model override, with exactly the two
+ * leaves {@code max-concurrent} and {@code calls-per-day} — both required for any scope that is declared at all.
+ * Those paths are translated into the one scope spelling {@link BudgetPolicy#scope} defines
+ * ({@code provider} and {@code provider|model}; a provider or model segment may not contain a dot), because an
+ * entry stored under any other spelling is an entry no lookup can find and a ceiling that silently never applies.
+ * Whether a provider that has <em>no</em> entry is open or refused is not inferred either: it comes from the
+ * required key {@code editorial.cost.provider-quota.unconfigured} ({@code unlimited} or {@code refuse}), with no
+ * default, so "we forgot to write it" cannot turn into "no provider-side limit".</p>
  */
 public final class BudgetPolicyConfig {
     private static final String QUOTA_PREFIX = "editorial.cost.provider-quota.";
+    /**
+     * The reserved leaf under the quota prefix that states what an unlisted provider means. It shares the namespace
+     * with provider names, so the name is reserved: a provider actually called {@code unconfigured} — a path like
+     * {@code provider-quota.unconfigured.max-concurrent} — is neither read as this switch nor dropped quietly, it
+     * fails the boot with 503 {@code INVALID_PROVIDER_QUOTA_KEY}. Nested YAML flattens a model id containing a dot
+     * the same way, into a segment count no scope can name, and that is refused too. Absence of this key is
+     * likewise a failure, never a default.
+     */
+    private static final String UNCONFIGURED_LEAF = "unconfigured";
 
     private BudgetPolicyConfig() {}
 
@@ -54,10 +73,17 @@ public final class BudgetPolicyConfig {
         return new BudgetPolicy(Money.of(env.getProperty("editorial.cost.daily-budget", "20.000000")), Map.copyOf(caps),
                 quotas(env), env.getProperty("editorial.cost.alert-percent", Integer.class, 80),
                 // No documented reconciliation window either: an operator has to state it.
-                statedCeiling(env, "editorial.cost.reconciliation-stale-minutes"));
+                statedCeiling(env, "editorial.cost.reconciliation-stale-minutes"),
+                // And so does the answer to "what about a provider nobody configured a quota for".
+                BudgetPolicy.UnconfiguredQuota.of(statedValue(env, QUOTA_PREFIX + UNCONFIGURED_LEAF)));
     }
 
-    /** Optional provider ceilings; a provider with no entry is limited only by the budgets above it. */
+    /**
+     * Provider ceilings, keyed exactly as {@link BudgetPolicy#scope} spells those keys. A path is either
+     * {@code <provider>.<leaf>} or {@code <provider>.<model>.<leaf>}; anything longer is a typo that would put
+     * the entry where no lookup can reach it, so it is refused rather than filed away. A declared scope must
+     * state both leaves: the absent side is not silently treated as unlimited.
+     */
     private static Map<String, BudgetPolicy.ProviderQuota> quotas(Environment env) {
         Map<String, Integer> concurrent = new LinkedHashMap<>();
         Map<String, Long> perDay = new LinkedHashMap<>();
@@ -66,23 +92,35 @@ public final class BudgetPolicyConfig {
                 if (!(source instanceof EnumerablePropertySource<?> enumerable)) continue;
                 for (String name : enumerable.getPropertyNames()) {
                     if (!name.startsWith(QUOTA_PREFIX)) continue;
-                    String key = name.substring(QUOTA_PREFIX.length());
-                    int dot = key.lastIndexOf('.');
-                    if (dot < 1) throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
-                    switch (key.substring(dot + 1)) {
-                        case "max-concurrent" -> concurrent.put(key.substring(0, dot), required(env, name));
-                        case "calls-per-day" -> perDay.put(key.substring(0, dot), (long) required(env, name));
+                    String[] path = name.substring(QUOTA_PREFIX.length()).split("\\.");
+                    if (path.length == 1 && UNCONFIGURED_LEAF.equals(path[0])) continue;
+                    // A quota path without a leaf, or a provider named after the reserved switch, is a mistake
+                    // that would otherwise park an entry where no lookup goes: refuse it out loud.
+                    if (path.length < 2 || UNCONFIGURED_LEAF.equals(path[0])) {
+                        throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
+                    }
+                    String leaf = path[path.length - 1];
+                    String scope = switch (path.length) {
+                        case 2 -> BudgetPolicy.scope(path[0], null);
+                        case 3 -> BudgetPolicy.scope(path[0], path[1]);
+                        default -> throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
+                    };
+                    switch (leaf) {
+                        case "max-concurrent" -> concurrent.put(scope, required(env, name));
+                        case "calls-per-day" -> perDay.put(scope, (long) required(env, name));
                         default -> throw new PublicFailure(503, "INVALID_PROVIDER_QUOTA_KEY");
                     }
                 }
             }
         }
-        // A ceiling that was not configured is unlimited rather than zero, so only the metrics an operator wrote
-        // apply; the record still refuses a negative value, which is why the absent side is the largest number.
         Map<String, BudgetPolicy.ProviderQuota> quotas = new LinkedHashMap<>();
         for (String scope : new java.util.TreeSet<>(concatenate(concurrent.keySet(), perDay.keySet()))) {
-            quotas.put(scope, new BudgetPolicy.ProviderQuota(
-                    concurrent.getOrDefault(scope, Integer.MAX_VALUE), perDay.getOrDefault(scope, Long.MAX_VALUE)));
+            Integer held = concurrent.get(scope);
+            Long calls = perDay.get(scope);
+            if (held == null || calls == null) {
+                throw new PublicFailure(503, "QUOTA_NOT_CONFIGURED");
+            }
+            quotas.put(scope, new BudgetPolicy.ProviderQuota(held, calls));
         }
         return Map.copyOf(quotas);
     }
@@ -108,6 +146,16 @@ public final class BudgetPolicyConfig {
         Integer value = env.getProperty(key, Integer.class);
         if (value == null) throw new PublicFailure(503, "QUOTA_NOT_CONFIGURED");
         if (value < 0) throw new PublicFailure(503, "INVALID_BUDGET_POLICY");
+        return value;
+    }
+
+    /**
+     * A choice the SRS does not make for the deployment, read with no default: unset is 503 QUOTA_NOT_CONFIGURED,
+     * the same refusal the count caps raise, so an unstated policy never becomes an inferred one.
+     */
+    private static String statedValue(Environment env, String key) {
+        String value = env.getProperty(key);
+        if (value == null || value.isBlank()) throw new PublicFailure(503, "QUOTA_NOT_CONFIGURED");
         return value;
     }
 

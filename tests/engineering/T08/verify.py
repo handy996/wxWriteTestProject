@@ -304,7 +304,27 @@ def check_acceptance_anchors() -> tuple[str, bool, str]:
                                           ["productionAuditPort", "23514", "42501"]),
         "documented ceilings": ("CostPricingTest", "budgetPolicyCeilings",
                                  ['assertEquals(30, policy.cap', 'assertEquals(40_000, policy.cap',
-                                  'assertEquals("20.000000", policy.dailyLimit'] ),
+                                  'assertEquals("20.000000", policy.dailyLimit']),
+        "model quota scope reaches its lookup": ("CostPricingTest", "modelLevelQuotaReachesTheLookupThatReadsIt",
+                                                 ['assertEquals(1, policy.providerQuota("mock", "mock-model")',
+                                                  'Set.of("mock", "mock|mock-model")']),
+        "model and provider windows each bind": ("T08PostgresTest",
+                                                 "modelAndProviderQuotaScopesEachBindTheirWindow",
+                                                 ["BudgetPolicy.scope(PROVIDER, MODEL)", "assertEquals(3, holds()"]),
+        "unlisted provider follows the stated policy": ("T08PostgresTest",
+                                                        "unlistedProviderFollowsTheStatedQuotaPolicy",
+                                                        ["PROVIDER_QUOTA_NOT_CONFIGURED", "assertEquals(0, rows()"]),
+        "quota case binds a real YAML document": ("CostPricingTest",
+                                                 "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads",
+                                                 ["BudgetPolicyConfig.from(yaml(",
+                                                  'policy.providerQuota("mock", "mock-model")',
+                                                  "INVALID_PROVIDER_QUOTA_KEY",
+                                                  "BudgetPolicy.UnconfiguredQuota.REFUSE"]),
+        "live quota case is fed by the bound environment": ("T08PostgresTest",
+                                                            "nestedYamlQuotaIsEnforcedByTheService",
+                                                            ["YamlPropertySourceLoader",
+                                                             "service(BudgetPolicyConfig.from(env))",
+                                                             "PROVIDER_QUOTA_EXCEEDED"]),
         "unstated ceilings refuse": ("CostPricingTest", "undocumentedCeilingsHaveNoDefault",
                                      ['assertEquals("QUOTA_NOT_CONFIGURED"', "editorial.cost.max-calls"]),
         "unbound executions refuse": ("CostPricingTest", "executionScopeIsFailClosed",
@@ -402,7 +422,13 @@ def check_admission_ceiling() -> tuple[str, bool, str]:
     lock = re.search(r"SELECT budget_limit INTO limit_amount FROM editorial\.article_job WHERE id=NEW\.article_id"
                      r" FOR UPDATE;", function)
     aggregate = function.find("INTO occupied")
-    locked_first = bool(lock) and 0 <= function.find("FOR UPDATE") < aggregate
+    # F2-02: anchor on the lock statement's own position, not on the first "FOR UPDATE" the function contains. A
+    # decoy comment naming FOR UPDATE would otherwise satisfy the ordering while the real lock sat after the
+    # aggregate, which is the exact bug the lock exists to prevent.
+    decoys = [match for match in re.finditer(r"FOR UPDATE", function)
+              if not lock or not (lock.start() <= match.start() < lock.end())]
+    locked_first = bool(lock) and 0 <= lock.start() < aggregate and not decoys
+    found_guard = bool(lock) and "IF NOT FOUND" in function[lock.end():lock.end() + 160]
     ceiling = "23514" in function and "cost budget ceiling" in function
     header = sql[:sql.find("CREATE FUNCTION editorial.t08_admit_estimate")]
     scoped = "article ceiling" in header and "service path" in header
@@ -417,11 +443,83 @@ def check_admission_ceiling() -> tuple[str, bool, str]:
         if "service path" not in text:
             overclaims.append(f"{source.name}: no service-path scoping of the database claim")
     raced = "concurrentBypassWritersCannotOversubscribe" in read(PG_TEST)
-    ok = bool(locked_first and ceiling and scoped and raced and not overclaims)
+    ok = bool(locked_first and found_guard and ceiling and scoped and raced and not overclaims)
     return ("article ceiling is a locked database rule", ok,
-            f"article row locked={bool(lock)}, lock precedes aggregate={locked_first}, ceiling 23514={ceiling}, "
+            f"article row locked={bool(lock)}, lock statement precedes aggregate={locked_first}, "
+            f"stray FOR UPDATE text in the function={[m.start() for m in decoys] or 'none'}, "
+            f"missing-row guard follows the lock={found_guard}, ceiling 23514={ceiling}, "
             f"V5 comment scoped to the article={scoped}, concurrent bypass case={raced}, "
             f"overstated claims={overclaims or 'none'}")
+
+
+def check_quota_scope_spelling() -> tuple[str, bool, str]:
+    """Finding F2-01: a provider quota that is spelled differently by its writer and its reader is a ceiling that
+    silently never applies. One method owns the scope spelling, both sides go through it, an unreachable key is
+    refused by the record, and the case for a provider nobody configured is a stated choice rather than absence."""
+    policy = read(COST_MAIN / "BudgetPolicy.java")
+    config = read(COST_MAIN / "BudgetPolicyConfig.java")
+    service = read(COST_MAIN / "BudgetService.java")
+    definition = re.search(r"public static String scope\(String provider, String model\)", policy)
+    scope_body = java_method_body(policy, "scope")
+    canonical = bool(re.search(r'provider \+ "\|" \+ model', scope_body))
+    # Exactly one join of a provider and a model into a scope may exist in the module: the one inside scope(). A
+    # second one anywhere is a second spelling, and a second spelling is how a configured ceiling reads as none.
+    joined = re.findall(r'provider\s*\+\s*"([._|])"\s*\+\s*model', policy + config)
+    writers = len(re.findall(r"BudgetPolicy\.scope\(", config))
+    readers = len(re.findall(r"\bscope\(provider, (?:model|null)\)", policy))
+    malformed_refused = "INVALID_PROVIDER_QUOTA_KEY" in policy and 'scope.contains(".")' in policy
+    # The reserved switch leaf shares the namespace with provider names, so a provider called unconfigured has to
+    # be refused where its quota leaves live, not skipped the way the switch itself is.
+    reserved_switch_refused = bool(re.search(
+        r"if \(path\.length < 2 \|\| UNCONFIGURED_LEAF\.equals\(path\[0\]\)\) \{\s*\n"
+        r"\s*throw new PublicFailure\(503, \"INVALID_PROVIDER_QUOTA_KEY\"\);", config))
+    both_leaves = "QUOTA_NOT_CONFIGURED" in config and "held == null || calls == null" in config
+    no_invented_open = "Integer.MAX_VALUE" not in config and "Long.MAX_VALUE" not in config
+    unconfigured_required = bool(re.search(r'statedValue\(env, QUOTA_PREFIX \+ UNCONFIGURED_LEAF\)', config)) \
+        and 'getProperty("editorial.cost.provider-quota.unconfigured"' not in config
+    unlisted_refused = "PROVIDER_QUOTA_NOT_CONFIGURED" in service \
+        and "UnconfiguredQuota.REFUSE" in service
+    # The window a provider-wide entry is measured over has to be chosen by the scope that answered, not hardcoded
+    # to the model window: otherwise a provider ceiling of 3 silently becomes 3 per model.
+    per_model_choice = bool(re.search(r'boolean perModel = quotaScope != null && quotaScope\.contains\("\|"\);',
+                                      service))
+    window_branch = bool(re.search(r"ceilings\.add\(perModel\s*\?", service))
+    wide_window = bool(re.search(r"l\.owner_id=\? AND l\.provider=\? AND l\.bucket_day=\?", service)) \
+        and "policy.quotaScope(provider, model)" in service and per_model_choice and window_branch
+    report = read(ROOT / "docs/execution/reports/T08.md")
+    documented = ["max-concurrent" in config, "calls-per-day" in config,
+                  "provider-quota.unconfigured" in config, "[_<model>]" not in config,
+                  "max-concurrency" not in report, "daily-calls" not in report]
+    # The same defect can hide one layer up: the cases above could bind flat test keys while the real YAML document
+    # produced a different shape. So the quota cases have to load a nested document through Spring's own loader,
+    # and the live case has to build the policy it hands the service from that environment.
+    unit = read(COST_TEST / "CostPricingTest.java")
+    live = read(PG_TEST)
+    loads_yaml = [unit.count("new YamlPropertySourceLoader()") == 1 and "ByteArrayResource(document.getBytes" in unit,
+                  "new YamlPropertySourceLoader()" in live, "BudgetPolicyConfig.from(env)" in live]
+    document = re.compile(r"provider-quota:\s*\n\s+unconfigured:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
+                          r"\s*\n\s+calls-per-day:\s*\S+\s*\n\s+[\w-]+:\s*\n\s+max-concurrent:\s*\S+"
+                          r"\s*\n\s+calls-per-day:\s*\S+")
+    # Look for the document inside the two cases that claim to bind one, not anywhere in the file: the other
+    # fixtures quote the same keys for different reasons.
+    nested = [bool(document.search(java_method_body(unit, "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads"))),
+              bool(document.search(java_method_body(live, "nestedYamlQuotaIsEnforcedByTheService")))]
+    flat_fixtures = re.findall(r"\n\s+editorial\.cost\.provider-quota\.[\w-]+\.[\w-]+:", unit + live)
+    ok = (bool(definition) and canonical and joined == ["|"] and writers >= 2 and readers >= 2
+          and malformed_refused and reserved_switch_refused and both_leaves and no_invented_open
+          and unconfigured_required and unlisted_refused and wide_window and all(documented)
+          and all(loads_yaml) and all(nested) and not flat_fixtures)
+    return ("provider quota scopes are spelled one way and absence is a stated choice", ok,
+            f"scope() defined={bool(definition)}, canonical '|' join inside it={canonical}, "
+            f"provider-model joins in the module={joined or 'none'}, "
+            f"BudgetPolicy.scope( call sites in config={writers}, scope( reads in policy={readers}, "
+            f"malformed key refused={malformed_refused}, reserved switch name refused as provider="
+            f"{reserved_switch_refused}, both leaves required={both_leaves}, "
+            f"no invented unlimited default={no_invented_open}, unconfigured key required={unconfigured_required}, "
+            f"unlisted refused on the service path={unlisted_refused}, provider-wide window measured per "
+            f"provider={wide_window}, keys documented as coded={documented}, "
+            f"quota cases bind a nested YAML document={loads_yaml + nested}, "
+            f"flat dotted fixtures in the cases={flat_fixtures or 'none'}")
 
 
 def check_configuration_ownership() -> tuple[str, bool, str]:
@@ -448,8 +546,8 @@ def check_configuration_ownership() -> tuple[str, bool, str]:
 
 CHECKS = [check_frozen_contracts, check_module_boundary, check_package_contents, check_installed_migration,
           check_grants, check_decimal_only, check_frozen_usage_surface, check_audit_payload_shape,
-          check_documented_ceilings, check_admission_ceiling, check_configuration_ownership,
-          check_paid_calls_still_refused, check_acceptance_anchors]
+          check_documented_ceilings, check_admission_ceiling, check_quota_scope_spelling,
+          check_configuration_ownership, check_paid_calls_still_refused, check_acceptance_anchors]
 
 
 def run_checks() -> list[tuple[str, bool, str]]:
@@ -468,6 +566,9 @@ def reversals() -> list[dict]:
     ceilings = "ceilings are the documented SRS numbers or required outright"
     admission = "article ceiling is a locked database rule"
     anchors = "acceptance cases still assert what they claim"
+    quotas = "provider quota scopes are spelled one way and absence is a stated choice"
+    quota_policy = COST_MAIN / "BudgetPolicy.java"
+    quota_service = COST_MAIN / "BudgetService.java"
     return [
         {"name": "SRS daily example replaced by an invented 999 USD", "path": CONFIG_JAVA,
          "old": 'getProperty("editorial.cost.daily-budget", "20.000000")',
@@ -527,6 +628,60 @@ def reversals() -> list[dict]:
         {"name": "the comment overclaims the database again", "path": ledger,
          "old": "repeats the article ceiling as a database rule", "new": "repeats the same ceiling as a database constraint",
          "red": [admission]},
+        {"name": "a model-level quota is keyed by the dotted property path again", "path": CONFIG_JAVA,
+         "old": 'BudgetPolicy.scope(path[0], path[1])', "new": 'path[0] + "." + path[1]',
+         "red": [quotas]},
+        {"name": "the reader joins the scope itself instead of asking the one definition", "path": quota_policy,
+         "old": 'return model == null || model.isBlank() ? provider : provider + "|" + model;',
+         "new": 'return model == null || model.isBlank() ? provider : provider + "_" + model;',
+         "red": [quotas]},
+        {"name": "a half-declared quota scope silently opens the other side", "path": CONFIG_JAVA,
+         "old": "if (held == null || calls == null) {", "new": "if (false) {", "red": [quotas]},
+        {"name": "the unconfigured-provider switch grows a default", "path": CONFIG_JAVA,
+         "old": "BudgetPolicy.UnconfiguredQuota.of(statedValue(env, QUOTA_PREFIX + UNCONFIGURED_LEAF))",
+         "new": 'BudgetPolicy.UnconfiguredQuota.of(env.getProperty("editorial.cost.provider-quota.unconfigured",'
+              ' "unlimited"))',
+         "red": [quotas]},
+        {"name": "an unlisted provider stops being refused", "path": quota_service,
+         "old": 'throw new PublicFailure(503, "PROVIDER_QUOTA_NOT_CONFIGURED");', "new": "return;",
+         "red": [quotas]},
+        {"name": "a provider-wide quota is measured per model again", "path": quota_service,
+         "old": 'boolean perModel = quotaScope != null && quotaScope.contains("|");', "new": "boolean perModel = true;",
+         "red": [quotas]},
+        {"name": "the report renames the quota leaves", "path": ROOT / "docs/execution/reports/T08.md",
+         "old": "max-concurrent", "new": "max-concurrency", "red": [quotas]},
+        {"name": "the quota case feeds dotted keys instead of the nested document",
+         "path": COST_TEST / "CostPricingTest.java",
+         "edits": [("                    provider-quota:\n                      unconfigured: refuse\n"
+                    "                      mock:\n                        max-concurrent: 3\n"
+                    "                        calls-per-day: 17\n                        mock-model:\n"
+                    "                          max-concurrent: 1\n                          calls-per-day: 2",
+                    "                    provider-quota.unconfigured: refuse\n"
+                    "                    provider-quota.mock.max-concurrent: 3\n"
+                    "                    provider-quota.mock.calls-per-day: 17\n"
+                    "                    provider-quota.mock.mock-model.max-concurrent: 1\n"
+                    "                    provider-quota.mock.mock-model.calls-per-day: 2")],
+         "red": [quotas]},
+        {"name": "the live quota case builds the policy by hand instead of from the bound environment",
+         "path": PG_TEST,
+         "edits": [("service(BudgetPolicyConfig.from(env));",
+                    'service(policy(wideCaps(), "20.000000", 80, Map.of()));')],
+         "red": [quotas]},
+        {"name": "a provider named after the reserved switch stops being refused", "path": CONFIG_JAVA,
+         "edits": [("if (path.length < 2 || UNCONFIGURED_LEAF.equals(path[0])) {", "if (path.length < 2) {")],
+         "red": [quotas]},
+        {"name": "a decoy FOR UPDATE comment stands where the lock should be", "path": V5,
+         "old": "  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id"
+                " FOR UPDATE;\n  IF NOT FOUND",
+         "new": "  -- FOR UPDATE is applied to the aggregate below\n  IF NOT FOUND", "red": [admission]},
+        {"name": "the lock moves after the aggregate while a decoy mentions it first", "path": V5,
+         "edits": [("  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id"
+                    " FOR UPDATE;\n  IF NOT FOUND", "  -- FOR UPDATE is applied to the aggregate below\n  IF NOT FOUND"),
+                   ("    FROM editorial.cost_ledger l WHERE l.article_id=NEW.article_id;",
+                    "    FROM editorial.cost_ledger l WHERE l.article_id=NEW.article_id;\n"
+                    "  SELECT budget_limit INTO limit_amount FROM editorial.article_job WHERE id=NEW.article_id"
+                    " FOR UPDATE;")],
+         "red": [admission]},
     ]
 
 
@@ -542,11 +697,14 @@ def reverse_control() -> int:
     blind, misplaced = [], []
     for spec in reversals():
         path = Path(spec["path"])
-        if spec["old"] not in path.read_text(encoding="utf-8", errors="replace"):
+        edits = spec.get("edits") or [(spec["old"], spec["new"])]
+        source = path.read_text(encoding="utf-8", errors="replace")
+        stale = [old for old, _ in edits if old not in source]
+        if stale:
             blind.append(f"{spec['name']}: the mutation target is gone")
             print(f"[STALE ] {spec['name']}: target text no longer present")
             continue
-        MUTATIONS[str(path)] = [(spec["old"], spec["new"])]
+        MUTATIONS[str(path)] = edits
         try:
             failed = {name for name, ok, _ in run_checks() if not ok}
         finally:

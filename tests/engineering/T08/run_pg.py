@@ -36,9 +36,14 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 MIGRATIONS = ROOT / 'backend/src/main/resources/db/migration'
 TESTS_DEFAULT = 'CostPricingTest,T08PostgresTest'
-# The delivered self-test shape, asserted by --expect-tests: 16 Money/price/policy unit cases plus 28 cases
-# against the real cluster. Deliberately a number the script enforces, so a silent skip cannot exit 0.
-EXPECTED_TESTS = 44
+# The delivered self-test shape, asserted by --expect-tests: 17 Money/price/policy unit cases plus 30 cases
+# against the real cluster. Deliberately a number the script enforces, so a silent skip cannot exit 0. Round 2
+# added modelLevelQuotaReachesTheLookupThatReadsIt (config path -> scope -> lookup), the two service-path quota
+# cases modelAndProviderQuotaScopesEachBindTheirWindow / unlistedProviderFollowsTheStatedQuotaPolicy, then round 3
+# added one quota case per side that binds through a real nested YAML document (CostPricingTest
+# quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads, T08PostgresTest nestedYamlQuotaIsEnforcedByTheService),
+# because flat fixture keys cannot show what Spring's own loader produces.
+EXPECTED_TESTS = 49
 DATABASE = 'editorial'
 ADMIN_ROLE = 'editorial_admin'
 

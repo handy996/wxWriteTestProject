@@ -41,7 +41,11 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.function.Executable;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mock.env.MockEnvironment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.boot.env.YamlPropertySourceLoader;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
@@ -222,6 +226,12 @@ class T08PostgresTest {
 
     private void policy(Map<BudgetPolicy.Counter, Long> caps, String daily, int alertPercent,
                         Map<String, BudgetPolicy.ProviderQuota> providers) {
+        policy(caps, daily, alertPercent, providers, BudgetPolicy.UnconfiguredQuota.UNLIMITED);
+    }
+
+    private void policy(Map<BudgetPolicy.Counter, Long> caps, String daily, int alertPercent,
+                        Map<String, BudgetPolicy.ProviderQuota> providers,
+                        BudgetPolicy.UnconfiguredQuota unconfigured) {
         Map<BudgetPolicy.Counter, Long> all = new EnumMap<>(BudgetPolicy.Counter.class);
         all.put(BudgetPolicy.Counter.CALLS, 1000L);
         all.put(BudgetPolicy.Counter.SEARCH_QUERY, 30L);
@@ -231,7 +241,7 @@ class T08PostgresTest {
         all.put(BudgetPolicy.Counter.IMAGE_GENERATION_SLOT, 2L);
         all.put(BudgetPolicy.Counter.IMAGE_GENERATION_ARTICLE, 4L);
         all.putAll(caps);
-        BudgetPolicy used = new BudgetPolicy(money(daily), Map.copyOf(all), providers, alertPercent, 30);
+        BudgetPolicy used = new BudgetPolicy(money(daily), Map.copyOf(all), providers, alertPercent, 30, unconfigured);
         service(used);
     }
 
@@ -552,7 +562,8 @@ class T08PostgresTest {
         assertEquals("DAILY_BUDGET_EXCEEDED", daily.code());
         assertEquals("2.000000", ledger.occupancy("l.owner_id=?", OWNER).reserved().text());
         // An unconfigured count cap refuses instead of treating absence as unlimited.
-        service(new BudgetPolicy(money("20.000000"), Map.of(BudgetPolicy.Counter.CALLS, 1000L), Map.of(), 80, 30));
+        service(new BudgetPolicy(money("20.000000"), Map.of(BudgetPolicy.Counter.CALLS, 1000L), Map.of(), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.UNLIMITED));
         PublicFailure uncapped = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
                 image(a, execution(a, null, null), UUID.randomUUID(), 1)));
         assertEquals(503, uncapped.status());
@@ -582,6 +593,125 @@ class T08PostgresTest {
         assertNotNull(budget.reserve(actor(), new BudgetService.Request(article, execution(article, null, null),
                 "other-provider", "other-model", Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0),
                 Money.ZERO, true, false, UUID.randomUUID())));
+    }
+
+    /**
+     * Finding F2-01, on the service path rather than in a map. The config builder used to key a model override as
+     * {@code provider.model} while the lookup asked for {@code provider|model}, so a per-model ceiling could be
+     * configured perfectly and still never apply. The tighter entry here is the model's, the looser one the
+     * provider's, and each has to bind the window it names.
+     */
+    @Test
+    @DisplayName("A model-level quota binds its model and a provider-wide quota binds every model")
+    void modelAndProviderQuotaScopesEachBindTheirWindow() {
+        policy(wideCaps(), "20.000000", 80, Map.of(
+                BudgetPolicy.scope(PROVIDER, null), new BudgetPolicy.ProviderQuota(3, 30),
+                BudgetPolicy.scope(PROVIDER, MODEL), new BudgetPolicy.ProviderQuota(1, 30)));
+        UUID article = article("10.000000");
+        assertNotNull(budget.reserve(actor(), image(article, execution(article, null, null), UUID.randomUUID(), 1)));
+        PublicFailure override = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                image(article, execution(article, null, null), UUID.randomUUID(), 1)));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", override.code(),
+                "the model override of one live hold applies; the provider-wide three would have admitted this");
+        // A different model of the same provider answers to the provider-wide entry, and that window counts
+        // holds across the provider's models: 1 + 2 fills the three, even though this model alone held only two.
+        publish(PROVIDER, "second-model", generation());
+        assertNotNull(budget.reserve(actor(), new BudgetService.Request(article, execution(article, null, null),
+                PROVIDER, "second-model", Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO,
+                true, false, UUID.randomUUID())));
+        assertNotNull(budget.reserve(actor(), new BudgetService.Request(article, execution(article, null, null),
+                PROVIDER, "second-model", Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO,
+                true, false, UUID.randomUUID())));
+        PublicFailure wide = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                new BudgetService.Request(article, execution(article, null, null), PROVIDER, "second-model",
+                        Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false,
+                        UUID.randomUUID())));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", wide.code(),
+                "the provider-wide ceiling counts every model, not one model at a time");
+        assertEquals(3, holds(), "the refusals booked nothing");
+        assertEquals(3, rows(), "three live holds and no facts");
+    }
+
+    /** The other half of F2-01: an unlisted provider/model must not read as "no provider-side limit". */
+    @Test
+    @DisplayName("An unlisted provider is refused when the deployment said refuse")
+    void unlistedProviderFollowsTheStatedQuotaPolicy() {
+        service(new BudgetPolicy(money("20.000000"), wideCaps(), Map.of(), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.REFUSE));
+        UUID article = article("10.000000");
+        PublicFailure refused = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                image(article, execution(article, null, null), UUID.randomUUID(), 1)));
+        assertEquals(503, refused.status());
+        assertEquals("PROVIDER_QUOTA_NOT_CONFIGURED", refused.code());
+        assertEquals(0, rows(), "a refused call leaves no ledger row");
+        assertTrue(audited.isEmpty(), "and no audit row either");
+        // UNLIMITED is the same gap, only chosen: the article and day ceilings still do the work.
+        service(new BudgetPolicy(money("20.000000"), wideCaps(), Map.of(), 80, 30,
+                BudgetPolicy.UnconfiguredQuota.UNLIMITED));
+        assertNotNull(budget.reserve(actor(), image(article, execution(article, null, null), UUID.randomUUID(), 1)));
+        assertEquals(1, rows());
+    }
+
+    /**
+     * The other half of F2-01: an unlisted provider/model must not read as "no provider-side limit". And the half
+     * F2-02/F2-05 could not reach: the policy is assembled here from a real nested YAML document through Spring's
+     * own loader, not from flat test keys, because the flat keys are what made the original two spellings look
+     * consistent. What is asserted is the service refusing, not a key string matching.
+     */
+    @Test
+    @DisplayName("A quota read from a nested YAML document is refused by the service that uses it")
+    void nestedYamlQuotaIsEnforcedByTheService() throws Exception {
+        String document = """
+                editorial:
+                  cost:
+                    max-calls-per-article: 1000
+                    reconciliation-stale-minutes: 30
+                    provider-quota:
+                      unconfigured: refuse
+                      mock-provider:
+                        max-concurrent: 3
+                        calls-per-day: 30
+                        mock-gpt:
+                          max-concurrent: 1
+                          calls-per-day: 30
+                """;
+        MockEnvironment env = new MockEnvironment();
+        for (PropertySource<?> source : new YamlPropertySourceLoader().load("t08-quota",
+                new ByteArrayResource(document.getBytes(java.nio.charset.StandardCharsets.UTF_8)))) {
+            env.getPropertySources().addLast(source);
+        }
+        service(BudgetPolicyConfig.from(env));
+        UUID article = article("10.000000");
+        assertNotNull(budget.reserve(actor(), image(article, execution(article, null, null), UUID.randomUUID(), 1)),
+                "the YAML model ceiling of one leaves room for exactly this hold");
+        PublicFailure override = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                image(article, execution(article, null, null), UUID.randomUUID(), 1)));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", override.code(),
+                "the model entry nested under its provider in the document is the entry that bound");
+        // Both levels of the same document bind their own window: the provider-wide three counts across models.
+        publish(PROVIDER, "second-model", generation());
+        assertNotNull(budget.reserve(actor(), hold(article, "second-model")));
+        assertNotNull(budget.reserve(actor(), hold(article, "second-model")));
+        PublicFailure wide = assertThrows(PublicFailure.class,
+                () -> budget.reserve(actor(), hold(article, "second-model")));
+        assertEquals("PROVIDER_QUOTA_EXCEEDED", wide.code(),
+                "one hold on the first model plus two here fill the provider-wide ceiling of three; the model "
+                        + "entry of one would have refused this second model's first call");
+        assertEquals(3, holds(), "the refusals booked nothing");
+        // The switch this document states is refuse, so a provider it never mentions cannot spend at all.
+        publish("other-provider", MODEL, generation());
+        PublicFailure unlisted = assertThrows(PublicFailure.class, () -> budget.reserve(actor(),
+                new BudgetService.Request(article, execution(article, null, null), "other-provider", MODEL,
+                        Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false,
+                        UUID.randomUUID())));
+        assertEquals("PROVIDER_QUOTA_NOT_CONFIGURED", unlisted.code());
+        assertEquals(3, holds(), "and that refusal booked nothing either");
+    }
+
+    /** The reservation the quota cases place: one image unit on a model of the configured provider. */
+    private BudgetService.Request hold(UUID article, String model) {
+        return new BudgetService.Request(article, execution(article, null, null), PROVIDER, model,
+                Capability.GENERATION, new Usage(0, 0, 0, null, 1, 0), Money.ZERO, true, false, UUID.randomUUID());
     }
 
     // ------------------------------------------------------------------ settlement, release, UNKNOWN
