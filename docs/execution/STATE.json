@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "未通过复审且整改未再审：T03 侧第七轮整改（剥离器文本块修正、调用点定位 bean 体、prod 三段、guardTest 入受控源、字节绑定证据、31 控制 + 5 良性探针、错名启动反证）全部由主 agent 本人编写，待第八轮；T08 侧实施方交出 49 项（+1 单元、+1 活库）真实嵌套 YAML 经 Spring YamlPropertySourceLoader 的绑定证据与首次红（r7 provider 名写成 mock 而夹具是 mock-provider → 503），待主 agent 独立复现后提交并派 T08 第三轮。已复审：b3a909d/849d784（T08 一、二轮）、2512025+b813bc3+164e3f8（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
+  "pendingReviewCommit": "T08 第三轮待派：F2-01 整改（实施方编写、主 agent 复现）未经独立复审，且含点模型 id 的配置限制是本轮新发现的设计后果。T03 侧第七轮整改仍待第八轮。已复审：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮，349b51c 为整改本身、非采纳判决）。reviewedBaselineCommit 仍是 b072abe",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -84,7 +84,7 @@
     },
     "T08": {
       "verdict": "CHANGES_REQUIRED",
-      "basis": "docs/execution/reviews/T08-round2/review.md（第一轮两条 P1 已 CLOSED；F2-01 P2 与四条 P3 整改后需第三轮）",
+      "basis": "docs/execution/reviews/T08-round2/review.md 判 CHANGES_REQUIRED；F-01/F-02 已闭合并有反证，F2-01（配额作用域）整改已交且由主 agent 独立复现于 49 项，待第三轮复审；启用前置条件见 activationPreconditions",
       "note": "第一轮独立复审（4e7342ba）判 CHANGES_REQUIRED：F-01 额度默认值与主 agent 的表述相反（P1）、F-02 AC-28 的\"数据库也守上限\"超出实现（P1）、另有死工厂/镜像守卫/over_run 无投影等 P2/P3。作者已整改：8 个回退值实为 SRS :1099/:1103/:1143 文档示例值（OQ-09 仍 OPEN），SRS 未写的两项改为无默认+配置期 503 QUOTA_NOT_CONFIGURED；t08_admit_estimate 先 FOR UPDATE 锁文章行再聚合，并在真实集群用两个 origin 裸连接并发绕过服务实测恰好 1 提交、另 1 个 23514（修前证据 t08-r1-baseline-gap-pre-fix.json：mvn 命令退出 1）；noAudit 死工厂已删（现仅存在于注释，verify.py 剥注释后检查）；审计用例改走生产 CostIntegration 适配器。主 agent 复现：run_pg --expect-tests 44 → 44/0/0、verify 13/13、--reverse-control 18/18 blind=none、contracts 27/27。仍待第二轮独立复审确认，未 PASS 第二轮独立复审（agent-257c7361）判两条 P1 CLOSED、新发现 F2-01（P2，provider-quota model 级 scope 永不命中＝配置静默 fail-open）与 F2-02/F2-03/F2-04/F2-05（P3），整改中，待第三轮；启用前置条件见本任务 activationPreconditions 字段（F2-04 要求从报告移入台账）",
       "activationPreconditions": [
         "editorial.cost.enabled=true 要求 editorial.identity.enabled=true：审计链由 bootstrap/CostIntegration 绑定 CostPorts.Audit，无审计绑定即启动失败（故意不提供 noAudit() 兜底，见 CostPorts.java:72 注释）",
@@ -282,13 +282,15 @@
       "id": "T08-F2-01-QUOTA-SCOPE",
       "task": "T08",
       "severity": "P2",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "model 级 provider-quota 经配置路径被静默忽略：实现把 scope 拼成 provider.model，查找先 provider|model 再退到 provider，永不命中，于是配了限额等于没配（fail-open）；javadoc 教的是第三种写法 provider_model；docs/execution/reports/T08.md:55 的键名 {max-concurrency,daily-calls} 与代码真实后缀 .max-concurrent/.calls-per-day 不符——照抄文档会响亮报错，写对了反而无声失效。唯一缓解是功能门默认关闭且 application.yml 不含这些键，这不构成正确性",
       "requiredFix": "统一 scope 拼法使 javadoc/实现/测试/文档四处一致；去掉“查不到即不限”的静默 fail-open（改必需键或显式语义，参照 max-calls-per-article 的处理）；补 model 级配置路径的行为测试；verify.py --reverse-control 补对应减弱项（现 18 条无一覆盖 model 级，这就是它能溜过去的原因）",
-      "closure": "实施方整改 + 第三轮独立复审确认；F2-02（verify 锁序 find 首次出现可诱饵绕过）与 F2-05（文档键名、AC-28 表重复单元格）同批",
+      "closure": "实施方 agent-8224880b 交出 49 项（44→47→49：+1 单元、+1 活库）。scope(provider,model) 为唯一 join；BudgetPolicyConfig 把 2/3 段路径经它翻译、其余抛 INVALID_PROVIDER_QUOTA_KEY；两个必需键无默认；新增 editorial.cost.provider-quota.unconfigured=unlimited|refuse（未配 → 503 QUOTA_NOT_CONFIGURED，refuse → 503 PROVIDER_QUOTA_NOT_CONFIGURED 且先于记账）。绑定路径不再靠声称：两条用例把真实嵌套 YAML 经 Spring 的 YamlPropertySourceLoader + ByteArrayResource 装进 Environment 再走 BudgetPolicyConfig.from(env)，并先以 jar tf/javap 证明 3.5.16 只有 load(String,Resource)。活库用例以跨模型累加区分窗口：模型级=1 会在第二模型首笔即拒，provider 级=3 让「1+2」在第三笔命中；两次拒绝后 holds()==3 证明未入账；未列出 provider 在 refuse 下 503。首次红也记录在案：YAML 里 provider 写成 mock 而夹具是 mock-provider → 503，改的是夹具键名而非断言",
       "owner": "实施方 agent 8224880b（cost 域属主），已派发",
       "openedAt": "2026-10-07",
-      "foundBy": "docs/execution/reviews/T08-round2/review.md F2-01"
+      "foundBy": "docs/execution/reviews/T08-round2/review.md F2-01",
+      "closedAt": "2026-10-07",
+      "evidence": "主 agent 独立复现（不看实施方报告，只取本机退出码）：tests/engineering/T08/evidence/r3-main-repro-49.json（run_pg.py --expect-tests 49，exit 0，14 条子命令全 0）；tests/engineering/T08/evidence/t08-r3-implementer-49.json（实施方原件自 .work 提升）；verify.py exit 0（14/14，weakened=none）；verify.py --reverse-control exit 0（30 条减弱，blind=none、misplaced=none，其中含「保留字 provider 不再被拒」「伪注释 FOR UPDATE」「锁移到聚合之后且先出现提及」三条本轮新增）；check_contracts.py exit 0（27 哈希）；mvn -B -ntp -o clean verify exit 0（281 项、0 失败、143 跳过、BUILD SUCCESS，276→281 的 +5 与 44→49 逐项对齐，无来源不明的测试数）。V5 与 migration-draft.sql 本轮未动"
     },
     {
       "id": "T03-R6-GATE",
@@ -325,6 +327,28 @@
       "closure": "第八轮判决写入 rounds 且无新 P0-P2；随后 T03 才可提交人工批准（T03-APPROVAL、G1 仍属人类）",
       "openedAt": "2026-10-07",
       "foundBy": "主 agent 第七轮自证 + 协议“不得自判采纳”"
+    },
+    {
+      "id": "T08-REVIEW-3RD",
+      "task": "T08",
+      "severity": "P1（门禁前置）",
+      "status": "OPEN",
+      "issue": "F2-01 整改由实施方编写、由主 agent 复现，但主 agent 不得自判采纳；且本轮引入两项尚未独立复核的设计选择",
+      "requiredFix": "第三轮独立复审需自证：(1) 嵌套 YAML→Environment→from(env) 是否真的替代了手搓策略（把用例改回手搓必须红）；(2) 跨模型累加的 provider 窗口断言是否可被“两个窗口都取较严值”之类的实现蒙过；(3) 保留字 unconfigured 放在配额子树内是否只是靠拒绝撑着，collision 之外有无更隐蔽的歧义；(4) 含点的模型名（真实存在的 gpt-4.1、claude-3.5-sonnet 形态）在扁平化后成第四段而被拒绝启动，这是否等于 model 级配额对一部分真实模型不可用；(5) 反向控制的 30 条是否有新的空转或错置",
+      "closure": "判决写入 rounds[\"T08-3rd\"] 且无新 P0-P2；否则 T08 不得转 PASS、G4 不得签署",
+      "openedAt": "2026-10-07",
+      "foundBy": "主 agent 集成时的独立判断（含点模型名一项为本轮新发现，非复审方所提）"
+    },
+    {
+      "id": "T08-R3-DOTMODEL",
+      "task": "T08",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "provider|model 配额以属性路径分段表达，段数限 2/3；含点的模型 id（gpt-4.1 这类真实存在的产品名）扁平化后成第四段 → 启动即抛 INVALID_PROVIDER_QUOTA_KEY。等价于 model 级配额对这类模型不可配置，只能退回 provider 级；实施方明确未发明逃生口并交由 Owner",
+      "requiredFix": "第三轮复审给出结论：是加转义/列表式配置（如 provider-quota.entries[] 带 provider/model 两字段），还是接受限制并把「含点模型 id 只能配 provider 级」写进 SRS 与运维前置条件；不得由主 agent 或实施方单方定",
+      "consequence": "若保留限制，启用 model 级配额前 Owner 必须知晓；若改配置形态，V5 不变但 BudgetPolicyConfig 与两条新用例需重做",
+      "openedAt": "2026-10-07",
+      "foundBy": "主 agent 读 T08PostgresTest:663-708 与 scope 翻译时推演真实模型 id"
     }
   ],
   "next": [
@@ -367,7 +391,7 @@
     "python tests/engineering/T03/check_session_cookie.py   # 会话 Cookie 契约闸门：绝对锚 EDITORIAL_SESSION + 缩进路径匹配（按 --- 分段）+ 扫全部 application*.yml + Java 剥注释（文本块独立态）+ 守卫调用须在 identitySecurity 方法体内 + prod 三子句与两条消息逐条钉住 + guardTest 为受控源 + 复现证据与当前字节 sha256 绑定；31 条反向控制全拒 + 5 条良性探针全过",
     "python tests/engineering/T08/verify.py   # T08 静态自检 13 项（含 V5 与草案逐字节、额度值必须对读 SRS 原文、只绑 CostPorts.Audit）",
     "python tests/engineering/T08/verify.py --reverse-control   # 18 条内存内减弱必须全 REJECT（blind=none, misplaced=none）",
-    "python tests/engineering/T08/run_pg.py --expect-tests 44 --evidence-name <新名>   # 真实 PG：应用安装版 V1–V5，CostPricing 16 + T08Postgres 28；总数不符即非零退出并拒写证据，结束自停集群",
+    "python tests/engineering/T08/run_pg.py --expect-tests 49   # T08 活库门（18 单元 + 31 活库，含嵌套 YAML 绑定与跨模型窗口用例）；本轮 44→49",
     "python -m unittest discover -s tests/contracts/T00 -v",
     "node tests/contracts/T00/hash-vector-js.cjs",
     "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe",
@@ -378,7 +402,7 @@
     "python tests/engineering/T02/compose_smoke.py --entrypoint   # 需 Docker；两个容器测试都用本机 18080，须顺序运行"
   ],
   "budget": {
-    "sessionBootstrap": "只读状态文件实测约 6k tok（21 顶层键、tasks 9、openItems 16、protocol 23）；整单读 SRS+计划+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 6.4k tok（21 顶层键、tasks 9、openItems 18、protocol 23）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",
