@@ -1,0 +1,105 @@
+{
+  "review": "T03 round 7 independent re-review of the round-6 remediation",
+  "reviewer": "independent agent (round 7); not the implementer, not the round-6 reviewer 6f5c382e",
+  "verdict": "CHANGES_REQUIRED",
+  "headCommit": "164e3f8a9fd10c29446af9354189bf8adcc07b68",
+  "reviewedCommits": ["b813bc3", "164e3f8"],
+  "reviewedBytesSha256": {
+    "tests/engineering/T03/check_session_cookie.py": "d8d478d86f92575a3b6378a4129869079154e2be46ea3e21712b14b8e20a9a6a",
+    "backend/src/main/java/com/example/editorial/identity/T03Configuration.java": "dc0bb777f966707f6671990c8470dd913a6a6de415e70f0bcd5a50329fb0ead7",
+    "backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java": "7ba45cc489bf674ab33a227b6e9a25190491499a1961047d439732eeea465246",
+    "backend/src/test/java/com/example/editorial/identity/T03PostgresTest.java": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392",
+    "backend/src/main/resources/application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d",
+    "backend/src/main/resources/application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+    "backend/src/main/java/com/example/editorial/bootstrap/StartupPolicy.java": "13d3367bb247ba895c08af7f21f4bfd519c345adc88865ae7619a5652419f569",
+    "docs/execution/STATE.json": "cc4fc4099cd6d0e98459939c5545b77ba076ab7b490812238755e154a74bc1f3",
+    "docs/execution/reports/T07-R04-Revision-v1.0.md": "5da45126c6ff4b275d2bf71b6244f947b8fec898b9bed3656a6fef91a48fc20e",
+    "tests/engineering/T03/evidence/session-cookie-r06.json": "49d62f036fdae69fee0e152c93b7b97b2e385b9e83436417199ea30b87de09d9",
+    "tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml": "f162ad52bcac6adeac3d9d0183dd243c55395f9b178624fd66bf30e477929a39"
+  },
+  "commands": [
+    {"argv": "python tests/engineering/T03/check_session_cookie.py", "exitCode": 0, "observed": "verdict=PASS; negativeControlCount=20; profileOverrides={}; configFilesScanned=application-dev/mock/prod/.yml; startupGuardLive=true runtimeAssertionLive=true guardCheckedAfterCommentStripping=true"},
+    {"argv": "python tests/engineering/T02/check_contracts.py", "exitCode": 0, "observed": "Approved T00 rc.3: 27 hashes verified, no regeneration"},
+    {"argv": "python xml.etree parse tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml", "exitCode": 0, "observed": "tests=7 failures=0 errors=0 skipped=0 flakes=0; 7 named cases all PASS; no input fingerprint inside; surefire run stamped 2026-10-07T22-08-49 (20 min before commit b813bc3 at 22:28:38)"},
+    {"argv": "python xml.etree parse tests/engineering/integration/evidence/r06-head-bytes-test-results/TEST-...T03PostgresTest.xml", "exitCode": 0, "observed": "tests=15 failures=6 errors=0 skipped=0; fixationRotationAndLogout=PASS; failures = emptyInitializationAndRepeatNeverReset, crossArticleRefsWorkerAndMissingResolver, replayConflictHashAndEtagOrder, secondOwnerCannotReadOrReplay, auditIsolationPagingAndTrace, concurrentIdenticalHttpOnlyOneEffect"},
+    {"argv": "git status --porcelain -- <T03 scope paths>", "exitCode": 0, "observed": "empty: T03 scope clean; the only dirty files are cost/T08-domain (8 paths: BudgetPolicy, BudgetPolicyConfig, BudgetService, CostPricingTest, T08PostgresTest, docs/execution/reports/T08.md, T08/run_pg.py, T08/verify.py) - not read, not judged"},
+    {"argv": "git show b813bc3 -- T03Configuration.java", "exitCode": 0, "observed": "the two cookie checks moved verbatim into static verifySessionCookieContract; call site unchanged (single call inside identitySecurity)"}
+  ],
+  "probeMethod": "in-memory only: the checker module is imported and evaluate() is called on mutated source dicts; no file written, no tracked file modified, no mvn/formal.py/run_pg.py",
+  "stripperProbes": [
+    {"id": "A1", "input": "String u=\"http://x\"; // path", "expected": "ACCEPT (no false reject)", "actual": "ACCEPT", "note": "// inside a string literal is respected"},
+    {"id": "A2", "input": "char c='\"';", "expected": "ACCEPT", "actual": "ACCEPT"},
+    {"id": "A3", "input": "char c='\\'';", "expected": "ACCEPT", "actual": "ACCEPT"},
+    {"id": "A4", "input": "// say \"hi\" and don't panic", "expected": "ACCEPT", "actual": "ACCEPT", "note": "quotes in comments do not enter the literal state machine"},
+    {"id": "A5", "input": "/* {@code \"x\"} more */", "expected": "ACCEPT", "actual": "ACCEPT"},
+    {"id": "A6", "input": "String tb = \"\"\"\\n ok\\n \"\"\";", "expected": "ACCEPT", "actual": "ACCEPT", "note": "text block with EVEN number of inner quotes stays aligned"},
+    {"id": "A7", "input": "string with apostrophe, block comment containing //, line comment containing /*, text block containing // and /*, text block with escaped quotes", "expected": "ACCEPT", "actual": "ACCEPT (8/8 benign constructs, no false reject)"},
+    {"id": "B1", "input": "//verifySessionCookieContract(env);  (current bytes, no text block)", "expected": "REJECT", "actual": "REJECT: identitySecurity no longer calls verifySessionCookieContract(env)"},
+    {"id": "B2", "input": "/*verifySessionCookieContract(env);*/", "expected": "REJECT", "actual": "REJECT (same branch)"},
+    {"id": "B3", "input": "guard call + whole name-check commented, no text block", "expected": "REJECT", "actual": "REJECT"},
+    {"id": "C1", "input": "class-level text block with ONE inner quote + //verifySessionCookieContract(env);", "expected": "REJECT", "actual": "ACCEPTED  <-- BREAK", "repro": "insert after 'public class T03Configuration {' the 3 lines: private static final String SAMPLE = \"\"\" / cookie \"EDITORIAL_SESSION / \"\"\";   and replace '        verifySessionCookieContract(env);' with '        //verifySessionCookieContract(env);'"},
+    {"id": "C2", "input": "same text block, guard call wrapped in /* */", "expected": "REJECT", "actual": "ACCEPTED  <-- BREAK"},
+    {"id": "C3", "input": "text block placed immediately before the guard inside identitySecurity + // commented call", "expected": "REJECT", "actual": "ACCEPTED  <-- BREAK"},
+    {"id": "C4", "input": "text block with 0/2/4/8 inner quotes (paired) + // commented call", "expected": "REJECT", "actual": "REJECT (exploit needs an ODD count of unescaped \\\" between the text-block delimiters)"},
+    {"id": "C5", "input": "repo scan: all 137 backend/src/**/*.java run through strip_java_comments; flag surviving comment markers or EOF still inside a literal", "expected": "0 files affected", "actual": "0 of 137 - the exposure is latent, current bytes are not vulnerable"},
+    {"id": "F1", "input": "T03PostgresTest.java + odd-quote text block + commented Set-Cookie name assertion", "expected": "REJECT", "actual": "ACCEPTED  <-- same root cause disables runtimeAssertionLive"}
+  ],
+  "reachabilityProbes": [
+    {"id": "D1", "input": "delete the call from identitySecurity and add static void harnessForReviewersOnly(Environment env){ verifySessionCookieContract(env); }", "expected": "gate should not claim the boot path is guarded", "actual": "ACCEPTED - GUARD_CALL matches a call in a method that never runs"},
+    {"id": "D2", "input": "verifySessionCookieContract body emptied, call kept", "expected": "REJECT", "actual": "REJECT: the cookie-name guard is missing or commented out (fail-closed, good)"},
+    {"id": "E1", "input": "if(env.matchesProfiles(\"prod\") && (  ->  if(false && env.matchesProfiles(\"prod\") && (", "expected": "REJECT", "actual": "ACCEPTED - prod branch can be short-circuited with no control firing"},
+    {"id": "E2", "input": "delete the http-only and same-site conditions, keep the secure condition and both throws", "expected": "REJECT", "actual": "ACCEPTED - http-only/same-site property literals are not controlled at all"},
+    {"id": "E3", "input": "matchesProfiles(\"prod\") -> matchesProfiles(\"prodXX\") (typo makes prod check dead forever)", "expected": "REJECT", "actual": "ACCEPTED"},
+    {"id": "E4", "input": "cookie.secure default false -> true ; same-site default strict -> lax", "expected": "REJECT", "actual": "ACCEPTED (insecure defaults invisible; unit tests set values explicitly so they do not catch this either)"},
+    {"id": "E5", "input": "T03_COOKIE -> T03_COOKIE2 (message prefix rename that keeps the old text as a prefix)", "expected": "REJECT", "actual": "ACCEPTED - count(\"T03_COOKIE\")>=2 is a substring test; no control covers the message segment. T03_COOKIE -> T03COOKIE is correctly REJECTED"},
+    {"id": "G1", "input": "application.yml += '---\\nserver: {servlet: {session: {cookie: {name: WRONG_SESSION}}}}'", "expected": "REJECT", "actual": "ACCEPTED - flow style in an extra document/profile file is invisible (fail-open, contrary to the docstring framing that flow style is only over-strict)"},
+    {"id": "G2", "input": "quoted duplicate key 'name': WRONG_SESSION next to the real declaration", "expected": "REJECT", "actual": "REJECT (round-6 F-02 dequoting fix confirmed, single and double quotes)"},
+    {"id": "G3", "input": "tab-indented declaration in an appended document", "expected": "REJECT", "actual": "ACCEPTED but non-actionable: SnakeYAML rejects tab indentation, so such a file cannot boot"}
+  ],
+  "negativeTestAudit": {
+    "tautological": false,
+    "verified": [
+      "prodRejectsEachInsecureCookieAttribute loops SECURE/HTTP_ONLY/SAME_SITE from a conformant baseline, so each of the three checks is independently necessary - deleting one makes that iteration red (proven by E1/E2/E3 on the source, which the unit test would catch)",
+      "absentCookieNameAbortsStartup / thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault assert the message startsWith T03_COOKIE, so IllegalStateException breadth is narrowed",
+      "containerDefaultNameAbortsStartup asserts only the exception type (minor)",
+      "MapPropertySource + addFirst cannot be shadowed by ambient system properties, so the fixture is not accidentally green"
+    ],
+    "scopeLimits": [
+      "the fixture is a plain StandardEnvironment: no relaxed binding, no Boot property-order ladder, no profile-file or OS-env override - it proves the decision logic, not that the effective production value reaches it",
+      "absentCookieNameAbortsStartup passes an EMPTY map added first, so the lookup falls through to real system properties/OS env; an ambient EDITORIAL_SESSION value would make it RED (fails safe, but the test is environment-dependent)",
+      "nothing proves the static method is invoked on the boot path (see D1): the test calls it directly",
+      "the gate's SOURCES does not include T03SessionCookieGuardTest.java, so deleting or gutting the file leaves check_session_cookie.py green",
+      "the tracked surefire XML carries no sha256 of the bytes it tested and its run stamp (22:08:49) predates the commit that added the file (22:28:38)"
+    ],
+    "ciCoverage": "github ci.yml runs 'mvn -B -ntp -f backend/pom.xml verify'; backend/pom.xml has no surefire includes/excludes overrides, so *Test naming puts the 7 cases in CI"
+  },
+  "ledgerAudit": {
+    "report_line_50": "FIXED: now cites items 4 and 10 and names its own history (round-5 F01, round-6 F-03); consistent with table row 3",
+    "state_20_controls": "MATCHES live run: 20 labels, all rejected, no-op detector verified working (mutated==sources check is a deep dict compare)",
+    "state_activationPreconditions": "PRESENT in tasks.T08 (5 entries)",
+    "state_four_segments_claim": "OVERSTATED: the call-point and name-check segments have controls; the prod segment only requires the literal string \"server.servlet.session.cookie.secure\" to survive (E1-E4 accepted); the message-prefix segment has no control at all (E5 accepted)",
+    "state_fixEvidence_14of14": "STALE: openItems[T07-R04].fixEvidence[1] still describes check_session_cookie.py as 'exit 0, 14/14 reverse controls' for a file that now has 20 and different bytes",
+    "round6_F04_subitem": "NOT DONE: the profile-overrides control still mutates only the alphabetically first profile (application-dev.yml); no comment says so"
+  },
+  "findings": [
+    {"id": "T03R7-F01", "severity": "P2", "title": "comment stripper is defeated by Java text blocks, so round-6 F-01 is not closed for future bytes", "detail": "probes C1/C2/C3/F1; evidence prints guardCheckedAfterCommentStripping=true while the guarantee does not hold for valid Java 17+ text blocks, a construct already used in this repo (DatabaseRolePolicy.java:19, PromptContractTest.java:57/66/72/85)"},
+    {"id": "T03R7-F02", "severity": "P2", "title": "GUARD_CALL proves a text line, not a boot-path call; the guard is also dormant whenever identity is disabled", "detail": "probe D1 accepted; T03Configuration is @ConditionalOnProperty(editorial.identity.enabled=true) whose default in application.yml is false, so with identity off a wrong cookie name boots silently and only the static gate stands between drift and a 401 storm"},
+    {"id": "T03R7-F03", "severity": "P2", "title": "prod-check and message-prefix segments are not actually controlled; ledger says four segments are", "detail": "probes E1/E2/E3/E4/E5 accepted; mitigated only by the offline unit tests, which the gate does not bind"},
+    {"id": "T03R7-F04", "severity": "P3", "title": "the negative-test file and its surefire XML are outside every byte-bound control", "detail": "gate SOURCES lacks T03SessionCookieGuardTest.java; the XML carries no input hashes and predates the commit that introduced it"},
+    {"id": "T03R7-F05", "severity": "P3", "title": "flow-style cookie declarations in extra documents or profile files are invisible (fail-open)", "detail": "probe G1 accepted; round-6 F-05 forward items (.yaml/.properties, docstring boundary) still unaddressed"},
+    {"id": "T03R7-F06", "severity": "P3", "title": "ledger wording still describes superseded bytes as current (14/14) and omits the dev-only profile control", "detail": "violates the repo rule that a reproducibility claim must bind current bytes"}
+  ],
+  "round6Closure": {
+    "F-01": "NOT CLOSED - the fix works for line/block comments and for \" and ' literals (A1-A5, B1-B3 all correct) but not for text blocks (C1/C2/C3/F1 accepted)",
+    "F-02": "CLOSED - quoted keys are dequoted and a quoted duplicate is rejected (G2, plus the built-in quoted-duplicate-cookie-key control)",
+    "F-03": "CLOSED - report section 3 line 50 now cites items 4 and 10 and is consistent with table row 3",
+    "F-04": "PARTIALLY CLOSED - machineGates[2] now describes the current scanner and 20 controls, but the new wording claims four separately controlled segments, which is not true (F-03 here); the dev-only note was not added",
+    "F-05": "NOT CLOSED - glob is still application*.yml and the flow-style blind spot is fail-open, not fail-closed"
+  },
+  "requestsForMainAgent": [
+    "mvn -B -ntp -o -f backend/pom.xml \"-Dmaven.repo.local=.tools/t02/m2\" -Dtest=T03SessionCookieGuardTest test   # re-run so the 7/0/0 count is stamped on bytes 7ba45cc4/dc0bb777, and store the XML plus a small JSON with the sha256 of the two java files",
+    "add one negative BOOT proof (not just a static-method proof): boot with server.servlet.session.cookie.name=JSESSIONID and require T03_COOKIE, e.g. formal.py identity suite with -Dserver.servlet.session.cookie.name=JSESSIONID, or a new test that drives StartupPolicy.postProcessEnvironment with MockEnvironment once the guard moves there",
+    "python tests/engineering/T03/check_session_cookie.py --output tests/engineering/T03/evidence/session-cookie-r07.json   # only after the stripper fix, so the new evidence is bound to the fixed gate"
+  ],
+  "constraintsHonoured": "no mvn/formal.py/run_pg.py executed, no file written outside docs/execution/reviews/T03-round7/**, no tracked file modified, openapi.yaml never read whole, cost-domain dirty files never opened, T03-APPROVAL and G1 not claimed"
+}

@@ -41,12 +41,24 @@ SCALAR = re.compile(r"([^:#]+?):[ \t]*(.*)$")
 # review showed that matching raw text lets an operator comment the guard out and still print startupGuardLive=true.
 GUARD_CALL = re.compile(r'verifySessionCookieContract\(\s*env\s*\)\s*;')
 GUARD_NAME = re.compile(
-    r'if\s*\(\s*!\s*SESSION_COOKIE_NAME\.equals\(\s*env\.getProperty\(\s*"server\.servlet\.session\.cookie\.name"'
+    r'if\s*\(\s*!\s*SESSION_COOKIE_NAME\.equals\s*\(\s*env\.getProperty\s*\(\s*"server\.servlet\.session\.cookie\.name"'
     r'\s*,\s*""\s*\)\s*\)\s*\)')
-GUARD_PROD = re.compile(r'"server\.servlet\.session\.cookie\.secure"')
-GUARD_MESSAGE = "T03_COOKIE"
-TEST_ASSERTION = re.compile(r'allValues\(\s*"Set-Cookie"\s*\)[^\n]*startsWith\(\s*T03Configuration\.SESSION_COOKIE_NAME\s*\+\s*"="')
 
+# The seventh round showed the prod branch was only checked for one string being present, so short-circuiting it,
+# deleting either attribute test, renaming the profile token or flipping a default were all accepted. Each clause
+# is now pinned with its comparison value, and both rejection messages must survive as written.
+
+GUARD_PROD_IF = re.compile(r'if\s*\(\s*env\.matchesProfiles\s*\(\s*"prod"\s*\)\s*&&')
+GUARD_PROD_SECURE = re.compile(r'"server\.servlet\.session\.cookie\.secure"\s*,\s*Boolean\.class\s*,\s*false')
+GUARD_PROD_HTTP_ONLY = re.compile(r'"server\.servlet\.session\.cookie\.http-only"\s*,\s*Boolean\.class\s*,\s*true')
+GUARD_PROD_SAME_SITE = re.compile(r'"strict"\.equals\s*\(\s*env\.getProperty\s*\(\s*"server\.servlet\.session\.cookie\.same-site"')
+GUARD_MESSAGES = (
+    "T03_COOKIE: session cookie name must equal the approved contract name ",
+    "T03_COOKIE: secure production cookie required",
+)
+BEAN_METHOD = re.compile(r'@Bean\s+(?:public\s+)?SecurityFilterChain\s+identitySecurity\s*\(')
+GUARD_TEST_DECL = re.compile(r'@Test\s+void\s+([A-Za-z0-9_]+)\s*\(')
+TEST_ASSERTION = re.compile(r'allValues\(\s*"Set-Cookie"\s*\)[^\n]*startsWith\(\s*T03Configuration\.SESSION_COOKIE_NAME\s*\+\s*"="')
 
 def strip_java_comments(text):
     """Remove // and block comments while respecting string and char literals.
@@ -82,6 +94,24 @@ def strip_java_comments(text):
                 index += 1
             index += 2
             continue
+        if text[index:index + 3] == '"""':
+            # Java text block. The seventh review desynced the previous scanner with an odd number of unescaped
+            # quotes inside one, which let a commented-out guard survive as "code". Inside a text block single
+            # quotes are content, not delimiters, so only the closing triple quote ends the run.
+            out.append('"""')
+            index += 3
+            while index < size:
+                if text[index] == "\\" and index + 1 < size:
+                    out.append(text[index:index + 2])
+                    index += 2
+                    continue
+                if text[index:index + 3] == '"""':
+                    out.append('"""')
+                    index += 3
+                    break
+                out.append(text[index])
+                index += 1
+            continue
         if ch in "\"'":
             quote = ch
         out.append(ch)
@@ -93,16 +123,31 @@ SOURCES = {
     "additiveContract": ROOT / "docs/api/diff-pages-v1.1.openapi.yaml",
     "code": ROOT / "backend/src/main/java/com/example/editorial/identity/T03Configuration.java",
     "test": ROOT / "backend/src/test/java/com/example/editorial/identity/T03PostgresTest.java",
+    # Seventh round: the offline negative guard test was not an inspected source at all, so deleting it or
+    # emptying its assertions kept the gate green while removing the only proof that a wrong name aborts boot.
+    "guardTest": ROOT / "backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java",
+}
+GUARD_TEST_METHODS = (
+    "absentCookieNameAbortsStartup", "containerDefaultNameAbortsStartup", "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault",
+    "prodRejectsEachInsecureCookieAttribute", "prodAcceptsTheContractConformantCookie", "approvedNameStartsOutsideProd",
+    "constantIsTheApprovedContractLiteral",
+)
+# The reproduction of the negative tests must be bound to the bytes under review, not merely present in the tree:
+# the tracked surefire XML carried no input fingerprints and its timestamp preceded the commit that introduced it.
+GUARD_TEST_BINDING = ROOT / "tests/engineering/T03/evidence/guard-test-binding.json"
+BINDING_INPUTS = {
+    "code": SOURCES["code"],
+    "test": SOURCES["test"],
+    "guardTest": SOURCES["guardTest"],
+    "baseConfig": ROOT / "backend/src/main/resources/application.yml",
 }
 CONFIG_DIR = ROOT / "backend/src/main/resources"
 BASE_CONFIG = "application.yml"
-
 
 def read_sources():
     configs = {path.name: path.read_text(encoding="utf-8", errors="replace")
                for path in sorted(CONFIG_DIR.glob("application*.yml"))}
     return {key: path.read_text(encoding="utf-8", errors="replace") for key, path in SOURCES.items()} | {"configs": configs}
-
 
 def contract_scheme_json(text, label):
     document = json.loads(text)
@@ -115,14 +160,12 @@ def contract_scheme_json(text, label):
         raise AssertionError(f"{label}: root security references undeclared scheme {key!r}")
     return key, schemes[key]
 
-
 def _next_indent(lines, start):
     for index in range(start, len(lines)):
         line = lines[index].split("#")[0].rstrip()
         if line.strip():
             return len(line) - len(line.lstrip())
     return None
-
 
 def contract_scheme_yaml(text, label):
     """(schemeKey, {type,in,name,...}) read from a block-YAML OpenAPI document."""
@@ -167,12 +210,10 @@ def contract_scheme_yaml(text, label):
         raise AssertionError(f"{label}: root security references undeclared scheme {name!r}")
     return name, schemes[name]
 
-
 def _unquote(value):
     if len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]:
         return value[1:-1]
     return value.split(" #")[0].strip()
-
 
 def cookie_names(text):
     """Every value declared at exactly server.servlet.session.cookie.name, per document.
@@ -206,13 +247,55 @@ def cookie_names(text):
             found.append(_unquote(value))
     return found
 
-
 def code_constant(text):
     match = re.search(r'SESSION_COOKIE_NAME\s*=\s*"([^"]+)"', text)
     if not match:
         raise AssertionError("code: SESSION_COOKIE_NAME constant is missing")
     return match.group(1)
 
+def bean_method_body(code):
+    """The brace-balanced body of the identitySecurity @Bean method.
+
+    The seventh round showed that GUARD_CALL alone only proves a call line exists somewhere: moving it into a
+    never-invoked static helper kept the gate green. A guard is only live if it sits in the method that actually
+    assembles the security chain, so the call site is now located inside that body. Braces inside string literals
+    would skew this, and none exist in the file today; a future one must be handled before it is added.
+    """
+    match = BEAN_METHOD.search(code)
+    if not match:
+        raise AssertionError("code: the identitySecurity @Bean method is missing after comment stripping")
+    start = code.find("{", match.end())
+    if start < 0:
+        raise AssertionError("code: identitySecurity has no body")
+    depth = 0
+    for position in range(start, len(code)):
+        if code[position] == "{":
+            depth += 1
+        elif code[position] == "}":
+            depth -= 1
+            if depth == 0:
+                return code[start:position + 1]
+    raise AssertionError("code: identitySecurity body is not brace-balanced")
+
+def binding_check(path=None):
+    """Prove the tracked reproduction of the negative tests was produced from the bytes under review."""
+    path = Path(path) if path else GUARD_TEST_BINDING
+    if not path.exists():
+        raise AssertionError(f"binding: {path.relative_to(ROOT)} is missing; rerun the guard test with fingerprints")
+    recorded = json.loads(path.read_text(encoding="utf-8"))
+    problems = []
+    for label, path in BINDING_INPUTS.items():
+        want = recorded.get("inputSha256", {}).get(label)
+        have = hashlib.sha256(path.read_bytes()).hexdigest()
+        if want != have:
+            problems.append(f"{label}: recorded {str(want)[:12]}… != current {have[:12]}…")
+    if problems:
+        raise AssertionError("binding: tracked guard-test evidence is stale for the current bytes -> " + "; ".join(problems))
+    counts = recorded.get("counts", {})
+    if counts.get("tests") != len(GUARD_TEST_METHODS) or counts.get("failures") or counts.get("errors") or counts.get("skipped"):
+        raise AssertionError(f"binding: recorded counts are not a clean {len(GUARD_TEST_METHODS)}-test run: {counts!r}")
+    return {"bindingFile": str(path.relative_to(ROOT)), "recordedCounts": counts,
+            "boundInputs": sorted(BINDING_INPUTS), "recordedCommand": recorded.get("command")}
 
 def evaluate(sources):
     """Absolute agreement: every declaration must equal the approved name, and the guards must be live."""
@@ -251,23 +334,39 @@ def evaluate(sources):
     if constant != APPROVED_NAME:
         raise AssertionError(f"code: constant {constant!r} != approved {APPROVED_NAME!r}")
     code = strip_java_comments(sources["code"])
-    if not GUARD_CALL.search(code):
-        raise AssertionError("code: identitySecurity no longer calls verifySessionCookieContract(env)")
+    body = bean_method_body(code)
+    if not GUARD_CALL.search(body):
+        raise AssertionError("code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body")
     if not GUARD_NAME.search(code):
         raise AssertionError("code: the cookie-name guard is missing or commented out")
-    if not GUARD_PROD.search(code):
-        raise AssertionError("code: the production secure-cookie guard is missing or commented out")
-    if code.count(GUARD_MESSAGE) < 2:
-        raise AssertionError(f"code: fewer than two {GUARD_MESSAGE} rejections survive comment stripping")
+    if not GUARD_PROD_IF.search(code):
+        raise AssertionError("code: the production guard is no longer an if(env.matchesProfiles(\"prod\") && ...) branch")
+    if not GUARD_PROD_SECURE.search(code):
+        raise AssertionError("code: the secure-attribute clause is missing, commented out, or its default flipped")
+    if not GUARD_PROD_HTTP_ONLY.search(code):
+        raise AssertionError("code: the http-only clause is missing, commented out, or its default flipped")
+    if not GUARD_PROD_SAME_SITE.search(code):
+        raise AssertionError("code: the same-site clause is missing, commented out, or no longer compared to strict")
+    for message in GUARD_MESSAGES:
+        if message not in code:
+            raise AssertionError(f"code: rejection message {message!r} is missing or reworded into a different prefix")
     test = strip_java_comments(sources["test"])
     if not TEST_ASSERTION.search(test):
         raise AssertionError("test: no live assertion that the runtime issues the declared cookie name via Set-Cookie")
+    guard_test = strip_java_comments(sources["guardTest"])
+    guard_declared = set(GUARD_TEST_DECL.findall(guard_test))
+    missing = sorted(set(GUARD_TEST_METHODS) - guard_declared)
+    if missing:
+        raise AssertionError(f"guardTest: negative cases disappeared: {missing}")
+    if "assertThrows(IllegalStateException.class" not in guard_test:
+        raise AssertionError("guardTest: no assertThrows left, so the rejection itself is unproven")
+    binding = binding_check(sources.get("bindingPath"))
     return {"schemeKey": key, "frozenScheme": frozen_scheme, "additiveScheme": additive_scheme,
             "approvedName": APPROVED_NAME, "baseConfigCookieName": declared[0],
             "profileOverrides": overrides, "configFilesScanned": sorted(configs),
             "javaConstant": constant, "startupGuardLive": True, "runtimeAssertionLive": True,
-            "guardCheckedAfterCommentStripping": True}
-
+            "guardCheckedAfterCommentStripping": True, "guardCallInsideBeanBody": True,
+            "negativeGuardCases": len(GUARD_TEST_METHODS), "binding": binding}
 
 def negative_control(sources):
     """Prove the guard bites: each weakening, applied in memory, must be rejected."""
@@ -285,11 +384,50 @@ def negative_control(sources):
                                      + "spring:\n  datasource:\n    cookie:\n      name: " + APPROVED_NAME + "\n")
         elif label == "extra-document-carries-second-name":
             configs[BASE_CONFIG] = base + "---\nserver:\n  servlet:\n    session:\n      cookie:\n        name: OTHER_SESSION\n"
-        elif label == "profile-overrides-cookie-name":
-            profile = next((name for name in configs if name != BASE_CONFIG), None)
-            if profile is None:
+        elif label == "all-profiles-override-cookie-name":
+            profiles = [name for name in configs if name != BASE_CONFIG]
+            if not profiles:
                 raise AssertionError("no profile config exists to mutate; the scan is untested")
-            configs[profile] = configs[profile] + "\nserver:\n  servlet:\n    session:\n      cookie:\n        name: " + FORBIDDEN + "\n"
+            for name in profiles:
+                configs[name] = (configs[name] + "\nserver:\n  servlet:\n    session:\n      cookie:\n        name: "
+                                 + FORBIDDEN + "\n")
+        elif label == "guard-call-moved-to-dead-method":
+            # The seventh round's exploit: the call existed, but not on any path Spring would execute.
+            relocated = sources["code"].replace("        verifySessionCookieContract(env);", "", 1)
+            copy["code"] = relocated.rstrip()[:-1] + (
+                "    static void harnessForReviewersOnly(Environment env) { verifySessionCookieContract(env); }\n}\n")
+        elif label == "prod-branch-short-circuited":
+            copy["code"] = sources["code"].replace('if(env.matchesProfiles("prod") &&', 'if(false && env.matchesProfiles("prod") &&', 1)
+        elif label == "prod-profile-token-renamed":
+            # Target the guard's own unique clause, not the bare token: matchesProfiles("prod") also appears in the
+            # unrelated origin check, so a first-occurrence replace there mutated nothing about the cookie guard and
+            # the gate correctly reported this control as ineffective.
+            copy["code"] = sources["code"].replace('if(env.matchesProfiles("prod") &&', 'if(env.matchesProfiles("production") &&', 1)
+        elif label == "prod-http-only-clause-deleted":
+            copy["code"] = re.sub(r'\|\| !env\.getProperty\("server\.servlet\.session\.cookie\.http-only"[^\n]*\n', "",
+                                  sources["code"], count=1)
+        elif label == "prod-same-site-clause-deleted":
+            copy["code"] = re.sub(r'\|\| !"strict"\.equals\([^\n]*same-site[^\n]*\)\n', "", sources["code"], count=1)
+        elif label == "prod-secure-default-flipped":
+            copy["code"] = sources["code"].replace('"server.servlet.session.cookie.secure",Boolean.class,false',
+                                                   '"server.servlet.session.cookie.secure",Boolean.class,true', 1)
+        elif label == "guard-message-prefix-changed":
+            copy["code"] = sources["code"].replace("T03_COOKIE: secure production cookie required",
+                                                    "T03_COOKIE2: secure production cookie required", 1)
+        elif label == "textblock-desyncs-commented-guard":
+            # The reviewer's minimal desync: an odd number of unescaped quotes inside a text block used to make the
+            # scanner treat following real code as string content, so a commented-out guard survived as live code.
+            copy["code"] = sources["code"].replace(
+                "    @Bean PasswordEncoder t03Passwords()",
+                '    private static final String DESYNC = """\n        cookie "EDITORIAL_SESSION\n        """;\n'
+                "    @Bean PasswordEncoder t03Passwords()", 1).replace(
+                "        verifySessionCookieContract(env);", "//verifySessionCookieContract(env);", 1)
+        elif label == "guard-test-file-emptied":
+            copy["guardTest"] = "class T03SessionCookieGuardTest {\n}\n"
+        elif label == "guard-test-assertions-removed":
+            copy["guardTest"] = sources["guardTest"].replace("assertThrows(IllegalStateException.class", "assertDoesNotThrow(() ->")
+        elif label == "binding-file-missing":
+            copy["bindingPath"] = str(ROOT / "tests/engineering/T03/evidence/__absent__.json")
         elif label == "contract-renames-cookie":
             # Replace every declared name value, not the first string match: the scheme block is what must move.
             copy["frozenContract"] = re.sub(r'("name"\s*:\s*)"' + APPROVED_NAME + '"', r'\1"OTHER_SESSION"',
@@ -338,19 +476,21 @@ def negative_control(sources):
             configs[BASE_CONFIG] = base.replace("name: " + APPROVED_NAME, "name: " + FORBIDDEN, 1)
             copy["code"] = sources["code"].replace('SESSION_COOKIE_NAME="' + APPROVED_NAME + '"',
                                                    'SESSION_COOKIE_NAME="' + FORBIDDEN + '"', 1)
-            copy["test"] = sources["test"].replace("x->x.startsWith(T03Configuration.SESSION_COOKIE_NAME+\"=\")",
-                                                   "x->x.startsWith(T03Configuration.SESSION_COOKIE_NAME+\"=\")", 1)
         else:
             raise AssertionError(f"unknown mutation {label}")
         copy["configs"] = configs
         return copy
 
     labels = ("config-drops-cookie-name", "config-changes-cookie-name", "cookie-path-relocated-under-unrelated-parent",
-              "extra-document-carries-second-name", "profile-overrides-cookie-name", "contract-renames-cookie",
+              "extra-document-carries-second-name", "all-profiles-override-cookie-name", "contract-renames-cookie",
               "additive-drops-scheme", "additive-scheme-extra-key", "code-constant-drifts",
-              "guard-call-deleted", "guard-call-commented-out", "guard-name-check-commented-out",
-              "prod-check-neutered", "guard-line-deleted", "guard-neutered-never-fires", "guard-reads-wrong-property",
-              "quoted-duplicate-cookie-key", "runtime-assertion-deleted", "runtime-assertion-commented-out",
+              "guard-call-deleted", "guard-call-commented-out", "guard-call-moved-to-dead-method",
+              "guard-name-check-commented-out", "prod-check-neutered", "prod-branch-short-circuited",
+              "prod-profile-token-renamed", "prod-http-only-clause-deleted", "prod-same-site-clause-deleted",
+              "prod-secure-default-flipped", "guard-message-prefix-changed", "guard-line-deleted",
+              "guard-neutered-never-fires", "guard-reads-wrong-property", "quoted-duplicate-cookie-key",
+              "textblock-desyncs-commented-guard", "guard-test-file-emptied", "guard-test-assertions-removed",
+              "binding-file-missing", "runtime-assertion-deleted", "runtime-assertion-commented-out",
               "all-sources-rename-in-lockstep")
     rejected = []
     for label in labels:
@@ -366,6 +506,40 @@ def negative_control(sources):
     evaluate(sources)  # pristine sources must still pass, so controls cannot "pass" by breaking everything
     return sorted(rejected)
 
+def benign_control(sources):
+    """The other half of the proof: legal edits must still pass, or the scanner is over-stripping real code.
+
+    The seventh review supplied benign cases its own probes relied on; encoding them here means a future change to
+    the stripper cannot silently start rejecting legitimate Java while still rejecting the attacks.
+    """
+    cases = {
+        "textblock-odd-quotes-intact": lambda c: c.replace(
+            "    @Bean PasswordEncoder t03Passwords()",
+            '    private static final String DESYNC = """\n        cookie "EDITORIAL_SESSION\n        """;\n'
+            "    @Bean PasswordEncoder t03Passwords()", 1),
+        "url-string-looks-like-comment": lambda c: c.replace(
+            "    @Bean PasswordEncoder t03Passwords()",
+            '    private static final String DOC = "https://example.test/a";\n    @Bean PasswordEncoder t03Passwords()', 1),
+        "char-literals-hold-quote-chars": lambda c: c.replace(
+            "    @Bean PasswordEncoder t03Passwords()",
+            "    private static final char Q = '\"';\n    private static final char A = '\\'';\n"
+            "    @Bean PasswordEncoder t03Passwords()", 1),
+        "guard-reflowed-with-whitespace": lambda c: c.replace(
+            'if(!SESSION_COOKIE_NAME.equals(env.getProperty("server.servlet.session.cookie.name","")))',
+            'if ( ! SESSION_COOKIE_NAME.equals ( env.getProperty ( "server.servlet.session.cookie.name" , "" ) ) )', 1),
+        "block-comment-containing-slashes-and-quotes": lambda c: c.replace(
+            "    @Bean SecurityFilterChain identitySecurity(",
+            '    /* reviewer note: "quoted" // not a nested comment */\n    @Bean SecurityFilterChain identitySecurity(', 1),
+    }
+    accepted = []
+    for label, apply in sorted(cases.items()):
+        mutated = dict(sources)
+        mutated["code"] = apply(sources["code"])
+        if mutated == sources:
+            raise AssertionError(f"benign probe {label} changed nothing; it proves nothing")
+        evaluate(mutated)
+        accepted.append(label)
+    return accepted
 
 def main():
     parser = argparse.ArgumentParser()
@@ -376,8 +550,12 @@ def main():
     sources = read_sources()
     agreement = evaluate(sources)
     rejected = negative_control(sources)
+    benign = benign_control(sources)
     texts = dict(sources)
     texts.update({"config:" + name: text for name, text in sources["configs"].items()})
+    # The negative guard test names the container default on purpose — that is what it proves gets rejected — so it is
+    # exempt from the drift scan, and only while it still carries the assertThrows rejections checked in evaluate().
+    texts.pop("guardTest", None)
     drift = [name for name, text in texts.items() if FORBIDDEN in text]
     if drift:
         raise AssertionError(f"container default {FORBIDDEN} reappears in: {drift}")
@@ -387,13 +565,13 @@ def main():
     result = {"agreement": agreement, "forbiddenDefault": FORBIDDEN, "forbiddenDefaultInCheckedSources": drift,
               "cookiePath": list(COOKIE_PATH), "negativeControlsRejected": rejected,
               "negativeControlCount": len(rejected),
+              "benignProbesAccepted": benign, "benignProbeCount": len(benign),
               "sha256": {label: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for label, path in paths.items()},
               "verdict": "PASS"}
     print(json.dumps(result, ensure_ascii=False))
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
-
 
 if __name__ == "__main__":
     main()

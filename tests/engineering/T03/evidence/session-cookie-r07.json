@@ -1,0 +1,109 @@
+{
+  "agreement": {
+    "schemeKey": "session",
+    "frozenScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "additiveScheme": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION"
+    },
+    "approvedName": "EDITORIAL_SESSION",
+    "baseConfigCookieName": "EDITORIAL_SESSION",
+    "profileOverrides": {},
+    "configFilesScanned": [
+      "application-dev.yml",
+      "application-mock.yml",
+      "application-prod.yml",
+      "application.yml"
+    ],
+    "javaConstant": "EDITORIAL_SESSION",
+    "startupGuardLive": true,
+    "runtimeAssertionLive": true,
+    "guardCheckedAfterCommentStripping": true,
+    "guardCallInsideBeanBody": true,
+    "negativeGuardCases": 7,
+    "binding": {
+      "bindingFile": "backend\\src\\main\\resources\\application.yml",
+      "recordedCounts": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "boundInputs": [
+        "baseConfig",
+        "code",
+        "guardTest",
+        "test"
+      ],
+      "recordedCommand": "mvn -B -ntp -o -f backend/pom.xml -Dmaven.repo.local=.tools/t02/m2 -Dtest=T03SessionCookieGuardTest test"
+    }
+  },
+  "forbiddenDefault": "JSESSIONID",
+  "forbiddenDefaultInCheckedSources": [],
+  "cookiePath": [
+    "server",
+    "servlet",
+    "session",
+    "cookie",
+    "name"
+  ],
+  "negativeControlsRejected": [
+    "additive-drops-scheme",
+    "additive-scheme-extra-key",
+    "all-profiles-override-cookie-name",
+    "all-sources-rename-in-lockstep",
+    "binding-file-missing",
+    "code-constant-drifts",
+    "config-changes-cookie-name",
+    "config-drops-cookie-name",
+    "contract-renames-cookie",
+    "cookie-path-relocated-under-unrelated-parent",
+    "extra-document-carries-second-name",
+    "guard-call-commented-out",
+    "guard-call-deleted",
+    "guard-call-moved-to-dead-method",
+    "guard-line-deleted",
+    "guard-message-prefix-changed",
+    "guard-name-check-commented-out",
+    "guard-neutered-never-fires",
+    "guard-reads-wrong-property",
+    "guard-test-assertions-removed",
+    "guard-test-file-emptied",
+    "prod-branch-short-circuited",
+    "prod-check-neutered",
+    "prod-http-only-clause-deleted",
+    "prod-profile-token-renamed",
+    "prod-same-site-clause-deleted",
+    "prod-secure-default-flipped",
+    "quoted-duplicate-cookie-key",
+    "runtime-assertion-commented-out",
+    "runtime-assertion-deleted",
+    "textblock-desyncs-commented-guard"
+  ],
+  "negativeControlCount": 31,
+  "benignProbesAccepted": [
+    "block-comment-containing-slashes-and-quotes",
+    "char-literals-hold-quote-chars",
+    "guard-reflowed-with-whitespace",
+    "textblock-odd-quotes-intact",
+    "url-string-looks-like-comment"
+  ],
+  "benignProbeCount": 5,
+  "sha256": {
+    "frozenContract": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b",
+    "additiveContract": "0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd",
+    "code": "dc0bb777f966707f6671990c8470dd913a6a6de415e70f0bcd5a50329fb0ead7",
+    "test": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392",
+    "guardTest": "7ba45cc489bf674ab33a227b6e9a25190491499a1961047d439732eeea465246",
+    "config:application-dev.yml": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68",
+    "config:application-mock.yml": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8",
+    "config:application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+    "config:application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d"
+  },
+  "verdict": "PASS"
+}
