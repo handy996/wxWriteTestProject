@@ -49,8 +49,11 @@ with tempfile.TemporaryDirectory(prefix='source-scan-',dir=HERE/'.work') as td:
         if (ROOT/path).is_file():target=dest/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/path,target)
     scan=run([scanner,'dir',dest,'--redact','--no-banner','--config',ROOT/'tests/engineering/T02/gitleaks.toml','--report-format','json','--report-path',report],(0,1))
     findings=json.loads(report.read_text(encoding='utf-8'));finding_paths=[Path(f['File']).relative_to(dest).as_posix() for f in findings]
-    unexpected=[x for x in finding_paths if x!='tests/engineering/T02/evidence/r01-integrity.json']
-    if unexpected or len(finding_paths)!=6:failures.append('secret scan differs from known T02 six findings')
+    # Invariant, not a count: under the value-precise allowlist no finding may survive anywhere in the tree. The old
+    # assertion pinned "exactly 6 findings, all in r01-integrity.json", so any change to T02's baseline silently
+    # broke this gate, and pinning a file name plus a number would also pass if findings moved elsewhere or grew.
+    unexpected=list(finding_paths)
+    if unexpected:failures.append('secret scan reported findings: '+','.join(sorted(unexpected)))
 owned=[path for path in paths if path.startswith(('backend/src/main/java/com/example/editorial/article/version/','backend/src/main/java/com/example/editorial/article/proposal/','backend/src/test/java/com/example/editorial/article/version/','backend/src/test/java/com/example/editorial/article/proposal/','tests/engineering/T07/')) or path=='docs/execution/reports/T07.md']
 # Evidence is immutable per run; source fingerprints avoid self-referential output and path->hash strings.
 fingerprints=[{'path':path,'sha256':hashlib.sha256((ROOT/path).read_bytes()).hexdigest()} for path in owned if '/evidence/' not in path]

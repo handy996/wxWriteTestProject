@@ -53,6 +53,11 @@ jobs:
           npm run build
       - name: Secret and dependency scans (fail on findings or unavailable service)
         run: |
+          # Exemptions must be value-shaped: a gitleaks allowlist with a paths clause leaves the whole file
+          # unscanned, so the allowlist itself and its suppression behaviour are policed here, not just the tree.
+          python tests/engineering/T02/secret_scan.py --self-test
+          python tests/engineering/T02/check_gitleaks_allowlists.py
+          python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe
           python tests/engineering/T02/secret_scan.py
           python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks
           python tests/engineering/T02/dependency_scan.py
