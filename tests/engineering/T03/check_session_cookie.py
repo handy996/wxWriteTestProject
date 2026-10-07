@@ -405,29 +405,17 @@ class JavaSource:
             return len(self.raw)
         return self.offsets[translated_offset]
 
-    def in_prose(self, offset):
-        """Strictly inside a text block's content: prose to a reader, not executable code."""
-        return any(start < offset < end for start, end in self.text_block_spans)
-
-    def in_literal(self, offset):
-        """Strictly inside a literal's content: a match there is string data, not a statement using it."""
-        return any(start < offset < end for start, end in self.literal_spans)
-
     def live(self, pattern, view=None):
         """The first match of `pattern` in the view the caller asked for.
 
-        The views carry the comment decision: comments are blanked in every one of them, `statements` additionally
-        blanks text-block prose. A match that sits strictly inside a literal's content is skipped here because it is
-        data, not a statement - "T03_COOKIE" written inside a string is not a throw carrying that message, and
-        `server.servlet.session.cookie.secure` written inside a string is not a clause reading that attribute. Both
-        halves are measured: the round-ten audit found the position rule carried the two only-in-literal controls that
-        a stale record had been hiding.
+        The views carry the comment decision: comments are blanked in every one of them, and `statements`
+        additionally blanks text-block prose, so no needle can be satisfied by a comment or by prose. A
+        position rule that also skipped matches inside literal contents was tried, then measured: stubbing it
+        moved no verdict, because the needles already require the shape of code - `String note =
+        "verifySessionCookieContract(env);"` quotes the call instead of making it, and a quoted throw does not
+        match a throw. The rule is therefore not here; this note is where its story is kept.
         """
-        text = view if view is not None else self.statements
-        for match in pattern.finditer(text):
-            if not self.in_literal(match.start()):
-                return match
-        return None
+        return pattern.search(view if view is not None else self.statements)
 
     def require_live(self, pattern, what, view=None):
         match = self.live(pattern, view)
@@ -962,7 +950,12 @@ def expand_yaml_flow(text, reasons):
 
 
 def construct_reason(key, value):
-    """Why a YAML construct at this path cannot be attributed by text, or None when it can."""
+    """Wording only: why a YAML construct at this path cannot be attributed by text, or None when it can.
+
+    The refusal itself is `census_yaml`'s, and the decision that a name hidden behind such a shape matters is the
+    executed binder certificate's. Stubbing this function to answer "it can be attributed" moves no verdict, which
+    is what the round-ten audit measured; that is why it is written as a classifier and not counted as a check.
+    """
     for token, label in (("<<", "merge-key"), ("&", "anchor-definition"), ("!", "tag")):
         if key == token or key.startswith(token):
             return label
@@ -1697,10 +1690,14 @@ def binding_check(sources, recorded, label="binding"):
     if set(names) != set(cases):
         raise Rejected(f"binding: the run executed {sorted(set(names) ^ set(cases))} which the current guard test does "
                        "not have, or the current test has cases the recorded run never executed")
-    absent = {role: [name for name in grouped if name not in set(names)] for role, grouped in roles.items()}
-    missing = {role: grouped for role, grouped in absent.items() if grouped}
-    if missing:
-        raise Rejected(f"binding: these executed roles are absent from the recorded run -> {missing}")
+    recorded_roles = {role: sorted(grouped or []) for role, grouped in (recorded.get("executedRoles") or {}).items()}
+    current_roles = {role: sorted(grouped) for role, grouped in roles.items()}
+    drift = sorted(f"{role}: recorded {recorded_roles.get(role)} != current {current_roles.get(role)}"
+                   for role in set(recorded_roles) | set(current_roles)
+                   if recorded_roles.get(role) != current_roles.get(role))
+    if drift:
+        raise Rejected("binding: which case proves which layer is an executed fact, not a claim about wording -> " +
+                       "; ".join(drift))
     toolchain = toolchain_check(recorded, properties, label)
     return {"recordedCounts": observed, "executedCases": names, "executedRoles": roles,
             "assertionVocabulary": verbs, "recordedArgv": argv, "boundInputs": surface_inputs,
@@ -1886,9 +1883,13 @@ def code_constant(java):
 
 
 def live_literals(java):
-    """The contents of ordinary string literals, which is where a declared name legitimately appears in code."""
+    """The contents of ordinary string literals, which is where a declared name legitimately appears in code.
+
+    Text blocks are not in `literal_spans` at all, so a name written as text-block prose is not a declared
+    literal here; the round-ten audit measured a second filter on top of this and found it decided nothing.
+    """
     text = java.translated
-    return [text[start:end] for start, end in java.literal_spans if not java.in_prose(start)]
+    return [text[start:end] for start, end in java.literal_spans]
 
 
 def forbidden_offsets(java):
@@ -1998,7 +1999,7 @@ def evaluate(sources):
                       test.code)
     guard_test = JavaSource(sources["guardTest"], "guardTest")
     roles, cases, verbs = executed_roles(guard_test)
-    if APPROVED_NAME not in live_literals(guard_test):
+    if not any(item.strip() == APPROVED_NAME for item in live_literals(guard_test)):
         raise Rejected("guardTest: no live string literal carries the approved anchor, so the cases compare against "
                        "something other than rc.3's name")
     exempt_start, exempt_end = guard_test.methods().get(CONTAINER_DEFAULT_CASE, (0, 0))
@@ -2015,6 +2016,10 @@ def evaluate(sources):
     binding = binding_check(sources, recorded)
     policy = ci_policy(sources["ci"])
     tokenizer = tokenizer_certificate(sources)
+    unfed = [field for field in ("sources", "corpusFiles", "divergences") if field not in tokenizer]
+    if unfed or not tokenizer["corpusFiles"]:
+        raise Rejected("tokenizer: the self-measurement was skipped or reported nothing, so the claim that one "
+                       "lexer backs three projections is an assertion rather than a measurement: " + str(unfed))
     return {"schemeKey": key, "frozenScheme": frozen, "additiveScheme": additive, "approvedName": APPROVED_NAME,
             "configFilesScanned": sorted(sources["configs"]), "textCensusCookieNames": declared,
             "textCensusUnattributable": unattributable,
@@ -2199,6 +2204,55 @@ MERGE_KEY_FRAGMENT = ("\nt03-anchor: &t03-anchor\n  name: " + FORBIDDEN + "\nser
 APPROVED_MERGE_FRAGMENT = ("\nt03-anchor: &t03-anchor\n  name: " + APPROVED_NAME + "\nserver:\n  servlet:\n"
                            "    session:\n      cookie:\n        <<: *t03-anchor\n")
 
+
+def retire_case(sources, *names):
+    """Take the `Test` annotation away and re-record what the run would then hold.
+
+    This is the honest consolidation the tenth review's F-11 was about: the cases still exist as methods,
+    and the XML, the recorded names, the counts and the recorded roles are all rewritten to agree, so
+    nothing about wording or staleness fails - only the floor a layer demands loses its witnesses.
+    """
+    out = dict(sources)
+    guard = out["guardTest"]
+    xml = out["guardTestXml"]
+    before = len(re.findall("<testcase ", xml))
+    for name in names:
+        guard = splice(guard, "Test void " + name + "(", "void " + name + "(", "retire")
+        xml, removed = re.subn("[ ]*<testcase name=\"" + re.escape(name) + "\"[^>]*/>" + chr(10), "", xml)
+        if removed != 1:
+            raise AssertionError(f"retire: {name} is no longer a self-closing testcase element")
+    total = len(re.findall("<testcase ", xml))
+    xml = xml.replace(" tests=\"" + str(before) + "\"", " tests=\"" + str(total) + "\"", 1)
+    record = json.loads(out["binding"])
+    record["testNames"] = [item for item in record["testNames"] if item not in names]
+    record["counts"]["tests"] = total
+    record["executedRoles"] = {role: [item for item in (grouped or []) if item not in names]
+                               for role, grouped in record["executedRoles"].items()}
+    out["guardTest"], out["guardTestXml"] = guard, xml
+    out["binding"] = json.dumps(record, indent=2, sort_keys=True) + chr(10)
+    return rehash_record(out)
+
+
+def xml_claim(sources, anchor, replacement, **counts):
+    """Edit the XML and rewrite the record so that it agrees, leaving the XML's own story as the only witness.
+
+    Without this an edited XML is caught by `surefireXmlSha256` before any internal check can answer for it,
+    and the controls that claim to prove the counts prove nothing of the kind.
+    """
+    out = xml_edit(sources, anchor, replacement)
+    record = json.loads(out["binding"])
+    merged = dict(record.get("counts") or {})
+    merged.update(counts)
+    record["counts"] = merged
+    out["binding"] = json.dumps(record, indent=2, sort_keys=True) + chr(10)
+    return rehash_record(out)
+
+
+def roles_claim(sources, role, names):
+    """Credit a layer with cases that never drove it, with the record re-fingerprinted to match."""
+    record = json.loads(sources["binding"])
+    out = binding_edit(sources, executedRoles=dict(record["executedRoles"] | {role: sorted(names)}))
+    return rehash_record(out)
 
 def empty_case(sources, name):
     """Replace one executed case's body with prose naming the same collaborators - round nine's F-04 hollowing."""
@@ -2506,7 +2560,15 @@ NEGATIVE_CONTROLS = (
     ("escape-swallowing-a-closing-quote", "an escape that turns a closing quote into string content",
      lambda s: code_edit(s, UNCOMPILE_ANCHOR, '    static final String Z = "x\\u0022y";\n' + UNCOMPILE_ANCHOR),
      ("unclosed", "code")),
+    ("container-default-mentioned-in-a-text-block", "the container default written as text-block prose is still a value",
+     lambda s: guard_edit(s, "class T03SessionCookieGuardTest {",
+                          "class T03SessionCookieGuardTest {" + chr(10) +
+                          "    static final String RUNBOOK = \"\"\"" + chr(10) +
+                          "            the container default is JSESSIONID" + chr(10) +
+                          "            \"\"\";"),
+     ("container default is named in code",)),
     ("container-default-spelled-with-escape", "the container default written JSESSION\\u0049D outside the exempt case",
+
      lambda s: guard_edit(s, "class T03SessionCookieGuardTest {", "class T03SessionCookieGuardTest {\n"
                               '    static final String PROBE = "JSESSION\\u0049D";'), ("guardTest",)),
     ("runtime-assertion-deleted", "the integration test stops asserting the issued cookie name",
@@ -2523,6 +2585,19 @@ NEGATIVE_CONTROLS = (
     ("guard-test-anchor-literal-dropped", "the guard test no longer holds the approved name as a literal",
      lambda s: guard_edit(s, "    private static final String " + "COOKIE_ANCHOR" + " = \"" + APPROVED_NAME + "\";",
                           "    private static final String " + "COOKIE_ANCHOR" + " = WRONG;"), ("guardTest",)),
+    ("call-only-recited-in-a-string", "the guard call survives only as the contents of a string literal",
+     lambda s: code_edit(s, "        verifySessionCookieContract(env);",
+                          "        String note = \"verifySessionCookieContract(env);\""),
+     ("the guard call is not a statement",)),
+    ("anchor-name-only-in-text-block-prose", "the approved name is left only as text-block prose",
+     lambda s: guard_edit(s, "    private static final String COOKIE_ANCHOR = \"" + APPROVED_NAME + "\";",
+                          "    private static final String COOKIE_ANCHOR = \"\"\"" + chr(10) +
+                          "            " + APPROVED_NAME + chr(10) + "            \"\"\";"),
+     ("no live string literal",)),
+    ("binder-shape-floor-loses-its-cases", "two binder-shape cases are retired and the record agrees",
+     lambda s: retire_case(s, "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader",
+                           "configDirectoryLayerOvertakesTheResourcesRoot"),
+     ("no longer cover every layer",)),
     ("file-emptied-of-executed-roles", "one executed case becomes prose, so a role loses its witness",
      lambda s: empty_case(s, "prodRejectsEachInsecureCookieAttribute"), ("guardTest", "binding")),
     ("assembly-case-hollowed", "the assembly case that must not abort becomes prose",
@@ -2605,15 +2680,18 @@ NEGATIVE_CONTROLS = (
      lambda s: binding_edit(s, testNames=["inventedCaseName"]), ("binding",)),
     ("binding-counts-disagree-with-xml", "the recorded counts do not match the re-parsed XML",
      lambda s: binding_edit(s, counts={"tests": 8, "failures": 0, "errors": 0, "skipped": 0}), ("binding",)),
-    ("binding-xml-tests-count-inflated", "the XML declares more cases than it carries",
-     lambda s: xml_edit(s, f'tests="{surefire_report(s["guardTestXml"], "xml")[0]["tests"]}"', 'tests="99"'),
-     ("binding",)),
-    ("binding-xml-skipped-case", "a case was skipped, so the run proves less than it says",
-     lambda s: xml_edit(s, 'skipped="0"', 'skipped="1"'), ("binding",)),
-    ("binding-xml-failure", "a case failed in the recorded run",
-     lambda s: xml_edit(s, 'failures="0"', 'failures="1"'), ("binding",)),
+    ("binding-xml-tests-count-inflated", "the XML declares more cases than it carries and says so consistently",
+     lambda s: xml_claim(s, f'tests="{surefire_report(s["guardTestXml"], "xml")[0]["tests"]}"', 'tests="99"', tests=99), ("declares tests=",)),
+    ("binding-xml-skipped-case", "a case was skipped, and the record says so too",
+     lambda s: xml_claim(s, 'skipped="0"', 'skipped="1"', skipped=1), ("not clean",)),
+    ("binding-xml-failure", "a case failed in the recorded run, and the record claims it",
+     lambda s: xml_claim(s, 'failures="0"', 'failures="1"', failures=1), ("not clean",)),
     ("binding-xml-sha-wrong", "the XML hash does not match the tracked artefact",
-     lambda s: binding_edit(s, surefireXmlSha256=sha256_text("other bytes")), ("binding",)),
+     lambda s: binding_edit(s, surefireXmlSha256=sha256_text("other bytes")), ("surefireXmlSha256",)),
+    ("binding-roles-miscredited", "the record credits a layer with cases that never drove it",
+     lambda s: roles_claim(s, "guardAbort", ["prodAcceptsTheContractConformantCookie",
+                           "approvedNameStartsOutsideProd", "constantIsTheApprovedContractLiteral"]),
+     ("which case proves",)),
     ("all-sources-rename-in-lockstep", "every source agrees on a name that is not the approved anchor",
      lockstep_rename, ("frozenContract", "additiveContract")),
 )
@@ -2649,6 +2727,20 @@ BENIGN_PROBES = (
     ("escaped-newline-inside-block-comment", "an escape sequence inside a block comment",
      lambda s: code_edit(s, UNCOMPILE_ANCHOR, "    /* note \\u000a still a comment */\n" + UNCOMPILE_ANCHOR)),
     ("escaped-comment-around-nothing", "an escaped comment that hides nothing", escaped_comment_around_note),
+    ("call-recited-in-a-string-while-live", "a string quotes the call beside the live call",
+     lambda s: code_edit(s, "        verifySessionCookieContract(env);",
+                          "        String note = \"verifySessionCookieContract(env);\"" + chr(10)
+                          + "        verifySessionCookieContract(env);")),
+    ("double-backslash-note-in-a-string", "a string quotes the comment delimiters as double backslashes, beside the live call",
+     lambda s: code_edit(s, "        verifySessionCookieContract(env);",
+                          "        Object note = \"" + chr(92) * 2 + "u002a runbook " + chr(92) * 2 +
+                          "u002f\";" + chr(10) + "        verifySessionCookieContract(env);")),
+    ("anchor-name-in-prose-and-live-literal", "the approved name as prose and as a live literal",
+     lambda s: guard_edit(s, "class T03SessionCookieGuardTest {",
+                          "class T03SessionCookieGuardTest {" + chr(10)
+                          + "    static final String RUNBOOK = \"\"\"" + chr(10)
+                          + "            the approved name is EDITORIAL_SESSION, written as prose" + chr(10)
+                          + "            \"\"\";")),
     ("container-default-mentioned-in-prose-only", "the container default appears only in a comment",
      lambda s: guard_edit(s, "    @Test void " + CONTAINER_DEFAULT_CASE + "()",
                           "    /** " + FORBIDDEN + " is the container default and is never approved. */\n"
