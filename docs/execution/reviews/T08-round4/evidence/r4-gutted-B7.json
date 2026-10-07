@@ -1,0 +1,262 @@
+{
+  "task": "T08 cost ledger, pricing, usage and reconciliation on real PostgreSQL",
+  "mode": "REAL_POSTGRES_INSTALLED_MIGRATIONS",
+  "paidCalls": 0,
+  "note": "Contract self-test only; no approval, no contract regeneration, no shared checkout mutation.",
+  "generatedAt": "2026-10-08T02:53:22+0800",
+  "cluster": {
+    "port": 10976,
+    "database": "editorial",
+    "adminRole": "editorial_admin",
+    "authentication": "scram-sha-256 with random per-run passwords (redacted below)"
+  },
+  "commands": [
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\r\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\r\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)\r\nMaven home: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\r\nJava version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\r\nDefault locale: en_US, platform encoding: UTF-8\r\nOS name: \"windows 11\", version: \"10.0\", arch: \"amd64\", family: \"windows\""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\postgres.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "postgres (PostgreSQL) 17.11"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "--version"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "psql (PostgreSQL) 17.11"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\initdb.exe",
+        "-D",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\data",
+        "-U",
+        "editorial_admin",
+        "--auth=scram-sha-256",
+        "--pwfile=C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\init-password",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "属于此数据库系统的文件宿主为用户 \"eie04\".\r\n此用户也必须为服务器进程的宿主.\r\n\r\n数据库集簇将以区域环境设置 \"C\" 进行初始化.\r\n默认的文本搜索配置将被设为 \"english\".\r\n\r\n禁止为数据页生成校验和.\r\n\r\n正在创建目录 C:/Users/eie04/AppData/Local/Temp/t08r4/gut-B7/.work/dc9b13540cd949fdbb4cdf4e43dc5c83/data ... 成功\r\n正在创建子目录 ... 成功\r\n正在选择动态共享内存实现 ... windows\r\n正在选择默认最大连接数 (max_connections) ... 100\r\n正在选择默认共享缓冲区 (shared_buffers) ... 128MB\r\n正在选择默认时区 ... Asia/Shanghai\r\n正在创建配置文件 ... 成功\r\n正在运行启动脚本 ... 成功\r\n正在执行启动脚本后续初始化 ... 成功\r\n正在同步数据到磁盘 ... 成功\r\n\r\n成功。你现在可以用下面的命令开启数据库服务器:\r\n\r\n ^\"E^:^\\project^\\codex^\\wxAgent^\\^.tools^\\t02^\\postgresql^-full^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"C^:^\\Users^\\eie04^\\AppData^\\Local^\\Temp^\\t08r4^\\gut^-B7^\\^.work^\\dc9b13540cd949fdbb4cdf4e43dc5c83^\\data^\" -l logfile start"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+        "-D",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\data",
+        "-l",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\postgres.log",
+        "-o",
+        "-p 10976 -h 127.0.0.1",
+        "-w",
+        "-t",
+        "60",
+        "start"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "等待服务器进程启动 .... 完成\r\n服务器进程已经启动"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\createdb.exe",
+        "editorial"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\backend\\docker\\bootstrap.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "CREATE ROLE\r\nCREATE ROLE\r\nCREATE ROLE\r\nREVOKE\r\nGRANT\r\nREVOKE\r\nCREATE SCHEMA\r\nCREATE SCHEMA\r\nREVOKE\r\nGRANT"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "-d",
+        "editorial",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\apply-installed-migrations.sql"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "ALTER DEFAULT PRIVILEGES\r\nALTER DEFAULT PRIVILEGES\r\nSET\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE TABLE\r\nREVOKE\r\nGRANT\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE FUNCTION\r\nREVOKE\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nREVOKE\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nREVOKE\r\nCREATE TRIGGER\r\nREVOKE\r\nGRANT\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nALTER TABLE\r\nALTER TABLE\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nREVOKE\r\nGRANT\r\nGRANT\r\nREVOKE\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nREVOKE\r\nGRANT\r\nREVOKE\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE TABLE\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE INDEX\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nCREATE FUNCTION\r\nCREATE TRIGGER\r\nREVOKE\r\nGRANT\r\nGRANT\r\nREVOKE\r\nRESET\r\nDO\r\nREVOKE\r\nGRANT\r\nREVOKE\r\nREVOKE\r\nALTER DEFAULT PRIVILEGES\r\nALTER DEFAULT PRIVILEGES\r\n state | tables \r\n---------+--------\r\n applied | 12\r\n(1 行记录)"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-Atc",
+        "select c.relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='editorial' and c.relkind='r' and c.relname like 'cost%' order by 1"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "cost_ledger\r\ncost_pricing_version"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-Atc",
+        "select tgname from pg_trigger t join pg_class c on c.oid=t.tgrelid where c.relname='cost_ledger' and not tgisinternal order by 1"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "cost_ledger_admit\r\ncost_ledger_consistent\r\ncost_ledger_guard"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\psql.exe",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-Atc",
+        "select grantee||'='||string_agg(privilege_type,'/' order by privilege_type) from information_schema.role_table_grants where table_schema='editorial' and table_name in ('cost_ledger','cost_pricing_version','audit_log') group by grantee order by grantee"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "editorial_migrator=DELETE/DELETE/DELETE/INSERT/INSERT/INSERT/REFERENCES/REFERENCES/REFERENCES/SELECT/SELECT/SELECT/TRIGGER/TRIGGER/TRIGGER/TRUNCATE/TRUNCATE/TRUNCATE/UPDATE/UPDATE/UPDATE\r\neditorial_runtime=INSERT/INSERT/SELECT/SELECT/SELECT/UPDATE"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+        "-B",
+        "-ntp",
+        "-o",
+        "-f",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\backend\\pom.xml",
+        "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+        "test",
+        "-Dtest=CostPricingTest,T08PostgresTest",
+        "-Dsurefire.failIfNoSpecifiedTests=false"
+      ],
+      "exitCode": 1,
+      "expected": 0,
+      "output": "[INFO] Scanning for projects...\r\n[INFO] \r\n[INFO] -----------------------< com.example:editorial >------------------------\r\n[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT\r\n[INFO] from pom.xml\r\n[INFO] --------------------------------[ jar ]---------------------------------\r\n[INFO] \r\n[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---\r\n[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed\r\n[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed\r\n[INFO] \r\n[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---\r\n[INFO] Copying 4 resources from src\\main\\resources to target\\classes\r\n[INFO] Copying 21 resources from src\\main\\resources to target\\classes …[2902 chars elided, full log kept in the run directory]… List.java:1596)\r\n\r\n[INFO] \r\n[INFO] Results:\r\n[INFO] \r\n[ERROR] Failures: \r\n[ERROR] T08PostgresTest.zeroCallsPerDayClosesTheDayButNotTheBoot:782 Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown.\r\n[INFO] \r\n[ERROR] Tests run: 57, Failures: 1, Errors: 0, Skipped: 0\r\n[INFO] \r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] BUILD FAILURE\r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] Total time: 24.147 s\r\n[INFO] Finished at: 2026-10-08T02:53:53+08:00\r\n[INFO] ------------------------------------------------------------------------\r\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project editorial: There are test failures.\r\n[ERROR] \r\n[ERROR] See C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\backend\\target\\surefire-reports for the individual test results.\r\n[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\r\n[ERROR] -> [Help 1]\r\n[ERROR] \r\n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\r\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\r\n[ERROR] \r\n[ERROR] For more information about the errors and possible solutions, please read the following articles:\r\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+    },
+    {
+      "argv": [
+        "E:\\project\\codex\\wxAgent\\.tools\\t02\\postgresql-full\\pgsql\\bin\\pg_ctl.exe",
+        "-D",
+        "C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0,
+      "expected": 0,
+      "output": "等待服务器进程关闭 .... 完成\r\n服务器进程已经关闭"
+    }
+  ],
+  "backendCopy": "verbatim copy of tracked backend/pom.xml + backend/src, target excluded",
+  "inputFingerprints": [
+    {
+      "path": "backend/pom.xml",
+      "sha256": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee"
+    },
+    {
+      "path": "backend/docker/bootstrap.sql",
+      "sha256": "ef70f7a175f2216f66236efaf23d5d1db56b00520af810d4ad8dbb9a34b0d949"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/beforeMigrate__t02_function_defaults.sql",
+      "sha256": "57d17a44dabefc4d0ad87b5ccd88118a84ce3a5baeceaac423ee2e570093f502"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/R__t02_function_permissions.sql",
+      "sha256": "1c6cc53da1e8b6c499a318056f7592f85bfe625dab474b539dbbac0de9723f26"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/R__t02_schema_permissions.sql",
+      "sha256": "6b5e594baba3d3dcb035a1f5ff19cb9859bad83bf90298b3999163b2c787d852"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V1__identity_audit_idempotency.sql",
+      "sha256": "fe34a84b909c4b97e56377504b685c0c293ba41f3efae5855c3cdf1c8bfc334e"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V2__skill_prompt_policy.sql",
+      "sha256": "7eeee255170a50bc7a95009e7f18a1586cb399e84315a6d7f9c07b4ff12c5911"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V3__article_job_version.sql",
+      "sha256": "1893ad02483385ef5e6b8a68781a3a27a8d407c6dd3166b8569828298695bebc"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V4__change_proposal.sql",
+      "sha256": "96a8a78c5ba25854cc05b6d28af5d58a0b61b21eab387ede2716d73dff564402"
+    },
+    {
+      "path": "backend/src/main/resources/db/migration/V5__cost_ledger_pricing.sql",
+      "sha256": "5eadd5294216d82ec4f4fd57b501975f4bd82a743403e1b861f8bfbaedff86fd"
+    }
+  ],
+  "copiedSourceFiles": 151,
+  "clusterStart": "pg_ctl",
+  "migrationOrder": [
+    "beforeMigrate__t02_function_defaults.sql",
+    "V1__identity_audit_idempotency.sql",
+    "V2__skill_prompt_policy.sql",
+    "V3__article_job_version.sql",
+    "V4__change_proposal.sql",
+    "V5__cost_ledger_pricing.sql",
+    "R__t02_function_permissions.sql",
+    "R__t02_schema_permissions.sql"
+  ],
+  "migrationResult": "NDEX CREATE TABLE CREATE INDEX CREATE INDEX CREATE INDEX CREATE INDEX CREATE INDEX CREATE INDEX CREATE INDEX CREATE FUNCTION CREATE TRIGGER CREATE FUNCTION CREATE TRIGGER CREATE FUNCTION CREATE TRIGGER CREATE FUNCTION CREATE TRIGGER REVOKE GRANT GRANT REVOKE RESET DO REVOKE GRANT REVOKE REVOKE ALTER DEFAULT PRIVILEGES ALTER DEFAULT PRIVILEGES state | tables ---------+-------- applied | 12 (1 行记录) ",
+  "costTables": [
+    "cost_ledger",
+    "cost_pricing_version"
+  ],
+  "costTriggers": [
+    "cost_ledger_admit",
+    "cost_ledger_consistent",
+    "cost_ledger_guard"
+  ],
+  "runtimeGrants": "editorial_migrator=DELETE/DELETE/DELETE/INSERT/INSERT/INSERT/REFERENCES/REFERENCES/REFERENCES/SELECT/SELECT/SELECT/TRIGGER/TRIGGER/TRIGGER/TRUNCATE/TRUNCATE/TRUNCATE/UPDATE/UPDATE/UPDATE\r\neditorial_runtime=INSERT/INSERT/SELECT/SELECT/SELECT/UPDATE\r\n",
+  "failure": "RuntimeError: recorded command failed: E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd -B -ntp -o -f C:\\Users\\eie04\\AppData\\Local\\Temp\\t08r4\\gut-B7\\.work\\dc9b13540cd949fdbb4cdf4e43dc5c83\\backend\\pom.xml -Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2 test -Dtest=CostPricingTest,T08PostgresTest -Dsurefire.failIfNoSpecifiedTests=false",
+  "clusterStopped": true,
+  "exitCode": 1,
+  "isolatedWork": ".work/dc9b13540cd949fdbb4cdf4e43dc5c83"
+}

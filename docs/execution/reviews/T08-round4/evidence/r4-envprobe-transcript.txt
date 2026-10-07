@@ -1,0 +1,31 @@
+== A: the channel round 3 said was broken ==
+A1 | canonical env names MAX_CONCURRENT=2 + CALLS_PER_DAY=5 | BOOT OK providers={mock=2/5} unconfigured=UNLIMITED
+A2 | same but only max-concurrent (half a scope) | REFUSED 503 QUOTA_NOT_CONFIGURED
+== B: typos �� loud or silent? ==
+B1 | typo in the leaf: ..._MOCK_MAX_CONCURENT=2 | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+B2 | typo in the prefix: EDITORIAL_COST_PROVIDER_QUOTAS_MOCK_...=2 (plural s) | BOOT OK providers={(EMPTY -> every provider reads as unconfigured)} unconfigured=UNLIMITED
+B3 | unknown leaf ..._MOCK_FOO=1 alongside a correct pair | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+B4 | leaf with no provider: EDITORIAL_COST_PROVIDER_QUOTA_MAX_CONCURRENT=2 | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+B5 | a leaf name nobody knows but shaped like one: ..._MOCK_MIN_CONCURRENT=2 | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+== C: ambiguity �� is 'refuse rather than guess' real? ==
+C1 | two readings: ..._QUOTA_OPEN_AI_MAX_CONCURRENT=2 (open-ai or open.ai?) | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+C2 | model level through env: ..._QUOTA_MOCK_M1_MAX_CONCURRENT=2 (+ day leaf) | REFUSED 503 INVALID_PROVIDER_QUOTA_KEY
+== D: case of the id carried by the env name ==
+D1 | uppercase env segment MOCK -> which scope key is stored? | BOOT OK providers={mock=2/5} unconfigured=UNLIMITED
+D2 | does the policy answer a provider id written as MOCK at lookup time? providerWideQuota("MOCK")=false providerWideQuota("mock")=true keys=[mock]
+== E: values ==
+E1 | non-numeric: ..._MOCK_MAX_CONCURRENT=three | REFUSED 503 INVALID_BUDGET_POLICY
+E2 | negative: ..._MOCK_CALLS_PER_DAY=-1 | REFUSED 503 INVALID_BUDGET_POLICY
+E3 | max-concurrent=0 (wedge) | REFUSED 503 INVALID_BUDGET_POLICY
+E4 | calls-per-day=0 (closed day: must boot) | BOOT OK providers={mock=2/0} unconfigured=UNLIMITED
+E5 | beyond int: calls-per-day=99999999999 (the record field is a long) | REFUSED 503 INVALID_BUDGET_POLICY
+E6 | empty value: ..._MOCK_MAX_CONCURRENT= | REFUSED 503 INVALID_BUDGET_POLICY
+== F: one scope named by two sources with different values ==
+F1 | file says 100, env says 2 (Spring precedence: env wins) �� which value bound, refused? | BOOT OK providers={mock=2/2} unconfigured=UNLIMITED
+== G/H: source-type recognition ==
+G1 | env-SHAPED names inside a plain MapPropertySource | BOOT OK providers={(EMPTY -> every provider reads as unconfigured)} unconfigured=UNLIMITED
+G2 | would Spring itself resolve that canonical name from the plain map? getProperty(editorial.cost.provider-quota.mock.max-concurrent)=null (null means Spring also sees it as unset)
+H1 | dotted canonical name living IN an env-typed source: getProperty()=2
+H2 | the same environment through BudgetPolicyConfig.from | BOOT OK providers={(EMPTY -> every provider reads as unconfigured)} unconfigured=UNLIMITED
+== I: does the switch itself survive the env channel? ==
+I1 | unconfigured stated as an env name, quotas as env names | BOOT OK providers={mock=2/5} unconfigured=REFUSE
