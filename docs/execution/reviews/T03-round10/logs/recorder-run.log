@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "counts": {
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cases": 15,
+  "censusFiles": 4,
+  "boundInputs": [
+    "census",
+    "code",
+    "config:backend/src/main/resources/application-dev.yml",
+    "config:backend/src/main/resources/application-mock.yml",
+    "config:backend/src/main/resources/application-prod.yml",
+    "config:backend/src/main/resources/application.yml",
+    "guardTest",
+    "guardTestXml",
+    "pom",
+    "test"
+  ],
+  "output": "tests/engineering/T03/evidence/guard-test-binding.json"
+}

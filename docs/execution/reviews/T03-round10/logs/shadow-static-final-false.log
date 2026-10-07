@@ -1,0 +1,98 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.example:editorial >------------------------
+[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] Copying 21 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 101 source files with javac [debug parameters release 21] to target\classes
+[INFO] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: C:\Users\eie04\AppData\Local\Temp\t03r10\shadow\backend\src\main\java\com\example\editorial\editorial\skill\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��
+[INFO] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---
+[INFO] skip non existing resourceDirectory C:\Users\eie04\AppData\Local\Temp\t03r10\shadow\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.editorial.identity.T03SessionCookieGuardTest
+T03-SURFACE classpath*:/application*.yml
+T03-SURFACE classpath*:/application*.yaml
+T03-SURFACE classpath*:/application*.properties
+T03-SURFACE classpath*:/config/application*.yml
+T03-SURFACE classpath*:/config/application*.yaml
+T03-SURFACE classpath*:/config/application*.properties
+T03-CENSUS application-dev.yml 41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68
+T03-CENSUS application-mock.yml c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8
+T03-CENSUS application-prod.yml bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0
+T03-CENSUS application.yml 42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d
+T03-BIND base EDITORIAL_SESSION
+T03-BIND dev EDITORIAL_SESSION
+T03-BIND mock EDITORIAL_SESSION
+T03-BIND prod EDITORIAL_SESSION
+[ERROR] Tests run: 15, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 1.438 s <<< FAILURE! -- in com.example.editorial.identity.T03SessionCookieGuardTest
+[ERROR] com.example.editorial.identity.T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnNonContractCookieName -- Time elapsed: 0.465 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected org.springframework.beans.factory.BeanCreationException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.identity.T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnNonContractCookieName(T03SessionCookieGuardTest.java:251)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.example.editorial.identity.T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnInsecureProdCookie -- Time elapsed: 0.082 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected org.springframework.beans.factory.BeanCreationException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.editorial.identity.T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnInsecureProdCookie(T03SessionCookieGuardTest.java:272)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnInsecureProdCookie:272 Expected org.springframework.beans.factory.BeanCreationException to be thrown, but nothing was thrown.
+[ERROR]   T03SessionCookieGuardTest.assembledIdentitySecurityAbortsOnNonContractCookieName:251 Expected org.springframework.beans.factory.BeanCreationException to be thrown, but nothing was thrown.
+[INFO] 
+[ERROR] Tests run: 15, Failures: 2, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.104 s
+[INFO] Finished at: 2026-10-08T06:56:20+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project editorial: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\eie04\AppData\Local\Temp\t03r10\shadow\backend\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

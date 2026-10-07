@@ -1,0 +1,14 @@
+T03-BIND base EDITORIAL_SESSION
+T03-BIND dev EDITORIAL_SESSION
+T03-BIND mock EDITORIAL_SESSION
+T03-BIND prod EDITORIAL_SESSION
+T03-CENSUS application-dev.yml 41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68
+T03-CENSUS application-mock.yml c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8
+T03-CENSUS application-prod.yml bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0
+T03-CENSUS application.yml 42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d
+T03-SURFACE classpath*:/application*.properties
+T03-SURFACE classpath*:/application*.yaml
+T03-SURFACE classpath*:/application*.yml
+T03-SURFACE classpath*:/config/application*.properties
+T03-SURFACE classpath*:/config/application*.yaml
+T03-SURFACE classpath*:/config/application*.yml

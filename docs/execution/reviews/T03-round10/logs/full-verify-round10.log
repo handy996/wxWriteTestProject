@@ -1,0 +1,140 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.example:editorial >------------------------
+[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ editorial ---
+[INFO] Deleting E:\project\codex\wxAgent\backend\target
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] Copying 21 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 101 source files with javac [debug parameters release 21] to target\classes
+[INFO] /E:/project/codex/wxAgent/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: E:\project\codex\wxAgent\backend\src\main\java\com\example\editorial\editorial\skill\JsonSchema.java使用或覆盖了已过时的 API。
+[INFO] /E:/project/codex/wxAgent/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ editorial ---
+[INFO] skip non existing resourceDirectory E:\project\codex\wxAgent\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ editorial ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ editorial ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.editorial.article.ast.ArticleAstTest
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.401 s -- in com.example.editorial.article.ast.ArticleAstTest
+[INFO] Running com.example.editorial.article.job.DeletionHandoffTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in com.example.editorial.article.job.DeletionHandoffTest
+[INFO] Running com.example.editorial.article.job.T06MigrationUpgradeTest
+[WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 s -- in com.example.editorial.article.job.T06MigrationUpgradeTest
+[INFO] Running com.example.editorial.article.job.T06PostgresTest
+[WARNING] Tests run: 19, Failures: 0, Errors: 0, Skipped: 19, Time elapsed: 0.013 s -- in com.example.editorial.article.job.T06PostgresTest
+[INFO] Running com.example.editorial.article.version.T07PostgresTest
+[WARNING] Tests run: 16, Failures: 0, Errors: 0, Skipped: 16, Time elapsed: 0.009 s -- in com.example.editorial.article.version.T07PostgresTest
+[INFO] Running com.example.editorial.article.version.T07RevisionBoundaryTest
+[WARNING] Tests run: 20, Failures: 0, Errors: 0, Skipped: 20, Time elapsed: 0 s -- in com.example.editorial.article.version.T07RevisionBoundaryTest
+[INFO] Running com.example.editorial.article.version.T07UnavailableTest
+[WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 s -- in com.example.editorial.article.version.T07UnavailableTest
+[INFO] Running com.example.editorial.article.version.T07UpgradeTest
+[WARNING] Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0 s -- in com.example.editorial.article.version.T07UpgradeTest
+[INFO] Running com.example.editorial.article.version.VersionDiffTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.560 s -- in com.example.editorial.article.version.VersionDiffTest
+[INFO] Running com.example.editorial.bootstrap.CostAuditWiringTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.example.editorial.bootstrap.CostAuditWiringTest
+[INFO] Running com.example.editorial.bootstrap.StartupPolicyTest
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.302 s -- in com.example.editorial.bootstrap.StartupPolicyTest
+[INFO] Running com.example.editorial.cost.CostPricingTest
+[INFO] Tests run: 28, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.292 s -- in com.example.editorial.cost.CostPricingTest
+[INFO] Running com.example.editorial.cost.T08PostgresTest
+[WARNING] Tests run: 37, Failures: 0, Errors: 0, Skipped: 37, Time elapsed: 0.004 s -- in com.example.editorial.cost.T08PostgresTest
+[INFO] Running com.example.editorial.editorial.skill.BaselineResourcesTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.075 s -- in com.example.editorial.editorial.skill.BaselineResourcesTest
+[INFO] Running com.example.editorial.editorial.skill.CursorCodecTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.editorial.editorial.skill.CursorCodecTest
+[INFO] Running com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.063 s -- in com.example.editorial.editorial.skill.JsonSchemaSkillConfigTest
+[INFO] Running com.example.editorial.editorial.skill.PromptContractTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.example.editorial.editorial.skill.PromptContractTest
+[INFO] Running com.example.editorial.editorial.skill.SemVerTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.example.editorial.editorial.skill.SemVerTest
+[INFO] Running com.example.editorial.editorial.skill.SkillConfigDiffTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.example.editorial.editorial.skill.SkillConfigDiffTest
+[INFO] Running com.example.editorial.editorial.skill.T05PostgresTest
+[WARNING] Tests run: 24, Failures: 0, Errors: 0, Skipped: 24, Time elapsed: 0 s -- in com.example.editorial.editorial.skill.T05PostgresTest
+[INFO] Running com.example.editorial.identity.T03PostgresTest
+[WARNING] Tests run: 15, Failures: 0, Errors: 0, Skipped: 15, Time elapsed: 0 s -- in com.example.editorial.identity.T03PostgresTest
+[INFO] Running com.example.editorial.identity.T03SessionCookieGuardTest
+07:05:47.279 [main] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'identitySecurity' defined in com.example.editorial.identity.T03Configuration: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'identitySecurity' threw exception with message: T03_COOKIE: session cookie name must equal the approved contract name EDITORIAL_SESSION
+T03-SURFACE classpath*:/application*.yml
+T03-SURFACE classpath*:/application*.yaml
+T03-SURFACE classpath*:/application*.properties
+T03-SURFACE classpath*:/config/application*.yml
+T03-SURFACE classpath*:/config/application*.yaml
+T03-SURFACE classpath*:/config/application*.properties
+T03-CENSUS application-dev.yml 41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68
+T03-CENSUS application-mock.yml c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8
+T03-CENSUS application-prod.yml bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0
+T03-CENSUS application.yml 42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d
+T03-BIND base EDITORIAL_SESSION
+T03-BIND dev EDITORIAL_SESSION
+T03-BIND mock EDITORIAL_SESSION
+T03-BIND prod EDITORIAL_SESSION
+07:05:48.097 [main] WARN org.springframework.context.annotation.AnnotationConfigApplicationContext -- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'identitySecurity' defined in com.example.editorial.identity.T03Configuration: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'identitySecurity' threw exception with message: T03_COOKIE: secure production cookie required
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.315 s -- in com.example.editorial.identity.T03SessionCookieGuardTest
+[INFO] Running com.example.editorial.settings.policy.HashingTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.editorial.settings.policy.HashingTest
+[INFO] Running com.example.editorial.shared.CanonicalRequestTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.editorial.shared.CanonicalRequestTest
+[INFO] Running com.example.editorial.storage.LocalDownloadHttpTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.748 s -- in com.example.editorial.storage.LocalDownloadHttpTest
+[INFO] Running com.example.editorial.storage.LocalStorageBackendTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.159 s -- in com.example.editorial.storage.LocalStorageBackendTest
+[INFO] Running com.example.editorial.storage.ObjectKeysTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.editorial.storage.ObjectKeysTest
+[INFO] Running com.example.editorial.storage.S3EndpointAuthorityTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.996 s -- in com.example.editorial.storage.S3EndpointAuthorityTest
+[INFO] Running com.example.editorial.storage.S3ProtocolRegressionTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.139 s -- in com.example.editorial.storage.S3ProtocolRegressionTest
+[INFO] Running com.example.editorial.storage.S3StorageBackendTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.example.editorial.storage.S3StorageBackendTest
+[INFO] Running com.example.editorial.storage.SignedUrlTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.editorial.storage.SignedUrlTest
+[INFO] Running com.example.editorial.storage.SigV4Test
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.example.editorial.storage.SigV4Test
+[INFO] Running com.example.editorial.storage.T04PostgresTest
+[WARNING] Tests run: 8, Failures: 0, Errors: 0, Skipped: 8, Time elapsed: 0 s -- in com.example.editorial.storage.T04PostgresTest
+[INFO] Running com.example.editorial.storage.T04RevisionPostgresTest
+[WARNING] Tests run: 7, Failures: 0, Errors: 0, Skipped: 7, Time elapsed: 0 s -- in com.example.editorial.storage.T04RevisionPostgresTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 305, Failures: 0, Errors: 0, Skipped: 149
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ editorial ---
+[INFO] Building jar: E:\project\codex\wxAgent\backend\target\editorial-0.1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.5.16:repackage (repackage) @ editorial ---
+[INFO] Replacing main artifact E:\project\codex\wxAgent\backend\target\editorial-0.1.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to E:\project\codex\wxAgent\backend\target\editorial-0.1.0-SNAPSHOT.jar.original
+[WARNING] Goal makeAggregateBom requires online mode for execution but Maven is currently offline, skipping
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  31.009 s
+[INFO] Finished at: 2026-10-08T07:05:55+08:00
+[INFO] ------------------------------------------------------------------------

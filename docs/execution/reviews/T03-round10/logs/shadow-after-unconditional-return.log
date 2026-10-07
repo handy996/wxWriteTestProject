@@ -1,0 +1,41 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.example:editorial >------------------------
+[INFO] Building AI Editorial Agent 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (default) @ editorial ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ editorial ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] Copying 21 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ editorial ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 101 source files with javac [debug parameters release 21] to target\classes
+[INFO] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: C:\Users\eie04\AppData\Local\Temp\t03r10\shadow\backend\src\main\java\com\example\editorial\editorial\skill\JsonSchema.javaʹ�û򸲸����ѹ�ʱ�� API��
+[INFO] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/editorial/skill/JsonSchema.java: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/identity/T03Configuration.java:[43,9] �޷����ʵ����
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.485 s
+[INFO] Finished at: 2026-10-08T06:56:54+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project editorial: Compilation failure
+[ERROR] /C:/Users/eie04/AppData/Local/Temp/t03r10/shadow/backend/src/main/java/com/example/editorial/identity/T03Configuration.java:[43,9] �޷����ʵ����
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
