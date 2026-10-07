@@ -39,10 +39,7 @@ public class T03Configuration {
             || !("https".equals(uri.getScheme()) || ("http".equals(uri.getScheme()) && !env.matchesProfiles("prod"))))
             throw new IllegalStateException("T03_ORIGIN: explicit origin required; HTTPS in production");
         if(!"none".equals(env.getProperty("server.forward-headers-strategy","none"))) throw new IllegalStateException("T03_PEER: forwarded headers must be disabled");
-        if(!SESSION_COOKIE_NAME.equals(env.getProperty("server.servlet.session.cookie.name",""))) throw new IllegalStateException("T03_COOKIE: session cookie name must equal the approved contract name "+SESSION_COOKIE_NAME);
-        if(env.matchesProfiles("prod") && (!env.getProperty("server.servlet.session.cookie.secure",Boolean.class,false)
-            || !env.getProperty("server.servlet.session.cookie.http-only",Boolean.class,true)
-            || !"strict".equals(env.getProperty("server.servlet.session.cookie.same-site","strict")))) throw new IllegalStateException("T03_COOKIE: secure production cookie required");
+        verifySessionCookieContract(env);
         return http
             .securityContext(c->c.requireExplicitSave(true))
             .requestCache(c->c.disable()).formLogin(c->c.disable()).httpBasic(c->c.disable()).logout(c->c.disable())
@@ -55,5 +52,21 @@ public class T03Configuration {
                 .requestMatchers("/api/v1/**").hasRole("OWNER").anyRequest().denyAll())
             .addFilterBefore(new RequestBoundary(),SecurityContextHolderFilter.class)
             .addFilterBefore(new RequestGuards(origin,identity),CsrfFilter.class).build();
+    }
+
+    /**
+     * Session cookie contract check, kept as a package-visible static method so the rejection itself is testable
+     * without an {@link HttpSecurity} instance: before this extraction nothing proved that a wrong cookie name
+     * actually fails the boot rather than merely being described in a gate. It runs during bean creation, so a
+     * deployment that names the cookie anything other than what rc.3 declares cannot start, and a production
+     * profile cannot ship an insecure session cookie.
+     */
+    static void verifySessionCookieContract(Environment env) {
+        if(!SESSION_COOKIE_NAME.equals(env.getProperty("server.servlet.session.cookie.name","")))
+            throw new IllegalStateException("T03_COOKIE: session cookie name must equal the approved contract name "+SESSION_COOKIE_NAME);
+        if(env.matchesProfiles("prod") && (!env.getProperty("server.servlet.session.cookie.secure",Boolean.class,false)
+            || !env.getProperty("server.servlet.session.cookie.http-only",Boolean.class,true)
+            || !"strict".equals(env.getProperty("server.servlet.session.cookie.same-site","strict"))))
+            throw new IllegalStateException("T03_COOKIE: secure production cookie required");
     }
 }

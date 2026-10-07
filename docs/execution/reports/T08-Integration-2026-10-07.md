@@ -15,7 +15,7 @@
 ## 2. 第 4 节 7 项待决事项，我的答复
 
 1. **Flyway 全局版本号**：分配 **V5**，安装为 `backend/src/main/resources/db/migration/V5__cost_ledger_pricing.sql`，正文与其草案**原始字节等同**。首轮集成时的数字是 12,774 = 12,774；第一轮复审的 F-02 修复同时改动了草案与安装版（触发器加 `FOR UPDATE`），现在两者仍是剥头 3 行后逐字节等同：**13,119 B**，`sha256(正文)=22d7fad3117ddd38ac9d…`，草案全文件 13,453 B / V5 全文件 13,470 B（差 17 B 是我那三行头注释更长），CR=0、无 BOM。这条等同性由 `verify.py` 第 4 项以**不归一化换行**的方式机器断言，不再靠我口头声明。
-2. **`editorial.cost.*` 配置键**：只加功能开关 `editorial.cost.enabled: ${EDITORIAL_COST_ENABLED:false}`。**我在这里写错了，据第一轮复审 F-01（P1）更正**：原文"业务额度我一律不编……启用 cost 必然启动失败"与代码相反，而且同一个假说法被我写进了提交 `b3a909d` 的提交信息与 `openItems[COST-BUDGET-LIMITS]`。实况是 `BudgetPolicyConfig` 有 10 个键，其中 **8 个的回退值等于 SRS 已文档化的示例值**（`docs/AI-Editorial-Agent-SRS-v1.0.md:1099` 日预算示例 20 USD、`:1103` 每文章检索 30 / 输出 token 40,000 / 单 Claim 3 / 自动编辑 1 / 单 Slot 生图 2 / 每篇 4、`:1143` 预算 >80% 告警），所以只加开关就能启动。这些数**不是实施方编造**——我先前把"不编额度"当成自己的功劳，是核实不足：我读了 `application.yml`（确实干净，+2 行）却没读 `BudgetPolicyConfig`，而后者才是生效路径。整改后：SRS 未写明的 `max-calls-per-article` 与 `reconciliation-stale-minutes` 不再有默认值，缺键在配置装配期 503 `QUOTA_NOT_CONFIGURED`（`BudgetPolicy:58` 由不可达变为可达），`verify.py` 第 9 项改为直接对读 `BudgetPolicyConfig.java` 与 SRS 原文，少一个/多一个/改一个都会红。真正待 Owner 签字的是 SRS `:1281` 的 **OQ-09**（"每篇/每天成本上限？示例 5/20 USD"，仍 OPEN）：文档给了示例值不等于产品批准了生产值。
+2. **`editorial.cost.*` 配置键**：只加功能开关 `editorial.cost.enabled: ${EDITORIAL_COST_ENABLED:false}`。**我在这里写错了，据第一轮复审 F-01（P1）更正**：原文"业务额度我一律不编……启用 cost 必然启动失败"与代码相反，而且同一个假说法被我写进了提交 `b3a909d` 的提交信息与 `openItems[COST-BUDGET-LIMITS]`。实况是 `BudgetPolicyConfig` 有 10 个键，其中 **8 个的回退值等于 SRS 已文档化的示例值**（`docs/AI-Editorial-Agent-SRS-v1.0.md:1099` 日预算示例 20 USD、`:1103` 每文章检索 30 / 输出 token 40,000 / 单 Claim 3 / 自动编辑 1 / 单 Slot 生图 2 / 每篇 4、`:1143` 预算 >80% 告警），所以只加开关就能启动。这些数**不是实施方编造**——我先前把"不编额度"当成自己的功劳，是核实不足：我读了 `application.yml`（确实干净，+2 行）却没读 `BudgetPolicyConfig`，而后者才是生效路径。整改后：SRS 未写明的 `max-calls-per-article` 与 `reconciliation-stale-minutes` 不再有默认值，缺键在配置装配期 503 `QUOTA_NOT_CONFIGURED`（可达路径是 `BudgetPolicy.statedCeiling:109`；第二轮复审 F2-03 指出我先前写的 `BudgetPolicy:58` 指错了行，`:58` 在生产装配路径仍不可达），`verify.py` 第 9 项改为直接对读 `BudgetPolicyConfig.java` 与 SRS 原文，少一个/多一个/改一个都会红。真正待 Owner 签字的是 SRS `:1281` 的 **OQ-09**（"每篇/每天成本上限？示例 5/20 USD"，仍 OPEN）：文档给了示例值不等于产品批准了生产值。
 3. **端口绑定**：`CostPorts.Audit` **已绑定**（新增 `bootstrap/CostIntegration.java`，写法对齐 `VersionIntegration:24`，`entityType=COST`）。`CostPorts.Executions` 与 `CostPorts.AlertSink` **保持未绑定**：前者等 T09 的 `agent_execution`/`tool_execution`，后者等 T10/T11 人工任务队列，任何绑定都必须是真实作用域而非编造。同时**删除** `CostConfiguration` 的 `noAudit()` 兜底：启用 cost 而无审计链将在启动期失败，不再静默丢审计事实。
 4. **FK**：`cost_ledger.execution_id/claim_id/slot_id` 保持无 FK，等 T09/T10 落表后集成（符合 T00 契约"FK 在 T06/T10 后集成"）。
 5. **`article_job` 金额列镜像**：**不镜像**。账本是唯一事实源；写这两列会 bump `lock_version`/ETag 并触发 T06 投影守卫，属跨任务放大改动面。
@@ -63,3 +63,15 @@
 其余条目（死工厂 `noAudit()`、审计用例改走生产 `CostIntegration`、`over_run` 无外部投影、告警与 `pendingReconciliations` 无生产调用方、503 `EXECUTION_SCOPE_NOT_READY` 断言、`--expect-tests` 总数闸门、报告陈旧数字）见 `docs/execution/reviews/T08-round1/review.md` 与 `docs/execution/reports/T08.md`。我还纠正了自己一次误判：`CostPorts.java:72` 里 `noAudit` 只剩注释文字（"故意不提供 noAudit 工厂"），工厂确已删除——我最初的 grep 太粗，`verify.py:223` 是先剥 Java 注释再检查的。
 
 整改后我的复现：`run_pg.py --expect-tests 44` → **44/0/0**（16 + 28）、`expectations.problems=[]`、`mode=REAL_POSTGRES_INSTALLED_MIGRATIONS`、`clusterStopped=true`，证据 `evidence/t08-r2-main-repro.json`；`verify.py` **13/13**；`verify.py --reverse-control` **18/18 REJECT（blind=none, misplaced=none）**；`check_contracts.py` **27/27**；草案与 V5 剥头 3 行后**原始字节仍相等**（13,119 B，sha `22d7fad3117ddd38ac9d…`，CR=0、无 BOM）。第二轮复审**尚未开始**，所以 T08 现在是 `CHANGES_REQUIRED（整改待复）`，不是 PASS。
+
+## 8. 第二轮复审结论（agent-257c7361，同日补记）
+
+判 **CHANGES_REQUIRED**，但**第一轮两条 P1 均判 CLOSED**：F-01 它逐条把 8 个回退值对读了 SRS `:1099/:1103/:1143` 原文，确认"全部吻合、无一编造"，并亲验两个必需键在 eager `@Bean BudgetPolicy`（`CostConfiguration:31`）下缺键即启动拒绝；F-02 它核了 V5 `:86` 锁先于 `:88-90` 聚合的 READ COMMITTED 语义（行锁持到提交、等待方解锁后聚合是新语句新快照必见对方已提交行、触发器至多锁一行故无环），并确认对抗用例不是空炮——两个独立 runtime 连接、每会话 `SHOW session_replication_role=origin` 断言、断的是**提交计数恰 1** 而不只是错误码。上一轮 F-03…F-11 也逐条复验 CLOSED。
+
+它另抓到我两处表述与实现问题：
+- **F2-03（P3，我的文档错误）**：我在第 2 节写 `BudgetPolicy:58` 由不可达变可达，实际可达的是 `statedCeiling:109`。已就地更正。
+- **F2-04（P3，登记位置）**：启用前置条件（必须同时启用 identity、`AUDIT_CURSOR_KEY` ≥32 字符；`AlertSink` 无生产绑定即静默）原先只写在报告里，未进 `STATE.json`。台账属我职责，已补。
+
+实施方属主范围内的新问题 **F2-01（P2）provider-quota model 级 scope 永不命中（配置静默 fail-open）** 与 **F2-05（P3）文档键名与代码后缀不符**、**F2-02（P3）`verify.py` 锁序用 `find` 首次出现可被诱饵绕过**，已派回实施方 agent-8224880b；活库复跑由我代跑入库：`evidence/t08-r2-reviewer2-replay.json`（exit 0，`totals 44/0/0`，`problems=[]`，`clusterStopped=true`）。
+
+**启用 cost 的前置条件**（供 Owner 与后续任务核对，非可选）：`editorial.cost.enabled=true` 要求 `editorial.identity.enabled=true`（审计链由 `CostIntegration` 绑 `AuditSink`，无审计即启动失败，故意不留 `noAudit()` 兜底）与 ≥32 字符的 `AUDIT_CURSOR_KEY`；`CostPorts.AlertSink` 与 `CostPorts.Executions` 在 T10/T11 与 T09 落地前保持未绑定，因此**告警不会外投、执行作用域记账缺口保持显式**，启用后看到"预算在跑但无告警"是预期而非事故。

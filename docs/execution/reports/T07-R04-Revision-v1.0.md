@@ -47,9 +47,9 @@
 | 7 | 基线工作树跑 `--suite all --evidence-name baseline-all` | 1 | 120 项 16 失败，失败集合与第 6 项差集 0 |
 | 8 | 第 6/7 项失败集合 vs 仓库历史 `formal-all-domains-01-test-results`（先前记录，`exitCode=1`） | — | **完全相同（`sets identical: True`）**，即该状态在我改动之前就已入库 |
 
-**运行时修复的直接证据**是第 3 项里的 `fixationRotationAndLogout`：它现在断言 `Set-Cookie` 以
+**运行时修复的直接证据**是第 4 与第 10 项里的 `fixationRotationAndLogout`（不是第 3 项：第 3 项的 core 套件白名单根本不含 `T03PostgresTest`，此句原为第五轮 F01 指出的错标，上一版只改了表格却漏了本节，第六轮 F-03 再次点名）：它现在断言 `Set-Cookie` 以
 `EDITORIAL_SESSION=` 开头并使用该名字的会话轮换比较。若配置未生效，该测试必然失败——因此它同时充当本次改名的
-反向控制。第 5/7 项证明我没有引入任何新失败；基线工作树建在被忽略的 `tests/engineering/integration/.work/` 下，
+反向控制。第 5/7/10 项证明我没有引入任何新失败；基线工作树建在被忽略的 `tests/engineering/integration/.work/` 下，
 用完已 `git worktree remove` 删除，未触碰生产文件与历史提交。
 
 `formal.py` 把 `backend` 复制到自身隔离目录再构建，因此**不写 `backend/target`**，与并行进行的 T08 实施不冲突。

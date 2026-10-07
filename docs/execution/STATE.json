@@ -3,13 +3,19 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "已复审但未通过：2512025（T07-R04 整改，第五轮判 CHANGES_REQUIRED，P2×3 已整改）与 b3a909d（T08 集成 + 实施，第一轮判 CHANGES_REQUIRED，P1×2 已整改）。两轮复审的整改本身又构成新的未审字节（T08 侧：cost 包 + V5 触发器加 FOR UPDATE + tests/engineering/T08；主 agent 侧：tests/engineering/T03/check_session_cookie.py 加固 + 台账与两份报告的更正）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据；推进前提是 T08 第二轮独立复审与 T03 第六轮（或人工）批准。注意 b3a909d 的提交信息含一句被第一轮复审 F-01 证伪的主张（\"no invented business limits / fails closed\"），该错误已在 T08-Integration 第 2 项第 2 条与本台账更正，历史提交不改写",
-  "rounds": { "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）", "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）", "T08-1st": "b3a909d → CHANGES_REQUIRED（P1×2：F-01 额度默认与表述相反、F-02 AC-28 DB 层超订；整改后待第 2 轮）", "T03-5th": "2512025+HEAD → CHANGES_REQUIRED（P2×3：证据载体错标、闸门对守卫盲视、配置扫描无路径锚定；后两项主 agent 已加固为 14 条控制）" },
+  "pendingReviewCommit": "未通过复审且整改未再审：T03 侧第六轮 P2/P3 由主 agent 本人整改（剥注释匹配 + 20 控制 + 守卫提取 + 7 项离线负向测试），其本身未经独立复核；T08 侧 F2-01 与 F2-02/F2-05 实施方整改中。已有复审：2512025（T03 第五轮 CHANGES_REQUIRED）、b3a909d 与 849d784（T08 第一轮 CHANGES_REQUIRED、第二轮 CHANGES_REQUIRED 但两条 P1 CLOSED）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据；推进前提是 T08 第三轮与 T03 第七轮（或人工批准 T03-APPROVAL）判决",
+  "rounds": {
+    "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
+    "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
+    "T08-1st": "b3a909d → CHANGES_REQUIRED（P1×2：F-01 额度默认与表述相反、F-02 AC-28 DB 层超订；整改后待第 2 轮）",
+    "T03-5th": "2512025+HEAD → CHANGES_REQUIRED（P2×3：证据载体错标、闸门对守卫盲视、配置扫描无路径锚定；后两项主 agent 已加固为 14 条控制）",
+    "T08-2nd": "b3a909d+849d784 -> CHANGES_REQUIRED（两条 P1 判 CLOSED，agent-2 逐条核过；新增 F2-01 P2：provider-quota model 级 scope 拼成 provider.model 而查找用 provider|model，永不命中＝配置静默 fail-open；F2-02/03/04/05 P3。其要求的活库复跑由主 agent 代跑：44/0/0）",
+    "T03-6th": "2512025+849d784 -> CHANGES_REQUIRED（P2×1：GUARD/TEST_ASSERTION 匹配含注释原文，把守卫行 // 注释掉或 /* */ 包裹后闸门仍通过并印 startupGuardLive=true；P3×3：引号化重复键对扫描器隐形、报告 :50 残留与更正自相矛盾的措辞、machineGates 旧“五源全等”描述未同步。复审方 18 条独立探针中 12 条被正确拒绝，含协同改第三名字）"
+  },
   "integrationBase": "5413cf4",
   "branch": "main",
   "trackedFilesAtReviewedBaseline": 1834,
   "baselineInvariant": "reviewedBaselineCommit 是最后一个已复审的字节基线；其后的提交（包括本文件的后续修订）未经复审，一律不得当作 PASS 依据",
-
   "contract": {
     "version": "1.0.0-rc.3",
     "decision": "PASS",
@@ -22,95 +28,271 @@
       "docs/schemas/editorial.schema.json (~59k tok)",
       "docs/execution/contracts/archive/** (rc1/rc2 历史)",
       "docs/execution/reviews/*/input-snapshot.json (~90k tok)",
-      "**/.work/**", "backend/target/**", "frontend/node_modules/**", ".tools/**"
+      "**/.work/**",
+      "backend/target/**",
+      "frontend/node_modules/**",
+      ".tools/**"
     ]
   },
-
   "gates": {
     "G0": "PASS — 契约 rc.3 已批准（27/27 指纹一致）",
     "G1": "PARTIAL — 不得宣布：T03 无独立批准记录、T04 真实 S3 验收 BLOCKED、T08 预算底座未开始",
     "G2": "PARTIAL — T06/T07 的幂等、并发保护、版本不可变已有真实 PostgreSQL/HTTP 证据；T10/T11 持久化调度、generation/fencing、崩溃恢复未实现",
     "G3_to_G7": "NOT_STARTED"
   },
-
   "tasks": {
-    "T00": { "verdict": "PASS", "basis": "docs/execution/reviews/T00-rc3-approval.json", "note": "仅工程契约基线，不代表产品或模型质量验收" },
-    "T01": { "verdict": "BLOCKED", "basis": "docs/execution/reports/T01.md", "note": "工具与候选材料自测完成；两名独立人工标注者与模型质量人工评分未完成（产品 Owner 事项，不可代签）" },
-    "T02": { "verdict": "CHANGES_REQUIRED", "basis": "docs/execution/reviews/T02-Review-v2.0.md", "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论" },
-    "T03": { "verdict": "INTEGRATED_UNREVIEWED", "basis": "docs/execution/reports/T03-T07-Integration-2026-10-06.md", "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录。T07-R04 整改（Cookie 名常量 + 启动断言 + 测试改名 + 新闸门）由主 agent 本人实施，属 T03 域且未经复审，T03 独立批准必须覆盖它" },
-    "T04": { "verdict": "BLOCKED", "basis": "docs/execution/reviews/T04-Review-v3.0.md", "note": "R03 默认端口签名缺陷已关闭；B01/R04 真实私有 S3 桶端到端验收缺失（环境依赖）。T07 组合根当前仅允许 Local 后端执行版本写入" },
-    "T05": { "verdict": "PASS", "basis": "docs/execution/reviews/T05-Review-v2.0.md", "note": "明示不代表 T03 已批准、全 CI/G1、后续工作流集成或生产上线" },
-    "T06": { "verdict": "PASS", "basis": "docs/execution/reviews/T06-Review-v4.0.md", "note": "范围为当时工作区 T06 交付；正式集成版不自动继承，边界由 verify_boundaries.py 逐字节复核" },
-    "T07": { "verdict": "PASS", "basis": "docs/execution/reviews/T07-Review-v4.0.md", "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域" },
-    "T08": { "verdict": "CHANGES_REQUIRED", "basis": "docs/execution/reviews/T08-round1/review.md", "note": "第一轮独立复审（4e7342ba）判 CHANGES_REQUIRED：F-01 额度默认值与主 agent 的表述相反（P1）、F-02 AC-28 的\"数据库也守上限\"超出实现（P1）、另有死工厂/镜像守卫/over_run 无投影等 P2/P3。作者已整改：8 个回退值实为 SRS :1099/:1103/:1143 文档示例值（OQ-09 仍 OPEN），SRS 未写的两项改为无默认+配置期 503 QUOTA_NOT_CONFIGURED；t08_admit_estimate 先 FOR UPDATE 锁文章行再聚合，并在真实集群用两个 origin 裸连接并发绕过服务实测恰好 1 提交、另 1 个 23514（修前证据 t08-r1-baseline-gap-pre-fix.json：mvn 命令退出 1）；noAudit 死工厂已删（现仅存在于注释，verify.py 剥注释后检查）；审计用例改走生产 CostIntegration 适配器。主 agent 复现：run_pg --expect-tests 44 → 44/0/0、verify 13/13、--reverse-control 18/18 blind=none、contracts 27/27。仍待第二轮独立复审确认，未 PASS" }
+    "T00": {
+      "verdict": "PASS",
+      "basis": "docs/execution/reviews/T00-rc3-approval.json",
+      "note": "仅工程契约基线，不代表产品或模型质量验收"
+    },
+    "T01": {
+      "verdict": "BLOCKED",
+      "basis": "docs/execution/reports/T01.md",
+      "note": "工具与候选材料自测完成；两名独立人工标注者与模型质量人工评分未完成（产品 Owner 事项，不可代签）"
+    },
+    "T02": {
+      "verdict": "CHANGES_REQUIRED",
+      "basis": "docs/execution/reviews/T02-Review-v2.0.md",
+      "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论"
+    },
+    "T03": {
+      "verdict": "INTEGRATED_UNREVIEWED",
+      "basis": "docs/execution/reviews/T03-round6/review.md（第六轮 P2/P3 整改由主 agent 完成，未审；T03-APPROVAL 仍 OPEN，仅人类可签）",
+      "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录。T07-R04 整改（Cookie 名常量 + 启动断言 + 测试改名 + 新闸门）由主 agent 本人实施，属 T03 域且未经复审，T03 独立批准必须覆盖它"
+    },
+    "T04": {
+      "verdict": "BLOCKED",
+      "basis": "docs/execution/reviews/T04-Review-v3.0.md",
+      "note": "R03 默认端口签名缺陷已关闭；B01/R04 真实私有 S3 桶端到端验收缺失（环境依赖）。T07 组合根当前仅允许 Local 后端执行版本写入"
+    },
+    "T05": {
+      "verdict": "PASS",
+      "basis": "docs/execution/reviews/T05-Review-v2.0.md",
+      "note": "明示不代表 T03 已批准、全 CI/G1、后续工作流集成或生产上线"
+    },
+    "T06": {
+      "verdict": "PASS",
+      "basis": "docs/execution/reviews/T06-Review-v4.0.md",
+      "note": "范围为当时工作区 T06 交付；正式集成版不自动继承，边界由 verify_boundaries.py 逐字节复核"
+    },
+    "T07": {
+      "verdict": "PASS",
+      "basis": "docs/execution/reviews/T07-Review-v4.0.md",
+      "note": "R01/R02/R03 全部关闭，CR-T07-01 关闭；范围为版本/Diff/提案/删除交接实现与增量契约 diff-pages v1.1（批准为可消费契约层）。不代表：G1/G2、S3 后端下的版本写入（当前仅 Local）、T10/T11 真实调度与 fencing、T16/T19 引用适用性、QA/Approval/导出联动。新发现的 T07-R04 属 T03 会话配置域"
+    },
+    "T08": {
+      "verdict": "CHANGES_REQUIRED",
+      "basis": "docs/execution/reviews/T08-round2/review.md（第一轮两条 P1 已 CLOSED；F2-01 P2 与四条 P3 整改后需第三轮）",
+      "note": "第一轮独立复审（4e7342ba）判 CHANGES_REQUIRED：F-01 额度默认值与主 agent 的表述相反（P1）、F-02 AC-28 的\"数据库也守上限\"超出实现（P1）、另有死工厂/镜像守卫/over_run 无投影等 P2/P3。作者已整改：8 个回退值实为 SRS :1099/:1103/:1143 文档示例值（OQ-09 仍 OPEN），SRS 未写的两项改为无默认+配置期 503 QUOTA_NOT_CONFIGURED；t08_admit_estimate 先 FOR UPDATE 锁文章行再聚合，并在真实集群用两个 origin 裸连接并发绕过服务实测恰好 1 提交、另 1 个 23514（修前证据 t08-r1-baseline-gap-pre-fix.json：mvn 命令退出 1）；noAudit 死工厂已删（现仅存在于注释，verify.py 剥注释后检查）；审计用例改走生产 CostIntegration 适配器。主 agent 复现：run_pg --expect-tests 44 → 44/0/0、verify 13/13、--reverse-control 18/18 blind=none、contracts 27/27。仍待第二轮独立复审确认，未 PASS 第二轮独立复审（agent-257c7361）判两条 P1 CLOSED、新发现 F2-01（P2，provider-quota model 级 scope 永不命中＝配置静默 fail-open）与 F2-02/F2-03/F2-04/F2-05（P3），整改中，待第三轮；启用前置条件见本任务 activationPreconditions 字段（F2-04 要求从报告移入台账）",
+      "activationPreconditions": [
+        "editorial.cost.enabled=true 要求 editorial.identity.enabled=true：审计链由 bootstrap/CostIntegration 绑定 CostPorts.Audit，无审计绑定即启动失败（故意不提供 noAudit() 兜底，见 CostPorts.java:72 注释）",
+        "要求 AUDIT_CURSOR_KEY 至少 32 字符（审计游标加密），否则 identity 组合根自身拒绝启动",
+        "CostPorts.AlertSink 未绑定（等 T10/T11 人工任务队列）、CostPorts.Executions 未绑定（等 T09 agent_execution/tool_execution）：因此启用后会出现预算判定生效但告警不外投、执行作用域记账留空，这是显式缺口而非事故",
+        "max-calls-per-article 与 reconciliation-stale-minutes 无默认值，缺键在配置装配期 503 QUOTA_NOT_CONFIGURED；其余 8 个额度键的回退值是 SRS 文档化示例值，尚未获产品批准（见 openItems COST-BUDGET-LIMITS）",
+        "audit_log 的 before_hash/after_hash 为 char(64)+^[a-f0-9]{64}$ CHECK、detail 被锁成 '{}'，所以金额不得进审计列；金额事实只在 append-only 的 cost_ledger，审计行以 article_id+entity_id 回溯"
+      ]
+    }
   },
-
   "inProgress": [],
-  "notStarted": ["T09","T10","T11","T12","T13","T14","T15","T16","T17","T18","T19","T20","T21","T22","T23","T24","T25","T26","T27","T28","T29","T30","T31","T32","T33","T34","T35","T36","T37"],
-
+  "notStarted": [
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15",
+    "T16",
+    "T17",
+    "T18",
+    "T19",
+    "T20",
+    "T21",
+    "T22",
+    "T23",
+    "T24",
+    "T25",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T35",
+    "T36",
+    "T37"
+  ],
   "openItems": [
-    { "id": "T07-R04", "task": "T03", "severity": "P1（主 agent 定级；复审方建议 P2）", "status": "CLOSED",
+    {
+      "id": "T07-R04",
+      "task": "T03",
+      "severity": "P1（主 agent 定级；复审方建议 P2）",
+      "status": "CLOSED",
       "issue": "冻结契约与增量契约都把 Session Cookie 声明为 EDITORIAL_SESSION，但 backend/ 无任何 server.servlet.session.cookie.name 配置，运行时为容器默认 JSESSIONID；历史 HTTP 测试全部以 JSESSIONID 取证。严格按契约生成的客户端携带 EDITORIAL_SESSION 将得到 401",
       "foundBy": "docs/execution/reviews/T07-Review-v4.0.md 第 4 节（独立复审计中新发现，非 R03 要求范围）",
       "fix": "方向 (a) 实现符合已批准 rc.3（契约文本零改动）：application.yml 设 cookie.name=EDITORIAL_SESSION；T03Configuration 增加常量 SESSION_COOKIE_NAME 并在组合根启动即断言配置名==契约名（所有 profile，非仅 prod）；T03PostgresTest 三处 JSESSIONID 字面量改用常量并新增运行时断言 Set-Cookie 必须以 EDITORIAL_SESSION= 开头；新增零依赖闸门 tests/engineering/T03/check_session_cookie.py 比对契约/增量契约/基础与 prod 配置/Java 常量五处全等且禁止容器默认名回流",
-      "fixEvidence": ["docs/execution/reports/T07-R04-Revision-v1.0.md（第 3 节已按第五轮复审 F01 更正：改名生效的真实载体是 identity 套件，不是 --include-review-regressions，后者的 -Dtest 白名单根本不含 T03PostgresTest）", "tests/engineering/T03/check_session_cookie.py（第五轮 F02/F03/F04/F07 加固后：退出 0，14/14 反向控制被拒，扫全部 application*.yml，绝对锚 EDITORIAL_SESSION，守卫行与运行时自证断言成为受控源）", "tests/engineering/T03/evidence/session-cookie-r05.json（HEAD 字节，PASS，14 条控制）", "tests/engineering/integration/evidence/r05-head-bytes.json（HEAD 字节 identity 套件：15 项 6 失败，失败集为既有 6 项，fixationRotationAndLogout 不在其中 → 改名在真实 HTTP 下成立）", "tests/engineering/integration/evidence/r04-session-cookie.json 与 r04-all-with-identity.json（同套件基线对照用）"],
+      "fixEvidence": [
+        "docs/execution/reports/T07-R04-Revision-v1.0.md（第 3 节已按第五轮复审 F01 更正：改名生效的真实载体是 identity 套件，不是 --include-review-regressions，后者的 -Dtest 白名单根本不含 T03PostgresTest）",
+        "tests/engineering/T03/check_session_cookie.py（第五轮 F02/F03/F04/F07 加固后：退出 0，14/14 反向控制被拒，扫全部 application*.yml，绝对锚 EDITORIAL_SESSION，守卫行与运行时自证断言成为受控源）",
+        "tests/engineering/T03/evidence/session-cookie-r06.json（当前字节，PASS，20/20 反向控制，Java 模式剥注释后匹配，扫全部 4 个 application*.yml，profileOverrides={}；r05 与其 14 条控制记录保留为历史）",
+        "tests/engineering/integration/evidence/r06-head-bytes.json（整改后字节上重跑 identity：15 项 6 失败，失败集与 r05-head-bytes 逐字相同、新增与消失皆为空集，fixationRotationAndLogout 不在失败集。绑定指纹：application.yml=42acb385…（未变）、T03Configuration.java=dc0bb777…（守卫提取后刷新，旧 56f4d50a… 作废）、T03PostgresTest.java=ecc2eaed…（未变）",
+        "tests/engineering/integration/evidence/r04-session-cookie.json 与 r04-all-with-identity.json（同套件基线对照用）",
+        "backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java（7 项离线负向运行时证明；mvn -o clean verify 全量 276 项 0 失败 140 跳过 BUILD SUCCESS）"
+      ],
       "attribution": "identity 单域 6 项失败与未改动基线工作树（git worktree @ dc95736）差集为 0；--suite all 的 16 项失败与基线差集为 0，且与仓库既有 formal-all-domains-01-test-results（先前已入库，exitCode=1）集合完全相同 → 非本次引入",
-      "closedAt": "2026-10-06", "closedBy": "主 agent 实施并自验；尚未独立复审，见 pendingReview",
-      "note": "属身份/会话配置域，不反转 T07 第四轮判决，也不计入 T07 OPEN 项" },
-    { "id": "MULTI-DOMAIN-SUITE", "task": "T10/T11", "severity": "P3（预期限制，非缺陷）", "status": "OPEN",
+      "closedAt": "2026-10-06",
+      "closedBy": "主 agent 实施并自验；尚未独立复审，见 pendingReview",
+      "note": "属身份/会话配置域，不反转 T07 第四轮判决，也不计入 T07 OPEN 项"
+    },
+    {
+      "id": "MULTI-DOMAIN-SUITE",
+      "task": "T10/T11",
+      "severity": "P3（预期限制，非缺陷）",
+      "status": "OPEN",
       "issue": "formal.py --suite identity 与 --suite all 在当前批次必然部分失败：跨域调用返回 503 OWNERSHIP_NOT_READY、审计写入 AUDIT_WRITE_FAILED、emptyInitializationAndRepeatNeverReset 初始化用户数期望差 1 vs 2，共 16 项",
       "cause": "T10/T11 未安装，生产 Changes/Deletion fail closed——仓库自己的 formal-all-domains-01.json domainSubstitutes 已记录此点，且其失败集合与本轮逐项相同",
       "closure": "T10/T11 安装后重跑 --suite all 应转绿；在此之前任何整改的回归判定必须用同套件基线对照，不得要求 120 项全绿，也不得把 core 套件的绿色扩展解释为全域组合根已通过",
-      "openedAt": "2026-10-06", "foundBy": "docs/execution/reports/T07-R04-Revision-v1.0.md 第 4 节" },
-    { "id": "T08-REVIEW-2ND", "task": "T08", "severity": "P1（门禁前置）", "status": "OPEN",
+      "openedAt": "2026-10-06",
+      "foundBy": "docs/execution/reports/T07-R04-Revision-v1.0.md 第 4 节"
+    },
+    {
+      "id": "T08-REVIEW-2ND",
+      "task": "T08",
+      "severity": "P1（门禁前置）",
+      "status": "CLOSED",
       "issue": "第一轮复审的两条 P1 由实施方整改、由主 agent 复现，但整改本身尚未被独立复核：F-01 的\"8 个默认值来自 SRS、2 个改为必需\"是否真的对齐 SRS 原文；F-02 的触发器 FOR UPDATE 是否真挡住并发绕过者（作者给的修前证据 t08-r1-baseline-gap-pre-fix.json 退出 1，修后 44/0/0）",
-      "closure": "第二轮独立复审（上下文隔离、非实施方非集成方）复现 run_pg --expect-tests 44、verify 13/13、--reverse-control 18/18，并对 F-01/F-02 给出判决；同时复核审计走生产适配器后的 SQL 层闭环是否真在生产 bean 上执行",
-      "openedAt": "2026-10-07", "foundBy": "docs/execution/reviews/T08-round1/review.md + 主 agent 复现 t08-r2-main-repro.json" },
-    { "id": "T03-R5-GATE", "task": "T03", "severity": "P2", "status": "CLOSED",
-      "issue": "第五轮复审指出闸门只有相对相等：五源协同改回 JSESSIONID 时 evaluate() 通过；cookie 名可挪到 spring.datasource 下冒充；追加 --- 文档可藏第二个名字；守卫行与运行时自证断言不在受控源里；dev/mock profile 未扫",
+      "closure": "第二轮复审 agent-257c7361 完成：F-01（额度默认值）与 F-02（AC-28 触发器锁序）均判 CLOSED，见 docs/execution/reviews/T08-round2/review.md；其环境无法写盘要求的活库复跑由主 agent 代跑，tests/engineering/T08/evidence/t08-r2-reviewer2-replay.json（exit 0，totals 44/0/0，problems=[]，clusterStopped=true）",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T08-round1/review.md + 主 agent 复现 t08-r2-main-repro.json",
+      "closedAt": "2026-10-07"
+    },
+    {
+      "id": "T03-R5-GATE",
+      "task": "T03",
+      "severity": "P2",
+      "status": "CLOSED",
+      "issue": "第五轮复审指出闸门只有相对相等：五源协同改回 JSESSIONID 时 evaluate() 通过；cookie 名可挪到 spring.datasource 下冒充；追加 --- 文档可藏第二个名字；守卫行与运行时自证断言不在受控源里；dev/mock profile 未扫；第六轮再抓到同源缺陷：守卫正则匹配含注释原文，注释掉守卫即失效",
       "requiredFix": "加绝对锚 APPROVED_NAME、按缩进路径匹配 server.servlet.session.cookie.name 且按文档分段、扫全部 application*.yml、把启动守卫与运行时断言纳入受控源并各配变异",
       "evidence": "tests/engineering/T03/evidence/session-cookie-r05.json（PASS，14/14 反向控制被拒，profileOverrides={} 有据）；F01 报告措辞与 F05 指纹过期同步更正见 fixEvidence",
-      "openedAt": "2026-10-07", "closedAt": "2026-10-07", "foundBy": "docs/execution/reviews/T03-round5/review.md F02/F03/F04/F07" },
-    { "id": "COST-BUDGET-LIMITS", "task": "T08", "severity": "P2（Owner 事项，不可代签）", "status": "OPEN",
+      "openedAt": "2026-10-07",
+      "closedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T03-round5/review.md F02/F03/F04/F07"
+    },
+    {
+      "id": "COST-BUDGET-LIMITS",
+      "task": "T08",
+      "severity": "P2（Owner 事项，不可代签）",
+      "status": "OPEN",
       "issue": "更正主 agent 此前的错误表述：它写进台账与提交信息的\"业务额度我一律不编、缺键必然启动失败\"与代码相反（第一轮复审 F-01，P1）。实况是 BudgetPolicyConfig 有 10 个配置键，其中 8 个的回退值等于 SRS 已文档化的示例值（:1099 日预算示例 20 USD、:1103 每文章检索 30/输出 token 40,000/单 Claim 3/自动编辑 1/单 Slot 生图 2/每篇 4、:1143 预算 >80% 告警），因此打开开关即可启动；SRS 未写明的 max-calls-per-article 与 reconciliation-stale-minutes 整改后不再给默认值，缺键在配置装配期 503 QUOTA_NOT_CONFIGURED。provider-quota 仍是\"未配置即不设限\"",
       "consequence": "数值出处合法但**未经产品批准**：SRS :1281 的 OQ-09 明写这些是\"示例\"值、待产品与真实 API 测试前定稿。也就是说启用态会带着未批准的 20 USD/日运行，这是 Owner 必须签字的事，不是实现细节能替代的",
       "closure": "产品 Owner 给出额度数值与告警阈值；同时需要价格发布的受控运维入口（现仅 migrator 可写，runtime 只读）。另需裁定是否镜像 article_job 金额列（主 agent 本轮决定：不镜像，账本为唯一事实源）",
-      "openedAt": "2026-10-07", "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 2 节" },
-    { "id": "COST-HTTP-E2E", "task": "T08", "severity": "P3", "status": "OPEN",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 2 节"
+    },
+    {
+      "id": "COST-HTTP-E2E",
+      "task": "T08",
+      "severity": "P3",
+      "status": "OPEN",
       "issue": "GET /api/v1/usage 未做真实 HTTP 端到端验证；CostController 仅在 editorial.cost.enabled=true 时装配，而该开关受 COST-BUDGET-LIMITS 阻塞",
       "closure": "拿到额度后以真实 PG + 真实 HTTP 跑通 /usage 的鉴权、分页游标与字段形状（对照 rc.3 DTO），并把证据并入 formal 套件或 T08 runner",
-      "openedAt": "2026-10-07", "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 6 节" },
-    { "id": "T07-R03", "task": "T07", "severity": "P2", "status": "CLOSED",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reports/T08-Integration-2026-10-07.md 第 6 节"
+    },
+    {
+      "id": "T07-R03",
+      "task": "T07",
+      "severity": "P2",
+      "status": "CLOSED",
       "issue": "docs/api/diff-pages-v1.1.openapi.yaml 无根级/操作级 security，也无 components.securitySchemes；独立生成客户端的 agent 无法从机器可读配置得知必须携带登录 Session，实际会收到 401",
       "requiredFix": "在增量 OpenAPI 声明与冻结契约一致的 session Cookie scheme 并在根级或 GET 操作引用；补自动化校验断言该路由的有效 security requirement 及 scheme 的 type/in/name；保留真实 HTTP 匿名 401 与登录成功回归。仅补文字说明不足以关闭",
       "evidence": "docs/execution/reviews/T07-round3/evidence/checks.json（contract 记录：期望 security=[{session:[]}]，实际 null）",
       "fixedAt": "2026-10-06",
       "fix": "增量 OpenAPI 现声明根级 security=[{session:[]}] 与 securitySchemes.session（apiKey/cookie/EDITORIAL_SESSION，与冻结契约字典全等）；verify_diff_page.py 按“操作级优先否则根级”解析有效 security 并校验 scheme 的 type/in/name，另加深拷贝反向控制必须全部被拒",
-      "fixEvidence": ["tests/engineering/T07/evidence/diff-page-v1.1-check-r03.json（交付方：退出 0；反向控制 4/4 拒绝；内嵌 rc.3 27/27）", "docs/execution/reports/T07-Revision-v3.0.md"],
-      "closedBy": "docs/execution/reviews/T07-Review-v4.0.md（独立复审：反向控制 6/6 拒绝，其中含交付方未做的两项超额控制；rc.3 27/27；差分中生产路径 0）", "closedAt": "2026-10-06" },
-    { "id": "CR-T07-01", "task": "T07", "severity": "登记项", "status": "CLOSED",
+      "fixEvidence": [
+        "tests/engineering/T07/evidence/diff-page-v1.1-check-r03.json（交付方：退出 0；反向控制 4/4 拒绝；内嵌 rc.3 27/27）",
+        "docs/execution/reports/T07-Revision-v3.0.md"
+      ],
+      "closedBy": "docs/execution/reviews/T07-Review-v4.0.md（独立复审：反向控制 6/6 拒绝，其中含交付方未做的两项超额控制；rc.3 27/27；差分中生产路径 0）",
+      "closedAt": "2026-10-06"
+    },
+    {
+      "id": "CR-T07-01",
+      "task": "T07",
+      "severity": "登记项",
+      "status": "CLOSED",
       "issue": "冻结 Diff 旧路由仍最多返回 1,000 项而合法 AST 可达 30,000 块；超限返回 DIFF_TOO_LARGE",
       "note": "分页新路由覆盖容量场景：601 页 / 60,002 行逐行验证；旧路由超限显式拒绝行为未变。登记关闭条件（R03 修复 + 增量契约复审）已满足",
-      "closedBy": "docs/execution/reviews/T07-Review-v4.0.md 第 6 节", "closedAt": "2026-10-06",
-      "caveat": "AC-19“任意合法版本 Diff 完整可读”的容量证据继承自第三轮运行、绑定未变的生产字节（第四轮以差分路径过滤证明未变），本轮未重跑；要求同轮重验时用 docs/execution/reviews/T07-round3/run_review.py --include-review-regressions 配新证据名" },
-    { "id": "B01", "task": "T04", "severity": "BLOCKED", "status": "OPEN",
-      "issue": "真实私有 S3 桶端到端验收缺失；协议与本地 HTTP/TLS 测试不能替代真实桶验收" },
-    { "id": "T03-APPROVAL", "task": "T03", "severity": "流程", "status": "OPEN",
-      "issue": "T03 尚无独立批准记录，G1 因此无法宣布；需一次针对已集成组合根的独立复审" },
-    { "id": "T01-HUMAN", "task": "T01", "severity": "BLOCKED", "status": "OPEN",
-      "issue": "人工金标（两名独立标注者、模型质量人工评分）与 SRS 第 40 节业务决策未由 Owner 完成" },
-    { "id": "COMPAT-INVENTORY", "task": "T02/T07", "severity": "OPEN", "status": "OPEN",
-      "issue": "旧 canonical 非 BMP/控制字符历史数据及幂等 hash 兼容盘点未完成；已存不可变行不得原地改写" }
+      "closedBy": "docs/execution/reviews/T07-Review-v4.0.md 第 6 节",
+      "closedAt": "2026-10-06",
+      "caveat": "AC-19“任意合法版本 Diff 完整可读”的容量证据继承自第三轮运行、绑定未变的生产字节（第四轮以差分路径过滤证明未变），本轮未重跑；要求同轮重验时用 docs/execution/reviews/T07-round3/run_review.py --include-review-regressions 配新证据名"
+    },
+    {
+      "id": "B01",
+      "task": "T04",
+      "severity": "BLOCKED",
+      "status": "OPEN",
+      "issue": "真实私有 S3 桶端到端验收缺失；协议与本地 HTTP/TLS 测试不能替代真实桶验收"
+    },
+    {
+      "id": "T03-APPROVAL",
+      "task": "T03",
+      "severity": "流程",
+      "status": "OPEN",
+      "issue": "T03 尚无独立批准记录，G1 因此无法宣布；需一次针对已集成组合根的独立复审"
+    },
+    {
+      "id": "T01-HUMAN",
+      "task": "T01",
+      "severity": "BLOCKED",
+      "status": "OPEN",
+      "issue": "人工金标（两名独立标注者、模型质量人工评分）与 SRS 第 40 节业务决策未由 Owner 完成"
+    },
+    {
+      "id": "COMPAT-INVENTORY",
+      "task": "T02/T07",
+      "severity": "OPEN",
+      "status": "OPEN",
+      "issue": "旧 canonical 非 BMP/控制字符历史数据及幂等 hash 兼容盘点未完成；已存不可变行不得原地改写"
+    },
+    {
+      "id": "T08-F2-01-QUOTA-SCOPE",
+      "task": "T08",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "model 级 provider-quota 经配置路径被静默忽略：实现把 scope 拼成 provider.model，查找先 provider|model 再退到 provider，永不命中，于是配了限额等于没配（fail-open）；javadoc 教的是第三种写法 provider_model；docs/execution/reports/T08.md:55 的键名 {max-concurrency,daily-calls} 与代码真实后缀 .max-concurrent/.calls-per-day 不符——照抄文档会响亮报错，写对了反而无声失效。唯一缓解是功能门默认关闭且 application.yml 不含这些键，这不构成正确性",
+      "requiredFix": "统一 scope 拼法使 javadoc/实现/测试/文档四处一致；去掉“查不到即不限”的静默 fail-open（改必需键或显式语义，参照 max-calls-per-article 的处理）；补 model 级配置路径的行为测试；verify.py --reverse-control 补对应减弱项（现 18 条无一覆盖 model 级，这就是它能溜过去的原因）",
+      "closure": "实施方整改 + 第三轮独立复审确认；F2-02（verify 锁序 find 首次出现可诱饵绕过）与 F2-05（文档键名、AC-28 表重复单元格）同批",
+      "owner": "实施方 agent 8224880b（cost 域属主），已派发",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T08-round2/review.md F2-01"
+    },
+    {
+      "id": "T03-R6-GATE",
+      "task": "T03",
+      "severity": "P2",
+      "status": "CLOSED",
+      "issue": "会话 Cookie 闸门的 Java 模式作用于含注释原文：把 verifySessionCookieContract 调用行或名字检查整行 // 注释掉、或 /* */ 包裹，evaluate() 仍通过并在证据里印 startupGuardLive/runtimeAssertionLive=true；引号化 YAML 键 \"name\": X 不在路径匹配内而对扫描器隐形（重复键的 Spring 行为仍未证明）",
+      "requiredFix": "Java 模式改在剥注释后的源码上匹配（字符串/字符字面量内的 // 不得误剥）；调用点、名字检查、prod 检查、消息前缀四段分别受控；YAML 键去引号归一；补注释类与引号类反向控制",
+      "evidence": "tests/engineering/T03/check_session_cookie.py（20/20 控制）+ tests/engineering/T03/evidence/session-cookie-r06.json；两条 Cookie 守卫从 @Bean 方法体提为 package-visible static verifySessionCookieContract，新增 backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java 7 项离线负向测试：缺名/JSESSIONID/第三名字必抛 T03_COOKIE，prod 的 secure、http-only、same-site 各自削弱必抛，符合契约则放行。此前从 R04 起无人证明“错名真的会拒绝启动”，因为守卫埋在需要 HttpSecurity 的 bean 方法里",
+      "openedAt": "2026-10-07",
+      "closedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T03-round6/review.md F-01/F-02"
+    }
   ],
-
   "next": [
-    "1. 已并行派出两路独立复审（实施方与集成方同侧，必须外部判决）：T08 第一轮（重点：锁序与 AC-28 并发论证、BEFORE-INSERT 触发器与服务上限一致性、UNKNOWN 先提交再 409 的语义、审计只存 id/哈希这一决定是否可接受、40/40 是否真能从零复现）与 T03 第五轮（覆盖 2512025 的 R04 整改）。按判决整改后才允许写入 rounds",
-    "2. 补 T02 第 3 轮复审与 T03 独立批准以推进 G1；T07-R04 与其整改都是 T03 缺少独立复审的直接证据。T04 保持 BLOCKED 并登记所需真实 S3 桶环境依赖",
-    "3. 向产品 Owner 索取 COST-BUDGET-LIMITS 的额度数值与告警阈值，并要价格发布运维入口；拿到后才能验证启用态组合根与 GET /usage 端到端（COST-HTTP-E2E），T09 也需要它们做真实预占",
-    "4. T09（AI 网关与调用追踪）的前置 T08 已集成，可派发；但真实收费调用仍被 editorial.providers.paid-calls-enabled=false 门禁锁住，T09 不得放开。T10/T11 装好后重跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
-    "4. 无人工金标就不能宣布 T01/G1 完成：T01-HUMAN 是产品 Owner 事项，不可代签"
+    "1. T08 第三轮独立复审：等实施方整改 F2-01（provider-quota model 级 scope 统一 + 去掉查不到即不限的静默 fail-open + model 级配置路径测试 + reverse-control 补覆盖）与 F2-02/F2-05 之后派；活库项由主 agent 代跑并入库",
+    "2. T03 第七轮独立复审：复核主 agent 第六轮整改（剥注释匹配、20 条控制、守卫提为 static、7 项离线负向测试）。T03-APPROVAL 与 G1 只能由人类签署，复审方与主 agent 均不得代宣",
+    "3. 产品 Owner 待决（COST-BUDGET-LIMITS）：SRS OQ-09 的示例值是否正式批准为生产值（日 20 USD、每篇 5 USD、30/40000/3/1/2/4、80% 告警线——代码回退值现即为这些），以及 max-calls-per-article 与 reconciliation-stale-minutes 两个必需键的取值；另需价格发布的受控运维写入口",
+    "4. COST-HTTP-E2E：启用态组合根启动 + GET /api/v1/usage 真实 HTTP 端到端（需 identity 启用与 AUDIT_CURSOR_KEY）",
+    "5. T09（AI 调用与成本追踪）现已可派：cost 域已集成，真实收费调用仍由 editorial.providers.paid-calls-enabled=false 拦",
+    "6. T10/T11 装配完成后跑 --suite all 以关闭 MULTI-DOMAIN-SUITE",
+    "7. 缺人工输入或外部条件：T01 人工金标、T02 第 3 轮返工复审、B01/T04 真实私有 S3、COMPAT-INVENTORY"
   ],
-
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
     "边界即审查范围：任务卡“写入：”字段之外被改动的文件直接判 CHANGES_REQUIRED，且不读其内容",
@@ -128,13 +310,14 @@
     "复现主张必须绑定当前字节：改了被验文件（含编码）就先重跑再声称通过，否则“我复现过”指的是另一个字节序列",
     "一致性检查必须有绝对锚：只比较各来源彼此相等是不够的——五源协同改成同一个错值照样通过（第五轮复审 F04）。来源全等之外还要各自等于被批准的那个字面值，且守卫本体与被测断言本身都要进受控源并各配变异",
     "复现用的证据必须落在跟踪路径：跑在 .work 里的成功或失败记录对复审方不存在；失败前置证据（修前跑红）同样要提升到跟踪 evidence，否则“修前会坏”只是口头主张",
-    "守卫自身也要有守卫：白名单/清单在被使用前面必须断言其结构（如“每一项都是字符串”）。本轮两次因 PowerShell 语法静默弱化判定而差点放行错误结论——同一续行写两个数组元素会产生嵌套数组，使 StartsWith 与 -contains 全部失效；给原生程序传参时消息内含引号字符会被重新分词。守卫只能失败关闭、不得默认放行"
+    "守卫自身也要有守卫：白名单/清单在被使用前面必须断言其结构（如“每一项都是字符串”）。本轮两次因 PowerShell 语法静默弱化判定而差点放行错误结论——同一续行写两个数组元素会产生嵌套数组，使 StartsWith 与 -contains 全部失效；给原生程序传参时消息内含引号字符会被重新分词。守卫只能失败关闭、不得默认放行",
+    "反向控制必须自证改变了字节：变异若产出与原文相同的字节，控制就是装饰。本轮内置的空操作检测器抓到两条自家缺陷——一条把字符串替换成它自己，一条只替换首次出现而目标串在文件中出现两次（被注释掉的是另一条无关断言）。局部变异必须覆盖全部出现点，或说明为何只需一处",
+    "状态台账用结构化编辑而非手改文本：python 读入—断言—写回，断言白名单外的顶层键必须逐字相等、点名键必须确实变化、写回后重新解析再比一次；任何断言失败即在写盘前中止。本轮该自检两次拦下脚本自身的错误（白名单比较用点号子路径却按顶层键比对、虚构的 contractsFrozen 键），台账未被误写一次"
   ],
-
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
     "python tests/engineering/T02/check_contracts.py",
-    "python tests/engineering/T03/check_session_cookie.py   # 会话 Cookie 名五源全等（契约/增量契约/基础与 prod 配置/Java 常量）",
+    "python tests/engineering/T03/check_session_cookie.py   # 会话 Cookie 契约闸门：绝对锚 EDITORIAL_SESSION + 缩进路径匹配 server.servlet.session.cookie.name（按 --- 分段）+ 扫全部 application*.yml + Java 模式在剥注释后匹配（调用点/名字检查/prod 检查/消息前缀四段）+ 运行时自证断言；20 条内存内反向控制，空操作变异自证拦截",
     "python tests/engineering/T08/verify.py   # T08 静态自检 13 项（含 V5 与草案逐字节、额度值必须对读 SRS 原文、只绑 CostPorts.Audit）",
     "python tests/engineering/T08/verify.py --reverse-control   # 18 条内存内减弱必须全 REJECT（blind=none, misplaced=none）",
     "python tests/engineering/T08/run_pg.py --expect-tests 44 --evidence-name <新名>   # 真实 PG：应用安装版 V1–V5，CostPricing 16 + T08Postgres 28；总数不符即非零退出并拒写证据，结束自停集群",
@@ -147,9 +330,8 @@
     "python tests/engineering/T02/integration.py --pg-bin <pgsql/bin> --java <jdk/bin>   # 真实 PostgreSQL，无 Docker 时",
     "python tests/engineering/T02/compose_smoke.py --entrypoint   # 需 Docker；两个容器测试都用本机 18080，须顺序运行"
   ],
-
   "budget": {
-    "sessionBootstrap": "只读本文件，实测约 3.9k tok（含 7 项台账与 10 条协议）；对照重读 SRS+计划+报告+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 4.6k tok（21 顶层键、tasks 9、openItems 14、protocol 19）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",

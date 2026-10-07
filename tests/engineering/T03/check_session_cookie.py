@@ -37,10 +37,56 @@ APPROVED_NAME = "EDITORIAL_SESSION"          # the name rc.3 declares and the R0
 FORBIDDEN = "JSESSIONID"                     # the container default that must never reappear
 COOKIE_PATH = ("server", "servlet", "session", "cookie", "name")
 SCALAR = re.compile(r"([^:#]+?):[ \t]*(.*)$")
-GUARD = re.compile(
+# The guard is three things now, and each is checked separately after comments are stripped, because the sixth
+# review showed that matching raw text lets an operator comment the guard out and still print startupGuardLive=true.
+GUARD_CALL = re.compile(r'verifySessionCookieContract\(\s*env\s*\)\s*;')
+GUARD_NAME = re.compile(
     r'if\s*\(\s*!\s*SESSION_COOKIE_NAME\.equals\(\s*env\.getProperty\(\s*"server\.servlet\.session\.cookie\.name"'
-    r'\s*,\s*""\s*\)\s*\)\s*\)\s*throw new IllegalStateException\(\s*"T03_COOKIE')
+    r'\s*,\s*""\s*\)\s*\)\s*\)')
+GUARD_PROD = re.compile(r'"server\.servlet\.session\.cookie\.secure"')
+GUARD_MESSAGE = "T03_COOKIE"
 TEST_ASSERTION = re.compile(r'allValues\(\s*"Set-Cookie"\s*\)[^\n]*startsWith\(\s*T03Configuration\.SESSION_COOKIE_NAME\s*\+\s*"="')
+
+
+def strip_java_comments(text):
+    """Remove // and block comments while respecting string and char literals.
+
+    A guard that only exists inside a comment is not a guard, so every Java pattern below is matched against the
+    de-commented source. Line structure is preserved so a reviewer can still map a match back to the file.
+    """
+    out = []
+    index = 0
+    size = len(text)
+    quote = None
+    while index < size:
+        ch = text[index]
+        if quote:
+            out.append(ch)
+            if ch == "\\" and index + 1 < size:
+                out.append(text[index + 1])
+                index += 2
+                continue
+            if ch == quote:
+                quote = None
+            index += 1
+            continue
+        if ch == "/" and index + 1 < size and text[index + 1] == "/":
+            while index < size and text[index] != "\n":
+                index += 1
+            continue
+        if ch == "/" and index + 1 < size and text[index + 1] == "*":
+            index += 2
+            while index + 1 < size and not (text[index] == "*" and text[index + 1] == "/"):
+                if text[index] == "\n":
+                    out.append("\n")
+                index += 1
+            index += 2
+            continue
+        if ch in "\"'":
+            quote = ch
+        out.append(ch)
+        index += 1
+    return "".join(out)
 
 SOURCES = {
     "frozenContract": ROOT / "docs/api/openapi.yaml",
@@ -153,7 +199,7 @@ def cookie_names(text):
         match = SCALAR.match(body)
         if not match:
             continue
-        key, value = match.group(1).strip(), match.group(2).strip()
+        key, value = _unquote(match.group(1).strip()), match.group(2).strip()
         if value == "" or value.startswith("#"):
             stack.append((indent, key))
         elif tuple(k for _, k in stack) + (key,) == COOKIE_PATH:
@@ -204,14 +250,23 @@ def evaluate(sources):
     constant = code_constant(sources["code"])
     if constant != APPROVED_NAME:
         raise AssertionError(f"code: constant {constant!r} != approved {APPROVED_NAME!r}")
-    if not GUARD.search(sources["code"]):
-        raise AssertionError("code: the startup guard that rejects a cookie name other than the contract is missing or neutered")
-    if not TEST_ASSERTION.search(sources["test"]):
-        raise AssertionError("test: no assertion that the runtime issues the declared cookie name via Set-Cookie")
+    code = strip_java_comments(sources["code"])
+    if not GUARD_CALL.search(code):
+        raise AssertionError("code: identitySecurity no longer calls verifySessionCookieContract(env)")
+    if not GUARD_NAME.search(code):
+        raise AssertionError("code: the cookie-name guard is missing or commented out")
+    if not GUARD_PROD.search(code):
+        raise AssertionError("code: the production secure-cookie guard is missing or commented out")
+    if code.count(GUARD_MESSAGE) < 2:
+        raise AssertionError(f"code: fewer than two {GUARD_MESSAGE} rejections survive comment stripping")
+    test = strip_java_comments(sources["test"])
+    if not TEST_ASSERTION.search(test):
+        raise AssertionError("test: no live assertion that the runtime issues the declared cookie name via Set-Cookie")
     return {"schemeKey": key, "frozenScheme": frozen_scheme, "additiveScheme": additive_scheme,
             "approvedName": APPROVED_NAME, "baseConfigCookieName": declared[0],
             "profileOverrides": overrides, "configFilesScanned": sorted(configs),
-            "javaConstant": constant, "startupGuardLive": True, "runtimeAssertionLive": True}
+            "javaConstant": constant, "startupGuardLive": True, "runtimeAssertionLive": True,
+            "guardCheckedAfterCommentStripping": True}
 
 
 def negative_control(sources):
@@ -248,15 +303,32 @@ def negative_control(sources):
         elif label == "code-constant-drifts":
             copy["code"] = sources["code"].replace('SESSION_COOKIE_NAME="' + APPROVED_NAME + '"',
                                                    'SESSION_COOKIE_NAME="' + FORBIDDEN + '"', 1)
+        elif label == "guard-call-deleted":
+            copy["code"] = sources["code"].replace("verifySessionCookieContract(env);", "", 1)
+        elif label == "guard-call-commented-out":
+            copy["code"] = sources["code"].replace("verifySessionCookieContract(env);", "//verifySessionCookieContract(env);", 1)
+        elif label == "guard-name-check-commented-out":
+            copy["code"] = sources["code"].replace("if(!SESSION_COOKIE_NAME.equals(", "//if(!SESSION_COOKIE_NAME.equals(", 1)
+        elif label == "prod-check-neutered":
+            copy["code"] = sources["code"].replace('"server.servlet.session.cookie.secure"', '"server.servlet.session.cookie.ssecure"', 1)
         elif label == "guard-line-deleted":
-            copy["code"] = GUARD.sub("", sources["code"], count=1)
+            copy["code"] = GUARD_NAME.sub("", sources["code"], count=1)
         elif label == "guard-neutered-never-fires":
             copy["code"] = sources["code"].replace("if(!SESSION_COOKIE_NAME.equals(", "if(false && !SESSION_COOKIE_NAME.equals(", 1)
         elif label == "guard-reads-wrong-property":
             copy["code"] = sources["code"].replace('getProperty("server.servlet.session.cookie.name","")',
-                                                   'getProperty("server.servlet.session.name","")', 1)
+                                                   'getProperty("server.servlet.session.cookie.nmae","")', 1)
+        elif label == "quoted-duplicate-cookie-key":
+            configs[BASE_CONFIG] = base.replace("        name: " + APPROVED_NAME + "\n",
+                                                "        name: " + APPROVED_NAME + "\n        \"name\": OTHER_SESSION\n", 1)
         elif label == "runtime-assertion-deleted":
             copy["test"] = TEST_ASSERTION.sub("allValues(\"Set-Cookie\")", sources["test"], count=1)
+        elif label == "runtime-assertion-commented-out":
+            # Replace every occurrence, not just the first: the first allValues("Set-Cookie") assert is the
+            # HttpOnly/SameSite one and commenting only that leaves the name assertion live, which would make
+            # this control prove nothing while still looking like a rejection.
+            copy["test"] = sources["test"].replace('assertTrue(r.headers().allValues("Set-Cookie")',
+                                                   '//assertTrue(r.headers().allValues("Set-Cookie")')
         elif label == "all-sources-rename-in-lockstep":
             # The F04 case: relative agreement is not correctness — four sources plus code agreeing on the
             # container default must still fail against the approved anchor.
@@ -275,8 +347,10 @@ def negative_control(sources):
 
     labels = ("config-drops-cookie-name", "config-changes-cookie-name", "cookie-path-relocated-under-unrelated-parent",
               "extra-document-carries-second-name", "profile-overrides-cookie-name", "contract-renames-cookie",
-              "additive-drops-scheme", "additive-scheme-extra-key", "code-constant-drifts", "guard-line-deleted",
-              "guard-neutered-never-fires", "guard-reads-wrong-property", "runtime-assertion-deleted",
+              "additive-drops-scheme", "additive-scheme-extra-key", "code-constant-drifts",
+              "guard-call-deleted", "guard-call-commented-out", "guard-name-check-commented-out",
+              "prod-check-neutered", "guard-line-deleted", "guard-neutered-never-fires", "guard-reads-wrong-property",
+              "quoted-duplicate-cookie-key", "runtime-assertion-deleted", "runtime-assertion-commented-out",
               "all-sources-rename-in-lockstep")
     rejected = []
     for label in labels:

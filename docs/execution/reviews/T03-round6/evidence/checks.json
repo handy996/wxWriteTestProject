@@ -1,0 +1,65 @@
+{
+  "review": "T03-round6",
+  "verdict": "CHANGES_REQUIRED",
+  "head": "23c6c2cdfbe18d07bb72f62e967ce1db8f3895a1",
+  "workingTree": "clean (git status --porcelain empty, exit 0)",
+  "reviewer": "independent agent-3; pure Python + git; no mvn, no formal.py, no disk writes for mutations (in-memory via stdin)",
+  "commands": [
+    { "cmd": "python tests/engineering/T03/check_session_cookie.py", "exit": 0,
+      "observed": "verdict=PASS; negativeControlCount=14; profileOverrides={}; configFilesScanned=[application-dev.yml, application-mock.yml, application-prod.yml, application.yml]; approvedName=EDITORIAL_SESSION; forbiddenDefaultInCheckedSources=[]" },
+    { "cmd": "python tests/engineering/T02/check_contracts.py", "exit": 0,
+      "observed": "Approved T00 rc.3: 27 hashes verified, no regeneration" },
+    { "cmd": "in-memory: compare session-cookie-r05.json vs live gate rerun (importlib load, evaluate+negative_control)", "exit": 0,
+      "observed": "control set equal (14/14); sha256 map byte-identical to live HEAD run" },
+    { "cmd": "parse surefire XML: r05-head-bytes / r04-session-cookie / formal-all-domains-01 TEST-*.T03PostgresTest.xml", "exit": 0,
+      "observed": "each: tests=15 failures=6 errors=0; failed method sets all three identical; fixationRotationAndLogout=PASS in both r04/r05; identity-suite whitelist (formal.py:137) contains T03PostgresTest, core+review-regressions whitelist (:135,:140-143) does not" },
+    { "cmd": "git grep -c JSESSIONID -- backend/src", "exit": 1, "observed": "no hits (production/test code residue-free)" },
+    { "cmd": "grep r05-head-bytes.json for bound hashes", "exit": 0,
+      "observed": "application.yml=42acb38562eb3212 present, T03Configuration=56f4d50a, T03PostgresTest=ecc2eaed present, fff6a718 absent; overall exitCode:1 recorded" },
+    { "cmd": "git log --oneline --follow tests/engineering/T03/check_session_cookie.py", "exit": 0,
+      "observed": "created 2512025, hardened in 849d784 (156+/48-); 23c6c2c does not touch it" }
+  ],
+  "myProbes": {
+    "total": 18, "attacks": 16, "expectedAccept": 2,
+    "rejected": ["P01 lockstep-3rd-name(all five+prod)", "P02 relocated under spring.cloud", "P03 full chain under management", "P04 extra --- doc second name", "P05 extra doc with on-profile:prod", "P06 guard if(false&&!..)", "P07 guard line deleted", "P18 guard reads wrong property key", "P10 assertion line deleted", "P12 anyMatch(x->true) neuter", "P13 dev override third name", "P14 dev override JSESSIONID"],
+    "holes": [
+      { "id": "P08", "attack": "guard line prefixed with '//'", "result": "ACCEPTED", "finding": "T03R6-F01" },
+      { "id": "P09", "attack": "guard wrapped in /* */", "result": "ACCEPTED", "finding": "T03R6-F01" },
+      { "id": "P11", "attack": "runtime self-assertion line prefixed with '//'", "result": "ACCEPTED", "finding": "T03R6-F01" },
+      { "id": "P16", "attack": "real 'name: EDITORIAL_SESSION' + hidden quoted duplicate '\"name\": MYSESSION'", "result": "ACCEPTED", "finding": "T03R6-F02" }
+    ],
+    "legitAccepts": ["P15 dev sets approved name -> recorded in profileOverrides", "P17 quoted value 'EDITORIAL_SESSION' -> accepted (F06 fix works)"]
+  },
+  "sha256_16": {
+    "tests/engineering/T03/check_session_cookie.py": "d099d47ca4f8a7da",
+    "backend/src/main/java/com/example/editorial/identity/T03Configuration.java": "56f4d50ac29ff90e",
+    "backend/src/test/java/com/example/editorial/identity/T03PostgresTest.java": "ecc2eaed5f10e223",
+    "backend/src/main/resources/application.yml": "42acb38562eb3212",
+    "tests/engineering/T03/evidence/session-cookie-r05.json": "eacf5cd367161480",
+    "tests/engineering/integration/evidence/r05-head-bytes.json": "29ea995f30597cb0",
+    "docs/execution/reports/T07-R04-Revision-v1.0.md": "26a249fc7ffdbb32",
+    "docs/api/openapi.yaml": "e285471760a5dce4",
+    "docs/api/diff-pages-v1.1.openapi.yaml": "0db04ea086c2c563"
+  },
+  "f01F07Reverify": {
+    "F01": "partially fixed honestly: table row 3 correction true (formal.py whitelists verified by me), STATE fixEvidence no longer lists r04-core as runtime evidence; residual contradiction at report lines 50-52 (T03R6-F03)",
+    "F02": "mostly fixed (guard+assertion now sources; 5 of my 8 guard/assertion attacks rejected); comment-out class survives (T03R6-F01, P2)",
+    "F03": "fixed (indentation path + --- split + exactly-one); quoted-key duplicate survives (T03R6-F02)",
+    "F04": "fixed (absolute anchor rejects 3rd-name lockstep, proven independent of JSESSIONID backstop); machineGates wording stale (T03R6-F04)",
+    "F05": "fixed and honest: r05-head-bytes binds HEAD bytes 42acb385/56f4d50a/ecc2eaed, surefire parse supports 15/6 with fixationRotationAndLogout PASS and triple-identical failure sets incl. ancestor formal-all-domains-01",
+    "F06": "addressed: quoted scalar now accepted, flow-style refusal documented",
+    "F07": "fixed: all application*.yml scanned; current resources contain exactly 4 yml, no .properties/.yaml yet (forward-looking note T03R6-F05)"
+  },
+  "notProvenByMe": [
+    "any Maven/HTTP runtime fact (read-only surefire parsing only)",
+    "negative runtime evidence: container startup throws T03_COOKIE on missing/wrong name",
+    "prod profile real startup and SPRING_* env override precedence",
+    "Spring behavior on duplicate YAML keys (startup failure vs last-wins) — gate hole P16 has unproven runtime severity",
+    "frontend/generated-client E2E consumption of EDITORIAL_SESSION (T12+ scope)",
+    "identity-suite rerun on whatever commit is finally submitted for human approval (required again if any bound byte changes)"
+  ],
+  "commandsForParentIfWanted": [
+    "python tests/engineering/integration/formal.py --suite identity --evidence-name r06-<new>  # after F01/F02 fix commit, on its HEAD bytes",
+    "negative runtime probe (needs write session): start app with -Dserver.servlet.session.cookie.name=BADNAME and EDITORIAL_IDENTITY_ENABLED=true, expect boot failure containing T03_COOKIE"
+  ]
+}

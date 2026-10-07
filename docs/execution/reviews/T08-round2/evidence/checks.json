@@ -1,0 +1,127 @@
+{
+  "review": "T08-round2",
+  "reviewer": "independent-review-agent-2",
+  "date": "2026-10-07",
+  "verdict": "CHANGES_REQUIRED",
+  "p1Closure": { "F-01": "CLOSED", "F-02": "CLOSED" },
+  "note": "CHANGES_REQUIRED is driven by new finding F2-01 (P2) plus P3 items F2-02..F2-05 and the live-DB replay the reviewer could not run; it does not reopen F-01/F-02. Reviewer self-approval disclaimed.",
+  "headUnderReview": "23c6c2cdfbe18d07bb72f62e967ce1db8f3895a1",
+  "remediationCommit": "849d784f1f8c9ac7e5f5322b200d6d91626bc570",
+  "implementationIntegrationCommit": "b3a909d0200769ac1940838849702a5f9bd258ad",
+  "gitStatus": "clean at review start; mid-review the parallel T03-round6 agent modified two tracked T03-domain files (identity/T03Configuration.java, tests/engineering/T03/check_session_cookie.py) - outside this review's scope, T08-domain bytes untouched throughout; after that diff appeared verify.py re-ran 13/13 exit 0 and check_contracts.py 27/27 exit 0",
+  "commands": [
+    {
+      "cmd": "python tests/engineering/T08/verify.py",
+      "exitCode": 0,
+      "result": "13/13 passed",
+      "keyDetails": [
+        "installed V5 equals the reviewed draft: raw body 13119B vs 13119B, byte-identical=True, CR=0/0, versioned files V1..V5 only, V5 tables cost_ledger+cost_pricing_version",
+        "ceilings: SRS counts {search 30, tokens 40000, claim 3, auto-edit 1, slot 2, article-image 4} equal code fallbacks, drifted=none, undocumented fallbacks=none, daily 20.000000=True, alert 80=True, required-without-default=[max-calls-per-article, reconciliation-stale-minutes], refuses 503=True, OQ-09 open=True, yml invented=none",
+        "article ceiling locked rule: article row locked=True, lock precedes aggregate=True, ceiling 23514=True, V5 comment scoped=True, concurrent bypass case=True, overstated claims=none",
+        "audit: bootstrap adapter wired=True, audit calls=2 all null-hashed=True, silent audit factories=none, suite drives shipped adapter=True, test-built mirror present=False",
+        "frozen usage: summary 11/11, reservation 10/10, settlement 6/6, only GET /usage",
+        "feature gate only, no invented limits; bound beans=[CostPorts.Audit costAudit]; acceptance anchors weakened=none"
+      ]
+    },
+    {
+      "cmd": "python tests/engineering/T08/verify.py --reverse-control",
+      "exitCode": 0,
+      "result": "18 weakenings, all REJECT, blind=none, misplaced=none",
+      "f01Relevant": [
+        "SRS daily 20 -> 999: REJECT by ceilings check",
+        "alert 80 -> 70: REJECT by ceilings check",
+        "tokens 40000 -> 40001: REJECT by ceilings check",
+        "AUTO_EDIT_LOOP ceiling line deleted: REJECT by ceilings check",
+        "max-calls-per-article given invented count(...,64): REJECT by ceilings check (extra + stated-set drift)",
+        "application.yml invents daily-budget: REJECT by ceilings + configuration-ownership checks"
+      ],
+      "f02Relevant": [
+        "V5 FOR UPDATE removed: REJECT by admission check + V5-vs-draft byte check",
+        "draft drifts (FOR NO KEY UPDATE): REJECT by byte check",
+        "CostLedger comment re-overclaims: REJECT by admission check",
+        "assertEquals(1, committed) emptied to assertTrue(true): REJECT by anchors check",
+        "ready.await latch unwired: REJECT by anchors check"
+      ],
+      "inMemoryOnly": "MUTATIONS applied via read()/mutate() and cleared in finally; no file writes, no cluster touch"
+    },
+    {
+      "cmd": "python tests/engineering/T02/check_contracts.py",
+      "exitCode": 0,
+      "result": "Approved T00 rc.3: 27 hashes verified, no regeneration"
+    },
+    {
+      "cmd": "python tests/engineering/T08/run_pg.py --evidence-name t08-r2-reviewer2",
+      "exitCode": 1,
+      "result": "PermissionError [WinError 5] at run_pg.py:117 mkdir tests/engineering/T08/.work/<uuid>",
+      "classification": "session confinement limit (low-integrity token, no write), identical to round-1 reviewer; NOT a delivery defect; not retried; no evidence file written"
+    },
+    {
+      "cmd": "git show -s b3a909d",
+      "exitCode": 0,
+      "result": "commit message still contains verbatim 'no invented business limits, so enabling the domain fails closed'; history unmodified; retraction exists only in T08-Integration-2026-10-07.md section 7"
+    }
+  ],
+  "fingerprints": {
+    "V5_current_full_file_sha256": "5eadd5294216d82ec4f4fd57b501975f4bd82a743403e1b861f8bfbaedff86fd",
+    "draft_current_full_file_sha256": "03b9d91f02dc463036b11c5f9e8a05a0ded9b57324af5c560be11769ed84095b",
+    "bodyAfterHeader3Lines_both": "13119B byte-identical (verify.py check 4, measured this round)",
+    "preFixEvidence_V5_sha256": "f71f7a49afa80d56feef6940e92c5382a6193b30be8a2100a6289d560d3f4806",
+    "preFixEvidenceMatchesRound1b3a909dBlob": true
+  },
+  "f01": {
+    "verdict": "CLOSED",
+    "codeRead": {
+      "documentedFallbacks": "BudgetPolicyConfig.java:47-55 -> 30, 40000, 3, 1, 2, 4, 20.000000, 80",
+      "srsLinesVerifiedDirectly": { "1103": "6 count ceilings 30/40000/3/1/2/4", "1099": "daily example 20 USD (article 5 USD is article_job.budget_limit, not a config default)", "1143": "alert budget >80%", "1281": "OQ-09 example 5/20 USD, owner product, still OPEN" },
+      "undocumentedNoDefault": "max-calls-per-article and reconciliation-stale-minutes via statedCeiling(:107-111): missing -> PublicFailure(503, QUOTA_NOT_CONFIGURED), negative -> 503 INVALID_BUDGET_POLICY",
+      "assemblyReachability": "CostConfiguration.java:31 eager @Bean under @ConditionalOnProperty(editorial.cost.enabled=true); throw during bean creation aborts startup",
+      "unitLock": "CostPricingTest#undocumentedCeilingsHaveNoDefault:385-399 asserts 503+code for bare env, partial env, negative env"
+    },
+    "gateProof": "check 9 parses SRS line 1103 itself (SystemExit on anchor drift), rejects changed/deleted/invented numbers and yml keys via 6 reverse controls run this round",
+    "wordingResidue": "T08.md 26/55/94, Integration 2.2+7, STATE tasks.T08/COST-BUDGET-LIMITS/pendingReviewCommit all state the true 8-documented/2-required split; falsified sentence survives only quoted-and-retracted; one inaccurate parenthetical filed as F2-03"
+  },
+  "f02": {
+    "verdict": "CLOSED",
+    "sqlOrder": "V5:86 SELECT budget_limit ... FOR UPDATE precedes V5:88-90 occupancy aggregate; V5:87 missing row -> 23503; V5:91 23514; ACTUAL rows return early (V5:85) so settlement never blocked, by design",
+    "readCommittedArgument": "per-statement snapshots in plpgsql + row lock held to commit: second bypassing INSERT blocks on article_job FOR UPDATE until first commits, then its aggregate is a fresh statement seeing the committed row; multi-row INSERT sees own prior rows under same lock; trigger takes at most one row lock -> no cycle",
+    "adversarialTest": {
+      "originAssertion": "bypassInsert:462-465 SHOW session_replication_role must equal origin (replica would disable the trigger and the case would be a blank shot)",
+      "connections": "two independent editorial_runtime connections from runtimeSource, autoCommit=false",
+      "overlap": "CyclicBarrier(2) release + pg_sleep(0.4) holding the committed-but-not-yet transaction open past the other read",
+      "assertion": "line 447-448 counts 'committed' outcomes == 1 (commit count, not just an error code), plus '23514' present, occupied stays 1.000000 and exactly 1 row"
+    },
+    "latch": "lastBalanceSingleWinner:369-376 real ready(2).await + start(1).countDown, attempt():398-400 countDown then await with LATCH_TIMEOUT poison value; 10 rounds, per-round winners==1 + BUDGET_EXCEEDED + 1.000000 + 1 row + alert + 1 audit",
+    "commentsDowngraded": ["V5:76-80 article ceiling and nothing else", "CostLedger:24-31 service path alone for the rest", "BudgetService:22-32 bypassing writer meets the article ceiling and nothing else", "verify check 10 bans 3 over-claim phrases and requires 'service path' in both Java files"],
+    "redEvidence": "tests/engineering/T08/evidence/t08-r1-baseline-gap-pre-fix.json: mvn exit 1 with exactly concurrentBypassWritersCannotOversubscribe:448 '[committed, committed] expected <1> but was <2>' (Tests run 44, Failures 1), clusterStopped=true, embedded pre-fix V5 sha f71f7a...4806 (byte-bound)",
+    "greenEvidence": "tests/engineering/T08/evidence/t08-r2-main-repro.json: totals 44/0/0, expectations.problems=[], clusterStopped=true, executed list includes concurrentBypassWritersCannotOversubscribe + lastBalanceSingleWinner + auditRowsLandInTheAuditTableThroughTheRealSink + undocumentedCeilingsHaveNoDefault (main-agent record; independent live replay pending)"
+  },
+  "priorP2P3Recheck": {
+    "F-03": "closed (scoping wording + gate)",
+    "F-04": "closed via the report-wording alternative (T08.md 2/4.2c); STATE-ledger part -> F2-04",
+    "F-05": "closed on code+report (CostPorts:58 known-gap comment, T08.md 4.2); STATE part -> F2-04; counting-metrics suggestion not done (was advisory)",
+    "F-06": "closed: noAudit factory deleted (main-source grep finds only comment text; strip-then-scan gate + reverse control 12 rejects revival); PG audit case drives production CostIntegration bean by reflection (:276/:1184, reverse controls 13/14 reject guard-off and Object.class); identity/cursor-key precondition recorded in T08.md 4.1 but not STATE -> F2-04",
+    "F-07": "closed (--reverse-control 18/18 run by this reviewer, structural require() and assertion-token anchors)",
+    "F-08": "closed (run_pg.py:281-296 hard totals gate, evidence refusal on name collision :106); minor: pre-fix run died at command-failure RuntimeError before the totals section, so 'both runs gated by totals' is loose wording (red still captured)",
+    "F-09": "closed for provable part (CostPricingTest:447 + T08PostgresTest:506-517 zero rows zero audits on real DB); Spring-assembly boot still untested but already registered (COST-HTTP-E2E / Integration 6)",
+    "F-10": "closed by documentation path (BudgetService:97-102 comment above the replay + T08.md 2)",
+    "F-11": "closed (byte facts re-measured this round: 13119B bodies, CR=0; Money 12-digit wording fixed; verify docstring no CRLF claim)",
+    "F-12": "open -> F2-05"
+  },
+  "newFindings": [
+    { "id": "F2-01", "severity": "P2", "title": "model-scoped provider-quota configured via properties is silently ignored (fail-open): quotas() keys scope 'provider.model' (or javadoc 'provider_model'), providerQuota() looks up 'provider|model' then 'provider' -> never matches; config-path test only covers provider scope (CostPricingTest:416-424); T08.md:55 teaches wrong suffixes max-concurrency/daily-calls" },
+    { "id": "F2-02", "severity": "P3", "title": "verify check 10 order test uses function.find('FOR UPDATE') first occurrence: decoy text before the aggregate with the real lock after would pass; current bytes correct by direct read; suggest matching lock-statement end position + a decoy mutation" },
+    { "id": "F2-03", "severity": "P3", "title": "Integration 2.2 parenthetical 'BudgetPolicy:58 from unreachable to reachable' inaccurate: startup-reachable throw is BudgetPolicyConfig.statedCeiling:109; BudgetPolicy:58 stays unreachable in production assembly (from() always fills all 7 counters), reachable only via directly built partial-cap policies in tests" },
+    { "id": "F2-04", "severity": "P3", "title": "STATE-ledger registrations requested by round-1 F-05/F-06 (silent AlertSink gap; identity + cursor-key enablement preconditions) live only in T08.md/Integration, not in STATE.json openItems" },
+    { "id": "F2-05", "severity": "P3", "title": "F-12 persists: 849d784 (author Codex) mixes T08 remediation, T03 gate hardening and both review records in one commit, so per-author boundary gates remain unusable for remediation bytes; cosmetic: T08.md AC-28 reconciliation row has a duplicated first cell and a stray repeated verification-entry cell" }
+  ],
+  "notProvenByThisReview": [
+    "live PostgreSQL replay of run_pg.py --expect-tests 44 (session cannot write; command requested from parent: python tests/engineering/T08/run_pg.py --expect-tests 44 --evidence-name t08-r2-reviewer2-replay)",
+    "mvn clean verify and formal.py (forbidden this round / parallel contention)",
+    "enabled-state Spring assembly boot (cost+identity) and real HTTP GET /usage end-to-end (registered open items)",
+    "clause-by-clause rc.3 reserve/settle contract applicability (only 27-hash gate + DTO field gates)",
+    "real provider billing, crash recovery"
+  ],
+  "noTrackedFileModified": "true for this reviewer; tracked diffs present at end of session are the parallel T03-round6 agent's own deliverables in the T03 domain",
+  "noGitAddCommitPush": true,
+  "docsApiSchemasUntouched": true
+}
