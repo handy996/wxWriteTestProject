@@ -1,35 +1,100 @@
 {
-  "command": "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd -B -ntp -o -f backend/pom.xml -Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2 -Dtest=T03SessionCookieGuardTest test",
-  "exitCode": 0,
+  "command": [
+    "E:\\project\\codex\\wxAgent\\.tools\\t02\\apache-maven-3.9.11\\bin\\mvn.cmd",
+    "-B",
+    "-ntp",
+    "-o",
+    "-f",
+    "backend/pom.xml",
+    "-Dmaven.repo.local=E:\\project\\codex\\wxAgent\\.tools\\t02\\m2",
+    "-Dtest=T03SessionCookieGuardTest",
+    "test"
+  ],
+  "configCensusSha256": "e2ff588e1ed43081a87c1c53c7b99e897bb6f5d501431a8f515dadde3fde2983",
   "counts": {
-    "tests": 7,
-    "failures": 0,
     "errors": 0,
-    "skipped": 0
+    "failures": 0,
+    "skipped": 0,
+    "tests": 15
   },
+  "executedRoles": {
+    "anchorConstant": [
+      "absentCookieNameAbortsStartup",
+      "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+      "assembledIdentitySecurityAbortsOnNonContractCookieName",
+      "assembledIdentitySecurityStartsWithContractCookieName",
+      "constantIsTheApprovedContractLiteral",
+      "prodRejectsEachInsecureCookieAttribute",
+      "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+    ],
+    "assemblyAbort": [
+      "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+      "assembledIdentitySecurityAbortsOnNonContractCookieName"
+    ],
+    "assemblyLive": [
+      "assembledIdentitySecurityStartsWithContractCookieName"
+    ],
+    "binderCensus": [
+      "contractNameBindsInEveryProfileLayerThroughTheRealLoaders"
+    ],
+    "binderShapes": [
+      "commentsAndEnvStyleKeysBindNoCookieName",
+      "configDirectoryLayerOvertakesTheResourcesRoot",
+      "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader"
+    ],
+    "guardAbort": [
+      "absentCookieNameAbortsStartup",
+      "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+      "assembledIdentitySecurityAbortsOnNonContractCookieName",
+      "containerDefaultNameAbortsStartup",
+      "prodRejectsEachInsecureCookieAttribute",
+      "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+    ],
+    "guardLive": [
+      "approvedNameStartsOutsideProd",
+      "prodAcceptsTheContractConformantCookie"
+    ],
+    "loaderAbort": [
+      "duplicateCookieNameKeysAbortLoading"
+    ]
+  },
+  "exitCode": 0,
+  "inputSha256": {
+    "census": "e2ff588e1ed43081a87c1c53c7b99e897bb6f5d501431a8f515dadde3fde2983",
+    "code": "bda8f72167fc1a4634a414af16843c22f9258edda4180ccf3473f8a97a5eee44",
+    "config:backend/src/main/resources/application-dev.yml": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68",
+    "config:backend/src/main/resources/application-mock.yml": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8",
+    "config:backend/src/main/resources/application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+    "config:backend/src/main/resources/application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d",
+    "guardTest": "3fa69c6ed386e20e348afb04c1d4edfe99fd39bc3c0042e46642ca94cff3471b",
+    "guardTestXml": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
+    "pom": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee",
+    "test": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392"
+  },
+  "jdk": ".tools/t02/jdk-21.0.12.1+1",
+  "jdkLauncherSha256": "82051fdab26319d77d20cc0065045d05ec00b3e3d05f44935d7c06b96b621d55",
+  "jdkVendor": "Eclipse Adoptium",
+  "jdkVersion": "21.0.12.1",
+  "note": "produced by record_guard_binding.py. Every input listed under inputSha256 is re-hashed by the gate against this checkout, the surefire XML is re-parsed (counts, testcase names, properties), the recorded command is compared with the gate's own pinned argv, and the surefire provider jar plus the JDK launcher are re-hashed when this checkout contains them. It does not prove that a human ran the command: a hand-written record matching the current bytes is still possible, which is why .github/workflows/ci.yml re-runs both this gate and this test class in the same push/PR job.",
+  "surefireJar": ".tools/t02/m2/org/apache/maven/surefire/maven-surefire-common/3.5.6/maven-surefire-common-3.5.6.jar",
+  "surefireJarSha256": "30c9e2bb7f1bb800482e42c208c144124132ec3c3b4b87ab5abda8b60c9f29b9",
+  "surefireXmlSha256": "4b78e410ddac64fec6a923248bb52aeba473914309a6ad9fa1efef66c7509053",
   "testNames": [
     "absentCookieNameAbortsStartup",
     "approvedNameStartsOutsideProd",
+    "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+    "assembledIdentitySecurityAbortsOnNonContractCookieName",
+    "assembledIdentitySecurityStartsWithContractCookieName",
+    "commentsAndEnvStyleKeysBindNoCookieName",
+    "configDirectoryLayerOvertakesTheResourcesRoot",
     "constantIsTheApprovedContractLiteral",
     "containerDefaultNameAbortsStartup",
+    "contractNameBindsInEveryProfileLayerThroughTheRealLoaders",
+    "duplicateCookieNameKeysAbortLoading",
+    "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader",
     "prodAcceptsTheContractConformantCookie",
     "prodRejectsEachInsecureCookieAttribute",
     "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
   ],
-  "inputSha256": {
-    "code": "bda8f72167fc1a4634a414af16843c22f9258edda4180ccf3473f8a97a5eee44",
-    "config:application-dev.yml": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68",
-    "config:application-mock.yml": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8",
-    "config:application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
-    "config:application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d",
-    "guardTest": "7ba45cc489bf674ab33a227b6e9a25190491499a1961047d439732eeea465246",
-    "guardTestXml": "d101e511311bf8dcd5aab670d1e426df77a0b17eca3521d32ea0cbe7211f7306",
-    "test": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392"
-  },
-  "surefireXmlSha256": "d101e511311bf8dcd5aab670d1e426df77a0b17eca3521d32ea0cbe7211f7306",
-  "surefireJarSha256": "30c9e2bb7f1bb800482e42c208c144124132ec3c3b4b87ab5abda8b60c9f29b9",
-  "surefireJar": "E:\\project\\codex\\wxAgent\\.tools\\t02\\m2\\org\\apache\\maven\\surefire\\maven-surefire-common\\3.5.6\\maven-surefire-common-3.5.6.jar",
-  "jdk": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1",
-  "workspace": "E:\\project\\codex\\wxAgent",
-  "note": "produced by record_guard_binding.py; the gate re-hashes every input listed here and re-parses the XML"
+  "workspace": "."
 }

@@ -7,4 +7,9 @@
 /README.md text eol=lf
 /tests/engineering/** text eol=lf
 /tests/engineering/**/*.png -text
+# Recorded tool output must stay byte faithful: a reviewer recomputing sha256 after a fresh checkout has to get
+# the same digest the run produced. Line ending normalisation silently rewrote 130 surefire and dumpstream files.
+/tests/engineering/**/evidence/** -text
+/tests/engineering/**/*-test-results/** -text
+/tests/engineering/output/** -text
 /docs/execution/reports/T02.md text eol=lf
