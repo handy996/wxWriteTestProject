@@ -338,12 +338,14 @@
       "id": "T08-REVIEW-3RD",
       "task": "T08",
       "severity": "P1（门禁前置）",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "F2-01 整改由实施方编写、由主 agent 复现，但主 agent 不得自判采纳；且本轮引入两项尚未独立复核的设计选择",
       "requiredFix": "第三轮独立复审需自证：(1) 嵌套 YAML→Environment→from(env) 是否真的替代了手搓策略（把用例改回手搓必须红）；(2) 跨模型累加的 provider 窗口断言是否可被“两个窗口都取较严值”之类的实现蒙过；(3) 保留字 unconfigured 放在配额子树内是否只是靠拒绝撑着，collision 之外有无更隐蔽的歧义；(4) 含点的模型名（真实存在的 gpt-4.1、claude-3.5-sonnet 形态）在扁平化后成第四段而被拒绝启动，这是否等于 model 级配额对一部分真实模型不可用；(5) 反向控制的 30 条是否有新的空转或错置",
-      "closure": "判决写入 rounds[\"T08-3rd\"] 且无新 P0-P2；否则 T08 不得转 PASS、G4 不得签署",
+      "closure": "已执行：agent-ad779f7e 第三轮判 CHANGES_REQUIRED（P2×3 + P3×5，从零重做且未采信中断会话 bd808c0c 的结论），整改派 agent-ef396972；后续验证转入 T08-REVIEW-4TH",
       "openedAt": "2026-10-07",
-      "foundBy": "主 agent 集成时的独立判断（含点模型名一项为本轮新发现，非复审方所提）"
+      "foundBy": "主 agent 集成时的独立判断（含点模型名一项为本轮新发现，非复审方所提）",
+      "closedAt": "2026-10-07",
+      "evidence": "docs/execution/reviews/T08-round3/review.md（57 行，sha256 1b6611f8…6ed23）+ evidence/checks.json（sha256 13d3fb5c…65aa，含 gate_probe/join_probe/variant-report/r3cfg-out 原件）；复审方自跑证据 tests/engineering/T08/evidence/r3-review-d.json 与 r3-review-{c,d}-test-results/；主 agent 复现 mvn clean verify exit 0（281 项 0 失败 143 跳过）"
     },
     {
       "id": "T08-R3-DOTMODEL",
@@ -564,7 +566,8 @@
     "阈值与计数类断言必须先量出实际数字再写，或直接删掉。本轮我凭猜写了 assertThrows≥5（实测 4 处），而逐方法体已钉住同样事实 ⇒ 冗余检查按每条检查都要承重删除，而不是把数字调对继续留着",
     "反证必须把注入变量与注入渠道写进证据工件（formal.py 新增 --inject 并记录 injections），且证据指针不得悬空：testResults 指向的目录必须从 .work 提升到跟踪路径。r07 的工件没说明被强制的是什么，导致同一结论要靠我复述才可信",
     "分层限额必须两级都生效、取较严者，并要有用例能区分 overlay 与覆盖；只钉住一侧等于语义未定——复审方给的两种实现变体在真实集群都 49 全绿，就是用例分不清的直接证据",
-    "给子 agent 的命令形状本身要被检验：run_pg.py 的相对 --work-root 让 14 条子命令全绿却整体 exit 1 且不落证据。派单一律写绝对路径，并在派单前自己跑一次该形状"
+    "给子 agent 的命令形状本身要被检验：run_pg.py 的相对 --work-root 让 14 条子命令全绿却整体 exit 1 且不落证据。派单一律写绝对路径，并在派单前自己跑一次该形状",
+    "rounds-key invariant：台账里 rounds 出现某轮的判决，就不允许对应的 <TASK>-REVIEW-<N>TH 仍是 OPEN——同一错误我连犯两次（T03-REVIEW-8TH 重复 append 被去重校验抓住、T08-REVIEW-3RD 忘记转 CLOSED）。写入前逐条比对 rounds 与 REVIEW 项的轮序号"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
