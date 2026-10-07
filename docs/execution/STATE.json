@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "未通过复审且整改未再审：T02 第三轮判 CHANGES_REQUIRED（R02 未闭合 + P1 扫描盲区），整改派 agent-abbe86de；T03 第七轮整改待第八轮（220c8350 在跑）；T08 F2-01 整改待第三轮（ad779f7e 在跑；前一次 bd808c0c 会话故障无产出已重派）。另有两项主 agent 自处理：storage 测试触发自有扫描器、T07 硬编码期望。已复审记录：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
+  "pendingReviewCommit": "未通过复审且整改未再审：T02 第三轮判 CHANGES_REQUIRED（R02 未闭合 + P1 扫描盲区），整改派 agent-abbe86de；T03 第七轮整改待第八轮（220c8350 在跑）；T08 F2-01 整改待第三轮（ad779f7e 在跑；前一次 bd808c0c 会话故障无产出已重派）。另有两项主 agent 自处理：storage 测试触发自有扫描器、T07 硬编码期望。已复审记录：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据（REVIEW-WORK-DISK-POLLUTION 闭环表述已按实测更正：8 目录 582,618,348 字节已释放，两个空目录因 JVM PID 17732 占用而残留）",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -399,7 +399,7 @@
       "status": "CLOSED",
       "issue": "复审方在 docs/execution/reviews/T0x-roundN/.work/ 留下整仓副本（含 backend/target），已被 .gitignore:21 **/.work/ 忽略但污染工作树",
       "requiredFix": "测出占用量并清理这些 .work 副本；保留各轮 review.md 与 evidence/",
-      "evidence": "复审方实测：T04-round1/2/3 = 135,057,906 / 102,923,333 / 3,996,285 字节；T07-round1..4 = 165,624,509 / 59,933,887 / 120,785,411 / 20,454 字节；合计 588,341,785 字节（约 561.1 MiB、19,306 文件），其中 .work 占 582,618,348。主 agent 删除前先证明 git ls-files 在这些 .work 下跟踪文件数为 0，删除后复核各轮 review.md 与 evidence/ 仍在、git 工作树干净",
+      "evidence": "复审方实测：T04-round1/2/3 = 135,057,906 / 102,923,333 / 3,996,285 字节；T07-round1..4 = 165,624,509 / 59,933,887 / 120,785,411 / 20,454 字节；合计 588,341,785 字节（约 561.1 MiB、19,306 文件），其中 .work 占 582,618,348。主 agent 删除前先证明 git ls-files 在这些 .work 下跟踪文件数为 0；实删 8 个复审目录（T04-round1..3、T05-round1..2、T07-round1..3），释放 582,618,348 字节；各轮 review.md 与 evidence/ 共 74 个文件仍在。更正本条原先的过头之处：上一条提交说明写的“工作树干净”当时并不成立（尚有 5 项未跟踪：三路复审目录与实施方在写的 T08 证据），清理也非全成——docs/execution/reviews/T04-round1/.work/e5d79453008a41c6b6cd87b93f27e7d3/hsperfdata_eie04 两个空目录删不掉，被 2026-10-06 16:26 启动、仍在运行的 JVM（PID 17732）占用；未强杀，因另有会话正在跑活库。残留文件字节量为 0，故“约 556 MiB 已释放”成立，“清理干净”不成立",
       "openedAt": "2026-10-07",
       "closedAt": "2026-10-07",
       "foundBy": "docs/execution/reviews/T02-round3/review.md 第五节附注"
