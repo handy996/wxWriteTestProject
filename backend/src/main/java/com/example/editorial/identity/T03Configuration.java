@@ -57,9 +57,12 @@ public class T03Configuration {
     /**
      * Session cookie contract check, kept as a package-visible static method so the rejection itself is testable
      * without an {@link HttpSecurity} instance: before this extraction nothing proved that a wrong cookie name
-     * actually fails the boot rather than merely being described in a gate. It runs during bean creation, so a
-     * deployment that names the cookie anything other than what rc.3 declares cannot start, and a production
-     * profile cannot ship an insecure session cookie.
+     * actually fails the boot rather than merely being described in a gate. Scope, stated precisely because an
+     * earlier revision claimed more: it runs while {@link #identitySecurity} is being created, so a deployment that
+     * names the cookie wrongly cannot start only where this configuration is assembled, that is with
+     * editorial.identity.enabled=true (the base config defaults it to false via EDITORIAL_IDENTITY_ENABLED). With
+     * identity disabled nothing here aborts the boot, and the offline agreement gate plus the recorded guard-test
+     * reproduction are what hold the declared name in that case.
      */
     static void verifySessionCookieContract(Environment env) {
         if(!SESSION_COOKIE_NAME.equals(env.getProperty("server.servlet.session.cookie.name","")))

@@ -1,0 +1,1242 @@
+{
+  "round": 8,
+  "task": "T03",
+  "reviewer": "T03 独立复审方（第八轮）",
+  "headCommit": "241083f",
+  "remediationCommit": "349b51c fix(T03): bind the cookie gate to the bytes it certifies (round 7)",
+  "verdict": "CHANGES_REQUIRED",
+  "method": "全部削弱只在内存或仓库外的临时副本内进行；backend/ 与 tests/ 下的受控源未被写入；未运行 maven。",
+  "gateRuns": {
+    "check_session_cookie.py": {
+      "exitCode": 0,
+      "output": "PASS 31 controls rejected, 5 benign probes accepted"
+    },
+    "check_contracts.py": {
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration"
+    }
+  },
+  "sha256AtReview": {
+    "gate": "b65c43d5419d00878033740e413d717327225420aecc6bb27cedaac88bf2cc27",
+    "code": "dc0bb777f966707f6671990c8470dd913a6a6de415e70f0bcd5a50329fb0ead7",
+    "guardTest": "7ba45cc489bf674ab33a227b6e9a25190491499a1961047d439732eeea465246",
+    "test": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392",
+    "application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d",
+    "application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+    "binding": "972a9c747e7c2399718c3259ec404c94879e2ae4a9c8cebed9a2bdf9d3cd15a4",
+    "ci": "b454c81c64948868a5a1038b9593d3dc5b3c9b054285a4e5d24176714d25cc92"
+  },
+  "gateLandmarks": {
+    "stripJavaCommentsLines": "63-119",
+    "sourcesDict": "121-129",
+    "guardTestMethods": "130-134",
+    "bindingInputs": "138-143",
+    "cookieNames": "218-248",
+    "evaluate": "300-369",
+    "textBlockStateLines": "97-114",
+    "beanMethodBodyLines": "256-278",
+    "beanMethodRegex": "59",
+    "guardClauseRegexes": "42-58",
+    "bindingCheckLines": "280-298",
+    "bindingLoopShadowingLine": "287",
+    "negativeControlLabels": "484-494",
+    "benignProbeLabels": "515-533",
+    "forbiddenDefaultScanLine": "559"
+  },
+  "javacProof": {
+    "tool": ".tools/t02/jdk-21.0.12.1+1/bin/javac.exe（仓库外 TEMP，非 maven）",
+    "files": [
+      "LexProbe.java",
+      "LexProbe2.java"
+    ],
+    "compileExitCode": 0,
+    "observed": {
+      "escapedSlashSlashGuardCall_executedGuard": false,
+      "escapedBlockCommentGuardCall_executedGuard": false,
+      "wholeGuardInEscapedBlockComment_executedGuard": false,
+      "stringLiteralDecoy_executedGuard": false,
+      "ifFalseBranch_executedGuard": false,
+      "staticFinalFalseField_executedGuard": false,
+      "escapedLineFeed_executedGuard": true,
+      "liveControlCall_executedGuard": true
+    },
+    "meaning": "这些形态都是合法可编译 Java；前六项守卫在运行时根本不执行，而闸门把它们算作活代码；escapedLineFeed 是反向不对称（合法活代码被判成注释）。"
+  },
+  "probe1_evaluate_level": {
+    "probeCount": 48,
+    "probes": [
+      {
+        "id": "A1 // written as \\u002f\\u002f before the guard call",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A2 name-check clause wrapped in \\u002f\\u002a ... \\u002a\\u002f (whole guard body neutered)",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A3 \\u002f\\u002f before the prod branch",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A4 block comment via \\u002f\\u002a ... \\u002a\\u002f wrapping the call",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A5 string literal \\u0022 /* opens a javac block comment swallowing the call",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A6 \\u000a inside a line comment: guard after it is LIVE for javac, invisible to the scanner",
+        "kind": "brittleness",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "A7 benign: char literal with \\u0027 and string with \\u0027 apostrophe",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "A8 benign: double-escaped unicode in a string (javac-safe, scanner-safe)",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "B1 guard call replaced by a string literal holding the same text",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "B2 whole verifySessionCookieContract body replaced by one string decoy",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "code: the cookie-name guard is missing or commented out"
+      },
+      {
+        "id": "B3 guard clauses commented out, original text kept in a text block decoy",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "B4 call inside if(false){...} in the bean body (unreachable)",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "B5 call captured in a Runnable that is never submitted",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "B6 call guarded by a static-final-false field",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "C1 open brace inside a string + call moved to a trailing dead method",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "C2 close brace inside a string truncates the bean body (legal live code)",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "C3 extra annotation between @Bean and identitySecurity (legal refactor)",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "code: the identitySecurity @Bean method is missing after comment stripping"
+      },
+      {
+        "id": "C4 @Bean(name=...) attribute form",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "code: the identitySecurity @Bean method is missing after comment stripping"
+      },
+      {
+        "id": "C5 real bean renamed, decoy identitySecurity with unreachable call",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "C6 brace in a string AFTER the call (no effect expected)",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "D1 text block containing /* and \" and // then commented guard",
+        "kind": "attack",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "D2 odd-quote text block (round-7 exploit) - must be rejected now",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "D3 unclosed /* at EOF",
+        "kind": "illegal-java",
+        "predicted": "REJECT",
+        "outcome": "ACCEPT",
+        "asPredicted": false,
+        "reason": ""
+      },
+      {
+        "id": "D4 nested-style /* /* */ then commented guard",
+        "kind": "attack",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "D5 text block with escaped closing quote \\\\\\\"\"\" then commented guard",
+        "kind": "attack",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      {
+        "id": "D6 char literal quote forms + url string + reflowed guard (benign set)",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "D7 annotation string containing triple quote escapes",
+        "kind": "benign",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "E1 flow-style override with a third name in application-prod.yml",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "E2 flow-style override with the container default in prod",
+        "kind": "attack",
+        "predicted": "REJECT-by-drift-not-evaluate",
+        "outcome": "ACCEPT",
+        "asPredicted": false,
+        "reason": ""
+      },
+      {
+        "id": "E3 placeholder default: name: ${SESSION_NAME:EDITORIAL_SESSION}",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "config: cookie name '${SESSION_NAME:EDITORIAL_SESSION}' != approved 'EDITORIAL_SESSION'"
+      },
+      {
+        "id": "E4 placeholder resolving to container default",
+        "kind": "attack",
+        "predicted": "REJECT-by-drift-not-evaluate",
+        "outcome": "REJECT",
+        "asPredicted": false,
+        "reason": "config: cookie name '${SESSION_NAME:JSESSIONID}' != approved 'EDITORIAL_SESSION'"
+      },
+      {
+        "id": "E5 tab-indented duplicate name key in dev profile",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "E6 quoted path keys in prod profile with wrong name",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "config: profile application-prod.yml overrides the session cookie name with 'WRONGNAME'"
+      },
+      {
+        "id": "F1 all 7 names kept + one assertThrows, six bodies emptied",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "F2 container-default case stops exercising JSESSIONID",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "F3 test stops calling the production guard, uses a local no-op stub",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "F4 assertThrows substring kept in a comment only",
+        "kind": "attack",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "guardTest: no assertThrows left, so the rejection itself is unproven"
+      },
+      {
+        "id": "G1 forged binding: current shas + counts 7/0/0, test never run",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "G2 binding records exitCode=1",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "G3 binding surefireXmlSha256 all zeros (never compared by gate)",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "G4 binding records fabricated testNames",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "G5 binding records command 'echo pretend'",
+        "kind": "attack",
+        "predicted": "ACCEPT",
+        "outcome": "ACCEPT",
+        "asPredicted": true,
+        "reason": ""
+      },
+      {
+        "id": "G6 binding counts tests=8 (must be red)",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "binding: recorded counts are not a clean 7-test run: {'tests': 8, 'failures': 0, 'errors': 0, 'skipped': 0}"
+      },
+      {
+        "id": "G7 binding records a stale code sha (must be red)",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "binding: tracked guard-test evidence is stale for the current bytes -> code: recorded 111111111111�� != current dc0bb777f966��"
+      },
+      {
+        "id": "G8 binding counts failures=1 (must be red)",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "binding: recorded counts are not a clean 7-test run: {'tests': 7, 'failures': 1, 'errors': 0, 'skipped': 0}"
+      },
+      {
+        "id": "G9 binding file absent",
+        "kind": "control",
+        "predicted": "REJECT",
+        "outcome": "REJECT",
+        "asPredicted": true,
+        "reason": "binding: tests\\engineering\\T03\\evidence\\__definitely_absent__.json is missing; rerun the guard test with fingerprints"
+      },
+      {
+        "id": "G10 in-memory guardTest byte change with unmodified binding on disk",
+        "kind": "audit",
+        "predicted": "n/a",
+        "outcome": "ACCEPT",
+        "asPredicted": false,
+        "reason": "binding_check hashes the on-disk file, so the in-memory controls never exercise the sha comparison"
+      },
+      {
+        "id": "G9 tracked surefire XML sha vs recorded surefireXmlSha256 (gate never compares them)",
+        "kind": "audit",
+        "predicted": "n/a",
+        "outcome": "match",
+        "asPredicted": null,
+        "reason": "recorded=6d0234e0c732 actual=6d0234e0c732"
+      }
+    ]
+  },
+  "controlAttribution": {
+    "controlsChecked": 31,
+    "allFireOnIntendedAssertion": true,
+    "notes": "第七轮两条错位控制已改正：prod-profile-token-renamed → prod 分支断言；textblock-desyncs-commented-guard → bean 体断言。",
+    "reasons": {
+      "config-drops-cookie-name": "AssertionError: config: application.yml must declare exactly one server.servlet.session.cookie.name, found []",
+      "config-changes-cookie-name": "AssertionError: config: cookie name 'JSESSIONID' != approved 'EDITORIAL_SESSION'",
+      "cookie-path-relocated-under-unrelated-parent": "AssertionError: config: application.yml must declare exactly one server.servlet.session.cookie.name, found []",
+      "extra-document-carries-second-name": "AssertionError: config: application.yml must declare exactly one server.servlet.session.cookie.name, found ['EDITORIAL_SESSION', 'OTHER_SESSION']",
+      "all-profiles-override-cookie-name": "AssertionError: config: profile application-dev.yml overrides the session cookie name with 'JSESSIONID'",
+      "contract-renames-cookie": "AssertionError: frozenContract: declared cookie name 'OTHER_SESSION' != approved 'EDITORIAL_SESSION'",
+      "additive-drops-scheme": "AssertionError: additiveContract: root security references undeclared scheme 'session'",
+      "additive-scheme-extra-key": "AssertionError: additiveContract: session={'type': 'apiKey', 'in': 'cookie', 'name': 'EDITORIAL_SESSION', 'description': 'extra'} must equal frozen session={'type': 'apiKey', 'in': 'cookie', 'name': 'EDITORIAL_SESSIO",
+      "code-constant-drifts": "AssertionError: code: constant 'JSESSIONID' != approved 'EDITORIAL_SESSION'",
+      "guard-call-deleted": "AssertionError: code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body",
+      "guard-call-commented-out": "AssertionError: code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body",
+      "guard-call-moved-to-dead-method": "AssertionError: code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body",
+      "guard-name-check-commented-out": "AssertionError: code: the cookie-name guard is missing or commented out",
+      "prod-check-neutered": "AssertionError: code: the secure-attribute clause is missing, commented out, or its default flipped",
+      "prod-branch-short-circuited": "AssertionError: code: the production guard is no longer an if(env.matchesProfiles(\"prod\") && ...) branch",
+      "prod-profile-token-renamed": "AssertionError: code: the production guard is no longer an if(env.matchesProfiles(\"prod\") && ...) branch",
+      "prod-http-only-clause-deleted": "AssertionError: code: the http-only clause is missing, commented out, or its default flipped",
+      "prod-same-site-clause-deleted": "AssertionError: code: the same-site clause is missing, commented out, or no longer compared to strict",
+      "prod-secure-default-flipped": "AssertionError: code: the secure-attribute clause is missing, commented out, or its default flipped",
+      "guard-message-prefix-changed": "AssertionError: code: rejection message 'T03_COOKIE: secure production cookie required' is missing or reworded into a different prefix",
+      "guard-line-deleted": "AssertionError: code: the cookie-name guard is missing or commented out",
+      "guard-neutered-never-fires": "AssertionError: code: the cookie-name guard is missing or commented out",
+      "guard-reads-wrong-property": "AssertionError: code: the cookie-name guard is missing or commented out",
+      "quoted-duplicate-cookie-key": "AssertionError: config: application.yml must declare exactly one server.servlet.session.cookie.name, found ['EDITORIAL_SESSION', 'OTHER_SESSION']",
+      "textblock-desyncs-commented-guard": "AssertionError: code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body",
+      "guard-test-file-emptied": "AssertionError: guardTest: negative cases disappeared: ['absentCookieNameAbortsStartup', 'approvedNameStartsOutsideProd', 'constantIsTheApprovedContractLiteral', 'containerDefaultNameAbortsStartup', 'prodAcceptsTheCo",
+      "guard-test-assertions-removed": "AssertionError: guardTest: no assertThrows left, so the rejection itself is unproven",
+      "binding-file-missing": "AssertionError: binding: tests\\engineering\\T03\\evidence\\__absent__.json is missing; rerun the guard test with fingerprints",
+      "runtime-assertion-deleted": "AssertionError: test: no live assertion that the runtime issues the declared cookie name via Set-Cookie",
+      "runtime-assertion-commented-out": "AssertionError: test: no live assertion that the runtime issues the declared cookie name via Set-Cookie",
+      "all-sources-rename-in-lockstep": "AssertionError: frozenContract: declared cookie name 'JSESSIONID' != approved 'EDITORIAL_SESSION'"
+    }
+  },
+  "loadBearingAudit": {
+    "variants": [
+      {
+        "variant": "pristine",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-strip-java-comments",
+        "controlsNowAccepted": [
+          "guard-call-commented-out",
+          "guard-name-check-commented-out",
+          "textblock-desyncs-commented-guard",
+          "runtime-assertion-commented-out"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-textblock-state",
+        "controlsNowAccepted": [
+          "textblock-desyncs-commented-guard"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "bean-body-reverted-to-whole-file",
+        "controlsNowAccepted": [
+          "guard-call-moved-to-dead-method"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_CALL-check",
+        "controlsNowAccepted": [
+          "guard-call-deleted",
+          "guard-call-commented-out",
+          "guard-call-moved-to-dead-method",
+          "textblock-desyncs-commented-guard"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_NAME",
+        "controlsNowAccepted": [
+          "guard-name-check-commented-out",
+          "guard-line-deleted",
+          "guard-neutered-never-fires",
+          "guard-reads-wrong-property"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_PROD_IF",
+        "controlsNowAccepted": [
+          "prod-branch-short-circuited",
+          "prod-profile-token-renamed"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_PROD_SECURE",
+        "controlsNowAccepted": [
+          "prod-check-neutered",
+          "prod-secure-default-flipped"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_PROD_HTTP_ONLY",
+        "controlsNowAccepted": [
+          "prod-http-only-clause-deleted"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_PROD_SAME_SITE",
+        "controlsNowAccepted": [
+          "prod-same-site-clause-deleted"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-GUARD_MESSAGES-loop",
+        "controlsNowAccepted": [
+          "guard-message-prefix-changed"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-guardTest-checks",
+        "controlsNowAccepted": [
+          "guard-test-file-emptied",
+          "guard-test-assertions-removed"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-binding_check-call",
+        "controlsNowAccepted": [
+          "binding-file-missing"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "binding-sha-never-compares",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "binding-counts-never-checked",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-profile-loop",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [
+          "config-drops-cookie-name:NameError",
+          "config-changes-cookie-name:NameError",
+          "cookie-path-relocated-under-unrelated-parent:NameError",
+          "extra-document-carries-second-name:NameError",
+          "all-profiles-override-cookie-name:NameError",
+          "contract-renames-cookie:NameError",
+          "additive-drops-scheme:NameError",
+          "additive-scheme-extra-key:NameError",
+          "code-constant-drifts:NameError",
+          "guard-call-deleted:NameError",
+          "guard-call-commented-out:NameError",
+          "guard-call-moved-to-dead-method:NameError",
+          "guard-name-check-commented-out:NameError",
+          "prod-check-neutered:NameError",
+          "prod-branch-short-circuited:NameError",
+          "prod-profile-token-renamed:NameError",
+          "prod-http-only-clause-deleted:NameError",
+          "prod-same-site-clause-deleted:NameError",
+          "prod-secure-default-flipped:NameError",
+          "guard-message-prefix-changed:NameError",
+          "guard-line-deleted:NameError",
+          "guard-neutered-never-fires:NameError",
+          "guard-reads-wrong-property:NameError",
+          "quoted-duplicate-cookie-key:NameError",
+          "textblock-desyncs-commented-guard:NameError",
+          "guard-test-file-emptied:NameError",
+          "guard-test-assertions-removed:NameError",
+          "binding-file-missing:NameError",
+          "runtime-assertion-deleted:NameError",
+          "runtime-assertion-commented-out:NameError",
+          "all-sources-rename-in-lockstep:NameError"
+        ],
+        "benignFailing": [
+          "NameError: name 'overrides' is not defined"
+        ],
+        "pristineEvaluate": "FAIL NameError name 'overrides' is not defined"
+      },
+      {
+        "variant": "drop-test-assertion-check",
+        "controlsNowAccepted": [
+          "runtime-assertion-deleted",
+          "runtime-assertion-commented-out"
+        ],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-noop-detector",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      },
+      {
+        "variant": "drop-self-pristine-check",
+        "controlsNowAccepted": [],
+        "noOps": [],
+        "errors": [],
+        "benignFailing": [],
+        "pristineEvaluate": "PASS"
+      }
+    ],
+    "blindVariants": [
+      "binding-sha-never-compares",
+      "binding-counts-never-checked",
+      "drop-noop-detector",
+      "drop-self-pristine-check"
+    ],
+    "reading": "逐一删除单项检查：只要有任何一条内置控制转为 ACCEPT，即证明该检查 load-bearing。blindVariants 里 binding-sha-never-compares / binding-counts-never-checked 是真正无控制覆盖的实质分支；drop-noop-detector 与 drop-self-pristine-check 属控制框架自身的脚手架（其失效按定义不可由控制自曝）；drop-profile-loop 因我的补丁引用了未定义变量而报错，该变体作废，不作为发现。",
+    "loadBearingCount": 13,
+    "loadBearing": [
+      "drop-strip-java-comments",
+      "drop-textblock-state",
+      "bean-body-reverted-to-whole-file",
+      "drop-GUARD_CALL-check",
+      "drop-GUARD_NAME",
+      "drop-GUARD_PROD_IF",
+      "drop-GUARD_PROD_SECURE",
+      "drop-GUARD_PROD_HTTP_ONLY",
+      "drop-GUARD_PROD_SAME_SITE",
+      "drop-GUARD_MESSAGES-loop",
+      "drop-guardTest-checks",
+      "drop-binding_check-call",
+      "drop-test-assertion-check"
+    ]
+  },
+  "wholeGateShadowRuns": {
+    "note": "把闸门与全部受控源复制到 TEMP 副本树（ROOT 由 __file__ 推导），在副本上改字节并重算绑定 sha（守卫测试直调 static 方法，故 7/0/0 在死字节能诚实复现），跑 main()。",
+    "probe5_staleBindingBlocksSome": {
+      "S1-pristine-tree": {
+        "tag": "S1-pristine-tree",
+        "exitCode": 0,
+        "result": "GREEN",
+        "detail": "GREEN: gate printed verdict=PASS, controls=31"
+      },
+      "S2-escaped-slashslash-dead-guard": {
+        "tag": "S2-escaped-slashslash-dead-guard",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> code: recorded dc0bb777f966�� != current 0dcafcaeafc2��"
+      },
+      "S3-escaped-blockcomment-dead-guard": {
+        "tag": "S3-escaped-blockcomment-dead-guard",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> code: recorded dc0bb777f966�� != current 94145a19c455��"
+      },
+      "S4-string-literal-decoy-dead-guard": {
+        "tag": "S4-string-literal-decoy-dead-guard",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> code: recorded dc0bb777f966�� != current fd72ac87f9e5��"
+      },
+      "S5-call-behind-constant-false": {
+        "tag": "S5-call-behind-constant-false",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> code: recorded dc0bb777f966�� != current 4ed679cac20c��"
+      },
+      "S6-flow-style-WRONGNAME-in-base-config": {
+        "tag": "S6-flow-style-WRONGNAME-in-base-config",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> baseConfig: recorded 42acb38562eb�� != current 5e2e86556b4e��"
+      },
+      "S7-flow-style-JSESSIONID-in-base-config": {
+        "tag": "S7-flow-style-JSESSIONID-in-base-config",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> baseConfig: recorded 42acb38562eb�� != current 1eefb1745852��"
+      },
+      "S8-dead-guard-vs-untouched-binding": {
+        "tag": "S8-dead-guard-vs-untouched-binding",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: binding: tracked guard-test evidence is stale for the current bytes -> code: recorded dc0bb777f966�� != current 0dcafcaeafc2��"
+      },
+      "S9-dead-guard-with-self-consistent-binding": {
+        "tag": "S9-dead-guard-with-self-consistent-binding",
+        "exitCode": 1,
+        "result": "RED",
+        "detail": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+      },
+      "S10-guardTest-calls-static-directly": {
+        "staticCallCount": 6,
+        "mentionsCallSite": true,
+        "note": "7/0/0 therefore stays green on the dead-call-site bytes; a rebuild is enough to refresh the binding"
+      }
+    },
+    "probe6_refreshedBinding": {
+      "M0-pristine-with-refreshed-binding": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "startupGuardLive": true,
+        "beanBodyGuard": true,
+        "profileOverrides": {}
+      },
+      "M1-guard-call-escaped-line-comment": {
+        "exitCode": 1,
+        "verdict": "RED",
+        "detail": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+      },
+      "M2-guard-call-escaped-block-comment": {
+        "exitCode": 1,
+        "verdict": "RED",
+        "detail": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+      },
+      "M3-guard-call-string-literal-decoy": {
+        "exitCode": 1,
+        "verdict": "RED",
+        "detail": "AssertionError: negative control guard-call-commented-out was accepted; the guard is ineffective"
+      },
+      "M4-guard-call-behind-constant-false": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "startupGuardLive": true,
+        "beanBodyGuard": true,
+        "profileOverrides": {}
+      },
+      "M5-call-only-inside-a-text-block": {
+        "exitCode": 1,
+        "verdict": "RED",
+        "detail": "AssertionError: negative control guard-call-commented-out was accepted; the guard is ineffective"
+      },
+      "M6-flow-style-override-in-prod-profile": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "startupGuardLive": true,
+        "beanBodyGuard": true,
+        "profileOverrides": {}
+      }
+    },
+    "probe7_honestRefresh": {
+      "N0-pristine-refreshed-binding": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N1-compile-time-false-flag-hides-call": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N2-call-moved-to-another-live-bean": {
+        "exitCode": 1,
+        "verdict": "RED",
+        "detail": "AssertionError: code: identitySecurity no longer calls verifySessionCookieContract(env) inside its own body"
+      },
+      "N3-prod-clauses-commented-with-text-block-echo": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N4-guard-test-bodies-hollowed": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N5-container-default-case-retargeted": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N6-flow-style-name-in-prod": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "N7-flow-style-name-in-dev-and-mock": {
+        "exitCode": 0,
+        "verdict": "GREEN",
+        "controls": 31,
+        "benign": 5,
+        "guardCases": 7,
+        "bindingCounts": {
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    "endToEndGreenOnWeakenedBytes": [
+      "M4-guard-call-behind-constant-false",
+      "M6-flow-style-override-in-prod-profile",
+      "N1-compile-time-false-flag-hides-call",
+      "N3-prod-clauses-commented-with-text-block-echo",
+      "N4-guard-test-bodies-hollowed",
+      "N5-container-default-case-retargeted",
+      "N6-flow-style-name-in-prod",
+      "N7-flow-style-name-in-dev-and-mock"
+    ],
+    "endToEndRedForTheRightOrWrongReason": [
+      "M1-guard-call-escaped-line-comment",
+      "M2-guard-call-escaped-block-comment",
+      "M3-guard-call-string-literal-decoy",
+      "M5-call-only-inside-a-text-block",
+      "N2-call-moved-to-another-live-bean"
+    ]
+  },
+  "bindingAudit": {
+    "forgedAccepts": [
+      "G1 current shas + counts 7/0/0 without running the test",
+      "G2 exitCode=1",
+      "G3 surefireXmlSha256 all zeros",
+      "G4 fabricated testNames",
+      "G5 command 'echo pretend'",
+      "G10 in-memory guardTest byte change with unchanged on-disk binding"
+    ],
+    "correctlyRejects": [
+      "G6 tests=8",
+      "G7 stale code sha",
+      "G8 failures=1",
+      "G9 binding file absent",
+      "S8 zeroed code sha in shadow tree"
+    ],
+    "boundary": "绑定只证明四个输入文件的字节与记录全等 + 记录自称的计数；不证明测试真的跑过、不校验 exitCode/surefireXmlSha256/testNames/command，也不含 profile 配置与闸门自身字节。",
+    "recordedSurefireXmlMatchesTrackedFile": true
+  },
+  "configCoverage": {
+    "flowStyleInvisible": [
+      "ACCEPT",
+      "ACCEPT",
+      "N6/N7 whole-gate GREEN"
+    ],
+    "tabIndentedKey": "ACCEPT at evaluate level (tab indentation is invalid YAML, so this is only a scanner asymmetry)",
+    "singleProfileOverrideBlockStyle": {
+      "single-profile-override application-dev.yml": "REJECT: config: profile application-dev.yml overrides the session cookie name with 'WRONGNAME'",
+      "single-profile-override application-mock.yml": "REJECT: config: profile application-mock.yml overrides the session cookie name with 'WRONGNAME'",
+      "single-profile-override application-prod.yml": "REJECT: config: profile application-prod.yml overrides the session cookie name with 'WRONGNAME'"
+    },
+    "multiDocumentOverride": "REJECT: config: profile application-mock.yml overrides the session cookie name with 'WRONGNAME'",
+    "quotedKeys": "REJECT (round-6 F-02 closure holds)",
+    "profileLoopDemonstration": "config: profile application-dev.yml overrides the session cookie name with 'JSESSIONID'",
+    "devOnlyLoopStillPassesAllControls": [],
+    "forbiddenDefaultScanCovers": [
+      "additiveContract",
+      "code",
+      "config:application-dev.yml",
+      "config:application-mock.yml",
+      "config:application-prod.yml",
+      "config:application.yml",
+      "configs",
+      "frozenContract",
+      "test"
+    ],
+    "forbiddenDefaultScanExempts": [
+      "guardTest"
+    ],
+    "bindingFileAsReported": "backend\\src\\main\\resources\\application.yml",
+    "bindingFileActual": "tests/engineering/T03/evidence/guard-test-binding.json",
+    "gateSelfFingerprintInEvidence": false,
+    "unicodeEscapesInCheckedSourcesToday": {
+      "code": 0,
+      "test": 0,
+      "guardTest": 0,
+      "frozenContract": 0,
+      "additiveContract": 0
+    }
+  },
+  "runtimeAssemblyEvidence": {
+    "artifact": "tests/engineering/integration/evidence/r07-wrong-cookie-must-not-boot.json",
+    "exitCode": 1,
+    "suite": {
+      "tests": 15,
+      "failures": 0,
+      "errors": 15,
+      "skipped": 0
+    },
+    "rootCause": "BeanCreationException 'identitySecurity' -> IllegalStateException T03_COOKIE: session cookie name must equal the approved contract name EDITORIAL_SESSION",
+    "baselineSixFailuresAreSubset": true,
+    "fixationRotationAndLogoutInErrorSet": true,
+    "executedInputsBindCurrentBytes": {
+      "T03Configuration.java": "dc0bb777f966707f",
+      "application.yml": "42acb38562eb3212"
+    },
+    "T03_COOKIEoccurrencesInRecordedMavenOutput": 10,
+    "ledgerClaims": "T03_COOKIE 出现 9 次（与工件不符）",
+    "injectionNotRecorded": "commands[].argv 与 transformations 均未记录注入的 SERVER_SERVLET_SESSION_COOKIE_NAME / EDITORIAL_IDENTITY_ENABLED（formal.py:54-57 只剥 SPRING_/EDITORIAL_ 等前缀，formal.py:115 自设 EDITORIAL_IDENTITY_ENABLED=true）"
+  },
+  "assemblyScope": {
+    "conditionalOnProperty": "T03Configuration.java:22 @ConditionalOnProperty(name=\"editorial.identity.enabled\",havingValue=\"true\")",
+    "defaultSwitchOff": "application.yml:65 enabled: ${EDITORIAL_IDENTITY_ENABLED:false}",
+    "javadocUnqualified": "T03Configuration.java:60-62",
+    "ciDoesNotRunTheGate": true,
+    "ciDoesNotSetIdentityFlag": true,
+    "judgement": "identity=true 时“错名必启动失败”成立且有当前字节反证；默认（false）时守卫不装配，该句越界。"
+  },
+  "findings": [
+    {
+      "id": "T03R8-F01",
+      "severity": "P1",
+      "title": "文本在场≠可达：守卫调用可被合法包装成永不执行，整条闸门仍全绿并印 startupGuardLive=true",
+      "minimalInput": [
+        "N1: 在 T03Configuration 顶部加 `static final boolean CHECK_COOKIE_AT_STARTUP = false;`，把 :42 的调用包进 `if (CHECK_COOKIE_AT_STARTUP) { ... }`",
+        "M4: 同位置改用 `if (Boolean.FALSE.booleanValue()) { verifySessionCookieContract(env); }`",
+        "N3: prod 三子句与两条消息整体搬进 `String archived = \"\"\"…\"\"\";` 文本块，原位只留 `// prod hardening archived`",
+        "C1: bean 体内加 `String skew = \"{\";`，把真调用移到文件末尾一个从未被调用的 static 方法"
+      ],
+      "gateOutcome": "ACCEPT（整闸门 main()：exit 0，31/31 控制被拒、5/5 良性通过、绑定 sha 与计数与文档复跑结果一致）",
+      "whyBindingDoesNotSaveIt": "T03SessionCookieGuardTest 用 6 处静态直调 verifySessionCookieContract，不经过调用点；调用点死掉后 7/0/0 仍诚实成立，sha 刷新即可",
+      "javacProof": "TEMP/LexProbe2.java、LexProbe3.java：JAVAC_EXIT=0，运行 executedGuard=false（同形守卫在真调用时抛 T03_COOKIE）",
+      "round7Link": "与第七轮 F-01 同根因（文本存在≠活代码）；本轮 requiredFix 只把调用钉进 bean 体，未触及可达性",
+      "latent": "当前字节干净：受控源内 \\uXXXX 计 0、串内花括号计 0"
+    },
+    {
+      "id": "T03R8-F02",
+      "severity": "P2",
+      "title": "profile 配置仍能藏第二个名：flow 风格对整个闸门不可见（第七轮 F-05 未闭合）",
+      "minimalInput": [
+        "N6: application-prod.yml 追加 `server: { servlet: { session: { cookie: { name: WRONGNAME } } } }`",
+        "N7: 同样追加到 application-dev.yml 与 application-mock.yml",
+        "E1/S6: 追加到 application.yml 本体（evaluate 级 ACCEPT；S6 只因 baseConfig 指纹过期而红）",
+        "E2: flow 里写 JSESSIONID → evaluate ACCEPT，仅 main() 的 forbiddenDefault 字面扫描接住",
+        "E5: application-dev.yml 用制表符缩进的 name: 块 → ACCEPT（YAML 不允许 tab 缩进，故只算扫描器错位）"
+      ],
+      "gateOutcome": "ACCEPT（N6/N7 整闸门 exit 0 且 profileOverrides={}）",
+      "note": "profile 文件不在 BINDING_INPUTS 内：改 dev/mock/prod 不需要重跑任何测试；camelCase 变体 server.Servlet… 亦 ACCEPT（Spring 宽松绑定实况未验证）"
+    },
+    {
+      "id": "T03R8-F03",
+      "severity": "P2",
+      "title": "guardTest 半边太浅：负向用例可被掏空而闸门照印 negativeGuardCases=7",
+      "minimalInput": [
+        "N4: 保留 7 个 @Test 名 + 一处 assertThrows(IllegalStateException.class（自抛自证），清空其余六个方法体 → 整闸门 exit 0",
+        "N5: containerDefault 用例的 `properties.put(NAME, \"JSESSIONID\")` 改成 \"OTHERSESSION\" → 整闸门 exit 0（guardTest 被 drift 扫描豁免）",
+        "F3: 用例改调本测试类内一个 no-op 桩 → evaluate ACCEPT"
+      ],
+      "consequence": "“缺名/JSESSIONID/第三名字/prod 三属性各自削弱必抛 T03_COOKIE”的唯一离线证据可以名存实亡"
+    },
+    {
+      "id": "T03R8-F04",
+      "severity": "P2",
+      "title": "绑定层只证字节一致、不证执行；其两条实质分支无任何控制覆盖",
+      "forgeableAllAccepted": [
+        "G1 用当前四个 sha256 + counts 7/0/0 伪造、测试从未运行",
+        "G2 exitCode:1",
+        "G3 surefireXmlSha256 全 0",
+        "G4 编造 testNames",
+        "G5 command: \"echo pretend\"",
+        "G10 内存改 guardTest 字节而盘上绑定不动"
+      ],
+      "noControlCovers": [
+        "binding-sha-never-compares（把 want != have 改成 want != want）→ 31 条控制无一翻身",
+        "binding-counts-never-checked（计数断言改成 if False）→ 同样无反应"
+      ],
+      "correctlyRejects": [
+        "G6 tests=8",
+        "G7 陈旧 code sha",
+        "G8 failures=1",
+        "G9 文件缺失",
+        "S8 影子树里把 code sha 归零"
+      ],
+      "audit": "记录中的 surefireXmlSha256 与跟踪 XML 的真实 sha 全等（6d0234e0…），但闸门从不比较该字段"
+    },
+    {
+      "id": "T03R8-F05",
+      "severity": "P2",
+      "title": "剥离器仍不等于 javac 词法：\\uXXXX 转义注释对扫描器不可见",
+      "minimalInput": [
+        "A1: `        verifySessionCookieContract(env);` → `        \\u002f\\u002fverifySessionCookieContract(env);`（JLS 3.3 先转义后分词，javac 视为行注释）",
+        "A4: 同处改为 `        \\u002f\\u002a verifySessionCookieContract(env); \\u002a\\u002f`",
+        "A2: 名检查+prod+两条消息整段包在 `\\u002f\\u002a … \\u002a\\u002f` 里",
+        "A5: `String desync = \"\\u0022 /*\";` 让 javac 进入块注释吞掉后续调用，再由 `\\u002a\\u002f` 收尾"
+      ],
+      "gateOutcome": "evaluate() ACCEPT（守卫已死）；整闸门在这几个形态上偶然 RED——原因是内置控制自身的锚点错位（如 guard-call-moved-to-dead-method 变成空转），不是剥离器识别成功",
+      "reverseAsymmetry": "A6: 行注释里放 `\\u000a`，javac 认为调用是活代码（LexProbe2 executedGuard=true），闸门当作注释 → REJECT 合法文件",
+      "latent": "受控源今日无任何 \\uXXXX；这是延迟型缺陷"
+    },
+    {
+      "id": "T03R8-F06",
+      "severity": "P3",
+      "title": "装配范围与措辞未收窄（第七轮 F-02 的措辞半边）+ CI 不跑本闸门",
+      "facts": [
+        "application.yml:65 `enabled: ${EDITORIAL_IDENTITY_ENABLED:false}`",
+        "T03Configuration.java:22 `@ConditionalOnProperty(name=\"editorial.identity.enabled\",havingValue=\"true\")`",
+        "T03Configuration.java:60-62 javadoc 仍无条件断言 “a deployment that names the cookie anything other than what rc.3 declares cannot start”",
+        ".github/workflows/ci.yml:38-46 只跑 check_contracts.py + mvn verify，既不跑 check_session_cookie.py 也不设 EDITORIAL_IDENTITY_ENABLED"
+      ],
+      "judgement": "identity 打开且 identitySecurity 被创建时，“错名部署必启动失败”成立并有当前字节反证；identity 关闭（仓库默认）时守卫不装配，该句不成立",
+      "ledger": "tasks.T03=INTEGRATED_UNREVIEWED、T03-REVIEW-8TH OPEN、T07-R04 note 明说整改未经复审 → 未自我采纳（诚实）；但 openItems[T03-R6-GATE] 仍 status=OPEN 且正文保留第七轮已被否的“四段分别受控”"
+    },
+    {
+      "id": "T03R8-F07",
+      "severity": "P3",
+      "title": "脆性/误拒与良性探针缺口",
+      "falseRejections": [
+        "C2 bean 体内字符串含 `\"}\"` → 方法体被截断（合法代码 REJECT）",
+        "C3 `@Bean` 与返回类型之间插一行注解 → BEAN_METHOD 不匹配",
+        "C4 `@Bean(name = \"identitySecurity\")` → 同上",
+        "A6（见 F-05）",
+        "N2 把调用移到另一个被装配的 @Bean（initializeIdentity，仍在建库前失败）→ 整闸门 RED"
+      ],
+      "protocol": "第七轮定的“每条反向控制配一条良性探针”只对 stripper 形态兑现；bean 体定位、绑定、profile 循环三个新维度都只有攻击半边",
+      "also": "D3 文件末尾未闭合 `/*`（非法 Java）→ ACCEPT，仅记录"
+    },
+    {
+      "id": "T03R8-F08",
+      "severity": "P3",
+      "title": "报告与台账小错",
+      "items": [
+        "check_session_cookie.py:287 `for label, path in BINDING_INPUTS.items():` 遮蔽形参 path → 证据里 bindingFile 印成 backend\\src\\main\\resources\\application.yml（实为 tests/engineering/T03/evidence/guard-test-binding.json），且反斜杠风格与其余 posix 路径不一致",
+        "证据 sha256 不含闸门自身字节（b65c43d5…）→ “31 条控制”无法绑定到闸门版本",
+        "STATE.openItems[T07-R04].fixEvidence 写 “T03_COOKIE 出现 9 次”，工件 commands[7].output 实为 10 次",
+        "r07 装配态证据未记录注入变量（formal.py:83 只记 argv/exitCode/output，transformations 只写 T06 路径改写）"
+      ]
+    }
+  ],
+  "round7Closure": {
+    "F01_stripperTextBlockDesync": {
+      "status": "部分闭合",
+      "closed": "文本块独立成态有效：D1（文本块内 /*）、D2（串内三连引号）、D4（/* /* */）、D5（转义收尾）全部 REJECT",
+      "open": "同根因两处仍在：\\uXXXX 转义注释（F-05）、文本块/字符串里的守卫文本算活代码（F-01/N3）"
+    },
+    "F02_callSiteAssemblyAndWording": {
+      "status": "部分闭合",
+      "closed": "bean 体定位生效且 load-bearing（probe3：删掉定位 → guard-call-moved-to-dead-method 翻身）；装配态反证已入库并绑定当前字节",
+      "open": "可达性未解决（F-01）；javadoc/STATE 措辞未收窄（F-06）；建议的 StartupPolicy 搬迁被拒，我维持建议但见 handBack"
+    },
+    "F03_prodClausesAndMessagesSeparatelyPinned": {
+      "status": "闭合",
+      "proof": "GUARD_PROD_IF/SECURE/HTTP_ONLY/SAME_SITE + GUARD_MESSAGES 逐条 load-bearing；31 条控制归因全部命中预期断言（含上轮自曝错位的 prod-profile-token-renamed）"
+    },
+    "F04_guardTestAsControlledSourcePlusBinding": {
+      "status": "部分闭合",
+      "closed": "guardTest 入受控源；删文件/清空 assertThrows 均红；陈旧 sha、计数不符、文件缺失均红",
+      "open": "用例可掏空（F-03）；sha/counts 两条分支零控制覆盖 + 其余字段不校验（F-04）"
+    },
+    "F05_profileConfigCoverage": {
+      "status": "未闭合",
+      "proof": "N6/N7/E1 整闸门 exit 0；S6/S7 只因指纹过期而红，WRONGNAME 类第三名字无人管（F-02）"
+    },
+    "F06_ledgerSyncAndBenignHalf": {
+      "status": "部分闭合",
+      "closed": "台账计数与 r07 证据同步；5 条良性探针入库，block-comment-含-// 与串内 // 两类不再被过剥",
+      "open": "bindingFile 路径错、9/10 次不符（F-08）；新维度缺良性半边（F-07）"
+    }
+  },
+  "unproven": [
+    "闸门是否在 CI 中执行：ci.yml 未调用 check_session_cookie.py（也未设 EDITORIAL_IDENTITY_ENABLED）",
+    "flow 风格 / camelCase 键 / 制表符缩进的 Spring 实际绑定结果（不能跑 Boot，只能静态推断）",
+    "identity 关闭的默认部署下，错名是否被任何东西接住",
+    "重复键与 SnakeYAML 行为仍未与运行时对质（第六轮遗留）",
+    "绑定 JSON 声称的那次运行确实发生过",
+    "调用点在真实装配里可达（r07 只证明当前字节的一次）",
+    "profile 循环的 mock/prod 分支：只由内置控制顺带命中（dev-only 循环下 31 条控制仍全红）",
+    "\\uXXXX 与文本块 decoy 在当前字节未被使用——本轮结论都是延迟型"
+  ],
+  "handBackCommands": [
+    "python tests/engineering/T03/check_session_cookie.py --output tests/engineering/T03/evidence/session-cookie-r08.json",
+    "python tests/engineering/T02/check_contracts.py",
+    "python tests/engineering/T03/verify.py",
+    "mvn -B -ntp -o -f backend/pom.xml \"-Dmaven.repo.local=.tools/t02/m2\" -Dtest=T03SessionCookieGuardTest test   # 整改后刷新 guard-test-binding.json 的 7/0/0 与四个 sha",
+    "mvn -B -ntp -f backend/pom.xml clean verify",
+    "mvn -B -ntp -f backend/pom.xml \"-Deditorial.identity.enabled=true\" \"-Dserver.servlet.session.cookie.name=WRONGNAME\" \"-Dtest=T03PostgresTest#fixationRotationAndLogout\" test   # 复跑错名装配反证，并把注入变量写进 evidence.transformations"
+  ],
+  "verdictRationale": "新增 1×P1 + 4×P2：在按文档复跑守卫测试即可刷新绑定的前提下，闸门对“运行时永不执行的守卫”“profile 里第二个 cookie 名”“被掏空的负向用例”“可伪造的绑定记录”四路全绿（影子树 main() 退出码见 wholeGateShadowRuns），第七轮 T03R7-F01/F05 的根因未闭合。同时如实记正面：13 项新检查逐一 load-bearing（删任一即有内置控制转为 ACCEPT），31 条控制归因全部命中预期断言，文本块与注释类攻击不再被过剥；唯二无控制覆盖的是绑定 sha 比较与计数比较两条实质分支。",
+  "corrections": {
+    "check_contractsOutputLine": "Approved T00 rc.3: 27 hashes verified, no regeneration",
+    "T03_COOKIE_occurrences_in_r07_artifact": 10,
+    "guardTestStaticCallsOfProductionGuard": 6
+  },
+  "ciEnforcement": {
+    "runsCheckContracts": true,
+    "runsMavenVerify": true,
+    "runsCheckSessionCookie": false,
+    "setsEditorialIdentityEnabled": false,
+    "note": "会话 Cookie 闸门在 CI 中不被执行；identity 默认 false ⇒ 运行时守卫也不装配 ⇒ 仓库层面对 cookie 名漂移没有任何自动拦截"
+  },
+  "headNote": "ed63c3f..HEAD 无提交触及 T03 受控源；sha256AtReview 即为当前 HEAD 字节"
+}

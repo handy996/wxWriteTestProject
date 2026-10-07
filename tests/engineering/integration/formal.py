@@ -36,6 +36,8 @@ def main():
     p.add_argument('--upgrade-only', action='store_true')
     p.add_argument('--include-review-regressions', action='store_true')
     p.add_argument('--suite', choices=('core', 'identity', 'storage', 'skill', 'all'), default='core')
+    p.add_argument('--inject', action='append', default=[], metavar='KEY=VALUE',
+                   help='force a JVM system property for the recorded run (repeatable); logged into the evidence')
     args = p.parse_args()
     if Path(args.evidence_name).name != args.evidence_name:
         p.error('--evidence-name must be a filename stem')
@@ -144,9 +146,13 @@ def main():
         if not args.upgrade_only and args.suite in ('core', 'all'):
             tests += ',T07RevisionBoundaryTest#revision*'
         evidence['executedInputs']=[{'path':str(path.relative_to(ROOT)), 'sha256':hashlib.sha256(path.read_bytes()).hexdigest()} for path in sorted(work.rglob('*')) if path.is_file() and (path.suffix in {'.java','.sql','.yml'} or path.name=='pom.xml')]
+        # Injections are recorded because they ARE the experiment: the eighth T03 review could not tell from the r07
+        # artefact which property channel was forced, and a negative boot proves nothing if its own input is missing.
+        evidence['injections'] = list(args.inject)
+        injection_args = ['-D' + item for item in args.inject]
         run([args.maven, '-o', '-B', '-ntp', '-f', work / 'backend/pom.xml',
              '-Dmaven.repo.local=' + str(args.m2), 'clean', 'test',
-             '-Dtest=' + tests, '-Dt06.root=' + str(ROOT), '-Dt07.samples=' + str(samples)], timeout=600)
+             '-Dtest=' + tests, '-Dt06.root=' + str(ROOT), '-Dt07.samples=' + str(samples)] + injection_args, timeout=600)
         jar = work / 'backend/target/editorial-0.1.0-SNAPSHOT.jar'
         if jar.exists():
             evidence['jar'] = {'path': str(jar.relative_to(ROOT)), 'sha256': hashlib.sha256(jar.read_bytes()).hexdigest()}
