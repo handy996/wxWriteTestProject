@@ -1,0 +1,83 @@
+[
+ {
+  "case": "7c-continue-on-error-after-run",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "hole": true,
+  "note": "step runs but a red gate no longer fails the job",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7c-step-if-schedule",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "hole": true,
+  "note": "step skipped for every trigger that actually fires",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7c-job-level-if",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "hole": true,
+  "note": "whole job never runs on push or pull_request",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7c-moved-to-schedule-only-job",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "hole": true,
+  "note": "the step exists, in a job that push and PR never execute",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7c-comment-out-the-step",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "hole": false,
+  "note": "commented out: the needle text survives, nothing runs",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7c-needle-only-in-artifact-paths",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "hole": false,
+  "note": "gate never runs; its file name appears in an upload path list",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7c-benign-block-scalar",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "hole": true,
+  "note": "legal block scalar must stay green",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7c-benign-continue-on-error-explicit-false",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "hole": true,
+  "note": "explicitly *not* allowed to fail; must stay green",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7c-benign-reordered-step-keys",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "hole": true,
+  "note": "a legal step with one more key",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ }
+]

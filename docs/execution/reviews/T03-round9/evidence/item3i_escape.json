@@ -1,0 +1,62 @@
+[
+ {
+  "shape": "3a-doubled-backslash-keeps-comment",
+  "javacExit": 0,
+  "javacError": "",
+  "javacExpectation": "a backslash preceded by a backslash cannot start an escape (JLS 3.3), so the call stays commented out",
+  "guardCalledInBytecode": false,
+  "forbiddenNameInConstantPool": false,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "gateExpectation": "REJECT",
+  "divergence": true
+ },
+ {
+  "shape": "3b-identifier-escape-is-legal",
+  "javacExit": 0,
+  "javacError": "",
+  "javacExpectation": "the escape resolves inside an identifier: javac compiles it and the guard does run",
+  "guardCalledInBytecode": true,
+  "forbiddenNameInConstantPool": false,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "gateExpectation": "ACCEPT",
+  "divergence": false
+ },
+ {
+  "shape": "3c-escaped-newline-in-string",
+  "javacExit": 1,
+  "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\escape3i\\probe\\Ec.java:7: error: unclosed string literal String nl = \"x\\u000ay\"; ^ C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\escape3i\\probe\\Ec",
+  "javacExpectation": "the escape resolves to a real newline inside a string literal: javac rejects the file",
+  "guardCalledInBytecode": "n/a",
+  "forbiddenNameInConstantPool": false,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "gateExpectation": "REJECT",
+  "divergence": true
+ },
+ {
+  "shape": "3d-forbidden-name-through-escape",
+  "javacExit": 0,
+  "javacError": "",
+  "javacExpectation": "the constant pool ends up holding exactly JSESSIONID (javap -constants)",
+  "guardCalledInBytecode": true,
+  "forbiddenNameInConstantPool": true,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "gateExpectation": "REJECT",
+  "divergence": true
+ },
+ {
+  "shape": "3f-illegal-escape",
+  "javacExit": 1,
+  "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\escape3i\\probe\\Ef.java:7: error: illegal unicode escape String odd = \"\\uZZZZ\"; ^ 1 error",
+  "javacExpectation": "not a valid hex escape: javac refuses to compile",
+  "guardCalledInBytecode": "n/a",
+  "forbiddenNameInConstantPool": false,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "gateExpectation": "REJECT",
+  "divergence": true
+ }
+]

@@ -1,0 +1,92 @@
+{"case": "4-config-flow-multiline", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "real override must be caught"}
+{"case": "4-config-flow-trailing-comment", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "real override must be caught"}
+{"case": "4-config-flow-comment-inside", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "real override must be caught"}
+{"case": "4-config-block-alias", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "real override must be caught"}
+{"case": "4-config-merge-key", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "real override must be caught"}
+{"case": "4-benign-legal-flow-shape", "exit": 0, "verdict": "ACCEPT", "expected": "ACCEPT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "a legal flow shape must not turn the gate red"}
+{"case": "4-benign-flow-no-space", "exit": 0, "verdict": "ACCEPT", "expected": "ACCEPT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "key style must not matter"}
+{"case": "4-benign-flow-double-quoted", "exit": 0, "verdict": "ACCEPT", "expected": "ACCEPT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "quoting must not matter"}
+{"case": "6-application-prod.properties", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "Spring loads this format (PropertiesPropertySourceLoader=[properties, xml], YamlPropertySourceLoader=[yml, yaml]) and the boot probe resolved the name from it"}
+{"case": "6-application-prod.yaml", "exit": 0, "verdict": "ACCEPT", "expected": "REJECT", "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"", "note": "Spring loads this format (PropertiesPropertySourceLoader=[properties, xml], YamlPropertySourceLoader=[yml, yaml]) and the boot probe resolved the name from it"}
+[
+ {
+  "case": "4-config-flow-multiline",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "real override must be caught"
+ },
+ {
+  "case": "4-config-flow-trailing-comment",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "real override must be caught"
+ },
+ {
+  "case": "4-config-flow-comment-inside",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "real override must be caught"
+ },
+ {
+  "case": "4-config-block-alias",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "real override must be caught"
+ },
+ {
+  "case": "4-config-merge-key",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "real override must be caught"
+ },
+ {
+  "case": "4-benign-legal-flow-shape",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "a legal flow shape must not turn the gate red"
+ },
+ {
+  "case": "4-benign-flow-no-space",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "key style must not matter"
+ },
+ {
+  "case": "4-benign-flow-double-quoted",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "quoting must not matter"
+ },
+ {
+  "case": "6-application-prod.properties",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "Spring loads this format (PropertiesPropertySourceLoader=[properties, xml], YamlPropertySourceLoader=[yml, yaml]) and the boot probe resolved the name from it"
+ },
+ {
+  "case": "6-application-prod.yaml",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"",
+  "note": "Spring loads this format (PropertiesPropertySourceLoader=[properties, xml], YamlPropertySourceLoader=[yml, yaml]) and the boot probe resolved the name from it"
+ }
+]

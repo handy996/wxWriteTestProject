@@ -1,0 +1,15 @@
+{
+ "sourceLine": "        // runbook note \\\\u000a probe();",
+ "javacExit": 0,
+ "javacDisassemblesProbeCall": false,
+ "runtimeSaysGuardRan": "<no output>",
+ "gateDecodesThatLineToNewline": true,
+ "gateDecodedLine": "\"        // runbook note \\\\\\n probe();\"",
+ "mutantContainsPlainCall": false,
+ "gateCase": {
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "problem": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+ }
+}

@@ -1,0 +1,44 @@
+[
+ {
+  "case": "5a-assert-equals-argument-order-swapped",
+  "exit": 1,
+  "verdict": "REJECT",
+  "note": "equivalent rewrite of one assertion; must stay green",
+  "problem": "AssertionError: guardTest: constantIsTheApprovedContractLiteral no longer contains ['assertEquals(\"EDITORIAL_SESSION\", T03Configuration.SESSION_COOKIE_NAME']; the case is hollow, not a rejection proof"
+ },
+ {
+  "case": "5b-loop-unrolled-into-three-assertions",
+  "exit": 1,
+  "verdict": "REJECT",
+  "note": "same test, `new String[]{}` becomes `List.of()`; must stay green",
+  "problem": "AssertionError: guardTest: prodRejectsEachInsecureCookieAttribute no longer contains ['{SECURE, HTTP_ONLY, SAME_SITE}']; the case is hollow, not a rejection proof"
+ },
+ {
+  "case": "5c-helper-renamed",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "note": "the fixture helper is renamed everywhere (behaviour identical); must stay green",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ },
+ {
+  "case": "5d-assertTrue-replaced-by-throw",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "note": "one assertion expressed as an explicit throw instead of assertTrue; behaviour identical",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ },
+ {
+  "case": "5e-minimal-hollow-text-block",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "note": "every executed assertion removed; each body carries the required tokens only as text-block prose",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ },
+ {
+  "case": "5f-empty-bodies",
+  "exit": 1,
+  "verdict": "REJECT",
+  "note": "control: removing one body's content must not turn the file into a silent pass",
+  "problem": "AssertionError: guardTest: containerDefaultNameAbortsStartup no longer contains ['JSESSIONID']; the case is hollow, not a rejection proof"
+ }
+]

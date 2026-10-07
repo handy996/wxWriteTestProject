@@ -1,0 +1,11 @@
+javac exit 0
+FILE application-a.yml
+  LOADER-EXCEPTION org.yaml.snakeyaml.constructor.DuplicateKeyException :: while constructing a mapping in 'reader', line 5, column 9: name: EDITORIAL_SESSION ^ found duplicate key name in 'reader', line 6, column 9: name: DUPLICATE-WINS ^
+FILE application-b.yml
+  LOADER-EXCEPTION org.yaml.snakeyaml.constructor.DuplicateKeyException :: while constructing a mapping in 'reader', line 5, column 9: "name": QUOTED-FIRST ^ found duplicate key name in 'reader', line 6, column 9: name: EDITORIAL_SESSION ^
+FILE application-c.yml
+  LOADER-EXCEPTION org.yaml.snakeyaml.constructor.DuplicateKeyException :: while constructing a mapping in 'reader', line 1, column 1: server: { servlet: { session: { ... ^ found duplicate key server in 'reader', line 2, column 1: server: ^
+FILE application-d.yml
+  sources=1 flatKeys=3
+  cookieKeys={defaults.servlet.session.cookie.name=ANCHOR-VALUE, server.servlet.session.cookie.name=ANCHOR-VALUE}
+  boundName=ANCHOR-VALUE

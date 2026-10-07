@@ -1,0 +1,59 @@
+[
+ {
+  "sample": "plain-call-statement",
+  "span": null,
+  "verdict": "raises: guardTest: method verifySessionCookieContract is gone",
+  "java": "        verifySessionCookieContract(env);"
+ },
+ {
+  "sample": "lambda-assigned-to-same-name",
+  "span": null,
+  "verdict": "raises: guardTest: method verifySessionCookieContract is gone",
+  "java": "        Runnable verifySessionCookieContract = () -> { };"
+ },
+ {
+  "sample": "method-reference-in-stream",
+  "span": null,
+  "verdict": "raises: guardTest: method verifySessionCookieContract is gone",
+  "java": "        list.forEach(this::verifySessionCookieContract);"
+ },
+ {
+  "sample": "generic-return-declaration",
+  "span": [
+   91,
+   121
+  ],
+  "verdict": "READ AS A DECLARATION",
+  "java": "    java.util.function.Function<String, Map<String, Object>> verifySessionCookieContract() {\n        return x -> x;\n    }"
+ },
+ {
+  "sample": "ternary-with-call",
+  "span": null,
+  "verdict": "raises: guardTest: method verifySessionCookieContract is gone",
+  "java": "        Object o = flag ? verifySessionCookieContract(env) : null;"
+ },
+ {
+  "sample": "annotation-on-same-line",
+  "span": [
+   56,
+   59
+  ],
+  "verdict": "READ AS A DECLARATION",
+  "java": "    @Override public void verifySessionCookieContract() { }"
+ },
+ {
+  "sample": "declaration-with-throws",
+  "span": null,
+  "verdict": "raises: guardTest: method verifySessionCookieContract is gone",
+  "java": "    void verifySessionCookieContract() throws Exception { }"
+ },
+ {
+  "sample": "declaration-across-two-lines",
+  "span": [
+   67,
+   74
+  ],
+  "verdict": "READ AS A DECLARATION",
+  "java": "    void verifySessionCookieContract(\n            Environment env) {\n    }"
+ }
+]

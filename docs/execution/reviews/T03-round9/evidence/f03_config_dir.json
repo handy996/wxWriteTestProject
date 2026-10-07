@@ -1,0 +1,16 @@
+{
+ "gateWithConfigDirProperties": {
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "reason": ""
+ },
+ "bootProbe": {
+  "javacExit": 0,
+  "javacStderr": "",
+  "exit": 0,
+  "stdout": "yamlExtensions=[yml, yaml]\npropertiesExtensions=[properties, xml]\nRESOLVED name=FROM-CONFIG-DIR\nRESOLVED bound=FROM-CONFIG-DIR\n  SOURCE configurationProperties -> FROM-CONFIG-DIR\n  SOURCE Config resource 'class path resource [config/application.properties]' via location 'optional:classpath:/config/' -> FROM-CONFIG-DIR\n  SOURCE Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' -> EDITORIAL_SESSION\n",
+  "stderrTail": ""
+ },
+ "shadowResourcesRemoved": true,
+ "gateAfterCleanupExit": 0
+}

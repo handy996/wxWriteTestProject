@@ -1,0 +1,58 @@
+[
+ {
+  "case": "7-commented-out-step",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "note": "the gate step is commented out: CI no longer runs it, the needle text survives",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7-continue-on-error",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "note": "step runs but its failure no longer fails the job",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7-if-conditional",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "note": "step only runs on a trigger that push/PR never produces",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7-moved-to-nonrunning-job",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "note": "the step is deleted from the push/PR job and re-added to a schedule-only job",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in"
+ },
+ {
+  "case": "7-needle-in-artifact-path-list",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "note": "gate deleted from steps but its file name appears in the upload-artifact path list",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate was accepted; the guard is ineffective"
+ },
+ {
+  "case": "7-benign-block-scalar",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "note": "legal block scalar, must stay green",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "7-benign-extra-step-around-it",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "an unrelated step added next to it",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in"
+ }
+]

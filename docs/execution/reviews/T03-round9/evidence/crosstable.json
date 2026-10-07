@@ -1,0 +1,299 @@
+{
+ "javac": [
+  {
+   "shape": "s1-if-false-unbraced",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (false) |             guard();"
+  },
+  {
+   "shape": "s2-if-false-braced",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (false) { |             guard(); |         }"
+  },
+  {
+   "shape": "s3-boolean-false-unbraced",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (Boolean.FALSE.booleanValue()) |             guard();"
+  },
+  {
+   "shape": "s4-static-final-false-unbraced",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (SKIP) |             guard();"
+  },
+  {
+   "shape": "s5-while-false-unbraced",
+   "javacExit": 1,
+   "runtime": "",
+   "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable\\s5-while-false-unbraced\\probe\\Shape.java:14: 错误: 无法访问的语句 guard(); ^ 1 个错误",
+   "fragment": "        while (false) |             guard();"
+  },
+  {
+   "shape": "s6-return-ahead-of-call",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (!\"prod\".equals(System.getProperty(\"mode\"))) |             return chain; |         guard();"
+  },
+  {
+   "shape": "s7-runtime-always-false-test",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (java.util.Optional.empty().isPresent()) |             guard();"
+  },
+  {
+   "shape": "s8-for-loop",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=true note=NONE",
+   "javacError": "",
+   "fragment": "        for (int i = 0; i < 1; i++) |             guard();"
+  },
+  {
+   "shape": "s9-try-finally",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=true note=NONE",
+   "javacError": "",
+   "fragment": "        try { |             guard(); |         } finally { |         }"
+  },
+  {
+   "shape": "s10-switch-default",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=true note=NONE",
+   "javacError": "",
+   "fragment": "        switch (0) { |             default: |                 guard(); |         }"
+  },
+  {
+   "shape": "s11-else-of-real-condition",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=true note=NONE",
+   "javacError": "",
+   "fragment": "        if (!on) { |             note = \"OTHER\"; |         } else { |             guard(); |         }"
+  },
+  {
+   "shape": "s12-lambda-never-invoked",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        Runnable r = () -> guard();"
+  },
+  {
+   "shape": "s13-return-true-then-call",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        if (true) { |             return chain; |         } |         guard();"
+  },
+  {
+   "shape": "s14-ternary-side-effect",
+   "javacExit": 0,
+   "runtime": "GUARD_RAN=false note=NONE",
+   "javacError": "",
+   "fragment": "        Runnable r = on ? () -> guard() : () -> { };"
+  },
+  {
+   "shape": "s15-inner-class-never-built",
+   "javacExit": 1,
+   "runtime": "",
+   "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable\\s15-inner-class-never-built\\probe\\Shape.java:14: 错误: 需要';' note = \"HOLDER\" ^ 1 个错误",
+   "fragment": "        class Holder { void run() { guard(); } } |         note = \"HOLDER\""
+  }
+ ],
+ "gate": [
+  {
+   "shape": "s1-if-false-unbraced",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s2-if-false-braced",
+   "exit": 1,
+   "verdict": "REJECT",
+   "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s3-boolean-false-unbraced",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s4-static-final-false-unbraced",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s5-while-false-unbraced",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s6-return-ahead-of-call",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s7-runtime-always-false-test",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s8-for-loop",
+   "exit": 0,
+   "verdict": "ACCEPT",
+   "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s9-try-finally",
+   "exit": 1,
+   "verdict": "REJECT",
+   "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s10-switch-default",
+   "exit": 1,
+   "verdict": "REJECT",
+   "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s12-lambda-never-invoked",
+   "exit": 1,
+   "verdict": "REJECT",
+   "problem": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+  }
+ ],
+ "merged": [
+  {
+   "shape": "s1-if-false-unbraced",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s2-if-false-braced",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "REJECT",
+   "gateProblem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s3-boolean-false-unbraced",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s4-static-final-false-unbraced",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s5-while-false-unbraced",
+   "javacExit": 1,
+   "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable\\s5-while-false-unbraced\\probe\\Shape.java:14: 错误: 无法访问的语句 guard(); ^ 1 个错误",
+   "guardExecutes": "n/a",
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s6-return-ahead-of-call",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s7-runtime-always-false-test",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s8-for-loop",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": true,
+   "gateVerdict": "ACCEPT",
+   "gateProblem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie"
+  },
+  {
+   "shape": "s9-try-finally",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": true,
+   "gateVerdict": "REJECT",
+   "gateProblem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s10-switch-default",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": true,
+   "gateVerdict": "REJECT",
+   "gateProblem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+  },
+  {
+   "shape": "s11-else-of-real-condition",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": true,
+   "gateVerdict": "not tested",
+   "gateProblem": ""
+  },
+  {
+   "shape": "s12-lambda-never-invoked",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "REJECT",
+   "gateProblem": "AssertionError: negative control guard-call-moved-to-dead-method was accepted; the guard is ineffective"
+  },
+  {
+   "shape": "s13-return-true-then-call",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "not tested",
+   "gateProblem": ""
+  },
+  {
+   "shape": "s14-ternary-side-effect",
+   "javacExit": 0,
+   "javacError": "",
+   "guardExecutes": false,
+   "gateVerdict": "not tested",
+   "gateProblem": ""
+  },
+  {
+   "shape": "s15-inner-class-never-built",
+   "javacExit": 1,
+   "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable\\s15-inner-class-never-built\\probe\\Shape.java:14: 错误: 需要';' note = \"HOLDER\" ^ 1 个错误",
+   "guardExecutes": "n/a",
+   "gateVerdict": "not tested",
+   "gateProblem": ""
+  }
+ ]
+}

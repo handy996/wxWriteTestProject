@@ -1,0 +1,7 @@
+{
+ "binding-without-profiles-pristine": "ACCEPT [\"application-dev.yml\", \"application-mock.yml\", \"application-prod.yml\", \"application.yml\"]",
+ "binding-without-profiles-controls": "SLIPPED negative control binding-profile-stale was accepted; the guard is ineffective",
+ "secure-clause-only-in-text-block@strict": "REJECT code: no live (non-literal) secure-attribute clause remains",
+ "secure-clause-only-in-text-block@literal-blind": "ACCEPT",
+ "literal-blind-controls": "all 49 still rejected"
+}

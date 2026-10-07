@@ -1,0 +1,16 @@
+{
+ "doubleBackslashSource": "String s = \"JSESSION\\\\u0049D\";",
+ "gateDecodesIt": "String s = \"JSESSION\\ID\";",
+ "gateSaysForbiddenAfterDecode": false,
+ "javacExit": 0,
+ "javacRuntime": [
+  "VALUE=JSESSION\\u0049D",
+  "EQUALS_FORBIDDEN=false"
+ ],
+ "doubleBackslashCase": {
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ }
+}

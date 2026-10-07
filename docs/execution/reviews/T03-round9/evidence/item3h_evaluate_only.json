@@ -1,0 +1,101 @@
+[
+ {
+  "case": "3h-escaped-backslash-newline",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "REJECT",
+  "javacGroundTruth": "javac exit 0; javap shows NO call inside the method; runtime prints nothing",
+  "note": "\\u000a preceded by an escaped backslash is not a newline, so the call stays commented out",
+  "problem": "",
+  "unfair": true
+ },
+ {
+  "case": "3h-plain-escape-newline",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "javac resolves \\u000a to a real newline, so the call IS live",
+  "note": "legal and executed",
+  "problem": "",
+  "unfair": false
+ },
+ {
+  "case": "3h-plain-comment",
+  "evaluate": "REJECT",
+  "expectedFairVerdict": "REJECT",
+  "javacGroundTruth": "exit 0, call inside a line comment",
+  "note": "classic bypass",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "unfair": false
+ },
+ {
+  "case": "3h-block-comment",
+  "evaluate": "REJECT",
+  "expectedFairVerdict": "REJECT",
+  "javacGroundTruth": "exit 0, call inside a block comment",
+  "note": "classic bypass",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "unfair": false
+ },
+ {
+  "case": "3h-illegal-unicode-escape",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "COMPILE ERROR: illegal unicode escape",
+  "note": "the gate certifies a file javac refuses",
+  "problem": "",
+  "unfair": false
+ },
+ {
+  "case": "3h-if-false-unbraced",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "REJECT",
+  "javacGroundTruth": "javac exit 0; the call sits in an if(false) branch and never executes",
+  "note": "constant fake branch",
+  "problem": "",
+  "unfair": true
+ },
+ {
+  "case": "3h-while-false-unbraced",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "COMPILE ERROR: unreachable statement",
+  "note": "the gate certifies a file javac refuses",
+  "problem": "",
+  "unfair": false
+ },
+ {
+  "case": "3h-called-private-forwarder",
+  "evaluate": "REJECT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "javac exit 0; the forwarder is invoked from the bean body, so the guard DOES execute",
+  "note": "an executed guard behind a one-line helper",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "unfair": true
+ },
+ {
+  "case": "3h-switch-default",
+  "evaluate": "REJECT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "javac exit 0 and EXECUTED",
+  "note": "executed, so rejecting it is over-strict",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "unfair": true
+ },
+ {
+  "case": "3h-try-finally",
+  "evaluate": "REJECT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "javac exit 0 and EXECUTED",
+  "note": "executed, so rejecting it is over-strict",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "unfair": true
+ },
+ {
+  "case": "3h-pristine-baseline",
+  "evaluate": "ACCEPT",
+  "expectedFairVerdict": "ACCEPT",
+  "javacGroundTruth": "exit 0",
+  "note": "unmutated file",
+  "problem": "",
+  "unfair": false
+ }
+]

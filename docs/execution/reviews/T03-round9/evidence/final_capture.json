@@ -1,0 +1,128 @@
+{
+ "methodSpanCallVsDeclaration": {
+  "plain-call-statement": {
+   "matched": null,
+   "kind": "rejected: guardTest: method verifySessionCookieContract is gone",
+   "sample": "verifySessionCookieContract(env);"
+  },
+  "lambda-assigned-to-name": {
+   "matched": null,
+   "kind": "rejected: guardTest: method verifySessionCookieContract is gone",
+   "sample": "Runnable verifySessionCookieContract = () -> { };"
+  },
+  "method-reference-in-stream": {
+   "matched": null,
+   "kind": "rejected: guardTest: method verifySessionCookieContract is gone",
+   "sample": "list.forEach(this::verifySessionCookieContract);"
+  },
+  "generic-declaration-line": {
+   "matched": [
+    91,
+    121
+   ],
+   "kind": "treated as DECLARATION",
+   "sample": "java.util.function.Function<String, Map<String, Object>> ver"
+  },
+  "call-then-block-not-legal": {
+   "matched": [
+    41,
+    52
+   ],
+   "kind": "treated as DECLARATION",
+   "sample": "verifySessionCookieContract(env) {\n        }"
+  },
+  "ternary-with-name": {
+   "matched": null,
+   "kind": "rejected: guardTest: method verifySessionCookieContract is gone",
+   "sample": "Object o = flag ? verifySessionCookieContract(env) : null;"
+  },
+  "annotation-on-same-line": {
+   "matched": [
+    56,
+    59
+   ],
+   "kind": "treated as DECLARATION",
+   "sample": "@Override public void verifySessionCookieContract() { }"
+  }
+ },
+ "checkContractsExit": 0,
+ "checkContractsTail": [
+  "Approved T00 rc.3: 27 hashes verified, no regeneration"
+ ],
+ "checkContractsErr": [],
+ "gateExit": 0,
+ "gateReport": {
+  "negativeControlCount": 49,
+  "benignProbeCount": 12,
+  "configFilesScanned": [
+   "application-dev.yml",
+   "application-mock.yml",
+   "application-prod.yml",
+   "application.yml"
+  ],
+  "boundInputs": [
+   "code",
+   "config:application-dev.yml",
+   "config:application-mock.yml",
+   "config:application-prod.yml",
+   "config:application.yml",
+   "guardTest",
+   "guardTestXml",
+   "test"
+  ],
+  "gateSha256InOutput": "a86f64dd3f59d9306628023dd228c2b51569adac467d6ae27229b1d92005970c",
+  "verdict": "PASS"
+ },
+ "sha256": {
+  "gate": "a86f64dd3f59d9306628023dd228c2b51569adac467d6ae27229b1d92005970c",
+  "record": "092796323f3e463cddcdd184b7629d63e3189259d92c756f0564570ddf7e933b",
+  "code": "bda8f72167fc1a4634a414af16843c22f9258edda4180ccf3473f8a97a5eee44",
+  "guardTest": "7ba45cc489bf674ab33a227b6e9a25190491499a1961047d439732eeea465246",
+  "bindingJson": "2c674ccc68940f9c087db3404e17771c51a77f1fc514bee04692e25bd9212d12",
+  "surefireXml": "d101e511311bf8dcd5aab670d1e426df77a0b17eca3521d32ea0cbe7211f7306",
+  "ci": "2f651cb7ba7b429bbd14b55fc70d74bdfa324ee9a20c0b7bf6738194e76693d8",
+  "config-application.yml": "42acb38562eb3212b1c66d9875c6f8ab12deca48576d77e0214289151cc1d06d",
+  "config-application-prod.yml": "bb769d087a85807a88b8aaca5c017553527ca086abb6fc6dc6f443904a6ee0a0",
+  "config-application-dev.yml": "41ee5e1caae10f1351f2c156bd290b60f9a66b9c4a322a2b43555625fd656b68",
+  "config-application-mock.yml": "c39f099652737792cc8106d6b121ab7c98a47f706976f2374bd23cbe8c44efe8"
+ },
+ "paths": {
+  "gate": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T03\\check_session_cookie.py",
+  "record": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T03\\record_guard_binding.py",
+  "code": "E:\\project\\codex\\wxAgent\\backend\\src\\main\\java\\com\\example\\editorial\\identity\\T03Configuration.java",
+  "guardTest": "E:\\project\\codex\\wxAgent\\backend\\src\\test\\java\\com\\example\\editorial\\identity\\T03SessionCookieGuardTest.java",
+  "bindingJson": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T03\\evidence\\guard-test-binding.json",
+  "surefireXml": "E:\\project\\codex\\wxAgent\\tests\\engineering\\T03\\evidence\\T03SessionCookieGuardTest.xml",
+  "ci": "E:\\project\\codex\\wxAgent\\.github\\workflows\\ci.yml",
+  "config-application.yml": "E:\\project\\codex\\wxAgent\\backend\\src\\main\\resources\\application.yml",
+  "config-application-prod.yml": "E:\\project\\codex\\wxAgent\\backend\\src\\main\\resources\\application-prod.yml",
+  "config-application-dev.yml": "E:\\project\\codex\\wxAgent\\backend\\src\\main\\resources\\application-dev.yml",
+  "config-application-mock.yml": "E:\\project\\codex\\wxAgent\\backend\\src\\main\\resources\\application-mock.yml"
+ },
+ "shadowFiles": [
+  ".github/workflows/ci.yml",
+  "backend/src/main/java/com/example/editorial/identity/T03Configuration.java",
+  "backend/src/main/resources/application-dev.yml",
+  "backend/src/main/resources/application-mock.yml",
+  "backend/src/main/resources/application-prod.yml",
+  "backend/src/main/resources/application.yml",
+  "backend/src/test/java/com/example/editorial/identity/T03PostgresTest.java",
+  "backend/src/test/java/com/example/editorial/identity/T03SessionCookieGuardTest.java",
+  "docs/api/diff-pages-v1.1.openapi.yaml",
+  "docs/api/openapi.yaml",
+  "tests/engineering/T03/__pycache__/check_session_cookie.cpython-312.pyc",
+  "tests/engineering/T03/check_session_cookie.py",
+  "tests/engineering/T03/evidence/T03SessionCookieGuardTest.txt",
+  "tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml",
+  "tests/engineering/T03/evidence/guard-test-binding.json",
+  "tests/engineering/T03/record_guard_binding.py"
+ ],
+ "headCommit": "fb622124e3b461e7899abd55a72d159d9d00f7ee",
+ "dirtyFiles": [
+  "M docs/execution/reports/T08-Revision-R3.md",
+  " M docs/execution/reports/T08.md",
+  "?? .tmp_t08fix.py",
+  "?? docs/execution/reviews/T02-round4/",
+  "?? docs/execution/reviews/T03-round9/"
+ ]
+}

@@ -1,0 +1,4 @@
+VARIANT=pristine
+SUMMARY found=7 succeeded=7 failed=0 aborted=0 skipped=0
+VARIANT=hollow
+SUMMARY found=7 succeeded=7 failed=0 aborted=0 skipped=0

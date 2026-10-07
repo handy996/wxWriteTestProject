@@ -1,0 +1,424 @@
+[
+ {
+  "case": "7b-continue-on-error-after-run",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "note": "step still runs but a red gate no longer fails the job",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7b-if-schedule-after-run",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "note": "step is skipped on push and pull_request, which are the only real triggers",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7b-job-level-if",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "note": "the whole verify job is gated on workflow_dispatch, so no push or PR ever runs the cookie gate",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "7b-benign-reordered-keys",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "note": "a legal step with an extra key before run: breaks the exact-adjacency anchor",
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "2-fuzz-mask-vs-spans",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "no disagreement",
+  "note": "4000 random strings over { }, quotes, backslashes, \\uXXXX escapes, comment openers",
+  "problem": "disagreements=370 first=[{\"text\": \"a\\\\u005c}{'b*/}'///**/}\\\\b\\\\u0027*/\\\\u005ca\\\\\\\"}\", \"offset\": 41, \"char\": \"}\", \"spans\": [[9, 15], [40, 42]], \"masked\": \"a\\\\u005c}{'xxxx'///**/}\\\\b\\\\u0027*/\\\\u005ca\\\\\\"
+ },
+ {
+  "fuzzSample": [
+   {
+    "text": "a\\u005c}{'b*/}'///**/}\\b\\u0027*/\\u005ca\\\"}",
+    "offset": 41,
+    "char": "}",
+    "spans": [
+     [
+      9,
+      15
+     ],
+     [
+      40,
+      42
+     ]
+    ],
+    "masked": "a\\u005c}{'xxxx'///**/}\\b\\u0027*/\\u005ca\\\"x",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "}\\u0022\\u0027//b\\u0022/**/*/\\u0027{/**/{\\u005c\n\n}{b{\"''b'/*\\u0022/*a\\u005c\\*/\\b\\u005cb{}",
+    "offset": 87,
+    "char": "}",
+    "spans": [
+     [
+      52,
+      88
+     ]
+    ],
+    "masked": "}\\u0022\\u0027//b\\u0022/**/*/\\u0027{/**/{\\u005c\n\n}{b{\"xxxxxx  xxxxxxx  xxxx  x    xxxxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "//}\\u005c//*/a}\\u0027}\\u005c'\\u005c/*{{\\\\u005c\\u0027}",
+    "offset": 52,
+    "char": "}",
+    "spans": [
+     [
+      28,
+      53
+     ]
+    ],
+    "masked": "//}\\u005c//*/a}\\u0027}\\u005c'  xxxxxxxx  xxxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u0027\n\\u0022\\u0022ab\\u0027b\\u005c*/\\u005c\\a\n\\b*/\"a}",
+    "offset": 51,
+    "char": "}",
+    "spans": [
+     [
+      49,
+      52
+     ]
+    ],
+    "masked": "\\u0027\n\\u0022\\u0022ab\\u0027b\\u005c*/\\u005c\\a\n\\b*/\"xx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "b\\u0027//\"a'\n{",
+    "offset": 13,
+    "char": "{",
+    "spans": [
+     [
+      9,
+      14
+     ]
+    ],
+    "masked": "b\\u0027//\"xx\nx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "'\\u0022\\u005c}}\\u0027\\u005c\\\\\"\\u0027{\"\"'\n'/*{",
+    "offset": 44,
+    "char": "{",
+    "spans": [
+     [
+      0,
+      40
+     ],
+     [
+      41,
+      45
+     ]
+    ],
+    "masked": "'  xxxx  xxxxxx  xxxx  xxxx  x  xxxxxxx'\n'xxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\"{*/\\\\\"\\u0022a\\u0022/*\\\nb\\'\"\\\\u005ca*/b*/\\\\\\u005c\"\\\\u0027{}",
+    "offset": 58,
+    "char": "}",
+    "spans": [
+     [
+      0,
+      7
+     ],
+     [
+      26,
+      59
+     ]
+    ],
+    "masked": "\"xxx  \"\\u0022a\\u0022/*\\\nb\\'x  xxxxxxxxxxx    xxxxx  xxxxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "a\"a{/*\\u0022*/{a'\nb\n\n\\u005c*/{//{}}",
+    "offset": 34,
+    "char": "}",
+    "spans": [
+     [
+      1,
+      35
+     ]
+    ],
+    "masked": "a\"xxxx  xxxxxxxxx\nx\n\n  xxxxxxxxxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "*/\"\\a{\nba\\u0027\\u0022{{\\u0022b\"////}b'\"//}",
+    "offset": 41,
+    "char": "}",
+    "spans": [
+     [
+      2,
+      31
+     ],
+     [
+      37,
+      42
+     ]
+    ],
+    "masked": "*/\"  x\nxx  xxxx  xxxxxx  xxxxx\"////}b'xxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u005c\n\\u0027\\u0027\\////}*/b\n\\u0022\\{\\u0027\"\\\n{'\\u0027\\u005cb\n\"\\u0022///*\"\"\"\\u0022{",
+    "offset": 82,
+    "char": "{",
+    "spans": [
+     [
+      43,
+      63
+     ],
+     [
+      73,
+      83
+     ]
+    ],
+    "masked": "\\u005c\n\\u0027\\u0027\\////}*/b\n\\u0022\\{\\u0027\"  xx  xxxx  xxxxx\n\"\\u0022///*\"\"\"  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\"\\u0027\\*/\n\\u0022*/\"*/*/\\u005c'\\u0027//*/*/*//*/*}'\n'\"}",
+    "offset": 54,
+    "char": "}",
+    "spans": [
+     [
+      0,
+      20
+     ],
+     [
+      30,
+      51
+     ],
+     [
+      52,
+      55
+     ]
+    ],
+    "masked": "\"  xxxx  x\n  xxxxxx\"*/*/\\u005c'  xxxxxxxxxxxxxxxxx'\n'xx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u005c\\u0027*///{b{\\u0022b\"\\u005c*/\\/*\\//{",
+    "offset": 41,
+    "char": "{",
+    "spans": [
+     [
+      26,
+      42
+     ]
+    ],
+    "masked": "\\u005c\\u0027*///{b{\\u0022b\"  xxxxxx  x  xx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\\n\\}{\n{bab//a{\\u005c\\u0022*/\\}}*//*/*\\'b\\*/{\\}",
+    "offset": 45,
+    "char": "}",
+    "spans": [
+     [
+      38,
+      46
+     ]
+    ],
+    "masked": "\\\n\\}{\n{bab//a{\\u005c\\u0022*/\\}}*//*/*\\'x  xx  ",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "}\\u0022\n\\u0022*/*/\\u0022/*/*b\\u005c'b*/'a*//*\"}{\\u005c//'\\u0022{",
+    "offset": 63,
+    "char": "{",
+    "spans": [
+     [
+      35,
+      40
+     ],
+     [
+      45,
+      64
+     ]
+    ],
+    "masked": "}\\u0022\n\\u0022*/*/\\u0022/*/*b\\u005c'xxx'a*//*\"xx  xxxxxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "*/}\"\n\\u0027/**///\n\"}\\u0022/*\\u0022a\\u0022b'/*b\n{",
+    "offset": 47,
+    "char": "{",
+    "spans": [
+     [
+      3,
+      19
+     ],
+     [
+      42,
+      48
+     ]
+    ],
+    "masked": "*/}\"\n  xxxxxxxxxx\n\"}\\u0022/*\\u0022a\\u0022b'xxx\nx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u0027'{a/*\\u005cb//\n\\u005c/**/////}\"/*a\\u005c\\u005c//b*/a\\a\\u005c\n/*}''\\u0027{\\u0027/*\\u0022{",
+    "offset": 93,
+    "char": "{",
+    "spans": [
+     [
+      6,
+      71
+     ],
+     [
+      71,
+      94
+     ]
+    ],
+    "masked": "\\u0027'xxxx  xxxxxxx\n  xxxxxxxxxxxxxxxxx  xxxx  xxxxxxxxxx    xxxx\nxxx''  xxxxx  xxxxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\"}{*/\\u005c\\u0022\\u0022*/'b*/\\u0027'\\u0027}\\u005c}",
+    "offset": 49,
+    "char": "}",
+    "spans": [
+     [
+      0,
+      50
+     ]
+    ],
+    "masked": "\"xxxx  xxxx  xxxx  xxxxxxxxxx  xxxxx  xxxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\n\n\\u005c\\u005c\\u0022\\\\u005c\nb\"\n\"\\u0022/*b\\u0027/*\"{",
+    "offset": 50,
+    "char": "{",
+    "spans": [
+     [
+      29,
+      32
+     ],
+     [
+      49,
+      51
+     ]
+    ],
+    "masked": "\n\n\\u005c\\u005c\\u0022\\\\u005c\nb\"\n\"\\u0022/*b\\u0027/*\"x",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "{\\u0027\\u005ca//*///\\u0022\n*/a\n/*}//}\\u0022\"/*a*/b//a\\}{",
+    "offset": 55,
+    "char": "{",
+    "spans": [
+     [
+      43,
+      56
+     ]
+    ],
+    "masked": "{\\u0027\\u005ca//*///\\u0022\n*/a\n/*}//}\\u0022\"xxxxxxxxx  x",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "{\\/**/\"}",
+    "offset": 7,
+    "char": "}",
+    "spans": [
+     [
+      6,
+      8
+     ]
+    ],
+    "masked": "{\\/**/\"x",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "b\n{\\u005c}'\\u0022\\u0022{",
+    "offset": 23,
+    "char": "{",
+    "spans": [
+     [
+      10,
+      24
+     ]
+    ],
+    "masked": "b\n{\\u005c}'  xxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u005ca//\\\"*/\\\na\\{\\u0027}}",
+    "offset": 25,
+    "char": "}",
+    "spans": [
+     [
+      10,
+      26
+     ]
+    ],
+    "masked": "\\u005ca//\\\"xx  x    xxxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\n\n\n\\u0027aab\\u005c\"\\u005c/*\"\n\\u0022\"/*/*\\u005c\\u0022aa\\u0022\\u0027b\\}b}",
+    "offset": 70,
+    "char": "}",
+    "spans": [
+     [
+      18,
+      28
+     ],
+     [
+      35,
+      71
+     ]
+    ],
+    "masked": "\n\n\n\\u0027aab\\u005c\"  xxxxxx\"\n\\u0022\"xxxx  xxxx  xxxxxx  xxxx  xxxxx  xx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "b/*\\u005c'{a\"\n}/*//\"}/*\n}\"\"a}{\\u0022\\u0022}{",
+    "offset": 43,
+    "char": "{",
+    "spans": [
+     [
+      9,
+      44
+     ]
+    ],
+    "masked": "b/*\\u005c'xxx\nxxxxxxxxx\nxxxxxx  xxxx  xxxxxx",
+    "why": "mask blanked a brace spans says is code"
+   },
+   {
+    "text": "\\u0027\\''\\u0022}//\\'/*\\u005c//\\u005ca{//*/*/}\"\\u0022{",
+    "offset": 52,
+    "char": "{",
+    "spans": [
+     [
+      7,
+      9
+     ],
+     [
+      19,
+      53
+     ]
+    ],
+    "masked": "\\u0027\\''\\u0022}//\\'xx  xxxxxx  xxxxxxxxxxxxxx  xxxxx",
+    "why": "mask blanked a brace spans says is code"
+   }
+  ],
+  "nearTotalSwallowCases": 1282
+ }
+]

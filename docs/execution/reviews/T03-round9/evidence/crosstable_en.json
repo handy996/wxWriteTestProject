@@ -1,0 +1,149 @@
+[
+ {
+  "shape": "s1-if-false-unbraced",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s1-if-false-unbraced\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s1-if-false-unbraced\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s1-if-false-unbraced\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s2-if-false-braced",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s2-if-false-braced\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s2-if-false-braced\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s2-if-false-braced\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s3-boolean-false-unbraced",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s3-boolean-false-unbraced\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s3-boolean-false-unbraced\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s3-boolean-false-unbraced\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s4-static-final-false-unbraced",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s4-static-final-false-unbraced\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s4-static-final-false-unbraced\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s4-static-final-false-unbraced\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s5-while-false-unbraced",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s5-while-false-unbraced\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s5-while-false-unbraced\\probe\\Shape.java",
+  "javacExit": 1,
+  "javacStderr": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s5-while-false-unbraced\\probe\\Shape.java:14: error: unreachable statement guard(); ^ 1 error",
+  "guardExecutes": "n/a (file does not compile)"
+ },
+ {
+  "shape": "s6-return-ahead-of-call",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s6-return-ahead-of-call\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s6-return-ahead-of-call\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s6-return-ahead-of-call\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s7-runtime-always-false-test",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s7-runtime-always-false-test\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s7-runtime-always-false-test\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s7-runtime-always-false-test\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s8-for-loop",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s8-for-loop\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s8-for-loop\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s8-for-loop\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=true note=NONE",
+  "guardExecutes": true
+ },
+ {
+  "shape": "s9-try-finally",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s9-try-finally\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s9-try-finally\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s9-try-finally\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=true note=NONE",
+  "guardExecutes": true
+ },
+ {
+  "shape": "s10-switch-default",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s10-switch-default\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s10-switch-default\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s10-switch-default\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=true note=NONE",
+  "guardExecutes": true
+ },
+ {
+  "shape": "s11-else-of-real-condition",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s11-else-of-real-condition\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s11-else-of-real-condition\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s11-else-of-real-condition\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=true note=NONE",
+  "guardExecutes": true
+ },
+ {
+  "shape": "s12-lambda-never-invoked",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s12-lambda-never-invoked\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s12-lambda-never-invoked\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s12-lambda-never-invoked\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s13-return-true-then-call",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s13-return-true-then-call\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s13-return-true-then-call\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s13-return-true-then-call\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s14-ternary-side-effect",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s14-ternary-side-effect\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s14-ternary-side-effect\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s14-ternary-side-effect\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=NONE",
+  "guardExecutes": false
+ },
+ {
+  "shape": "s15-inner-class-never-built",
+  "javacCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\javac.exe -J-Duser.language=en -J-Duser.country=US -d C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s15-inner-class-never-built\\out C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s15-inner-class-never-built\\probe\\Shape.java",
+  "javacExit": 0,
+  "javacStderr": "",
+  "javaCommand": "E:\\project\\codex\\wxAgent\\.tools\\t02\\jdk-21.0.12.1+1\\bin\\java.exe -cp C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\crosstable-en\\s15-inner-class-never-built\\out probe.Shape",
+  "javaExit": 0,
+  "runtime": "GUARD_RAN=false note=HOLDER",
+  "guardExecutes": false
+ }
+]

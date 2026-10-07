@@ -1,0 +1,641 @@
+[
+ {
+  "group": "mask-vs-spans",
+  "name": "char-literal-double-quote",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     20,
+     23
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "char-literal-escaped-quote",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     20,
+     24
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "string-with-apostrophe",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     28
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "string-ending-backslash",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     27
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "string-with-brace",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     25
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "textblock-with-quote",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     35
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "textblock-with-escaped-triple",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     37
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "textblock-with-four-quotes",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     35
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "concat-across-lines",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     25
+    ],
+    [
+     36,
+     40
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "unterminated-block-comment",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": []
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "textblock-containing-hash-brace",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     46
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "mask-vs-spans",
+  "name": "string-with-escaped-quote",
+  "expect": true,
+  "got": {
+   "lengthPreserved": true,
+   "braceDisagreement": [],
+   "spans": [
+    [
+     22,
+     37
+    ]
+   ]
+  },
+  "agree": false,
+  "note": "expect: equal length and no structural brace surviving inside a span"
+ },
+ {
+  "group": "bean-bodies",
+  "name": "brace-in-string",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "guard_is_reachable should find the call in bean method y"
+ },
+ {
+  "group": "bean-bodies",
+  "name": "quote-in-textblock",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "guard_is_reachable should find the call in bean method y"
+ },
+ {
+  "group": "bean-bodies",
+  "name": "escaped-quote-string",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "guard_is_reachable should find the call in bean method y"
+ },
+ {
+  "group": "bean-bodies",
+  "name": "char-literal-quote",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "guard_is_reachable should find the call in bean method y"
+ },
+ {
+  "group": "reachability",
+  "name": "unbraced-if-false",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "braced-if-false",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "lambda-capture",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "switch-default",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "try-block",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "inner-class",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "else-of-if",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "static-final-int-counter-part",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "forward-private-method",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "ternary",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "synchronized",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "if-else-braceless-both",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "do-while",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "multiline-arg",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "comment-between",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "reachability",
+  "name": "nonbean-static-helper",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "gate accepts when it returns a bean name"
+ },
+ {
+  "group": "unicode",
+  "name": "escaped-line-comment-hides-guard",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "escaped-newline-in-line-comment",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "escaped-quote-creates-literal",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "backslash-from-escape-in-string",
+  "expect": "y",
+  "got": "EXC AssertionError",
+  "agree": false,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "illegal-escape-not-reported",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "escaped-block-comment-wraps",
+  "expect": "y",
+  "got": "y",
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "unicode",
+  "name": "escaped-block-comment-inside",
+  "expect": null,
+  "got": null,
+  "agree": true,
+  "note": "javac resolves \\uXXXX before tokenising"
+ },
+ {
+  "group": "cookie_names",
+  "name": "single-line-flow-wrong",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "round-8 F-02 case"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-no-space",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "legal YAML"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-key-order",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "legal"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-double-quoted",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "legal"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-quoted-brace-value",
+  "expect": [
+   "A}B"
+  ],
+  "got": [
+   "A}B"
+  ],
+  "agree": true,
+  "note": "quote wins"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-single-quoted-key",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "legal"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-multiline",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [],
+  "agree": false,
+  "note": "a flow mapping may span lines in YAML"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-with-comment",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [],
+  "agree": false,
+  "note": "legal"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-inside-block",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "mixed style"
+ },
+ {
+  "group": "cookie_names",
+  "name": "block-alias",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [],
+  "agree": false,
+  "note": "SnakeYAML resolves the alias onto the cookie path"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-alias",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [],
+  "agree": false,
+  "note": "same, flow"
+ },
+ {
+  "group": "cookie_names",
+  "name": "merge-key",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [],
+  "agree": false,
+  "note": "YAML 1.1 merge key, supported by SnakeYAML"
+ },
+ {
+  "group": "cookie_names",
+  "name": "seq-of-map",
+  "expect": [],
+  "got": [],
+  "agree": true,
+  "note": "list where an object is expected: not bindable, so invisible is acceptable"
+ },
+ {
+  "group": "cookie_names",
+  "name": "case-variant-block",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "Spring relaxed binding maps these onto the same property"
+ },
+ {
+  "group": "cookie_names",
+  "name": "tab-indent",
+  "expect": [],
+  "got": [],
+  "agree": true,
+  "note": "tab indentation is illegal YAML"
+ },
+ {
+  "group": "cookie_names",
+  "name": "document-separator-flow",
+  "expect": [
+   "WRONG",
+   "OTHER"
+  ],
+  "got": [
+   "WRONG",
+   "OTHER"
+  ],
+  "agree": true,
+  "note": "per-document tracking"
+ },
+ {
+  "group": "cookie_names",
+  "name": "approved-in-flow",
+  "expect": [
+   "EDITORIAL_SESSION"
+  ],
+  "got": [
+   "EDITORIAL_SESSION"
+  ],
+  "agree": true,
+  "note": "benign"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-empty-parent",
+  "expect": [],
+  "got": [],
+  "agree": true,
+  "note": "benign"
+ },
+ {
+  "group": "cookie_names",
+  "name": "quoted-colon-value",
+  "expect": [
+   "A:B"
+  ],
+  "got": [
+   "A:B"
+  ],
+  "agree": true,
+  "note": "legal"
+ },
+ {
+  "group": "cookie_names",
+  "name": "flow-then-block-sibling",
+  "expect": [
+   "WRONG"
+  ],
+  "got": [
+   "WRONG"
+  ],
+  "agree": true,
+  "note": "flow followed by block"
+ }
+]

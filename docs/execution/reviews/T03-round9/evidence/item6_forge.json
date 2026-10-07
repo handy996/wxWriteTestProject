@@ -1,0 +1,26 @@
+[
+ {
+  "case": "6-forged-artefact-echo-pretend",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \"EDITORIAL_SESSION\", ",
+  "note": "no maven ran; JSON agrees with a hand-written XML; command string is 'echo pretend' plus the -Dtest token"
+ },
+ {
+  "case": "6-forged-jar-and-jdk-fields",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \"EDITORIAL_SESSION\", ",
+  "note": "surefireJarSha256/surefireJar/jdk are recorded by record_guard_binding.py but never re-hashed by the gate"
+ },
+ {
+  "case": "6-note-field-claim",
+  "exit": "n/a",
+  "verdict": "note",
+  "expected": "n/a",
+  "problem": "hand-forged by the round-9 reviewer; maven was never invoked",
+  "note": "text of the artefact note compared with what binding_check reads"
+ }
+]

@@ -1,0 +1,47 @@
+[
+ {
+  "shape": "3j-quote-escape-in-string",
+  "javacExit": 1,
+  "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\escape3j\\probe\\Fj.java:6: error: illegal text block open delimiter sequence, missing line terminator String qu",
+  "guardCalledInBytecode": "n/a",
+  "gateVerdict": "REJECT",
+  "gateReason": "code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body",
+  "falseRed": false
+ },
+ {
+  "shape": "3k-brace-escape-in-string",
+  "javacExit": 0,
+  "javacError": "",
+  "guardCalledInBytecode": true,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "falseRed": false
+ },
+ {
+  "shape": "3l-slash-escape-in-string",
+  "javacExit": 0,
+  "javacError": "",
+  "guardCalledInBytecode": true,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "falseRed": false
+ },
+ {
+  "shape": "3m-newline-escape-in-string",
+  "javacExit": 1,
+  "javacError": "C:\\Users\\eie04\\AppData\\Local\\Temp\\t03r9\\escape3j\\probe\\Fm.java:6: error: unclosed string literal String newline = \"\\u000a\"; ^ C:\\Users\\eie04\\AppData\\L",
+  "guardCalledInBytecode": "n/a",
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "falseRed": false
+ },
+ {
+  "shape": "3n-backslash-escape-in-string",
+  "javacExit": 0,
+  "javacError": "",
+  "guardCalledInBytecode": true,
+  "gateVerdict": "ACCEPT",
+  "gateReason": "",
+  "falseRed": false
+ }
+]

@@ -1,0 +1,50 @@
+[
+ {
+  "case": "2f-forbidden-name-in-java-comment",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "note": "documenting the old name in Java must be allowed",
+  "problem": "AssertionError: container default JSESSIONID reappears in: ['code']"
+ },
+ {
+  "case": "2g-forbidden-name-in-yaml-comment",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "ACCEPT",
+  "note": "documenting the old name in a runbook comment must be allowed",
+  "problem": "AssertionError: container default JSESSIONID reappears in: ['config:application-prod.yml']"
+ },
+ {
+  "case": "2h-lookalike-inside-literal",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "a literal that spells the call must not confuse the scanner",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ },
+ {
+  "case": "2h2-only-occurrence-is-a-literal",
+  "exit": 1,
+  "verdict": "REJECT",
+  "expected": "REJECT",
+  "note": "a literal is not a call",
+  "problem": "AssertionError: code: verifySessionCookieContract(env) is not a direct statement of an assembled @Bean body"
+ },
+ {
+  "case": "2i-textblock-with-braces-in-bean-body",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "text blocks must not break brace matching",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"approvedName\": \""
+ },
+ {
+  "case": "2j-text-block-fuzz",
+  "exit": "n/a",
+  "verdict": "scanner-divergence",
+  "expected": "mask and spans agree on every balanced text block",
+  "note": "3000 random bodies embedded in a text block inside a bean body",
+  "problem": "disagreements=2308"
+ }
+]

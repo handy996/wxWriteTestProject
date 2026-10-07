@@ -1,0 +1,26 @@
+[
+ {
+  "case": "x1-python3",
+  "exit": 1,
+  "verdict": "REJECT",
+  "want": "REJECT",
+  "mismatch": false,
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "x2-rename-step",
+  "exit": 1,
+  "verdict": "REJECT",
+  "want": "REJECT",
+  "mismatch": false,
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ },
+ {
+  "case": "x3-add-shell-bash",
+  "exit": 1,
+  "verdict": "REJECT",
+  "want": "REJECT",
+  "mismatch": false,
+  "problem": "AssertionError: negative control ci-drops-cookie-gate changed nothing; it proves nothing"
+ }
+]

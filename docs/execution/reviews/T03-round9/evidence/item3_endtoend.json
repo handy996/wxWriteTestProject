@@ -1,0 +1,34 @@
+[
+ {
+  "case": "3a-escape-hidden-container-default",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "REJECT",
+  "note": "FORBIDDEN reflow must be caught whatever the spelling",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "3b-escaped-slash-star-in-string",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "legal Java must not turn the gate red",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "3c-escaped-quote-in-text-block",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "legal Java must not turn the gate red",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "3d-escape-in-config-comment",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "expected": "ACCEPT",
+  "note": "a comment mentioning the old name is not a reflow",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ }
+]

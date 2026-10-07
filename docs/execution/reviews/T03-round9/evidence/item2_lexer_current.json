@@ -1,0 +1,23 @@
+[
+ {
+  "case": "2a-configuration-url-literal-ending-in-escaped-quote",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "2b-char-literal-holding-quote",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ },
+ {
+  "case": "2c-single-backslash-newline-in-comment",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "ACCEPT",
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\""
+ }
+]

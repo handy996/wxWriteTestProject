@@ -1,0 +1,66 @@
+[
+ {
+  "case": "3a-forbidden-comment-via-doubled-backslash",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "REJECT",
+  "mismatch": true,
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIA",
+  "note": "javac: still inside the // comment (javap proves no call); gate: decoded into a live statement",
+  "snippet": "        // runbook \\\\u000a        verifySessionCookieContract(env);"
+ },
+ {
+  "case": "3b-escape-inside-identifier",
+  "exit": 1,
+  "verdict": "REJECT",
+  "want": "ACCEPT",
+  "mismatch": true,
+  "problem": "AssertionError: negative control guard-call-deleted changed nothing; it proves nothing",
+  "note": "JLS 3.3 identifier escape: compiles, guard runs; must stay green",
+  "snippet": "        verifySessionCookie\\u0043ontract(env);"
+ },
+ {
+  "case": "3c-escaped-newline-inside-string",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "ACCEPT",
+  "mismatch": false,
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIA",
+  "note": "legal escape; decoded view puts a raw newline inside a literal",
+  "snippet": "    static final String NL = \"x\\u000ay\";"
+ },
+ {
+  "case": "3d-forbidden-default-through-escape",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "REJECT",
+  "mismatch": true,
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIA",
+  "note": "constant pool value is exactly JSESSIONID; forbidden-name sweep should see it",
+  "snippet": "    static final String OLD_DEFAULT = \"JSESSION\\u0049D\";"
+ },
+ {
+  "case": "3e-benign-letter-escape",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "ACCEPT",
+  "mismatch": false,
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIA",
+  "note": "plain legal escape with no security meaning",
+  "snippet": "    static final String LETTER_A = \"\\u0041\";"
+ },
+ {
+  "case": "3f-illegal-escape-four-z",
+  "exit": 0,
+  "verdict": "ACCEPT",
+  "want": "REJECT",
+  "mismatch": true,
+  "problem": "{\"agreement\": {\"schemeKey\": \"session\", \"frozenScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIAL_SESSION\"}, \"additiveScheme\": {\"type\": \"apiKey\", \"in\": \"cookie\", \"name\": \"EDITORIA",
+  "note": "javac: illegal unicode escape, file cannot compile",
+  "snippet": "    static final String ODD = \"\\uZZZZ\";"
+ },
+ {
+  "case": "note-3f",
+  "want": "javac exit code for an identical shape is recorded in out/crosstable_en.json (s5) and escape/ probes"
+ }
+]
