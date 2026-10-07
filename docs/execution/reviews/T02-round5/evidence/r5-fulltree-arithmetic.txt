@@ -1,0 +1,11 @@
+T02 round-5 review: full-tree arithmetic replication (same input set, three configs).
+copied files 2320 total bytes 39125989
+delivered  exit=0 findings=0 3:48AM INF scanned ~38976469 bytes (38.98 MB) in 1.51s
+defaults   exit=1 findings=15 3:48AM INF scanned ~38976469 bytes (38.98 MB) in 1.3s
+historical exit=1 findings=7 3:48AM INF scanned ~38825865 bytes (38.83 MB) in 1.33s
+ARITHMETIC: total=39125989 scanned_delivered=38976469 scanned_hist=38825865
+  whole-file-skip = scanned_delivered - scanned_hist = 150604 (claimed 150604)
+  total - scanned_delivered = 149520 (claimed 149520)
+  name-skip bytes in tree = 3329 -> binary-only = 146191 (claimed 146191)
+  defaults findings = 15 (claimed 15) / historical = 7 (claimed 7)
+done stable

@@ -1,0 +1,109 @@
+T02 round-5 review: substring / collision battery against the DELIVERED config.
+base = defaults-only config (must be red, otherwise the probe is void); gate = delivered config.
+suppressed = the finding disappeared under the delivered config (i.e. the exemption swallowed it).
+Tokens are shown with long hex runs truncated; full shapes are reproducible from the case name.
+
+10-dots-four                   base=1 gate=0 -> suppressed | token=e28547…(len 50 redacted)
+10-dots-then-dash              base=1 gate=0 -> suppressed | token=e28547…(len 50 redacted)
+10-dots-then-lowerhex          base=0 (VOID) gate=0 -> suppressed | token=e28547…(len 27 redacted)…ef01(30 chars)
+10-dots-then-nonhex-Z          base=1 gate=0 -> suppressed | token=e28547…(len 49 redacted)
+10-dots-then-nonhex-g          base=1 gate=0 -> suppressed | token=e28547…(len 49 redacted)
+10-dots-then-space-word        base=1 gate=0 -> suppressed | token=e28547…(len 19 redacted) Zk3xQ9mTg7Lp5Rw2Bv5Cx3Tn6Rm
+10-dots-then-upperhex          base=0 (VOID) gate=0 -> suppressed | token=e28547…(len 49 redacted)
+10-dots-two                    base=1 gate=1 -> reported | token=e28547…(len 48 redacted)
+10-other-prefix                base=1 gate=1 -> reported | token=f1e2d3…(len 46 redacted)
+10-pre-dash                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 36 redacted)
+coll-64hex-embedded            base=1 gate=1 -> reported | token=q7e285471…0246(61 chars)
+coll-full-hex-same-prefix      base=1 gate=1 -> reported | token=e2854717…0246(60 chars)
+coll-full-hex-same-prefix-2    base=0 (VOID) gate=0 -> suppressed | token=e2854717…8765(60 chars)
+exact-00                       base=1 gate=0 -> suppressed | token=397c4e…(len 36 redacted)
+exact-01                       base=1 gate=0 -> suppressed | token=55565d…(len 36 redacted)
+exact-02                       base=1 gate=0 -> suppressed | token=775fb076…ec99(64 chars)
+exact-03                       base=1 gate=0 -> suppressed | token=ecfd7efc…a8ea(64 chars)
+exact-04                       base=1 gate=0 -> suppressed | token=ac4a337a…8cc4(64 chars)
+exact-05                       base=1 gate=0 -> suppressed | token=408651c6…6ac9(64 chars)
+exact-06                       base=1 gate=0 -> suppressed | token=394de144…f4bc(64 chars)
+exact-07                       base=1 gate=0 -> suppressed | token=568ac573…6eb1(64 chars)
+exact-08                       base=1 gate=0 -> suppressed | token=e2854717…eb2b(64 chars)
+exact-09                       base=1 gate=0 -> suppressed | token=0db04ea0…68fd(64 chars)
+exact-10                       base=1 gate=0 -> suppressed | token=e28547…(len 19 redacted)
+mid-dash-00                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 54 redacted)
+mid-dash-01                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 54 redacted)
+mid-dash-02                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-775fb076…ec99(64 chars)-g7Lp5Rw2
+mid-dash-03                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-ecfd7efc…a8ea(64 chars)-g7Lp5Rw2
+mid-dash-04                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-ac4a337a…8cc4(64 chars)-g7Lp5Rw2
+mid-dash-05                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-408651c6…6ac9(64 chars)-g7Lp5Rw2
+mid-dash-06                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-394de144…f4bc(64 chars)-g7Lp5Rw2
+mid-dash-07                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-568ac573…6eb1(64 chars)-g7Lp5Rw2
+mid-dash-08                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-e2854717…eb2b(64 chars)-g7Lp5Rw2
+mid-dash-09                    base=1 gate=0 -> suppressed | token=Zk3xQ9mT-0db04ea0…68fd(64 chars)-g7Lp5Rw2
+pre-alnum-00                   base=1 gate=1 -> reported | token=ab397c…(len 38 redacted)
+pre-alnum-01                   base=1 gate=1 -> reported | token=ab5556…(len 38 redacted)
+pre-alnum-02                   base=1 gate=1 -> reported | token=ab775fb0…ec99(66 chars)
+pre-alnum-03                   base=1 gate=1 -> reported | token=abecfd7e…a8ea(66 chars)
+pre-alnum-04                   base=1 gate=1 -> reported | token=abac4a33…8cc4(66 chars)
+pre-alnum-05                   base=1 gate=1 -> reported | token=ab408651…6ac9(66 chars)
+pre-alnum-06                   base=1 gate=1 -> reported | token=ab394de1…f4bc(66 chars)
+pre-alnum-07                   base=1 gate=1 -> reported | token=ab568ac5…6eb1(66 chars)
+pre-alnum-08                   base=1 gate=1 -> reported | token=abe28547…eb2b(66 chars)
+pre-alnum-09                   base=1 gate=1 -> reported | token=ab0db04e…68fd(66 chars)
+pre-dash-00                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 53 redacted)
+pre-dash-01                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 53 redacted)
+pre-dash-02                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…ec99(64 chars)
+pre-dash-03                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…a8ea(64 chars)
+pre-dash-04                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…8cc4(64 chars)
+pre-dash-05                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…6ac9(64 chars)
+pre-dash-06                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…f4bc(64 chars)
+pre-dash-07                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…6eb1(64 chars)
+pre-dash-08                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…eb2b(64 chars)
+pre-dash-09                    base=1 gate=0 -> suppressed | token=Zk3xQ9…(len 25 redacted)…68fd(64 chars)
+suf-alnum-00                   base=1 gate=1 -> reported | token=397c4e…(len 38 redacted)
+suf-alnum-01                   base=1 gate=1 -> reported | token=55565d…(len 38 redacted)
+suf-alnum-02                   base=1 gate=1 -> reported | token=775fb076…99cd(66 chars)
+suf-alnum-03                   base=1 gate=1 -> reported | token=ecfd7efc…eacd(66 chars)
+suf-alnum-04                   base=1 gate=1 -> reported | token=ac4a337a…c4cd(66 chars)
+suf-alnum-05                   base=1 gate=1 -> reported | token=408651c6…c9cd(66 chars)
+suf-alnum-06                   base=1 gate=1 -> reported | token=394de144…bccd(66 chars)
+suf-alnum-07                   base=1 gate=1 -> reported | token=568ac573…b1cd(66 chars)
+suf-alnum-08                   base=1 gate=1 -> reported | token=e2854717…2bcd(66 chars)
+suf-alnum-09                   base=1 gate=1 -> reported | token=0db04ea0…fdcd(66 chars)
+suf-dash-00                    base=1 gate=0 -> suppressed | token=397c4e…(len 53 redacted)
+suf-dash-01                    base=1 gate=0 -> suppressed | token=55565d…(len 53 redacted)
+suf-dash-02                    base=1 gate=0 -> suppressed | token=775fb076…ec99(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-03                    base=1 gate=0 -> suppressed | token=ecfd7efc…a8ea(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-04                    base=1 gate=0 -> suppressed | token=ac4a337a…8cc4(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-05                    base=1 gate=0 -> suppressed | token=408651c6…6ac9(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-06                    base=1 gate=0 -> suppressed | token=394de144…f4bc(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-07                    base=1 gate=0 -> suppressed | token=568ac573…6eb1(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-08                    base=1 gate=0 -> suppressed | token=e2854717…eb2b(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dash-09                    base=1 gate=0 -> suppressed | token=0db04ea0…68fd(64 chars)-Zk3xQ9mTg7Lp5Rw2
+suf-dot-00                     base=1 gate=0 -> suppressed | token=397c4e…(len 53 redacted)
+suf-dot-01                     base=1 gate=0 -> suppressed | token=55565d…(len 53 redacted)
+suf-dot-02                     base=1 gate=0 -> suppressed | token=775fb076…ec99(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-03                     base=1 gate=0 -> suppressed | token=ecfd7efc…a8ea(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-04                     base=1 gate=0 -> suppressed | token=ac4a337a…8cc4(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-05                     base=1 gate=0 -> suppressed | token=408651c6…6ac9(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-06                     base=1 gate=0 -> suppressed | token=394de144…f4bc(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-07                     base=1 gate=0 -> suppressed | token=568ac573…6eb1(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-08                     base=1 gate=0 -> suppressed | token=e2854717…eb2b(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-dot-09                     base=1 gate=0 -> suppressed | token=0db04ea0…68fd(64 chars).Zk3xQ9mTg7Lp5Rw2
+suf-eq-00                      base=1 gate=0 -> suppressed | token=397c4e…(len 53 redacted)
+suf-eq-01                      base=1 gate=0 -> suppressed | token=55565d…(len 53 redacted)
+suf-eq-02                      base=1 gate=0 -> suppressed | token=775fb076…ec99(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-03                      base=1 gate=0 -> suppressed | token=ecfd7efc…a8ea(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-04                      base=1 gate=0 -> suppressed | token=ac4a337a…8cc4(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-05                      base=1 gate=0 -> suppressed | token=408651c6…6ac9(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-06                      base=1 gate=0 -> suppressed | token=394de144…f4bc(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-07                      base=1 gate=0 -> suppressed | token=568ac573…6eb1(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-08                      base=1 gate=0 -> suppressed | token=e2854717…eb2b(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-eq-09                      base=1 gate=0 -> suppressed | token=0db04ea0…68fd(64 chars)=Zk3xQ9mTg7Lp5Rw2
+suf-us-00                      base=1 gate=1 -> reported | token=397c4e…(len 36 redacted)_Zk3xQ9mTg7Lp5Rw2
+suf-us-01                      base=1 gate=1 -> reported | token=55565d…(len 36 redacted)_Zk3xQ9mTg7Lp5Rw2
+suf-us-02                      base=1 gate=1 -> reported | token=775fb076…ec99(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-03                      base=1 gate=1 -> reported | token=ecfd7efc…a8ea(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-04                      base=1 gate=1 -> reported | token=ac4a337a…8cc4(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-05                      base=1 gate=1 -> reported | token=408651c6…6ac9(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-06                      base=1 gate=1 -> reported | token=394de144…f4bc(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-07                      base=1 gate=1 -> reported | token=568ac573…6eb1(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-08                      base=1 gate=1 -> reported | token=e2854717…eb2b(64 chars)_Zk3xQ9mTg7Lp5Rw2
+suf-us-09                      base=1 gate=1 -> reported | token=0db04ea0…68fd(64 chars)_Zk3xQ9mTg7Lp5Rw2

@@ -1,0 +1,14 @@
+T02 round-5 review: RE2 lookaround panic originals (gitleaks 8.30.1, pinned binary).
+Method: delivered config with one exception rewritten into lookaround forms; two probes
+(the rewritten value and an UNTOUCHED value) scanned with each variant config.
+
+VARIANT lookbehind         substituted=True exit=2 n=0 scanned=
+   untouched value 03 under same config: exit=2 n=0
+   stderr head: ["E0000 00:00:1791401990.873642  145936 re2.cc:237] Error parsing '(?<![0-9a-f])775fb076…ec99(64 chars)(?![0-9a-f])': invalid perl operator: (?<!", 'panic: regexp: Compile(`(?<![0-9a-f])775fb076…ec99(64 chars)(?![0-9a-f])`): error parsing regexp: bad perl operator: `(?<!`', 'github.com/wasilibs/go-re2.MustCompile({0xc000838660, 0x59})']
+VARIANT lookahead          substituted=True exit=2 n=0 scanned=
+   untouched value 03 under same config: exit=2 n=0
+   stderr head: ["E0000 00:00:1791401991.368688  145936 re2.cc:237] Error parsing '(?!775fb076…ec99(64 chars))': invalid perl operator: (?!", 'panic: regexp: Compile(`(?!775fb076…ec99(64 chars))`): error parsing regexp: bad perl operator: `(?!`', 'github.com/wasilibs/go-re2.MustCompile({0xc000738550, 0x44})']
+VARIANT lookahead_simple   substituted=True exit=2 n=0 scanned=
+   untouched value 03 under same config: exit=2 n=0
+   stderr head: ["E0000 00:00:1791401991.842598  145936 re2.cc:237] Error parsing '\\b775fb07…ec99(65 chars)(?![0-9a-f])': invalid perl operator: (?!", 'panic: regexp: Compile(`\\b775fb07…ec99(65 chars)(?![0-9a-f])`): error parsing regexp: bad perl operator: `(?!`', 'github.com/wasilibs/go-re2.MustCompile({0xc00088a550, 0x4e})']
+[{"name": "re2-lookbehind", "exit": 2, "n": 0, "other_n": 0, "scanned": "", "head": ["E0000 00:00:1791401990.873642  145936 re2.cc:237] Error parsing '(?<![0-9a-f])775fb076…ec99(64 chars)(?![0-9a-f])': invalid perl operator: (?<!", "panic: regexp: Compile(`(?<![0-9a-f])775fb076…ec99(64 chars)(?![0-9a-f])`): error par

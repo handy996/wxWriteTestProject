@@ -1,0 +1,56 @@
+T02 round-5 review: load-bearing audit of the 139 --with-controls assertions.
+Seed 20261008 picked indices: 12 23 40 55 56 62 72 75 80 113 of 139 (0 exact duplicate lines,
+0 NOTE/void probes in the delivered run). Each variant replaces one sampled assertion input with
+a permissive stub; the sampled line must turn RED. Copies live only under
+tests/engineering/T02/.work/rev5-audit/<VARIANT>/ (gitignored scratch, deleted at the end).
+
+---- BASE : relocated unmodified copy: must reproduce 139 PASS / 0 FAIL / exit 0
+     assertions PASS=139 FAIL=0  GITLEAKS ALLOWLIST POLICY: PASSED
+---- SR1 : sampled line 12 - entry 06 un-anchored (substring exemption restored)
+     assertions PASS=17 FAIL=1  GITLEAKS ALLOWLIST POLICY: FAILED ["exception is anchored (word-boundary or non-hex guard): 394de144ba..."]
+  RED  exception is anchored (word-boundary or non-hex guard): 394de144ba...  [unanchored len 64]
+---- CRA : lines 56/62/72 attempt 1 - wildcard the config, which also changes the probe inputs (see note)
+     assertions PASS=107 FAIL=8  GITLEAKS ALLOWLIST POLICY: FAILED ["exception is one full literal value, word-boundary anchored, no wildcard: ac4a337a11...", "exception is one full literal value, word-boundary anchored, no wildcard: 408651c696...", "ex
+  RED  exception is one full literal value, word-boundary anchored, no wildcard: ac4a337a11...  [literal len 30]
+  RED  exception is one full literal value, word-boundary anchored, no wildcard: 408651c696...  [literal len 30]
+  RED  exception is one full literal value, word-boundary anchored, no wildcard: 568ac57369...  [literal len 30]
+  RED  reverse control: every unchanged probe really triggers generic-api-key (control is not void)  [['case-04-exact.json', 'case-05-exact.json', 'case-07-exact.json']]
+  RED  reverse control: at least two single-character probes stay live for value 04  [live 0 of 4]
+  RED  reverse control: at least two single-character probes stay live for value 05  [live 0 of 4]
+  RED  reverse control: at least two single-character probes stay live for value 07  [live 0 of 4]
+  RED  reverse control: the 44-mutation battery is present (>= 40 live single-character probes)  [live mutation probes 32]
+  NOTE    probes the rule itself does not report (entropy gate), excluded from the count: ['case-04-exact.json', 'case-04-first.json', 'case-04-last.json', 'case-04-middle.json', 'case-04-supe
+---- CRB : sampled line 113 - entry 07 leading \b removed (prefix super-strings swallowed again)
+     assertions PASS=138 FAIL=1  GITLEAKS ALLOWLIST POLICY: FAILED ["substring control: super-string pre for value 07 is reported again (not swallowed)"]
+  RED  substring control: super-string pre for value 07 is reported again (not swallowed)  [the anchored value exception swallowed a longer token]
+---- CRC : sampled lines 40/55/75/80 - mutation probes of values 01/04/08/09 made low-entropy (rule silent)
+     assertions PASS=118 FAIL=5  GITLEAKS ALLOWLIST POLICY: FAILED ["reverse control: at least two single-character probes stay live for value 01", "reverse control: at least two single-character probes stay live for value 04", "reverse control: at leas
+  RED  reverse control: at least two single-character probes stay live for value 01  [live 0 of 4]
+  RED  reverse control: at least two single-character probes stay live for value 04  [live 0 of 4]
+  RED  reverse control: at least two single-character probes stay live for value 08  [live 0 of 4]
+  RED  reverse control: at least two single-character probes stay live for value 09  [live 0 of 4]
+  RED  reverse control: the 44-mutation battery is present (>= 40 live single-character probes)  [live mutation probes 28]
+  NOTE    probes the rule itself does not report (entropy gate), excluded from the count: ['case-01-first.json', 'case-01-last.json', 'case-01-middle.json', 'case-01-upper.json', 'case-04-firs
+---- CRD : sampled line 23 - live AWS canary suffix replaced by AAAAAAAAAAAAAAAA (entropy 0)
+     assertions PASS=134 FAIL=5  GITLEAKS ALLOWLIST POLICY: FAILED ["positive control: synthetic aws-access-token caught in a copy of docs/AI-Editorial-Agent-SRS-v1.0.md", "positive control: synthetic aws-access-token caught in a copy of tests/engineeri
+  RED  positive control: synthetic aws-access-token caught in a copy of docs/AI-Editorial-Agent-SRS-v1.0.md
+  RED  positive control: synthetic aws-access-token caught in a copy of tests/engineering/T02/evidence/r01-integrity.json
+  RED  positive control: synthetic aws-access-token caught in a copy of tests/engineering/T04/evidence/integration.json
+  RED  positive control: the nine canary findings are the only findings  [exit 1; extra []]
+  RED  AWS-shape control: only the three base32 ids fired (near-miss with 0/1/8/9 stayed silent)  [aws-access-token findings 0]
+---- CRC2 : sampled lines 62/72 - gate scan swapped for a head+.*+tail wildcard stub, probes stay true
+     assertions PASS=133 FAIL=6  GITLEAKS ALLOWLIST POLICY: FAILED ["reverse control: one-character change in case-04-middle.json is reported again", "reverse control: one-character change in case-04-upper.json is reported again", "reverse control: one-
+  RED  reverse control: one-character change in case-04-middle.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-04-upper.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-05-middle.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-05-upper.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-07-middle.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-07-upper.json is reported again  [gate suppressed it]
+---- CRE : sampled line 56 - gate stub wildcards the first and last character of entries 04/05/07
+     assertions PASS=133 FAIL=6  GITLEAKS ALLOWLIST POLICY: FAILED ["reverse control: one-character change in case-04-first.json is reported again", "reverse control: one-character change in case-04-last.json is reported again", "reverse control: one-ch
+  RED  reverse control: one-character change in case-04-first.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-04-last.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-05-first.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-05-last.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-07-first.json is reported again  [gate suppressed it]
+  RED  reverse control: one-character change in case-07-last.json is reported again  [gate suppressed it]

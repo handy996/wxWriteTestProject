@@ -1,0 +1,23 @@
+T02 round-5 review: command matrix I ran myself (see review.md section 0).
+Powershell 5.1, $env:PYTHONDONTWRITEBYTECODE=1, python = the managed runtime.
+$ secret_scan.py --self-test
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+secret_scan.py --self-test :: lines=1 tail=secret_scan self-test: 10 fixtures and 1 exemptions agree
+$ secret_scan.py
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+secret_scan.py :: lines=1 tail=Secret pattern scan: no matches
+$ check_gitleaks_allowlists.py
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+check_gitleaks_allowlists.py :: lines=19 tail=GITLEAKS ALLOWLIST POLICY: PASSED (structure only)
+$ check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe :: lines=140 tail=140 lines: 139 PASS / 0 FAIL / 0 NOTE; GITLEAKS ALLOWLIST POLICY: PASSED
+$ check_contracts.py
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+check_contracts.py :: lines=1 tail=Approved T00 rc.3: 27 hashes verified, no regeneration
+$ digest_records.py
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+digest_records.py :: lines=0 tail=(no output)
+$ scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe --report <temp>
+  exit code captured immediately after the call; see review.md section 0 table (all 0)
+scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe --report <temp> :: lines=3 tail=[]

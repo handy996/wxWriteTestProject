@@ -1,0 +1,20 @@
+T02 round-5 review: aws-access-token entropy sweep, base32 suffix by distinct-symbol count k.
+h16 = Shannon entropy of the 16-char suffix; h20 = entropy of the whole 20-char match (AKIA+suffix).
+Delivered config used (no allowlist entry touches AKIA ids, so delivered == defaults here).
+
+k= 1 suffix=AAAAAAAAAAAAAAAA h16=-0.0000 h20=0.5690 caught=False rules=[]
+k= 2 suffix=AAAAAAAABBBBBBBB h16=1.0000 h20=1.4610 caught=False rules=[]
+k= 3 suffix=AAAAAABBBBBCCCCC h16=1.5794 h20=1.9610 caught=False rules=[]
+k= 4 suffix=AAAABBBBCCCCDDDD h16=2.0000 h20=2.3464 caught=False rules=[]
+k= 5 suffix=AAAABBBCCCDDDEEE h16=2.3113 h20=2.5955 caught=False rules=[]
+k= 6 suffix=AAABBBCCCDDDEEFF h16=2.5613 h20=2.8282 caught=False rules=[]
+k= 7 suffix=AAABBBCCDDEEFFGG h16=2.7806 h20=3.0037 caught=True  rules=['aws-access-token']
+k= 8 suffix=AABBCCDDEEFFGGHH h16=3.0000 h20=3.2219 caught=True  rules=['aws-access-token']
+k= 9 suffix=AABBCCDDEEFFGGHI h16=3.1250 h20=3.2219 caught=True  rules=['aws-access-token']
+k=10 suffix=AABBCCDDEEFFGHIJ h16=3.2500 h20=3.3219 caught=True  rules=['aws-access-token']
+k=11 suffix=AABBCCDDEEFGHIJK h16=3.3750 h20=3.3219 caught=True  rules=['aws-access-token']
+k=12 suffix=AABBCCDDEFGHIJKL h16=3.5000 h20=3.4219 caught=True  rules=['aws-access-token']
+k=13 suffix=AABBCCDEFGHIJKLM h16=3.6250 h20=3.5219 caught=True  rules=['aws-access-token']
+k=14 suffix=AABBCDEFGHIJKLMN h16=3.7500 h20=3.6219 caught=True  rules=['aws-access-token']
+k=15 suffix=AABCDEFGHIJKLMNO h16=3.8750 h20=3.7219 caught=True  rules=['aws-access-token']
+k=16 suffix=ABCDEFGHIJKLMNOP h16=4.0000 h20=3.8842 caught=True  rules=['aws-access-token']

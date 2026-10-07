@@ -1,0 +1,28 @@
+T02 round-5 review: forbidden-alphabet rows (replication of evidence/r05-allowlist-hardening.json).
+NOTE: live key shapes in this file are written as PREFIX+BODY (a plus is inserted between the AKIA-style prefix and the 16-character part) so this review directory never itself becomes a gitleaks/secret_scan finding. Measurements are unchanged.
+aws=False means the aws-access-token rule did not fire; rules=[] means NO rule fired at all.
+AB0DEFGHIJKLMNOP   base32=False h16=4.0 h20=3.8842 aws=False rules=[] n=0
+ABCDE1GHIJKLMNOP   base32=False h16=4.0 h20=3.8842 aws=False rules=[] n=0
+ABCDEFGHI8KLMNOP   base32=False h16=4.0 h20=3.8842 aws=False rules=[] n=0
+ABCDEFGHIJKLM9OP   base32=False h16=4.0 h20=3.8842 aws=False rules=[] n=0
+0EPW1ABQ8QRZ9D23   base32=False h16=3.875 h20=3.9842 aws=False rules=[] n=0
+QWE1TYU9OPASDFGH   base32=False h16=4.0 h20=4.0842 aws=False rules=[] n=0
+AAAAAA8ABBBBBBBB   base32=False h16=1.2718 h20=1.6955 aws=False rules=[] n=0
+AAAABBBBCCCCDDDD   base32=True  h16=2.0 h20=2.3464 aws=False rules=[] n=0
+ABCDEFGHIJKLMNOP   base32=True  h16=4.0 h20=3.8842 aws=True  rules=['aws-access-token'] n=2
+QWERTYUIOPASDFGH   base32=True  h16=4.0 h20=3.9842 aws=True  rules=['aws-access-token'] n=2
+AAAAAAAABBBBBBBB   base32=True  h16=1.0 h20=1.461 aws=False rules=[] n=0
+MEPWJABQTQRZRD23   base32=True  h16=3.75 h20=3.8842 aws=True  rules=['aws-access-token'] n=2
+ABCDEFGHABCDEFGH   base32=True  h16=3.0 h20=3.2219 aws=True  rules=['aws-access-token'] n=2
+EXAMPLE probe AKIA+IOSFODNN7EXAMPLE         defaults rules=[] n=0
+EXAMPLE probe AKIA+ABCDEFGHIJKLMNOP         defaults rules=['aws-access-token'] n=1
+
+A-3 name-substring skip (identical 281-byte payload, defaults-only config):
+  gitleaks.toml          exit=0 findings=0 3:59AM INF scanned ~0 bytes (0) in 0s
+  sub-gitleaks.toml      exit=0 findings=0 3:59AM INF scanned ~0 bytes (0) in 2.51ms
+  .gitleaks.toml         exit=0 findings=0 3:59AM INF scanned ~0 bytes (0) in 2.03ms
+  gitleaks.toml.bak      exit=0 findings=0 3:59AM INF scanned ~0 bytes (0) in 6.36ms
+  dir-gitleaks.toml.txt  exit=0 findings=0 3:59AM INF scanned ~0 bytes (0) in 0s
+  plain.txt              exit=1 findings=1 3:59AM INF scanned ~281 bytes (281 bytes) in 5.51ms
+  gitleaks-toml.txt      exit=1 findings=1 4:00AM INF scanned ~281 bytes (281 bytes) in 8.8ms
+  subGitleaksToml.txt    exit=1 findings=1 4:00AM INF scanned ~281 bytes (281 bytes) in 10.5ms
