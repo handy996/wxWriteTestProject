@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "T08 第三轮待派：F2-01 整改（实施方编写、主 agent 复现）未经独立复审，且含点模型 id 的配置限制是本轮新发现的设计后果。T03 侧第七轮整改仍待第八轮。已复审：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮，349b51c 为整改本身、非采纳判决）。reviewedBaselineCommit 仍是 b072abe",
+  "pendingReviewCommit": "未通过复审且整改未再审：T02 第三轮判 CHANGES_REQUIRED（R02 未闭合 + P1 扫描盲区），整改派 agent-abbe86de；T03 第七轮整改待第八轮（220c8350 在跑）；T08 F2-01 整改待第三轮（ad779f7e 在跑；前一次 bd808c0c 会话故障无产出已重派）。另有两项主 agent 自处理：storage 测试触发自有扫描器、T07 硬编码期望。已复审记录：b3a909d/849d784（T08 一二轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe，不得当作本轮依据",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -11,7 +11,8 @@
     "T03-5th": "2512025+HEAD → CHANGES_REQUIRED（P2×3：证据载体错标、闸门对守卫盲视、配置扫描无路径锚定；后两项主 agent 已加固为 14 条控制）",
     "T08-2nd": "b3a909d+849d784 -> CHANGES_REQUIRED（两条 P1 判 CLOSED，agent-2 逐条核过；新增 F2-01 P2：provider-quota model 级 scope 拼成 provider.model 而查找用 provider|model，永不命中＝配置静默 fail-open；F2-02/03/04/05 P3。其要求的活库复跑由主 agent 代跑：44/0/0）",
     "T03-6th": "2512025+849d784 -> CHANGES_REQUIRED（P2×1：GUARD/TEST_ASSERTION 匹配含注释原文，把守卫行 // 注释掉或 /* */ 包裹后闸门仍通过并印 startupGuardLive=true；P3×3：引号化重复键对扫描器隐形、报告 :50 残留与更正自相矛盾的措辞、machineGates 旧“五源全等”描述未同步。复审方 18 条独立探针中 12 条被正确拒绝，含协同改第三名字）",
-    "T03-7th": "b813bc3+164e3f8 → CHANGES_REQUIRED（P2×3 + P3×3）。复审方 agent-d32adfb4 的自建内存探针打穿第六轮加固：F-01 注释剥离器遇 Java 文本块内奇数个未转义引号即错位，被 // 注释掉的守卫反算活代码（偶数引号正常拒绝，故奇偶 bug；现存 137 个 java 全扫无一受影响 → P2）；F-02 GUARD_CALL 只证明源码有该行调用，挪进永不执行的 static 方法照样绿，且 T03Configuration 受 identity.enabled=false 门控、默认态守卫不装配；F-03 prod 段只查一个字符串在场，if(false && matchesProfiles)、删 http-only/same-site 子句、翻默认值、改 profile 字面量、改消息前缀全 ACCEPTED → 台账“四段分别受控”当时不成立。另：SOURCES 不含 guardTest（删掉整份负向测试仍 PASS）、跟踪 surefire 无输入指纹且时间戳早于引入提交、fixEvidence 仍以 14/14 描述当前文件、profile 控制只演字母序第一个。判 round-6 F-01/F-05 未闭合、F-04 部分闭合"
+    "T03-7th": "b813bc3+164e3f8 → CHANGES_REQUIRED（P2×3 + P3×3）。复审方 agent-d32adfb4 的自建内存探针打穿第六轮加固：F-01 注释剥离器遇 Java 文本块内奇数个未转义引号即错位，被 // 注释掉的守卫反算活代码（偶数引号正常拒绝，故奇偶 bug；现存 137 个 java 全扫无一受影响 → P2）；F-02 GUARD_CALL 只证明源码有该行调用，挪进永不执行的 static 方法照样绿，且 T03Configuration 受 identity.enabled=false 门控、默认态守卫不装配；F-03 prod 段只查一个字符串在场，if(false && matchesProfiles)、删 http-only/same-site 子句、翻默认值、改 profile 字面量、改消息前缀全 ACCEPTED → 台账“四段分别受控”当时不成立。另：SOURCES 不含 guardTest（删掉整份负向测试仍 PASS）、跟踪 surefire 无输入指纹且时间戳早于引入提交、fixEvidence 仍以 14/14 描述当前文件、profile 控制只演字母序第一个。判 round-6 F-01/F-05 未闭合、F-04 部分闭合",
+    "T02-3rd": "5413cf4 之后的整改复审 → CHANGES_REQUIRED。复审方 agent-406822b7 判 R02 未闭合：全量 gitleaks 退出 1、7 条命中（原 6 项已被例外抑制；新命中全在已跟踪文件：docs/execution/reviews/T03-round5/evidence/checks.json L11/L12/L20、docs/execution/reviews/T07-round4/checks.json L91/L93、tests/engineering/T03/evidence/session-cookie-r04.json L29/L30，值是 docs/api/openapi.yaml=e285471760a5dce4… 与 docs/api/diff-pages-v1.1.openapi.yaml=0db04ea086c2c563… 的真实 SHA-256）；自有扫描器 python tests/engineering/T02/secret_scan.py 亦退出 1（storage 测试里的 AWS 文档示例键）。主 agent 亲测复现并证明修复方向（8.30.1，同一 canary github_token: ghp_…）：变体 A 生产原样 → 3 条命中但被 paths 匹配的 r01-integrity.json 零命中，即该文件内植入的真实形态凭证完全不可见；变体 B 删去全部 paths 只留 regexes → 2 条命中（sibling.json 与 r01-integrity.json 的 canary），而被豁免的那个 sha256 值仍不报。⇒ 值条件在 paths 命中时形同虚设，docs/execution/reports/T02.md:115 那句“同文件路径且同完整示例值、未豁免目录或真实密钥”是主 agent 写下的假表述，且它把仍在被编辑的 165KB SRS 变成永久盲区"
   },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -54,7 +55,7 @@
     },
     "T02": {
       "verdict": "CHANGES_REQUIRED",
-      "basis": "docs/execution/reviews/T02-Review-v2.0.md",
+      "basis": "docs/execution/reviews/T02-round3/review.md（第三轮）：R02 未闭合 + 新 P1 扫描盲区。整改已派实施方 agent-abbe86de（只改 T02 自有文件：生成器分行、gitleaks.toml 去 paths 改值精确、四个必交付控制、T02.md 就地撤回）",
       "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论"
     },
     "T03": {
@@ -349,16 +350,80 @@
       "consequence": "若保留限制，启用 model 级配额前 Owner 必须知晓；若改配置形态，V5 不变但 BudgetPolicyConfig 与两条新用例需重做",
       "openedAt": "2026-10-07",
       "foundBy": "主 agent 读 T08PostgresTest:663-708 与 scope 翻译时推演真实模型 id"
+    },
+    {
+      "id": "T02-R02-BLINDSPOT",
+      "task": "T02",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "gitleaks.toml 三条 [[allowlists]] 都写了 paths，而 paths 命中会让 gitleaks 整文件跳过（实测该文件 scanned 0 字节、regexes 形同虚设），于是 tests/engineering/T02/evidence/r01-integrity.json、tests/engineering/T04/evidence/integration.json 与仍在被编辑的 docs/AI-Editorial-Agent-SRS-v1.0.md（165KB）成为永久盲区：在其相对路径副本内植入合成 github PAT 形态凭证，交付配置报 0 命中；删掉 paths 后同一 canary 立刻被抓",
+      "requiredFix": "例外一律只按值（删除全部 paths；主 agent 已实测该写法只抑制该值、文件仍被扫）；根因 tests/engineering/T02/revision_integrity.py:35 的“路径作键 + SHA-256 作值同行”改分行记录；历史 7 条命中用值精确 regexes 抑制，并规避配置自命中（完整 64 位摘要写进 gitleaks.toml 会让配置自己被判 generic-api-key）；加结构自检：gitleaks.toml 中 paths 出现次数必须为 0，且该断言要接进可重跑的门",
+      "consequence": "R02 未闭合前 T02 不得转 PASS、G0 不得签署；CI 的密钥扫描步骤当前必红",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md F-02 + 主 agent 变体 A/B 内存对照实验复现"
+    },
+    {
+      "id": "T02-R02-LEAKS-PERSIST",
+      "task": "T02",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "全量扫描退出 1、7 条 generic-api-key 误报，均为契约文件真实 SHA-256 与含 api 的路径同处一行；根因在清单生成器的输出形态，故每新增一份证据就要再加一条豁免，不可持续；T02.md:94/:115 声称的“复扫通过”只对当时输入集成立",
+      "requiredFix": "改生成器形态（分行/拆数组）使新证据不再触发；历史证据不可改写，用值精确 regexes 抑制；重跑并留退出码",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md 第二节"
+    },
+    {
+      "id": "SECRET-SCAN-STORAGE-EXAMPLE-KEY",
+      "task": "T02",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "python tests/engineering/T02/secret_scan.py 退出 1：自有正则 \\bAKIA[0-9A-Z]{16}\\b 命中 backend/src/test/java/com/example/editorial/storage/S3ProtocolRegressionTest.java:15 的 AWS 官方文档示例键 AKIAIOSFODNN7EXAMPLE（SigV4 发布向量标准常量）。CI 第 54 步即此扫描，故 CI 也必红",
+      "requiredFix": "主 agent 处理（跨 storage 测试域，不派给 T02 实施方）：在 secret_scan.py 内做**值精确**豁免只放行该 AWS 文档常量，并以控制证明换成任一其它 AKIA 形态 id 仍必红；不得改成整文件/整目录豁免；也不得为通过而拆散测试里的字面量（那只是把扫描器瞎化）",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md 第一节实测"
+    },
+    {
+      "id": "T07-GITLEAKS-EXPECT-HARDCODED",
+      "task": "T07",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "tests/engineering/T07/verify_delivery.py:52-53 硬编码“命中恰 6 条且全部位于 tests/engineering/T02/evidence/r01-integrity.json”。现实已是 7 条且在别处 ⇒ T07 交付门必然失败；这是跨任务耦合：T02 的扫描基线变动会无声打断 T07",
+      "requiredFix": "主 agent 改为不依赖条数与具体路径的期望（例外修好后应为 0 命中；命中即失败），并留反向控制证明该断言仍承重",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md 第三节"
+    },
+    {
+      "id": "REVIEW-WORK-DISK-POLLUTION",
+      "task": "T02",
+      "severity": "P3",
+      "status": "CLOSED",
+      "issue": "复审方在 docs/execution/reviews/T0x-roundN/.work/ 留下整仓副本（含 backend/target），已被 .gitignore:21 **/.work/ 忽略但污染工作树",
+      "requiredFix": "测出占用量并清理这些 .work 副本；保留各轮 review.md 与 evidence/",
+      "evidence": "复审方实测：T04-round1/2/3 = 135,057,906 / 102,923,333 / 3,996,285 字节；T07-round1..4 = 165,624,509 / 59,933,887 / 120,785,411 / 20,454 字节；合计 588,341,785 字节（约 561.1 MiB、19,306 文件），其中 .work 占 582,618,348。主 agent 删除前先证明 git ls-files 在这些 .work 下跟踪文件数为 0，删除后复核各轮 review.md 与 evidence/ 仍在、git 工作树干净",
+      "openedAt": "2026-10-07",
+      "closedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md 第五节附注"
+    },
+    {
+      "id": "T02-REVIEW-4TH",
+      "task": "T02",
+      "severity": "P1（门禁前置）",
+      "status": "OPEN",
+      "issue": "R02 与盲区整改将由实施方编写、主 agent 集成，二者都不得自判采纳；且“值精确”写法必须被独立攻击过",
+      "requiredFix": "第四轮独立复审必做四个控制：豁免路径内植入真实形态凭证必须被抓；豁免值改一位必须重新被报；只含哈希清单的正常文件不得红；gitleaks.toml 中 paths 计数必须为 0 且该断言自身有承重反向控制",
+      "closure": "第四轮判决 PASS 且无新 P0-P2 后，T02 才可提交人工签署，G0 方可关闭",
+      "openedAt": "2026-10-07",
+      "foundBy": "docs/execution/reviews/T02-round3/review.md + 协议“不得自判采纳”"
     }
   ],
   "next": [
-    "1) 收两份在跑的独立复审：bd808c0c（T08 第三轮，验 F2-01 整改与含点模型 id 后果）、220c8350（T03 第八轮，验第七轮整改，重点是剥离器还能否被 \\u0022 之类错位、每条检查是否承重、binding JSON 的可信边界）。判决到手后按处置顺序：先改自己写的东西，再自证，再派下一轮。",
-    "2) T03 若第八轮无新 P0-P2：把结论提交人类签署（T03-APPROVAL，G1 的前置）。主 agent 与任何子 agent 不得自签。",
-    "3) T08 若第三轮 PASS：tasks.T08 转 PASS 由人类或复审记录决定；activationPreconditions 五条进入运维启用清单；随后解 COST-HTTP-E2E（真实 GET /api/v1/usage + 启用态组合根）。",
-    "4) 欠一项独立复审：T02 第三轮（第二轮整改后未再复审）。G0 关闭前必须补。",
-    "5) T09 暂不派。卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 自写依赖 T03、T04、T05、T08：T03 未过第八轮且未获人类批准、T08 第三轮在跑、T04 的真实私有桶仍阻塞（B01）。原先 next 里“T09 现已可派”是主 agent 的乐观陈述，与卡片依赖行不符，已撤回。可做的前置工作：Flyway V6 版本号规划、CostPorts.Executions 绑定设计（刻意推迟到 T09，不得提前塞进 T08）。",
-    "6) COST-BUDGET-LIMITS 等 Owner：8 个 SRS 示例值批准 + 2 个必需配额键 + alert-percent，另加本轮新增的含点模型 id 限制（T08-R3-DOTMODEL）归谁裁定。",
-    "7) MULTI-DOMAIN-SUITE：T10/T11 之后用 formal.py --suite all 关闭；COMPAT-INVENTORY 与 T01 人工金标签仍欠。"
+    "1) 三路在跑：220c8350（T03 第八轮：剥离器还能否被错位、每条检查是否承重、binding JSON 的可信边界）、ad779f7e（T08 第三轮：绑定证据可否被手搓策略蒙过、跨模型窗口语义、含点模型 id 后果；bd808c0c 会话故障无产出已重派）、abbe86de（T02 R02 整改：去 paths、生成器分行、值精确抑制、四个控制、T02.md 就地撤回）。",
+    "2) 主 agent 自处理两项：SECRET-SCAN-STORAGE-EXAMPLE-KEY（值精确豁免 + 换 id 仍必红的控制）与 T07-GITLEAKS-EXPECT-HARDCODED（改为“命中即失败”的不变式）。两者都不得改成整文件/整目录豁免。",
+    "3) T02 整改落地后派第四轮独立复审（T02-REVIEW-4TH），四个控制必须自建；T02 未 PASS 前 G0 不签。",
+    "4) T03 若第八轮无新 P0-P2：提交人类签署 T03-APPROVAL（G1 前置）。主 agent 与任何子 agent 不得自签。",
+    "5) T08 若第三轮 PASS：activationPreconditions 五条进运维启用清单，随后解 COST-HTTP-E2E（真实 GET /api/v1/usage + 启用态组合根）。",
+    "6) T09 暂不派：卡片 docs/AI-Editorial-Agent-Execution-Plan-v1.0.md:179 自写依赖 T03/T04/T05/T08，而 T03 未过第八轮且未获人类批准、T08 第三轮在跑、T04 真实私有桶仍阻塞（B01）。可做的只有 Flyway V6 版本规划与 CostPorts.Executions 绑定设计（刻意推迟，不提前塞进 T08）。",
+    "7) Owner/人类事项：COST-BUDGET-LIMITS（8 个 SRS 示例值 + 2 个必需配额键 + alert-percent）、T08-R3-DOTMODEL 归属、B01 真实私有桶、T01 人工金标签、COMPAT-INVENTORY；MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all 关闭。"
   ],
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
@@ -383,7 +448,10 @@
     "git add 是整批原子操作：任一 pathspec 不存在会让整批失败，而 stderr 常被重定向吞掉，看起来像“成功但暂存 0 项”。提交守卫必须有暂存数下限断言，0 项或低于预期一律中止并 reset，不得把空索引当成通过",
     "反向控制必须配良性探针：只有“削弱必须被拒”不足以证明闸门可用——过剥与过紧同样能制造全拒的假绿。同一门禁里要跑已知合法的变异并断言其仍通过（本轮加文本块奇引号、串内 //、字符字面量、合法重排版、块注释含引号共 5 条）；正是良性探针暴露了正则不容忍合法空格这一真实缺陷",
     "变异必须打在唯一锚上：replace(...,1) 会命中同串第一处无关文本（本轮 prod-profile-token-renamed 改到的是 origin 检查，Cookie 守卫纹丝不动，闸门如实报“该控制无效”）。凡以“应当只有一处”为前提的变异，先证明唯一性或改用带上下文的唯一锚",
-    "台账自身也要过门禁：本轮给 STATE 写脚本加的“OPEN 必须写明下一步、CLOSED 必须有闭环指针、必须有 openedAt”立刻查出 7 项缺日期、4 项缺路径（B01/T03-APPROVAL/T01-HUMAN/COMPAT-INVENTORY）。规则发现问题时补数据（日期取自 git log -S 首次引入该 id 的提交），不放宽规则"
+    "台账自身也要过门禁：本轮给 STATE 写脚本加的“OPEN 必须写明下一步、CLOSED 必须有闭环指针、必须有 openedAt”立刻查出 7 项缺日期、4 项缺路径（B01/T03-APPROVAL/T01-HUMAN/COMPAT-INVENTORY）。规则发现问题时补数据（日期取自 git log -S 首次引入该 id 的提交），不放宽规则",
+    "密钥豁免只能按值写：gitleaks 的 allowlist paths 会让整文件跳过（实测 scanned 0 字节、regexes 形同虚设），“同文件+同值”的承诺在实现层面并不存在。任何豁免都必须受一个正向控制约束——在该豁免路径的副本内植入真实形态凭证必须被抓。另注意配置文件自身也在扫描输入内：把完整摘要写进 gitleaks.toml 会造成配置自命中",
+    "扫描器覆盖边界不等于没有密钥：Gitleaks 8.30.1 对单行 AKIA 形态与 password= 明文 0 命中（与无配置默认规则命中集相同），自有 secret_scan.py 却能抓 AKIA。两个脚本的文档串已写 neither proves absence，任何“扫描通过”的表述都必须带这一限定",
+    "跨任务期望不得硬编码他人基线：T07 交付门写死“命中恰 6 条且都在 r01-integrity.json”，T02 基线一变即无声失效。对他人产物的期望应写成不变式（命中即失败），不要写成快照数字"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
@@ -399,10 +467,12 @@
     "mvn -B -ntp -f backend/pom.xml clean verify\n    mvn -B -ntp -o -f backend/pom.xml \"-Dmaven.repo.local=.tools/t02/m2\" -Dtest=T03SessionCookieGuardTest test   # 会话 Cookie 契约的离线负向运行时证明（7 项，不需 PG；结果跟踪在 tests/engineering/T03/evidence/T03SessionCookieGuardTest.xml）",
     "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix frontend audit",
     "python tests/engineering/T02/integration.py --pg-bin <pgsql/bin> --java <jdk/bin>   # 真实 PostgreSQL，无 Docker 时",
-    "python tests/engineering/T02/compose_smoke.py --entrypoint   # 需 Docker；两个容器测试都用本机 18080，须顺序运行"
+    "python tests/engineering/T02/compose_smoke.py --entrypoint   # 需 Docker；两个容器测试都用本机 18080，须顺序运行",
+    "python tests/engineering/T02/scan_secrets.py --gitleaks .tools/t02/gitleaks/gitleaks.exe   # 全量密钥扫描（Gitleaks 8.30.1；ci.yml:35-37 固定版本并校验 sha256 551f6fc8…、:55 调同一脚本、配置在 scan_secrets.py:32 硬编码，与本地等价）。R02 整改后期望退出 0 且 0 命中，并要求 gitleaks.toml 内 paths 计数为 0",
+    "python tests/engineering/T02/secret_scan.py   # 自有离线基线扫描（PEM/AKIA/sk-/ghp）；当前退出 1，见 SECRET-SCAN-STORAGE-EXAMPLE-KEY"
   ],
   "budget": {
-    "sessionBootstrap": "只读状态文件实测约 6.4k tok（21 顶层键、tasks 9、openItems 18、protocol 23）；整单读 SRS+计划+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 7.4k tok（21 顶层键、tasks 9、openItems 24、protocol 26）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",
