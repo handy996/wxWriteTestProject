@@ -42,6 +42,8 @@ jobs:
           node tests/contracts/T00/hash-vector-js.cjs
           python tests/engineering/T02/check_contracts.py
           git diff --exit-code -- docs tests/fixtures tests/contracts
+      - name: Session cookie contract agreement gate
+        run: python tests/engineering/T03/check_session_cookie.py
       - name: Backend build, policy tests and dependency inventory
         run: .tools/t02/apache-maven-3.9.11/bin/mvn -B -ntp -f backend/pom.xml verify
       - name: Frontend locked install, types and build

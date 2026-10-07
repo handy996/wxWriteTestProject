@@ -143,6 +143,9 @@ SOURCES = {
     "binding": ROOT / "tests/engineering/T03/evidence/guard-test-binding.json",
     # The gate's own bytes are recorded in its evidence, so a result cannot be cited for a later gate edit.
     "gate": ROOT / "tests/engineering/T03/check_session_cookie.py",
+    # Eighth round F-06: CI ran neither this gate nor the identity flag, so nothing in the repository caught cookie
+    # name drift automatically. The wiring is now an inspected source, with a control that deletes it.
+    "ci": ROOT / ".github/workflows/ci.yml",
 }
 GUARD_TEST_METHODS = (
     "absentCookieNameAbortsStartup", "containerDefaultNameAbortsStartup", "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault",
@@ -508,6 +511,8 @@ GUARD_TEST_REQUIRE = {
 # requirement is file-wide rather than inside the method body; hollowing the case is caught by the body needles above.
 GUARD_TEST_FILE_NEEDLES = ("server.servlet.session.cookie.secure", "server.servlet.session.cookie.http-only",
                            "server.servlet.session.cookie.same-site")
+# Matched on the file name alone so reformatting the CI step cannot silently unpolice the contract.
+CI_GATE_NEEDLE = "check_session_cookie.py"
 
 
 def method_span(stripped, name):
@@ -653,13 +658,16 @@ def evaluate(sources):
         raise AssertionError(f"guardTest: the production attributes {missing} are no longer exercised anywhere in the file")
     recorded = json.loads(sources["binding"]) if sources.get("binding") else None
     binding = binding_check(recorded, "binding")
+    if CI_GATE_NEEDLE not in sources["ci"]:
+        raise AssertionError("ci: no workflow step runs this gate, so cookie name drift has no automatic police")
     return {"schemeKey": key, "frozenScheme": frozen_scheme, "additiveScheme": additive_scheme,
             "approvedName": APPROVED_NAME, "baseConfigCookieName": declared[0],
             "profileOverrides": overrides, "configFilesScanned": sorted(configs),
             "javaConstant": constant, "startupGuardLive": True, "runtimeAssertionLive": True,
             "guardCheckedAfterCommentStripping": True, "guardCallDirectStatementInBean": bean,
             "unicodeEscapesResolvedBeforeLexing": True,
-            "guardTestCaseShapes": sorted(bodies), "negativeGuardCases": len(GUARD_TEST_METHODS), "binding": binding}
+            "guardTestCaseShapes": sorted(bodies), "ciWiresThisGate": True,
+            "negativeGuardCases": len(GUARD_TEST_METHODS), "binding": binding}
 
 def negative_control(sources):
     """Prove the guard bites: each weakening, applied in memory, must be rejected."""
@@ -782,6 +790,10 @@ def negative_control(sources):
             copy["guardTest"] = sources["guardTest"].replace('"' + FORBIDDEN + '"', '"OTHERSESSION"', 1)
         elif label == "guard-test-prod-clauses-dropped":
             copy["guardTest"] = sources["guardTest"].replace('"server.servlet.session.cookie.secure"', '"irrelevant"', 1)
+        elif label == "ci-drops-cookie-gate":
+            copy["ci"] = sources["ci"].replace(
+                "      - name: Session cookie contract agreement gate\n"
+                "        run: python tests/engineering/T03/check_session_cookie.py\n", "")
         elif label == "contract-renames-cookie":
             # Replace every declared name value, not the first string match: the scheme block is what must move.
             copy["frozenContract"] = re.sub(r'("name"\s*:\s*)"' + APPROVED_NAME + '"', r'\1"OTHER_SESSION"',
@@ -850,7 +862,7 @@ def negative_control(sources):
               "guard-call-under-escaped-line-comment", "guard-call-under-escaped-block-comment",
               "message-only-in-literal", "secure-clause-only-in-literal", "flow-profile-override-cookie-name",
               "flow-base-second-name", "case-variant-flow-override", "guard-test-hollow-container-default",
-              "guard-test-prod-clauses-dropped",
+              "guard-test-prod-clauses-dropped", "ci-drops-cookie-gate",
               "runtime-assertion-deleted", "runtime-assertion-commented-out",
               "all-sources-rename-in-lockstep")
     rejected = []
@@ -916,6 +928,12 @@ def benign_control(sources):
         "yaml-flow-approved-name": ("application-prod.yml", lambda t: t + (
             "\nserver: { servlet: { session: { cookie: { name: " + APPROVED_NAME + " } } } }\n")),
     }
+    # A legal reformat of the CI step must still count as policed, or the assertion is only testing its own wording.
+    ci_cases = {
+        "ci-invokes-gate-as-block-scalar": sources["ci"].replace(
+            "        run: python tests/engineering/T03/check_session_cookie.py\n",
+            "        run: |\n          python tests/engineering/T03/check_session_cookie.py --output /tmp/cookie.json\n"),
+    }
     accepted = []
     for label, apply in sorted(code_cases.items()):
         mutated = dict(sources)
@@ -931,6 +949,11 @@ def benign_control(sources):
         mutated["configs"] = configs
         if mutated == sources:
             raise AssertionError(f"benign probe {label} changed nothing; it proves nothing")
+        evaluate(mutated)
+        accepted.append(label)
+    for label, text in sorted(ci_cases.items()):
+        mutated = dict(sources)
+        mutated["ci"] = text
         evaluate(mutated)
         accepted.append(label)
     return accepted
