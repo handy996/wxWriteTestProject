@@ -1,0 +1,33 @@
+{
+  "probes": [
+    {
+      "probe": "J1 BudgetService joins provider and model itself (a second spelling outside the scanned files)",
+      "red": [
+        "provider quota scopes are spelled one way and absence is a stated choice"
+      ]
+    },
+    {
+      "probe": "J2 BudgetService builds the scope with String.join (the scan only knows '+' spellings)",
+      "red": [
+        "provider quota scopes are spelled one way and absence is a stated choice"
+      ]
+    },
+    {
+      "probe": "J3 second provider+\"|\"+model join added in CostLedger (outside the two scanned files)",
+      "red": []
+    }
+  ],
+  "v5Lock": {
+    "lockOffset": 243,
+    "aggregateOffset": 604,
+    "lockBeforeAggregate": true,
+    "forUpdateMentions": [
+      332
+    ],
+    "mentionsInsideTheLockStatement": [
+      332
+    ],
+    "missingRowGuardFollows": true,
+    "aggregateIsSumOfOccupied": false
+  }
+}

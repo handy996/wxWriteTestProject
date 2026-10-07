@@ -1,0 +1,218 @@
+{
+  "round": "T08-round3",
+  "verdict": "CHANGES_REQUIRED",
+  "reviewer": "independent third-round reviewer (T08-R3, restarted from zero; no prior-session conclusions used)",
+  "maxSeverity": "P2",
+  "findingCount": 8,
+  "git": {
+    "dispatchBaselineCommit": "7a8fc75",
+    "headAtReviewTime": "241083f",
+    "auditedPathsDiffBetweenThoseCommits": "empty",
+    "remediationCommits": [
+      "005872f (implementer)",
+      "60fa1db (main agent ledger)",
+      "ed63c3f (surefire originals)"
+    ],
+    "note": "docs/execution/reviews/T02-round3 and T03-round8 plus tests/engineering/T02/** and backend/src/test/java/com/example/editorial/storage/** are other sessions' work; not judged as contamination."
+  },
+  "reviewedBytesSha256": {
+    "backend/src/main/java/com/example/editorial/cost/BudgetPolicy.java": "9b699b4cf0584dcf0c3caf2ac29f0ae110cac1d85a27b7d4e92a4c0d67a22d12",
+    "backend/src/main/java/com/example/editorial/cost/BudgetPolicyConfig.java": "61d67b72841b3df9012f0def6a0f74765f177723f781ffb0d97e4ab4d4ed0ef5",
+    "backend/src/main/java/com/example/editorial/cost/BudgetService.java": "3cec81fa09c4878cf47afddcf99a90e6a37e7b911f008b139a9bd4ce3a4d81c5",
+    "backend/src/test/java/com/example/editorial/cost/CostPricingTest.java": "0e260729169ccbfdaf58d6343fbc5de09273c7f488054d172551cd1e01fb595f",
+    "backend/src/test/java/com/example/editorial/cost/T08PostgresTest.java": "37097619e727199be803984810ddb79d936ed246434da18b1f2f127034fe2afd",
+    "tests/engineering/T08/verify.py": "9049d36780279f008960fd81113b5a52a2bbfba175c1cf7185a04d19728724c4",
+    "tests/engineering/T08/run_pg.py": "908b5941c13e34c06d5c3262bb8248d5e814dde00b04aa20d1a770ca8e666428",
+    "docs/execution/reports/T08.md": "e0802f0291175c57089a6d2c45c8c998772526f7005154a783f47448721a5363",
+    "backend/src/main/resources/db/migration/V5__cost_ledger_pricing.sql": "5eadd5294216d82ec4f4fd57b501975f4bd82a743403e1b861f8bfbaedff86fd",
+    "tests/engineering/T08/migration-draft.sql": "03b9d91f02dc463036b11c5f9e8a05a0ded9b57324af5c560be11769ed84095b"
+  },
+  "selfReproducedGates": [
+    {
+      "command": "python tests/engineering/T08/run_pg.py --expect-tests 49 --work-root E:/project/codex/wxAgent/.work/t08/r3-review-d --evidence-name r3-review-d",
+      "exitCode": 0,
+      "totals": {
+        "tests": 49,
+        "failures": 0,
+        "skipped": 0
+      },
+      "suites": {
+        "CostPricingTest": 18,
+        "T08PostgresTest": 31
+      },
+      "evidence": "tests/engineering/T08/evidence/r3-review-d.json"
+    },
+    {
+      "command": "python tests/engineering/T08/run_pg.py --expect-tests 49 --work-root .work/t08/r3-review-c --evidence-name r3-review-c",
+      "exitCode": 1,
+      "note": "F-07: all 14 child commands exit 0 and surefire shows 18/0/0 + 31/0/0, but run_pg.py:343 throws ValueError in the finally block for a relative --work-root and writes no evidence",
+      "surefireReadFrom": ".work/t08/r3-review-c/*/backend/target/surefire-reports"
+    },
+    {
+      "command": "python tests/engineering/T08/verify.py",
+      "exitCode": 0,
+      "checksPassed": "14/14"
+    },
+    {
+      "command": "python tests/engineering/T08/verify.py --reverse-control",
+      "exitCode": 0,
+      "weakenings": 30,
+      "blind": "none",
+      "misplaced": "none"
+    },
+    {
+      "command": "python tests/engineering/T02/check_contracts.py",
+      "exitCode": 0,
+      "output": "Approved T00 rc.3: 27 hashes verified, no regeneration"
+    }
+  ],
+  "notProvenByMe": [
+    "mvn -B -ntp -o -f backend/pom.xml clean verify (281 / 0 failures / 143 skipped) - forbidden to this reviewer; requested from the main agent",
+    "production composition-root boot with editorial.cost.enabled=true and GET /usage HTTP end-to-end",
+    "over_run projection, pendingReconciliations/alerts production callers, CostPorts.Executions binding (T09/T10/T11 preconditions)",
+    "Owner sign-off on the quota layering semantics (F-03) and on the config shape for dotted model ids (F-04c)"
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "P2",
+      "title": "provider quotas supplied through OS environment variables (Spring relaxed binding) are silently dropped; with unconfigured=unlimited every provider ends up unlimited",
+      "evidence": "docs/execution/reviews/T08-round3/evidence/r3cfg-out.txt probes 7a/7b/7c (java exit 0): getProperty('editorial.cost.provider-quota.mock.max-concurrent') = 2 while BudgetPolicyConfig.from(env) yields providers={} unconfigured=UNLIMITED; with refuse it is REFUSE providers={}",
+      "judgement": "BudgetPolicyConfig.java:90-94 enumerates raw property names and requires the dotted prefix, while BudgetPolicyConfig.java:78/:156-160 reads the switch through env.getProperty (relaxed binding). Same failure class as round-2 F2-01 (configured correctly, silently never applies) in a different channel.",
+      "reachability": "infra/compose.yml sets no EDITORIAL_COST_* variables and application.yml:78 only carries the feature gate, so this is a deployment-shaped trap, not a live defect.",
+      "requiredFix": "loud rejection when EDITORIAL_COST_PROVIDER_QUOTA_* shaped keys exist but no quota entry was enumerated, or a stated activation precondition plus a test; a reverse control for either."
+    },
+    {
+      "id": "F-02",
+      "severity": "P2",
+      "title": "the nested-YAML binding proof is removable without turning any gate or any test red",
+      "evidence": "docs/execution/reviews/T08-round3/evidence/gate_probe.json: A1 (loader moved into an uncalled helper, yaml() hand-builds flat keys, nested text kept in the body) => check 11 GREEN; B1 (live case serves from(env) then overrides with a hand-built policy) => checks 11 and 14 GREEN; A2 (nested document moved out of the body) => RED, so only the body-scoped shape scan is load-bearing. docs/execution/reviews/T08-round3/evidence/variant-report.json V6 = compilable B1 run on the live cluster: 49/49 GREEN.",
+      "judgement": "verify.py:498-499 tests file-wide substrings ('the word appeared in the file'), verify.py:505-506 is the only body-scoped test; nothing follows the data flow from the loader into the policy the case asserts on.",
+      "requiredFix": "scope the loader/ByteArrayResource/from(env) evidence to java_method_body of the two cases, add a rule that the case body calls service() exactly once, and make the fixture numbers unreachable by any hand-built policy in the file."
+    },
+    {
+      "id": "F-03",
+      "severity": "P2",
+      "title": "layering resolves to override, so a looser model entry lifts the provider-wide ceiling; no case distinguishes override from overlay",
+      "evidence": "variant-report.json P1 (implementation untouched, only two reviewer cases added; exit 0, T08PostgresTest 33/0/0): provider max-concurrent=2 with mock-gpt max-concurrent=5 admits 3 live holds on mock-gpt. variant-report.json V1 (enforce both levels, i.e. stricter) => 49/49 GREEN.",
+      "judgement": "BudgetPolicy.java:112-117 prefers the exact scope, BudgetService.java:295-307 measures only that entry's window; CostPricingTest.java:368-373 asserts the override preference at map level, so the design is intentional but unratified and the service path has no case for the looser-override direction.",
+      "requiredFix": "pick one semantics and pin it: either overlay (check both windows) plus a service-path case, or reject at assembly time a model leaf looser than the same provider's leaf; state the choice in the activation preconditions for Owner sign-off."
+    },
+    {
+      "id": "F-04",
+      "severity": "P3",
+      "title": "dot-in-model-id (ledger T08-R3-DOTMODEL) adjudication",
+      "evidence": "r3cfg-out.txt 3a/3b (model-level quota for 'gpt-4.1' -> 503 INVALID_PROVIDER_QUOTA_KEY in both nested YAML and flat writings), 4/4b (quotaScope('mock','gpt-4.1') = 'mock', perModel=false, quota present; unlisted provider = null), variant-report.json P1 reviewerDottedModelIdUsesTheProviderWindow (live cluster: two admits, third refused PROVIDER_QUOTA_EXCEEDED with a provider-wide ceiling of 2)",
+      "judgement": "(a) model-level quotas are not configurable for dotted model ids - loudly, at assembly, in both config writings; no silent entry loss. (b) with a provider-level entry the runtime metering for dotted model ids is correct - the request answers the provider scope so its rows land in the provider window. (c) capability gap, not a defect; P3.",
+      "ownership": "reviewer ruled loud-vs-silent only; the config-shape choice belongs to the main agent (integration surface) - recommended provider-quota.entries[] list form, escaping rejected because a second spelling is exactly the F2-01 disease; whether dotted product models need per-model ceilings belongs to the Owner (OQ-09 is due before real API tests, where gpt-4.1 / claude-3.5-sonnet appear).",
+      "requiredFix": "either the entries[] shape with cases, or an activation precondition stating that dotted model ids can only carry provider-level quotas."
+    },
+    {
+      "id": "F-05",
+      "severity": "P3",
+      "title": "the separator is not excluded from provider/model ids, so two scopes collide and leaves overwrite each other",
+      "evidence": "r3cfg-out.txt 9a/9b: configuring provider-quota.p|q.* (9/9) together with provider-quota.p.q.* (1/1) yields {p|q=ProviderQuota[maxConcurrent=9, callsPerDay=1]} and providerQuota('p','q') returns that hybrid",
+      "judgement": "BudgetPolicy.scope():44-47 does not validate segments; the constructor (:86-90) rejects dots and leading/trailing pipes only; BudgetService.java:69-70 and V5 (varchar(64)/varchar(128)) impose no character rules on provider/model.",
+      "requiredFix": "refuse a provider or model segment containing '|' (and '.', already refused as a key) with 503 INVALID_PROVIDER_QUOTA_KEY, plus a case."
+    },
+    {
+      "id": "F-06",
+      "severity": "P3",
+      "title": "check 11 overstates its coverage and fires on benign equivalent rewrites",
+      "evidence": "gate_probe.json: F1 (perModel via indexOf instead of contains, same predicate) RED; F4 (binding split into a local variable) RED; F2 (line wrap) GREEN; F3 (javadoc re-worded) GREEN. join_probe.json: J3 (a second provider+\"|\"+model join added inside CostLedger.java, quotaScope call kept) GREEN - verify.py:467 builds the joined scan from policy + config only; J1/J2 go RED only because they also delete policy.quotaScope(provider, model) and trip wide_window.",
+      "judgement": "docs/execution/reports/T08.md:46 claims the check asserts a single join for the whole module; verify.py:467 builds that scan from `policy + config` only, i.e. two of nineteen files. Conversely, two legal refactors (indexOf for contains, an added local variable) turn the build gate red.",
+      "requiredFix": "widen the join scan to the cost module or re-word the claim; relax the perModel and service() anchors to semantic shapes so equivalent rewrites stay green, and add a benign-probe reverse control pair."
+    },
+    {
+      "id": "F-07",
+      "severity": "P3",
+      "title": "run_pg.py loses all evidence and exits 1 when --work-root is relative (the shape given in this dispatch)",
+      "evidence": "run with --work-root .work/t08/r3-review-c: 14 child commands exit 0, surefire 18/0/0 + 31/0/0, then ValueError at run_pg.py:343 inside finally; the same run with an absolute --work-root exits 0 and writes r3-review-d.json",
+      "requiredFix": "resolve work_root against ROOT (or fall back to str(work)) and keep the evidence write independent of that path."
+    },
+    {
+      "id": "F-08",
+      "severity": "P3",
+      "title": "assembly failures are not all normalized to a PublicFailure; zero-valued leaves are accepted silently",
+      "evidence": "r3cfg-out.txt 8b: max-concurrent 'three' -> ConversionFailedException (stack, not 503 INVALID_BUDGET_POLICY); 8c: max-concurrent=0 / calls-per-day=0 accepted (that provider can never be admitted); 8a/8d behave as claimed (503 QUOTA_NOT_CONFIGURED / INVALID_PROVIDER_QUOTA_KEY)",
+      "requiredFix": "catch conversion failures in BudgetPolicyConfig.required() and raise the structured 503; document or forbid zero leaves."
+    }
+  ],
+  "claims": [
+    {
+      "id": 1,
+      "verdict": "PARTIALLY SUSTAINED",
+      "detail": "scope() as the only join is enforced over two files only (F-06/J3) and the binding evidence is weakly gated (F-02); 2/3-segment translation, INVALID_PROVIDER_QUOTA_KEY for everything else, both leaves required with no default, 503 QUOTA_NOT_CONFIGURED when the switch is absent, and refuse -> 503 PROVIDER_QUOTA_NOT_CONFIGURED before any booking (BudgetService.java:122 before insertEstimate:130; T08PostgresTest.java:638-653 rows()==0 and no audit row) all reproduced."
+    },
+    {
+      "id": 2,
+      "verdict": "SUSTAINED",
+      "detail": "CostPricingTest.java:465-476 (loader at 468), the case at :487 with the nested document at :488-501, and T08PostgresTest.java:663 (loader at 679, service(BudgetPolicyConfig.from(env)) at 683) really load a nested YAML document through YamlPropertySourceLoader + ByteArrayResource and then call BudgetPolicyConfig.from(env); my own probe enumerated the loader's real names and bound {mock, mock|mock-model}. True for today's bytes only - it is not protected against removal (F-02)."
+    },
+    {
+      "id": 3,
+      "verdict": "SUSTAINED, ONE-SIDED",
+      "detail": "model=1 refuses on the model's second call, provider=3 is reached by 1+2 on the third call, holds()==3 after both refusals; the cross-model count is SQL (CostLedger.java:85). The overlay semantics (V1) also passes 49/49, so only one of the two possible designs is pinned (F-03)."
+    },
+    {
+      "id": 4,
+      "verdict": "SUSTAINED EXCEPT mvn clean verify",
+      "detail": "49/0/0, 14/14, 30/30 blind=none, 27 hashes reproduced with exit 0 by this reviewer; the 44 -> 49 delta is exactly the five named quota cases with no removals (compared t08-r2-main-repro.json against r3-review-d.json). The 281/0/143 full verify was not run here (forbidden) - requested."
+    },
+    {
+      "id": 5,
+      "verdict": "SUSTAINED",
+      "detail": "V5 sha 5eadd529... is byte-identical to the fingerprint embedded in the round-2 evidence and to the draft body (13119 bytes after three header lines, zero CR); neither file appears in 005872f and both were last touched at 849d784. My own offset measurement in the installed function: lock statement at 243, aggregate at 604, one FOR UPDATE mention in the file, inside that statement, with IF NOT FOUND following."
+    }
+  ],
+  "requestedFromMainAgent": [
+    "mvn -B -ntp -o -f backend/pom.xml \"-Dmaven.repo.local=.tools/t02/m2\" clean verify",
+    "python tests/engineering/T08/run_pg.py --expect-tests 51 --evidence-name r3-fix-51   (after adopting the two reviewer probe cases from .work/t08/r3-variants/P1/backend)",
+    "python tests/engineering/T08/verify.py --reverse-control   (after the new controls for F-01/F-02/F-03/F-05/F-06)",
+    "always pass an absolute --work-root or omit it (F-07)"
+  ],
+  "artifacts": {
+    "gate_probe.py": "0ad741cb0e68136c",
+    "gate_probe.json": "a3397fc58a60d9d0",
+    "join_probe.py": "2bbaa063f7f05d82",
+    "join_probe.json": "0c8605a2ed643ae1",
+    "variant_runner.py": "602039be235edc2a",
+    "variant-report.json": "3ce8a8dfcf00a5f8",
+    "R3CfgProbe.java": "8618ff969a357d24",
+    "r3cfg-out.txt": "7c7af1c4937f75d8",
+    "r3-review-d.json": "8532677d026d076a",
+    "predecessorSessionFilesNotUsedAsEvidence": [
+      "R3Probe.java",
+      "java-probe-output.txt",
+      "weakening_probe.py",
+      "srs_and_ceiling_probe.py",
+      "tests/engineering/T08/evidence/r3-review.json",
+      "tests/engineering/T08/evidence/r3-review-test-results"
+    ]
+  },
+  "writeBoundaries": {
+    "wroteOnlyUnder": [
+      "docs/execution/reviews/T08-round3/",
+      ".work/t08/r3-review-c/",
+      ".work/t08/r3-review-d/",
+      ".work/t08/r3-variants/",
+      ".work/t08/r3-cfg-probe/",
+      "tests/engineering/T08/evidence/r3-review-d.json + r3-review-c/d-test-results (the fixed output location of the runner command given in this dispatch)"
+    ],
+    "neverWritten": [
+      "any tracked backend or tests/engineering/T08 source",
+      "evidence originals r3-main-repro-49.json / t08-r3-implementer-49.json",
+      "frozen rc.3 contracts"
+    ],
+    "gitAdd": false,
+    "gitCommit": false
+  },
+  "windowSemanticsVariants": {
+    "V1 overlay / stricter of both": "49/49 GREEN (F-03)",
+    "V2 provider entry wins the lookup": "5 red (3 unit + 2 live quota cases)",
+    "V3 one shared bucket (perModel always true)": "2 red (both live quota cases)",
+    "V4 model key matched by prefix (startsWith, not equality)": "49/49 GREEN - neither check 11 nor any case notices (added to F-06)",
+    "V6 nested-YAML binding served then overridden": "49/49 GREEN (F-02)",
+    "P1 reviewer cases on the untouched implementation": "exit 0, 33 live cases green (F-03 breach + F-04b correct metering)"
+  }
+}

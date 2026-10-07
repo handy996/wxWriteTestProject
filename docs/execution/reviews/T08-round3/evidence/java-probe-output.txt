@@ -1,0 +1,71 @@
+﻿=== A. how Spring flattens a nested quota document ===
+--- A1 ordinary nested document (no dots in identifiers)
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.openai.max-concurrent ; editorial.cost.provider-quota.openai.calls-per-day ; editorial.cost.provider-quota.openai.gpt-4o.max-concurrent ; editorial.cost.provider-quota.openai.gpt-4o.calls-per-day ; 
+    RESULT ok providers={openai=ProviderQuota[maxConcurrent=3, callsPerDay=30], openai|gpt-4o=ProviderQuota[maxConcurrent=1, callsPerDay=5]} unconfigured=REFUSE
+
+=== B. dotted identifiers, three spellings ===
+--- B1 dotted model id, plain nested key (gpt-4.1)
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.openai.gpt-4.1.max-concurrent ; editorial.cost.provider-quota.openai.gpt-4.1.calls-per-day ; 
+    RESULT throws status=503 code=INVALID_PROVIDER_QUOTA_KEY
+--- B2 dotted model id, YAML-quoted key
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.openai.gpt-4.1.max-concurrent ; editorial.cost.provider-quota.openai.gpt-4.1.calls-per-day ; 
+    RESULT throws status=503 code=INVALID_PROVIDER_QUOTA_KEY
+--- B3 list-shaped entries[] (the proposed alternative shape)
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.entries[0].provider ; editorial.cost.provider-quota.entries[0].model ; editorial.cost.provider-quota.entries[0].max-concurrent ; editorial.cost.provider-quota.entries[0].calls-per-day ; 
+    RESULT throws status=503 code=INVALID_PROVIDER_QUOTA_KEY
+--- B4 dotted PROVIDER id used as a provider-wide entry
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.openai.com.max-concurrent ; editorial.cost.provider-quota.openai.com.calls-per-day ; 
+    RESULT ok providers={openai|com=ProviderQuota[maxConcurrent=2, callsPerDay=10]} unconfigured=REFUSE
+
+=== C. where a dotted provider id actually lands ===
+    stored keys            : [openai|com]
+    quotaScope(openai.com) : null
+    quotaScope(openai,com) : openai|com  <- the entry the operator wrote for provider openai.com answers for this route instead
+
+=== D. property sources the quota reader cannot see ===
+    getProperty(dotted) resolves the env var : 2 / unlimited
+--- D1 quotas supplied as environment variables (container style)
+    enumerated editorial keys: 
+    RESULT ok providers={} unconfigured=UNLIMITED
+    getProperty(dotted) resolves the opaque source : 2
+--- D2 quotas supplied by a non-enumerable source (remote config style)
+    enumerated editorial keys: <source reviewerOpaque is , not enumerable>
+    RESULT ok providers={} unconfigured=UNLIMITED
+--- D3 control: the same two values through an enumerable flat source
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.mock.calls-per-day ; editorial.cost.provider-quota.mock.max-concurrent ; 
+    RESULT ok providers={mock=ProviderQuota[maxConcurrent=2, callsPerDay=10]} unconfigured=UNLIMITED
+
+=== E. reserved word 'unconfigured' used as a provider, both spellings ===
+--- E1 flat spelling
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.unconfigured.calls-per-day ; editorial.cost.provider-quota.unconfigured.max-concurrent ; 
+    RESULT throws status=503 code=INVALID_PROVIDER_QUOTA_KEY
+--- E2 nested spelling
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured.max-concurrent ; editorial.cost.provider-quota.unconfigured.calls-per-day ; 
+    RESULT throws status=503 code=INVALID_PROVIDER_QUOTA_KEY
+--- E3 a model literally named unconfigured under provider mock
+    enumerated editorial keys: editorial.cost.max-calls-per-article ; editorial.cost.reconciliation-stale-minutes ; editorial.cost.provider-quota.unconfigured ; editorial.cost.provider-quota.mock.unconfigured.max-concurrent ; editorial.cost.provider-quota.mock.max-concurrent ; editorial.cost.provider-quota.mock.calls-per-day ; editorial.cost.provider-quota.mock.unconfigured.calls-per-day ; 
+    RESULT ok providers={mock|unconfigured=ProviderQuota[maxConcurrent=2, callsPerDay=10], mock=ProviderQuota[maxConcurrent=3, callsPerDay=10]} unconfigured=UNLIMITED
+    UnconfiguredQuota.of("refuse") -> REFUSE
+    UnconfiguredQuota.of("  Refuse  ") -> REFUSE
+    UnconfiguredQuota.of("UNLIMITED") -> UNLIMITED
+    UnconfiguredQuota.of("0") -> INVALID_BUDGET_POLICY
+    UnconfiguredQuota.of("false") -> INVALID_BUDGET_POLICY
+    UnconfiguredQuota.of("no") -> INVALID_BUDGET_POLICY
+    UnconfiguredQuota.of("unlisted-refuse") -> INVALID_BUDGET_POLICY
+    UnconfiguredQuota.of("") -> INVALID_BUDGET_POLICY
+
+=== F. runtime path for a dotted model id with a provider-wide entry only ===
+    quotaScope(openai,gpt-4.1) = openai present=true value=Optional[ProviderQuota[maxConcurrent=3, callsPerDay=30]]
+    quotaScope(openai,claude-3.5-sonnet) = openai present=true value=Optional[ProviderQuota[maxConcurrent=3, callsPerDay=30]]
+    quotaScope(openai,llama3.1) = openai present=true value=Optional[ProviderQuota[maxConcurrent=3, callsPerDay=30]]
+    quotaScope(openai,gpt-4o) = openai present=true value=Optional[ProviderQuota[maxConcurrent=3, callsPerDay=30]]
+    quotaScope(openai,null) = openai present=true value=Optional[ProviderQuota[maxConcurrent=3, callsPerDay=30]]
+
+=== G. is the provider-wide entry still consulted when a model entry answers? ===
+    configured openai=(3,30) plus openai|gpt-4o=(5,50)
+    quotaScope(openai,gpt-4o) = openai|gpt-4o -> BudgetService takes the per-model window branch (contains '|') and never sees (3,30)
+    quotaScope(openai,other)  = openai
+
+=== H. pipe inside an identifier ===
+    scope(a|b,null)=a|b scope(a,b)=a|b stored=[a|b] lookup(a,b)=a|b
+    scope(a,b|c)=a|b|c stored=[a|b|c] lookup(a|b,c)=a|b|c lookup(a,b|c)=a|b|c

@@ -1,0 +1,204 @@
+[
+  {
+    "variant": "V1",
+    "label": "overlay: enforce provider-wide as well as the model override (stricter of both)",
+    "exitCode": 0,
+    "stdoutTail": "command 1 exit=0\ncommand 2 exit=0\ncommand 3 exit=0\ncommand 4 exit=0\ncommand 5 exit=0\ncommand 6 exit=0\ncommand 7 exit=0\ncommand 8 exit=0\ncommand 9 exit=0\ncommand 10 exit=0\ncommand 11 exit=0\ncommand 12 exit=0\ncommand 13 exit=0\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\V1\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "31",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      }
+    ],
+    "allGreen": true
+  },
+  {
+    "variant": "V2",
+    "label": "provider level always wins the lookup (model entry only when no provider-wide entry)",
+    "exitCode": 1,
+    "stdoutTail": "\n\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n\n[ERROR] \n\n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\V2\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "3",
+        "errors": "0",
+        "skipped": "0",
+        "red": [
+          {
+            "case": "modelLevelQuotaReachesTheLookupThatReadsIt",
+            "kind": [
+              "failure"
+            ],
+            "message": "expected: <1> but was: <3>"
+          },
+          {
+            "case": "quotaWrittenAsNestedYamlBindsTheScopeTheLookupReads",
+            "kind": [
+              "failure"
+            ],
+            "message": "expected: <1> but was: <3>"
+          },
+          {
+            "case": "budgetPolicyCeilings",
+            "kind": [
+              "failure"
+            ],
+            "message": "expected: <5> but was: <2>"
+          }
+        ]
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "31",
+        "failures": "2",
+        "errors": "0",
+        "skipped": "0",
+        "red": [
+          {
+            "case": "nestedYamlQuotaIsEnforcedByTheService",
+            "kind": [
+              "failure"
+            ],
+            "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+          },
+          {
+            "case": "modelAndProviderQuotaScopesEachBindTheirWindow",
+            "kind": [
+              "failure"
+            ],
+            "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+          }
+        ]
+      }
+    ],
+    "allGreen": false
+  },
+  {
+    "variant": "V3",
+    "label": "control: one shared bucket - every quota measured per model",
+    "exitCode": 1,
+    "stdoutTail": "\n\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n\n[ERROR] \n\n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\V3\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "31",
+        "failures": "2",
+        "errors": "0",
+        "skipped": "0",
+        "red": [
+          {
+            "case": "nestedYamlQuotaIsEnforcedByTheService",
+            "kind": [
+              "failure"
+            ],
+            "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+          },
+          {
+            "case": "modelAndProviderQuotaScopesEachBindTheirWindow",
+            "kind": [
+              "failure"
+            ],
+            "message": "Expected com.example.editorial.shared.PublicFailure to be thrown, but nothing was thrown."
+          }
+        ]
+      }
+    ],
+    "allGreen": false
+  },
+  {
+    "variant": "V4",
+    "label": "model key matched by prefix (startsWith) instead of the exact scope",
+    "exitCode": 0,
+    "stdoutTail": "command 1 exit=0\ncommand 2 exit=0\ncommand 3 exit=0\ncommand 4 exit=0\ncommand 5 exit=0\ncommand 6 exit=0\ncommand 7 exit=0\ncommand 8 exit=0\ncommand 9 exit=0\ncommand 10 exit=0\ncommand 11 exit=0\ncommand 12 exit=0\ncommand 13 exit=0\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\V4\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "31",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      }
+    ],
+    "allGreen": true
+  },
+  {
+    "variant": "V6",
+    "label": "the nested-YAML binding is served then replaced by a hand-built policy (decorative proof)",
+    "exitCode": 0,
+    "stdoutTail": "command 1 exit=0\ncommand 2 exit=0\ncommand 3 exit=0\ncommand 4 exit=0\ncommand 5 exit=0\ncommand 6 exit=0\ncommand 7 exit=0\ncommand 8 exit=0\ncommand 9 exit=0\ncommand 10 exit=0\ncommand 11 exit=0\ncommand 12 exit=0\ncommand 13 exit=0\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\V6\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "31",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      }
+    ],
+    "allGreen": true
+  },
+  {
+    "variant": "P1",
+    "label": "reviewer probes added on the UNMODIFIED implementation (fail-open + dotted model window)",
+    "exitCode": 0,
+    "stdoutTail": "command 1 exit=0\ncommand 2 exit=0\ncommand 3 exit=0\ncommand 4 exit=0\ncommand 5 exit=0\ncommand 6 exit=0\ncommand 7 exit=0\ncommand 8 exit=0\ncommand 9 exit=0\ncommand 10 exit=0\ncommand 11 exit=0\ncommand 12 exit=0\ncommand 13 exit=0\ncommand 14 exit=0\nevidence: E:\\project\\codex\\wxAgent\\.work\\t08\\r3-variants\\P1\\tests\\engineering\\T08\\evidence\\variant.json\n",
+    "suites": [
+      {
+        "suite": "com.example.editorial.cost.CostPricingTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      },
+      {
+        "suite": "com.example.editorial.cost.T08PostgresTest",
+        "tests": "33",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "red": []
+      }
+    ],
+    "allGreen": true
+  }
+]

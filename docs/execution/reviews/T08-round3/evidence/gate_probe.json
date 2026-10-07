@@ -1,0 +1,196 @@
+{
+  "baseline": [
+    {
+      "check": "frozen contract files unchanged",
+      "ok": true
+    },
+    {
+      "check": "cost module depends only on shared",
+      "ok": true
+    },
+    {
+      "check": "cost package complete",
+      "ok": true
+    },
+    {
+      "check": "installed V5 equals the reviewed draft",
+      "ok": true
+    },
+    {
+      "check": "runtime grants are minimal",
+      "ok": true
+    },
+    {
+      "check": "amounts are decimal, never binary floats",
+      "ok": true
+    },
+    {
+      "check": "frozen GET /usage surface, no field drift",
+      "ok": true
+    },
+    {
+      "check": "audit trail carries identifiers, not amounts",
+      "ok": true
+    },
+    {
+      "check": "ceilings are the documented SRS numbers or required outright",
+      "ok": true
+    },
+    {
+      "check": "article ceiling is a locked database rule",
+      "ok": true
+    },
+    {
+      "check": "provider quota scopes are spelled one way and absence is a stated choice",
+      "ok": true
+    },
+    {
+      "check": "feature gate only, no invented limits, reproducible runner",
+      "ok": true
+    },
+    {
+      "check": "startup still refuses paid provider calls",
+      "ok": true
+    },
+    {
+      "check": "acceptance cases still assert what they claim",
+      "ok": true
+    }
+  ],
+  "probes": [
+    {
+      "probe": "A1 loader call moved to an unrelated helper; yaml() now hand-builds flat keys, nested doc still in the body",
+      "note": "blind => check 11 matches words in the file, not the data flow of the case",
+      "red": []
+    },
+    {
+      "probe": "A2 nested document moved out of the case body into a field (body keeps only from(yaml(FIXTURE)))",
+      "note": "should be red: the body-scoped nested-shape scan is the part that carries weight",
+      "red": [
+        "provider quota scopes are spelled one way and absence is a stated choice"
+      ]
+    },
+    {
+      "probe": "B1 live case serves the bound env then overrides it with a hand-built policy (tokens intact)",
+      "note": "blind => no check notices that the last policy served is not the bound one",
+      "red": []
+    },
+    {
+      "probe": "B2 live case binding moved behind a bind(env) helper; body reads service(bind(env))",
+      "note": "anchor token service(BudgetPolicyConfig.from(env)) is gone from the body: expect red via check 14",
+      "red": [
+        "acceptance cases still assert what they claim",
+        "provider quota scopes are spelled one way and absence is a stated choice"
+      ]
+    },
+    {
+      "probe": "C1 SRS line 1103 re-typed 40,000 -> 41,000 (only the requirement text changes)",
+      "note": "must be red: proof that check 9 parses the SRS instead of hard-coding the number",
+      "red": [
+        "ceilings are the documented SRS numbers or required outright"
+      ]
+    },
+    {
+      "probe": "C2 SRS line 1099 daily example 20 -> 25 USD",
+      "note": "must be red: the daily fallback is compared against the SRS text",
+      "red": [
+        "ceilings are the documented SRS numbers or required outright"
+      ]
+    },
+    {
+      "probe": "C3 SRS line 1143 alert trigger >80% -> >70%",
+      "note": "must be red: the alert line is compared against the SRS text",
+      "red": [
+        "ceilings are the documented SRS numbers or required outright"
+      ]
+    },
+    {
+      "probe": "D1 invented ceiling written straight into the map, bypassing count()/statedCeiling()",
+      "note": "blind => check 9 only re-reads the two literal regex shapes it knows",
+      "red": []
+    },
+    {
+      "probe": "F1 benign: perModel written with indexOf instead of contains (same predicate)",
+      "note": "equivalent rewrite: a red here is brittleness, not a defect",
+      "red": [
+        "provider quota scopes are spelled one way and absence is a stated choice"
+      ]
+    },
+    {
+      "probe": "F2 benign: BudgetPolicy.scope(path[0], path[1]) re-wrapped onto two lines",
+      "note": "whitespace only: must stay green",
+      "red": []
+    },
+    {
+      "probe": "F3 benign: javadoc sentence in BudgetPolicyConfig re-worded, code identical",
+      "note": "prose only: must stay green",
+      "red": []
+    },
+    {
+      "probe": "F4 benign: the live case splits the binding into a local before serving it",
+      "note": "same behaviour, anchor text moved: expect red (name coupling)",
+      "red": [
+        "acceptance cases still assert what they claim"
+      ]
+    }
+  ],
+  "stub": [
+    {
+      "check": "ceilings are the documented SRS numbers or required outright",
+      "controls_naming_it": 6,
+      "go_accepted_when_stubbed": [
+        "SRS daily example replaced by an invented 999 USD",
+        "alert line moved off the documented 80 percent",
+        "one documented token ceiling re-typed",
+        "a documented ceiling quietly dropped",
+        "the unstated call cap gets an invented default"
+      ]
+    },
+    {
+      "check": "provider quota scopes are spelled one way and absence is a stated choice",
+      "controls_naming_it": 10,
+      "go_accepted_when_stubbed": [
+        "a model-level quota is keyed by the dotted property path again",
+        "the reader joins the scope itself instead of asking the one definition",
+        "a half-declared quota scope silently opens the other side",
+        "the unconfigured-provider switch grows a default",
+        "an unlisted provider stops being refused",
+        "a provider-wide quota is measured per model again",
+        "the report renames the quota leaves",
+        "the quota case feeds dotted keys instead of the nested document",
+        "a provider named after the reserved switch stops being refused"
+      ]
+    },
+    {
+      "check": "article ceiling is a locked database rule",
+      "controls_naming_it": 4,
+      "go_accepted_when_stubbed": [
+        "the comment overclaims the database again"
+      ]
+    },
+    {
+      "check": "acceptance cases still assert what they claim",
+      "controls_naming_it": 4,
+      "go_accepted_when_stubbed": [
+        "the bypass assertion is emptied",
+        "the single-winner latches are unwired again"
+      ]
+    },
+    {
+      "check": "frozen GET /usage surface, no field drift",
+      "controls_naming_it": 1,
+      "go_accepted_when_stubbed": [
+        "a frozen wire field is renamed"
+      ]
+    }
+  ],
+  "detail": {
+    "A2": "provider quota scopes are spelled one way and absence is a stated choice: scope() defined=True, canonical '|' join inside it=True, provider-model joins in the module=['|'], BudgetPolicy.scope( call sites in config=2, scope( reads in policy=2, malformed key refused=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default",
+    "B2": "acceptance cases still assert what they claim: weakened=[\"live quota case is fed by the bound environment/nestedYamlQuotaIsEnforcedByTheService: ['service(BudgetPolicyConfig.from(env))']\"]",
+    "C1": "ceilings are the documented SRS numbers or required outright: SRS counts={'search-queries-per-article': 30, 'model-output-tokens-per-article': 41000, 'queries-per-claim': 3, 'auto-edit-loops-per-article': 1, 'image-units-per-slot': 2, 'image-units-per-article': 4}, code fallbacks={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'que",
+    "C2": "ceilings are the documented SRS numbers or required outright: SRS counts={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'queries-per-claim': 3, 'auto-edit-loops-per-article': 1, 'image-units-per-slot': 2, 'image-units-per-article': 4}, code fallbacks={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'que",
+    "C3": "ceilings are the documented SRS numbers or required outright: SRS counts={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'queries-per-claim': 3, 'auto-edit-loops-per-article': 1, 'image-units-per-slot': 2, 'image-units-per-article': 4}, code fallbacks={'search-queries-per-article': 30, 'model-output-tokens-per-article': 40000, 'que",
+    "F1": "provider quota scopes are spelled one way and absence is a stated choice: scope() defined=True, canonical '|' join inside it=True, provider-model joins in the module=['|'], BudgetPolicy.scope( call sites in config=2, scope( reads in policy=2, malformed key refused=True, reserved switch name refused as provider=True, both leaves required=True, no invented unlimited default",
+    "F4": "acceptance cases still assert what they claim: weakened=[\"live quota case is fed by the bound environment/nestedYamlQuotaIsEnforcedByTheService: ['service(BudgetPolicyConfig.from(env))']\"]"
+  }
+}
