@@ -3,7 +3,7 @@
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
   "capturedAt": "2026-10-06",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "待独立复审：T08 第五轮整改（F-R5-01…F-R5-06，即将派工）；T02 第六轮整改（agent-884f26dc 在跑，将派第六轮复审）；T03 第十轮整改（agent-95794bd8 独占 maven 与 backend/target，**其 5 个在途文件被我在 e4f0f3c 误并入主线，集成时须以它工作树最新字节为准并说明该越界**）。已复审入库：87e7ee4（T08 第五轮判决与 44 份工件）、c55116c（T02 第五轮判决与 11 份工件）、37542cb（T08 第四轮判决与 55 份工件）、8304401+2a13a2e（T02 第四轮与其 P1 修复）、d733b3f（T03 第九轮判决与 41 份工件）、976e8ee+91c789b（T08 第三轮复审记录）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。reviewedBaselineCommit 仍是 b072abe；e4f0f3c 之前的旧提交里 127 个证据文件仍是规范化 blob，**对旧提交验证摘要会分叉，以 HEAD 为准**",
+  "pendingReviewCommit": "待独立复审：T03 第十轮整改 11a3d7f + 主 agent 注入证据 cc99998（agent-69861721 在跑，maven/backend/target 归它独占）；T08 第五轮整改（agent-6ff99be4 在跑，将派第六轮复审）；T02 第六轮整改（agent-acfe96e1 在跑，前两会话 884f26dc 零推进已重派，将派第六轮复审）。已复审入库：87e7ee4（T08 第五轮判决 44 份）、c55116c（T02 第五轮判决 11 份）、37542cb（T08 第四轮）、8304401+2a13a2e（T02 第四轮与其 P1 修复）、d733b3f（T03 第九轮 41 份）、976e8ee+91c789b（T08 第三轮）、2512025+b813bc3+164e3f8+349b51c（T03 五六七轮）。集成入库：e4f0f3c（含我越界并入的 5 个 T03 在途文件，已公开撤回）、47caf6c（T08 第四轮整改）、f5a399a、e3efcd8、11a3d7f、cc99998。reviewedBaselineCommit 仍是 b072abe；e4f0f3c 之前旧提交里 127 个证据文件仍是规范化 blob ⇒ **验证摘要一律以 HEAD 为准**",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -29,7 +29,9 @@
     "T08-4th-rulings-landed": "第四轮三条裁定全部落地且未重开辩论：宽窗语义未动（只如实写进行为章节与第 2.4 节并点名 SRS:1093 与本卡 :26/66/137 的差异，另加活库用例 providerWideQuotaWindowIsPartitionedByOwnerToday 钉住「今天=按 Owner 分区」，两 Owner 各压 2、第 3 笔两侧都拒、holds()=4，未偷改成全局帽）；产品默认值 4 不动、真实拒绝顺序写进行为章节并三段钉住；F-R4-11a/b 按「测试自己的前提」处理，不路由 Owner",
     "T02-5th": "第五轮独立复审（agent-4aae5bf5，**崩两次后靠 send_message 续跑落槌**：第一次留 7,450 B 骨架，第二次留 29,085 B/258 行 + 9 份证据，最终 review.md 46,608 B/332 行 sha256[:12] d1b19aae2e82 + evidence/ 10 份 44,793 B）→ CHANGES_REQUIRED（R5-1…R5-7）。它独立复现了我的 7 条门、44 条自生成变异全复报、139 断言为真（0 重复 0 空转，seed 20261008 抽 10 条换宽容桩 **10/10 变红**）、二进制算术用自己的原始量全链复现（2,320 文件/39,125,989 B/scanned 38,976,469 ⇒ 150,604、149,520、3,329、146,191，并反推旧值 148,267）、revision_integrity 的 4 种绕过形状全部拒（A-6 闭合无旁路）、以及 **2a13a2e 的静态与逻辑侧闭合**（.exe 仅 ci.yml:42 注释与 :44 候选，controls :80-86 确在扫描步 :69-79 之后，Python 模拟 5 种布局都选对且「同名目录+目录内 exe」不误选）。**主项 R5-1（P2）：词界加固确实把豁免换宽了**——11/11 精确值仍抑制，但 `-`/`.`/`=` 邻接超串在 10/10 个值上仍被抑制（50 例），第 11 条的 [^0-9a-f] 尾巴再吞 5 例；而交付门的 33 条超串探针只测字母数字拼接，**看不见这一面**。它同时给出 RE2 可表达的两侧定界候选（11/11 抑制 + 55/55 超串复报）并警告改锚必须同步 unwrap() 与标签逻辑，否则 11 条标签断言会红。**R5-2（P2）第三道门证伪了我的合取式**：规则自带 EXAMPLE$ 豁免 ⇒ AKIA+IOSFODNN7EXAMPLE 0 命中、改末位 1 字符即命中，「当且仅当 base32 AND 熵」不成立，方向是**高估检出率**。**R5-3：熵的计量对象**——规则是 entropy=3 且**按整条 20 字符匹配串计**（k=7 整串 3.0037），我按 16 位后缀测的 (2.561, 2.781] 与它**不矛盾但都缺单位**。其余：R5-4 R05:19 把字符类写成 [A-Z0-9]{16} 与自身 §0 矛盾；R5-5 canary 缺「合法字母表 + 低熵」那一角近例；R5-6 R02:163 仍写「secret_scan.py 仍退出 1」而无就地标注（实测 0，与 A-7 同型）；R5-7 STATE.json:937 的「纯 base32 是 100%」是残留单因表述（该文件它无写权，由我改）。它自己当众记下一条：把探针输出直接落盘曾让它**自己的目录**成为 10 条 generic-api-key 命中（token= 即关键词、混合大小写串逃过它第一版只截小写十六进制的脱敏）——正是 R5-1 的现场演示；它做显示层脱敏并重扫至退出 0，**没有新增豁免**。它还更正了我一处口径错误：我说「evidence/ 9 份合计 61,873 B」把 review.md 也加进去了（61,873 = 32,788 evidence + 29,085 review.md）",
     "EVIDENCE-CRLF-FIDELITY": "主 agent 造成并修复的仓库级缺陷（e4f0f3c）。**这条轮次文本是补记的**：我第一次写台账时在重写脚本的过程中漏了它，只在协议里留下一条规则，而那条规则里还含一句假证据（现已原位更正）。事件本体：我在 .gitattributes:8 写的 `/tests/engineering/** text eol=lf` 把记录件一并换行规范化 ⇒ 普查 git ls-files 限两棵受控树、只取磁盘仍含 CRLF 的 436 个（唯一有风险的一类）⇒ **130 个受控证据文件入库字节 ≠ 磁盘字节**（.dumpstream 318→313、surefire TXT 339→335、T03 套件 XML 48,047→47,981），直接破坏我每次派单都引用的「用摘要证词」：任何人（含 CI、含复审方）重新 checkout 后重算 sha256 都会与我报的值不同。docs/execution/reviews/** 只因 `* -text` 顺序恰好挡住而幸免。修复：四条 evidence 范围 `-text` 加在 blanket **之后**（后匹配者胜）+ git add --renormalize tests/engineering 重录 136 个 blob。**修复本体经复审与我各自复算为真**：1,026 个记录型跟踪文件 disk vs HEAD 分叉 **0**；同批在 fb62212 上 127 个分叉全部修好；authored .py 仍 text set / eol lf（没被一并豁免）；「我没有删改历史」属实。**但同一次提交越界了**：136 个文件里 5 个是内容改动而非换行，全属并行的 T03 会话在途工作（check_session_cookie.py 58,746→155,999 B、record_guard_binding.py 5,392→8,078 B、3 份 T03 证据），它们被以「修换行」的名义记进主线，我的三句自证因此为假（复算：该 5 个中当下 4 个仍 disk≠HEAD）。**处置**：不改写历史（复审亦要求如此），撤回写在这里与下一次提交说明；T03 的内容本就由它继续推进、最终仍由我集成，所以实质损害是主线里多了一个**未审快照且贴错了标签**，归属与标签问题由我负责。先前所有测量都取自磁盘文件、无一取自 checkout ⇒ 没有旧结论因此作废",
-    "T08-5th": "第五轮独立复审（agent-9991edd2，**一次成工零崩溃**：review.md 68,669 B、§0–§13 全满、0 占位符 + evidence/ 42 份，合计 44 文件 470 KB）→ CHANGES_REQUIRED：P2×2 + P3×5。基线自证扎实：起点 HEAD e4f0f3c 期间被我移到 f5a399a，它用 git diff --name-only e4f0f3c f5a399a 证明被审字节一行未变，并**不采信任何证词**自己复跑 verify.py 16/16、--reverse-control 66 条 [REJECT] + 8 良性全绿、contracts 27 哈希、--path-selftest 0、自己的隔离整轮 0（65/0/0）。**F-R5-01（P2）F-R4-06 连续第三轮未闭合**：A5/E4 现已在门 11+16 打红、A8 良性仍绿（这三条实施方做到了），但它另造两型**第三掏法**——G1（真造一具诱饵 PropertySource + 头尾拼接平铺键）与 G2（同文件 helper 装配平铺键、体内只留假 token）⇒ 16/16 全绿、且送进隔离副本跑真库整轮 exit 0、65/0/0，**被摘空的用例在 surefire 原件里确为绿**（不仅门被骗，用例本身也不再断言）。收口建议：bound_in 要求 add 的目标变量就是 from(env) 读的那具环境，并禁止体内出现属性写入或助手调用（它验证该改法不误杀 A8）。**F-R5-07（P2）指向我自己**：见 rounds.EVIDENCE-CRLF-FIDELITY 的越界段。关闭项：F-R4-09 锁序（B1/B1b/B1c 三条自建削弱各红门 12、detail 各异；inLockOrder 在 :109 而首取锁在 :110；**措辞审计 5 处全部自带「未观测到死锁」免责，无一处越界**）；F-R4-01 语义未被偷改（宽窗仍 (owner,provider,day)、用例两 Owner 各 2 第 3 笔两侧拒 + holds()=4、文档写「不擅自改成全局帽」）；F-R4-02/03/04/05/10 四条静默路径（它用**自己写的** R5Probe.java + javac/java 退出 0 的 20 个反例直调装配层，不复用我的门）；失败原件 r4fix-65.json 与 retry 的差异**只落在它声称的两处**、65 个用例名单一致。数字承重：14→16 是两条新检查对象、44→66 无凑数（69 次编辑去重 68，仅 1 个三元组被两场景共用，属场景计数）、57→65 删除 0 改名 0（它自己比名字集合）。新残留 P3：**F-R5-02** 落点自检被攻下——判据是**等值不是包含**，--work-root 指进受控 evidence 目录算出 …/evidence/evidence 仍 problems=[] exit 0，且把 `and not chosen` 摘成 `if False:` 门 13 仍 16/16（看守不看可达性；但 R2「默认落点挪进受控树」确实 15/16 红）；**F-R5-03** --path-selftest 校验的 --tests 是硬编码、不吃操作者传值；**F-R5-04** quota 词内拼错仍在近邻拦截面外、unlimited 下无声不设帽；**F-R5-05** T08.md:122 仍写「默认 57」；**F-R5-06** credentials.txt 重复写入。另有 3 条不编号观察（单测夹具 label==lockKey、javadoc classic shape of a cross-transaction wait cycle 措辞略强、「66 条」计的是场景数）。**它对我 mvn 违规的判定**：全仓只有 backend/pom.xml、根目录 Test-Path pom.xml=False ⇒ 无项目进不了生命周期、clean 不可能执行；backend/target 仍是 351 文件完整成品；且 T08 三条读数路径**一字节都不读 backend/target**（run_pg.py:291 复制时 ignore_patterns('target')）⇒ 读数未被污染，**记纪律项、不进缺陷表**。它还如实披露自己的口径事故：PS `*>` 写 UTF-16，两份门输出是转码副本"
+    "T08-5th": "第五轮独立复审（agent-9991edd2，**一次成工零崩溃**：review.md 68,669 B、§0–§13 全满、0 占位符 + evidence/ 42 份，合计 44 文件 470 KB）→ CHANGES_REQUIRED：P2×2 + P3×5。基线自证扎实：起点 HEAD e4f0f3c 期间被我移到 f5a399a，它用 git diff --name-only e4f0f3c f5a399a 证明被审字节一行未变，并**不采信任何证词**自己复跑 verify.py 16/16、--reverse-control 66 条 [REJECT] + 8 良性全绿、contracts 27 哈希、--path-selftest 0、自己的隔离整轮 0（65/0/0）。**F-R5-01（P2）F-R4-06 连续第三轮未闭合**：A5/E4 现已在门 11+16 打红、A8 良性仍绿（这三条实施方做到了），但它另造两型**第三掏法**——G1（真造一具诱饵 PropertySource + 头尾拼接平铺键）与 G2（同文件 helper 装配平铺键、体内只留假 token）⇒ 16/16 全绿、且送进隔离副本跑真库整轮 exit 0、65/0/0，**被摘空的用例在 surefire 原件里确为绿**（不仅门被骗，用例本身也不再断言）。收口建议：bound_in 要求 add 的目标变量就是 from(env) 读的那具环境，并禁止体内出现属性写入或助手调用（它验证该改法不误杀 A8）。**F-R5-07（P2）指向我自己**：见 rounds.EVIDENCE-CRLF-FIDELITY 的越界段。关闭项：F-R4-09 锁序（B1/B1b/B1c 三条自建削弱各红门 12、detail 各异；inLockOrder 在 :109 而首取锁在 :110；**措辞审计 5 处全部自带「未观测到死锁」免责，无一处越界**）；F-R4-01 语义未被偷改（宽窗仍 (owner,provider,day)、用例两 Owner 各 2 第 3 笔两侧拒 + holds()=4、文档写「不擅自改成全局帽」）；F-R4-02/03/04/05/10 四条静默路径（它用**自己写的** R5Probe.java + javac/java 退出 0 的 20 个反例直调装配层，不复用我的门）；失败原件 r4fix-65.json 与 retry 的差异**只落在它声称的两处**、65 个用例名单一致。数字承重：14→16 是两条新检查对象、44→66 无凑数（69 次编辑去重 68，仅 1 个三元组被两场景共用，属场景计数）、57→65 删除 0 改名 0（它自己比名字集合）。新残留 P3：**F-R5-02** 落点自检被攻下——判据是**等值不是包含**，--work-root 指进受控 evidence 目录算出 …/evidence/evidence 仍 problems=[] exit 0，且把 `and not chosen` 摘成 `if False:` 门 13 仍 16/16（看守不看可达性；但 R2「默认落点挪进受控树」确实 15/16 红）；**F-R5-03** --path-selftest 校验的 --tests 是硬编码、不吃操作者传值；**F-R5-04** quota 词内拼错仍在近邻拦截面外、unlimited 下无声不设帽；**F-R5-05** T08.md:122 仍写「默认 57」；**F-R5-06** credentials.txt 重复写入。另有 3 条不编号观察（单测夹具 label==lockKey、javadoc classic shape of a cross-transaction wait cycle 措辞略强、「66 条」计的是场景数）。**它对我 mvn 违规的判定**：全仓只有 backend/pom.xml、根目录 Test-Path pom.xml=False ⇒ 无项目进不了生命周期、clean 不可能执行；backend/target 仍是 351 文件完整成品；且 T08 三条读数路径**一字节都不读 backend/target**（run_pg.py:291 复制时 ignore_patterns('target')）⇒ 读数未被污染，**记纪律项、不进缺陷表**。它还如实披露自己的口径事故：PS `*>` 写 UTF-16，两份门输出是转码副本",
+    "T03-10th-remediation": "第十轮整改（agent-95794bd8 实施，主 agent 集成入库 11a3d7f，8 个路径按归属逐条显式暂存）：闸门 check_session_cookie.py 增至 162,443 B / 2,952 行（指纹 5AED73E5F4A3），身份守卫用例 7→15——3 条真装配用例用 AnnotationConfigApplicationContext.register(T03Configuration.class) 取真 identitySecurity、非契约名走产品自身 T03_COOKIE 抛出；5 条加载用例改用框架自己的 Yaml/PropertiesPropertySourceLoader + Binder（第九轮判我方「静态普查冒充行为证明」的直接回应）；guard-test-binding.json 绑定 10 个输入 + census。掏空形状不再靠推理而是实测：4 类假形状 mvn exit 1 且红在装配用例、javap 数 identitySecurity 体内 invokestatic 归零；2 类是 javac 编译期红（报告如实写「未跑成功」，不冒充绿灯）；try...finally / switch default / else 良性半边不假红。静态层口径收缩为「五面一致 + 执行事实可重推导 + 三投影同源（496/600 可编译形状 0 分歧）+ 与 javac 在转义与可达性同向」，明确不证明调用点被执行（那是 mvn/formal 的责任），并为此删掉两条桩化后不动任何判定的规则。**实施方两条自曝**（报告 §6，写进正文不是注释）：影子树第一次把 13 条 mvn 全读成 compileError，原因是它用 \"\\\\n\" 拼出了字面反斜杠 n；第一版掏空形态（裸文本块语句）根本编不过，改成赋值形式后才跑绿并被闸门拒绝。主 agent 在最终字节上独立跑：全量 mvn -B -ntp -o clean verify -f backend/pom.xml exit 0（Tests run: 305, Failures: 0, Errors: 0, Skipped: 149，19.2 s）；check_session_cookie.py exit 0（PASS - approved name EDITORIAL_SESSION; 106/106 negative controls rejected, 36/36 benign probes accepted，对比 r08 的 48/11、r09 的 49/12）；check_contracts.py exit 0（27 哈希）；注入反证 exit 1（T03PostgresTest tests=15 / errors=15 / failures=0，全部 Failed to load ApplicationContext ... WRONGNAME，9 条命令、151 executed inputs，工件 r10-wrong-cookie-inject* 已入库 cc99998）；并实测 @Test 出现 15 次、r08/r09 逐字节仍为 6EB8EF60/F18C88EF",
+    "T03-10th-integration-notes": "集成时的两处归属与命名事实，都由主 agent 负责：(1) 11a3d7f 收的是实施方**工作树最新字节**，而 e4f0f3c 里那个被贴错标签的中间快照仍在历史中（check_session_cookie.py 入库 155,999 B、现为 162,443 B），实施方承诺不对这些路径做 checkout/restore，交付时补了逐文件指纹表（9 行 disk/HEAD blob 对照），我这轮据其复核一致。(2) 注入反证的证据我用默认名 integration 生成，**该默认名在 git 历史里 0 提交 0 删除**（先查后动，没覆盖任何人）；但同类先例 r07-wrong-cookie-must-not-boot、r08-wrong-cookie-via-system-property 都带描述名，故改名为 r10-wrong-cookie-inject* 后入库 cc99998。**两处归属必须写对**：15 条 error 全在 T03PostgresTest（活库 HTTP/CSRF 身份套件），不是同有 15 条用例的静态守卫类 T03SessionCookieGuardTest——两个类现在都是 15 条，纯巧合；这条区分正是「错名下真的起不来」的行为学价值所在"
   },
   "integrationBase": "5413cf4",
   "branch": "main",
@@ -76,8 +78,8 @@
       "note": "R02（完整 Gitleaks）已按 6 项精确指纹豁免整改并复扫退出 0（见集成记录），尚未出具第 3 轮复审结论"
     },
     "T03": {
-      "verdict": "CHANGES_REQUIRED",
-      "basis": "第九轮判 CHANGES_REQUIRED（P1×5 + P2×4 + P3×3，全部附最小复现与 javac/javap/JUnit 实跑证据）。核心结论：**我写的静态文本闸门证明不了行为，且多条检查在红侧不承重**。整改派 agent-95794bd8，主 agent 裁定把承重从文本分析移到执行证明（R1 离线装配抛异常用例 + R2 用 Spring 自己的 loader/Binder 普查配置）。第八轮的 F-01/F-03 由它判定原样重开",
+      "verdict": "INTEGRATED_UNREVIEWED",
+      "basis": "第十轮整改已入库 11a3d7f：用例 7→15（3 条真装配 + 5 条框架 loader/Binder）、掏空形状改为实测（4 类 mvn 红 + 2 类 javac 编译期红，良性半边不假红），静态层口径收缩并删掉两条不动判定的规则。主 agent 在最终字节上独立跑：全量 mvn -B -ntp -o clean verify -f backend/pom.xml exit 0（Tests run: 305, Failures: 0, Errors: 0, Skipped: 149，19.2 s）；check_session_cookie.py exit 0（PASS - approved name EDITORIAL_SESSION; 106/106 negative controls rejected, 36/36 benign probes accepted，对比 r08 的 48/11、r09 的 49/12）；check_contracts.py exit 0（27 哈希）；注入反证 exit 1（T03PostgresTest tests=15 / errors=15 / failures=0，全部 Failed to load ApplicationContext ... WRONGNAME，9 条命令、151 executed inputs，工件 r10-wrong-cookie-inject* 已入库 cc99998）；并实测 @Test 出现 15 次、r08/r09 逐字节仍为 6EB8EF60/F18C88EF。第十轮复审 agent-69861721 已派（maven 与 backend/target 归它独占）",
       "note": "原 shared-integration.patch hunk 损坏，改由组合根开关接线；会话/CSRF/审计/幂等由 73 项跨域真实测试覆盖，但没有独立批准记录。T07-R04 整改（Cookie 名常量 + 启动断言 + 测试改名 + 新闸门）由主 agent 本人实施，属 T03 域且未经复审，T03 独立批准必须覆盖它"
     },
     "T04": {
@@ -919,7 +921,7 @@
       "severity": "P2",
       "status": "OPEN",
       "issue": "R5-1：词界 \\b 把 [^0-9a-f] 之类的标点邻接超串一并放行——10/10 个值、50 例仍被抑制；第 11 条尾巴无界再吞 5 例；而交付门的 33 条超串探针只测字母数字拼接，结构性看不见这一面",
-      "requiredFix": "采用复审实测的 RE2 两侧定界候选（左 (?:^|[\\x60\\'\"=:\\s])、右 (?:$|[\\x60\\'\"\\s;])，第 11 条保留 [^0-9a-f] 再接右界），同步改 unwrap() 与标签逻辑否则 11 条标签断言会红；先跑 r5-harness-probe.py 复现 50 例、改后必须 0 例；超串探针补 - / . / = 三种邻接。已派 agent-884f26dc",
+      "requiredFix": "采用复审实测的 RE2 两侧定界候选（左 (?:^|[\\x60\\'\"=:\\s])、右 (?:$|[\\x60\\'\"\\s;])，第 11 条保留 [^0-9a-f] 再接右界），同步改 unwrap() 与标签逻辑否则 11 条标签断言会红；先跑 r5-harness-probe.py 复现 50 例、改后必须 0 例；超串探针补 - / . / = 三种邻接。agent-884f26dc **连续两次会话失败且工件 sha 完全未变（5,271 B / 114 行 / e9f7c5997cb2 / 59 占位）⇒ 判定为零推进，改为重派 agent-acfe96e1（简报压缩为按序 6 件事）**，不再是同一长简报原样重发",
       "openedAt": "2026-10-08",
       "foundBy": "docs/execution/reviews/T02-round5/review.md §1 与 §11(A)"
     },
@@ -967,11 +969,14 @@
       "id": "T08-FULL-VERIFY-OWED",
       "task": "T08",
       "severity": "P3",
-      "status": "OPEN",
+      "status": "CLOSED",
       "issue": "整改后尚未跑过全量 mvn -B -ntp -o clean verify -f backend/pom.xml（旧期望 289 那一档已过期：cost 用例现为 28+37，T03 也在改）。我唯一一次尝试因缺 -f 在 0.062 秒 BUILD FAILURE，没执行 clean、没碰 backend/target，不算读数",
       "requiredFix": "等 agent-95794bd8 交出 maven 独占权后由我跑，并把新总数写进 T08.md 第 7 节与台账，保持「集成时代跑、非本卡亲跑」的标注口径",
       "openedAt": "2026-10-08",
-      "foundBy": "主 agent 自曝（同轮内的违规与撤回）"
+      "foundBy": "主 agent 自曝（同轮内的违规与撤回）",
+      "closedAt": "2026-10-08",
+      "fixEvidence": "主 agent 跑全量 mvn -B -ntp -o clean verify -f backend/pom.xml（JAVA_HOME 与 -Dmaven.repo.local 照台账）：exit 0、Tests run: 305, Failures: 0, Errors: 0, Skipped: 149、19.2 s。旧期望 289 那一档确实过期（cost 用例现为 28+37、身份守卫现为 15）。**但读数工件被我删了**：我把重定向日志当垃圾清掉，却引用了它的 exit 0 与 305/149 ⇒ 派生缺陷另立 MAIN-READOUT-NO-ARTIFACT，第十轮复审方被要求自己重跑并留存",
+      "closedBy": "主 agent 亲跑（读数有效，工件留存由复审方补）"
     },
     {
       "id": "PAIRING-GATE-SCOPE",
@@ -999,7 +1004,7 @@
       "severity": "P2",
       "status": "OPEN",
       "issue": "F-R5-01：体内绑定证据仍可整段摘空——G1（真造诱饵 PropertySource + 头尾拼接平铺键）与 G2（同文件 helper 装配平铺键、体内只留假 token）都使 16/16 门全绿、隔离真库整轮 65/0/0，且被摘空的用例在 surefire 原件里确为绿；这是同一缺陷**连续第三轮**未闭合",
-      "requiredFix": "按复审收口：bound_in 要求 add 的目标变量就是 from(env) 读的那具环境，并禁止体内出现属性写入/助手调用；G1/G2 收编进 MUTATIONS 并证明不误杀 A8。第六轮整改执行",
+      "requiredFix": "按复审收口：bound_in 要求 add 的目标变量就是 from(env) 读的那具环境，并禁止体内出现属性写入/助手调用；G1/G2 收编进 MUTATIONS 并证明不误杀 A8。第六轮整改执行。执行方 agent-6ff99be4（第五轮整改，骨架优先）",
       "openedAt": "2026-10-08",
       "foundBy": "docs/execution/reviews/T08-round5/review.md §1 + evidence/r5_gate_probe.py"
     },
@@ -1032,16 +1037,66 @@
       "requiredFix": "不改写历史（复审亦要求）。已完成：撤回写入 rounds.EVIDENCE-CRLF-FIDELITY、协议原位更正、本条公开记录。仍要做：向 agent-95794bd8 通告归属；下一次 T03 集成以它工作树最新字节为准并说明主线里存在一个未审快照；引用 e4f0f3c 的派单一律带这条越界脚注",
       "openedAt": "2026-10-08",
       "foundBy": "docs/execution/reviews/T08-round5/review.md §7 + 主 agent 复算 136 文件性质"
+    },
+    {
+      "id": "T03-REVIEW-10TH",
+      "task": "T03",
+      "severity": "P1",
+      "status": "OPEN",
+      "issue": "T03 第十轮整改（11a3d7f）与主 agent 的注入反证（cc99998）需独立复审第十轮",
+      "requiredFix": "agent-69861721 必答十项：重放 4 类 mvn 红 + 2 类 javac 红并**再造一型**自己的假形状；验三条装配用例取真上下文、五条加载用例真用框架 loader/Binder；攻击「载荷审计 54 桩无人看守 0 条」（构造削弱后不改判定却被算作有人看守的桩）；亲跑记录器证明「由人跑过」并申报 3 个受控文件的改前改后 sha；闸门重跑用**新名** session-cookie-r10b.json（不得 --force 覆盖已入库的 r10）；验 census 链条与「闸门不直接读 backend/target」；跑正确路径的注入反证；审 149 项 skipped 的构成；审我两笔（默认名改名入库的三句话是否属实、删日志却引用读数）",
+      "openedAt": "2026-10-08",
+      "foundBy": "主 agent 集成 11a3d7f 后派工"
+    },
+    {
+      "id": "MAIN-READOUT-NO-ARTIFACT",
+      "task": "T03",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "我引用了全量 verify 的 exit 0 与 305/149 读数，却把重定向日志当 scratch 删了 ⇒ **读数无留存工件**，与我自己定的「证据必须是可复算工件」不一致；且 Out-File -Encoding utf8 出的日志带 BOM，本身也不是合格记录件",
+      "requiredFix": "由第十轮复审方自己重跑并把输出（python 落字节、无 BOM）放进它的 evidence 目录；我此后凡引用退出码必须同时留下在仓工件，或在台账注明「无工件、需重放」",
+      "openedAt": "2026-10-08",
+      "foundBy": "主 agent 自曝（写 cc99998 提交说明时想到）"
+    },
+    {
+      "id": "FORMAL-NO-PROVENANCE-STAMP",
+      "task": "T03",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "tests/engineering/integration/formal.py 生成的 JSON **不写 producedBy 之类的署名字段**（顶层键为 mode/paidCalls/domainSubstitutes/commands/transformations/samples/executedInputs/injections/failure/testResults/isolatedWork/exitCode），所以「谁跑的」只存在于提交说明里；我给 T08 工装要求的 producedBy 在这条链上缺失",
+      "requiredFix": "给 formal.py 加 --produced-by 并写入 JSON（与 run_pg.py 一致）；同时把默认 --evidence-name 从 integration 改为必填或带时间戳，避免复用未描述名。属共享工装，须由主 agent 在 T03 复审结束后改，不能由被审方改自己的考题",
+      "openedAt": "2026-10-08",
+      "foundBy": "主 agent 入库自己的注入证据时发现"
+    },
+    {
+      "id": "HANDBACK-COMMAND-PATH",
+      "task": "T03",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "实施方交回命令写的是 python tests/engineering/T03/formal.py --suite identity --inject ...，**该路径不存在**（真路径 tests/engineering/integration/formal.py），且漏了 --evidence-name ⇒ 照抄即失败",
+      "requiredFix": "派单与交付模板加一条硬要求：交回命令必须可原样粘贴执行，路径由真跑过的人给出；本轮我已在复审派单里更正",
+      "openedAt": "2026-10-08",
+      "foundBy": "主 agent 照抄交回命令时失败"
+    },
+    {
+      "id": "SKIPPED-149-COMPOSITION",
+      "task": "T03",
+      "severity": "P3",
+      "status": "OPEN",
+      "issue": "全量离线 verify 的 305 项里有 149 项 skipped（近一半）。目前只知道它们多为活库/外部依赖套件（日志尾可见 storage.T04Rev* skipped 7 等），**尚未逐项核对构成**，也没有证明没有断言被静默吞掉冒充绿灯",
+      "requiredFix": "第十轮复审方列出 skipped 的套件清单与跳过条件，并判定是否存在「该跑的没跑还被计入绿灯」（若有则 P2）；结论写进 T03.md 或相应卡的覆盖边界段",
+      "openedAt": "2026-10-08",
+      "foundBy": "主 agent 读 verify 汇总时的疑问，未查证不判缺陷"
     }
   ],
   "next": [
-    "1) 两路在跑：agent-95794bd8（T03 第十轮整改，独占 maven 与 backend/target）、agent-884f26dc（T02 第六轮整改）。T08 第六轮整改即将派工（G1/G2 收口 + 落点祖先包含 + 旧计数 + credentials 重复写入）。",
-    "2) **必须立刻向 agent-95794bd8 通告归属**：我在 e4f0f3c 里把它 5 个在途文件记入了主线，它交付时要说明这与工作树当前字节的关系，我集成时以工作树最新字节为准。",
-    "3) **需人类/Owner**：provider 帽语义（T08-R4-OWNER-CEILING-SCOPE，我倾向全局帽——复审已确认代码仍是每 Owner 分区且未被偷改）；证据保真守卫放属性文件还是写入路径；COST-BUDGET-LIMITS；含点 model id；T03-APPROVAL；B01；T01-HUMAN；COMPAT-INVENTORY；WAITING_MANUAL；T07 基线重录；OQ-09 额度与 unconfigured 运维默认（复审 §10 亦列为 Owner 未决）。",
-    "4) T03 交回后由我跑全量 `mvn -B -ntp -o clean verify -f backend/pom.xml`（**带 -f**），一次了结 T08-FULL-VERIFY-OWED 与 T03 整轮读数；再跑 record_guard_binding.py、formal.py 注入错名反证、check_session_cookie.py --output r10。",
-    "5) T02 第六轮回来后派第六轮复审；G0 在 T02 与 T08 都过审前不签。",
-    "6) 所有引用 e4f0f3c 的派单都要带越界脚注，并写明「以 HEAD 为准，旧提交仍分叉」——否则别人会把我的历史缺陷读成造假。",
-    "7) T09 仍不派（卡片 :179 依赖 T03/T04/T05/T08；T04 阻塞于 B01）。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all。"
+    "1) 三路在跑：agent-69861721（T03 第十轮复审，**独占 mvn 与 backend/target**）、agent-6ff99be4（T08 第五轮整改）、agent-acfe96e1（T02 第六轮整改重派）。我期间不跑 mvn、不改共享工装（formal.py / run_pg.py / CI / Flyway 由我集成时改）。",
+    "2) T03 复审回来后我必做三件共享工装改动：formal.py 加 --produced-by 并把默认 evidence-name 改为必填（P3）；按 SKIPPED-149-COMPOSITION 的结论把覆盖边界写进报告；若复审判定我删日志成立，则把这条写进门禁提示。",
+    "3) **需人类/Owner**：provider 帽语义（全局 vs 每 Owner，我倾向全局帽——T08 复审已确认代码仍是每 Owner 分区且未被偷改）；证据保真守卫放属性文件还是写入路径；COST-BUDGET-LIMITS；含点 model id；**T03-APPROVAL（G1，只能人类签）**；B01 真实私有桶；T01-HUMAN 金标签；COMPAT-INVENTORY；WAITING_MANUAL；T07 基线重录方向；OQ-09 额度与 unconfigured 运维默认。",
+    "4) T08/T02 整改回来后各派一轮独立复审；G0 在 T02、T08、T03 全部过审前**不签**。",
+    "5) 所有引用 e4f0f3c 与 11a3d7f 的派单继续带两条脚注：旧提交里 127 个证据文件仍是规范化 blob（以 HEAD 为准）；e4f0f3c 内含 T03 会话的中间快照（权威是工作树）。",
+    "6) 残留清理待办：tests/engineering/integration/.work/c2dee2b518954fe1ac160da74e7d8bb3（我那次注入跑的隔离副本，已嘱复审方别删）、.work/t08、tests/engineering/T02/.work、六个哈希命名的早先 T08 根、游离 java PID 17732；CI 侧 --with-controls 断言期望数若被写死需从 88 改到实测值（现 139，第六轮可能再变）。",
+    "7) T09 仍不派（卡片 :179 依赖 T03/T04/T05/T08；T04 阻塞于 B01）。MULTI-DOMAIN-SUITE 待 T10/T11 后 --suite all；T07-BASELINE-STALE 仍需一个决定并单开一轮。"
   ],
   "protocol": [
     "冻结即指纹：已 PASS 的源文件与契约只比 sha256，不再进入任何上下文",
@@ -1105,7 +1160,13 @@
     "全量普查要**限定风险类**而不是无脑遍历：我第一次用 os.walk 扫 tests/engineering，直接违反「绝不递归列举工作根」（会下钻进 .work 的真实数据目录）而卡死、被我自己 kill。正确口径是 git ls-files 限定目录 + 只取磁盘上仍含 CRLF 的那一类，436 个候选而不是上万文件",
     "放宽型修补必须**双向**校验：我给 .gitattributes 加了 4 条规则，除「修后 0 分叉」外还要证「没把 authored .py 一并免掉换行」。已派复审方抽验这一条",
     "「我证明了 X」这类句子只能写在**逐对象复算**之后。我在 e4f0f3c 的提交说明里写了三句自证（restage the affected blobs / zero still divergent / authored 前后一致），第五轮复审逐个比对该提交 136 个文件的 parent 与新 blob，发现 130 纯换行 + 1 规则本体 + **5 个换行解释不了的内容改动**，且当下 5 个里有 4 个 disk≠HEAD；我自己复算结果与它一致。抽样不能支撑全称句，尤其是关于自己提交的句子",
-    "跨会话并工时，集成动作的 pathspec 必须**先按归属分组再执行**：批量 add/renormalize 会把别的会话的在途内容一起入库。以后我只对本轮声明负责的路径动 add，批量重录一律用显式文件清单"
+    "跨会话并工时，集成动作的 pathspec 必须**先按归属分组再执行**：批量 add/renormalize 会把别的会话的在途内容一起入库。以后我只对本轮声明负责的路径动 add，批量重录一律用显式文件清单",
+    "续跑 vs 重派的判据是**工件是否推进**，不是失败次数。同一会话两次死亡且报告文件 sha 完全未变（5,271 B / 114 行 / e9f7c5997cb2 / 59 占位，mtime 也停在第一次）⇒ 零推进，重派不违反「留工件必续跑」；反之只要 sha 变了就必须续跑。重派时把简报压缩到按序的少数几件事——长简报本身可能就是崩溃变量",
+    "凡我引用的退出码与读数，必须同时留下**在仓工件**或在台账显式标注「无工件、需重放」。我把全量 verify 的日志当 scratch 删了，却引用它的 exit 0 与 305/149——这与我对实施方的要求不一致，已立独立项并把重跑交给复审方",
+    "交回命令必须**可原样粘贴**：路径由真跑过的人给。tests/engineering/T03/formal.py 不存在（真路径 tests/engineering/integration/formal.py），照抄即失败；同时记录件名要走描述性约定（先例 r07/r08），默认名 integration 不可复用——用之前先 git log --all -- <path> 确认 0 提交 0 删除，才敢说没覆盖别人",
+    "行数一律 len(splitlines())，不要 count('\\n')+1：我用后者把自己的 2,952 看成 2,953、把 114 看成 115，两次都是**我的口径**错、不是对方报错。PS 内联 python 也不要写转义双引号（被 PS 吞成非法 token），写脚本文件",
+    "同一轮里的**数字巧合**必须点名区分：注入反证的 15 条 error 属于 T03PostgresTest（活库套件），而 T03SessionCookieGuardTest 也恰好有 15 条用例。写「15 条失败」而不写类名，就是在制造可被误读的读数",
+    "承载中文正文的 Python 字符串一律用 r'''...'''三引号或直角引号，不要用双引号包裹再在内部写 ASCII 直引号：我在同一份台账脚本上第三次因此 SyntaxError，前两次靠手工替换引号修，这次改用三引号从根上免疫（注意 r 三引号内 \\\\n 会原样保留，正是记录别人源代码字面量时要的效果）"
   ],
   "machineGates": [
     "python tests/contracts/T00/verify_rc3.py",
@@ -1136,10 +1197,13 @@
     "python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks <解析出的真实二进制>   # R05 后实测 139 条断言全 PASS（改前 88）、结构模式 18（改前 16）；CI 期望条数若存在需同步更新",
     "python tests/engineering/T08/verify.py [--reverse-control]   # R4 整改后 16/16；反向 66 条减弱 + 8 条良性，blind/misplaced/brittle/stale 全 none（改前 14/14、44+5）",
     "python tests/engineering/T08/run_pg.py --work-root <绝对路径> --evidence-dir <显式目录> --evidence-name <名> --expect-tests 65   # 真库整轮 65/0/0；不给 --evidence-dir 时证据落 <work-root>/evidence 且 JSON 记 insideControlledDirectory=false（F-R4-12 的落点自检）",
-    "git add --renormalize 之前必须先按归属分组核对 pathspec   # 教训来自 e4f0f3c：它把并行会话的 5 个在途内容改动一并入库"
+    "git add --renormalize 之前必须先按归属分组核对 pathspec   # 教训来自 e4f0f3c：它把并行会话的 5 个在途内容改动一并入库",
+    "mvn -B -ntp -o clean verify -f backend/pom.xml   # 当前全量：exit 0，Tests run 305 / F 0 / E 0 / Skipped 149（19.2 s）；**必须带 -f**，引用该读数要在仓留工件",
+    "python tests/engineering/integration/formal.py --suite identity --inject server.servlet.session.cookie.name=WRONGNAME --evidence-name <描述名>   # 期望非 0，红在 T03PostgresTest 的 15 条 ApplicationContext 加载失败",
+    "python tests/engineering/T03/check_session_cookie.py   # 当前：PASS，106/106 negative controls rejected、36/36 benign probes accepted（r08 48/11、r09 49/12）；重跑输出必须换新名，不得 --force 覆盖已入库件"
   ],
   "budget": {
-    "sessionBootstrap": "只读状态文件实测约 13k tok（21 顶层键、tasks 9、openItems 76、protocol 62、rounds 25）；整单读 SRS+计划+契约约 120k tok",
+    "sessionBootstrap": "只读状态文件实测约 14k tok（21 顶层键、tasks 9、openItems 81、protocol 68、rounds 27）；整单读 SRS+计划+契约约 120k tok",
     "perGateReviewTarget": "约 10k tok（状态 + 卡片段落 + 边界 diff + 门禁退出码，只在 fail/OPEN 上按需读段）",
     "referenceCosts": {
       "SRS 全文": "~49k tok（按章节取段，单次 ≤2k）",
@@ -1147,6 +1211,6 @@
       "openapi.yaml 全文": "~170k tok（禁止）",
       "editorial.schema.json 全文": "~59k tok（禁止）"
     },
-    "note": "本轮（T08 第五轮判决入账 + 我的提交越界撤回）主上下文只做了：复算 e4f0f3c 的 136 个文件性质（一次脚本）、入库 1 份判决记录（44 文件 470 KB）、改台账。review.md 68,669 B **未整份读入**，我读它的交回消息 + 我自己要裁的两处（F-R5-01 收口、F-R5-07 归属）。值得记的开销差：这一路复审一次成工零崩溃，因为它严格执行骨架优先与逐节落盘"
+    "note": "本轮主上下文：集成 T03 第十轮（读它的交回消息 + 报告 41,067 B **未整读**，只取指纹表与两处口径）、跑 4 道命令（mvn 全量、闸门、契约、formal 注入）、复算 e4f0f3c 的 136 文件性质、审 T08 第五轮判决（68,669 B **未整读**）、4 个入库 + 台账、一次改名入库、派 3 路（T08 整改、T03 复审、T02 重派）。隐性开销最大的是 formal.py 那份 491 KB JSON 的归属核验——我只读顶层键与 grep，没整读，但为确认「15 条 error 属于哪个类」必须解析 surefire 头，这一步不能省"
   }
 }
