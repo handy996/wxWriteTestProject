@@ -1,0 +1,85 @@
+{
+  "inputSet": {
+    "listed": 2264,
+    "copiedFiles": 2264,
+    "copiedBytes": 38301887
+  },
+  "delivered": {
+    "exit": 0,
+    "count": 0,
+    "byFile": {},
+    "rules": [],
+    "scanned": [
+      "2:29AM INF scanned ~38153620 bytes (38.15 MB) in 1.36s"
+    ],
+    "leaks": [
+      "2:29AM INF no leaks found"
+    ]
+  },
+  "preDeca2a1": {
+    "exit": 1,
+    "count": 7,
+    "byFile": {
+      "docs/execution/reviews/T03-round5/evidence/checks.json": 3,
+      "docs/execution/reviews/T07-round4/checks.json": 2,
+      "tests/engineering/T03/evidence/session-cookie-r04.json": 2
+    },
+    "rules": [
+      "generic-api-key"
+    ],
+    "scanned": [
+      "2:29AM INF scanned ~38003016 bytes (38 MB) in 1.16s"
+    ],
+    "leaks": [
+      "2:29AM WRN leaks found: 7"
+    ]
+  },
+  "defaults": {
+    "exit": 1,
+    "count": 15,
+    "byFile": {
+      "docs/AI-Editorial-Agent-SRS-v1.0.md": 1,
+      "docs/execution/reviews/T03-round5/evidence/checks.json": 3,
+      "docs/execution/reviews/T07-round4/checks.json": 2,
+      "tests/engineering/T02/evidence/r01-integrity.json": 6,
+      "tests/engineering/T03/evidence/session-cookie-r04.json": 2,
+      "tests/engineering/T04/evidence/integration.json": 1
+    },
+    "rules": [
+      "generic-api-key"
+    ],
+    "scanned": [
+      "2:29AM INF scanned ~38153620 bytes (38.15 MB) in 1.26s"
+    ],
+    "leaks": [
+      "2:29AM WRN leaks found: 15"
+    ]
+  },
+  "frozenUnchanged": true,
+  "frozenSha256": [
+    {
+      "path": "docs/api/openapi.yaml",
+      "sha256": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b"
+    },
+    {
+      "path": "docs/schemas/editorial.schema.json",
+      "sha256": "7b5872e129817bbcbb32e8b841e430eb69f35d4ca18bac21bc24a708cfcbe2aa"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/gitleaks-findings.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity-run.json",
+      "sha256": "18be0c34fbc16ad1f018324e51fc339bf8ca3293d733d41ffe5e9c5bc4e78f27"
+    },
+    {
+      "path": "tests/engineering/T02/evidence/r01-integrity.json",
+      "sha256": "1d18eef28322218a27a1a666198509050f1cbe4a86728a7f08a98b194221dd14"
+    },
+    {
+      "path": "tests/engineering/T02/gitleaks.toml",
+      "sha256": "efd32a24525457b71dc4cc030dd6d468e66d065d449f0c40bcd9aef0b35fbc82"
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "entriesAnchored": 11,
+  "anchoredConfigBytes": 2098,
+  "cases": {
+    "value-00": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-01": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-02": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-03": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-04": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-05": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-06": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-07": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-08": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-09": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-10": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "superstring": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "anchored": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    }
+  },
+  "verdict": {
+    "exactStillSuppressedUnderAnchoring": false,
+    "superstringNowReportedUnderAnchoring": [
+      "value-00",
+      "value-01",
+      "value-02",
+      "value-03",
+      "value-04",
+      "value-05",
+      "value-06",
+      "value-07",
+      "value-08",
+      "value-09",
+      "value-10"
+    ],
+    "anchoringIsARealHardening": false,
+    "note": "values whose probe is not live under defaults are counted as void, not as failures"
+  }
+}

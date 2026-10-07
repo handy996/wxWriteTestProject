@@ -1,0 +1,132 @@
+{
+  "expectedCanaries": [
+    "docs/AI-Editorial-Agent-SRS-v1.0.md:github-pat",
+    "docs/AI-Editorial-Agent-SRS-v1.0.md:private-key",
+    "tests/engineering/T02/evidence/r01-integrity.json:github-pat",
+    "tests/engineering/T02/evidence/r01-integrity.json:private-key",
+    "tests/engineering/T04/evidence/integration.json:github-pat",
+    "tests/engineering/T04/evidence/integration.json:private-key"
+  ],
+  "results": {
+    "probeDefaultsOnly": {
+      "exit": 1,
+      "reportWritten": true,
+      "count": 2,
+      "rules": [
+        "github-pat",
+        "private-key"
+      ],
+      "caught": [
+        "probe.txt:github-pat",
+        "probe.txt:private-key"
+      ],
+      "canariesCaught": [],
+      "canaryCount": 0,
+      "otherFindings": [
+        "probe.txt:github-pat",
+        "probe.txt:private-key"
+      ],
+      "scanned": "1:44AM INF scanned ~198 bytes (198 bytes) in 10.3ms",
+      "logTail": [
+        "1:44AM INF scanned ~198 bytes (198 bytes) in 10.3ms",
+        "1:44AM WRN leaks found: 2"
+      ]
+    },
+    "deliveredConfig": {
+      "exit": 1,
+      "reportWritten": true,
+      "count": 6,
+      "rules": [
+        "github-pat",
+        "private-key"
+      ],
+      "caught": [
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:github-pat",
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:private-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:github-pat",
+        "tests/engineering/T02/evidence/r01-integrity.json:private-key",
+        "tests/engineering/T04/evidence/integration.json:github-pat",
+        "tests/engineering/T04/evidence/integration.json:private-key"
+      ],
+      "canariesCaught": [
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:github-pat",
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:private-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:github-pat",
+        "tests/engineering/T02/evidence/r01-integrity.json:private-key",
+        "tests/engineering/T04/evidence/integration.json:github-pat",
+        "tests/engineering/T04/evidence/integration.json:private-key"
+      ],
+      "canaryCount": 6,
+      "otherFindings": [],
+      "scanned": "1:44AM INF scanned ~151198 bytes (151.20 KB) in 36.9ms",
+      "logTail": [
+        "1:44AM INF scanned ~151198 bytes (151.20 KB) in 36.9ms",
+        "1:44AM WRN leaks found: 6"
+      ]
+    },
+    "defaultsOnly": {
+      "exit": 1,
+      "reportWritten": true,
+      "count": 14,
+      "rules": [
+        "generic-api-key",
+        "github-pat",
+        "private-key"
+      ],
+      "caught": [
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:generic-api-key",
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:github-pat",
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:private-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:generic-api-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:github-pat",
+        "tests/engineering/T02/evidence/r01-integrity.json:private-key",
+        "tests/engineering/T04/evidence/integration.json:generic-api-key",
+        "tests/engineering/T04/evidence/integration.json:github-pat",
+        "tests/engineering/T04/evidence/integration.json:private-key"
+      ],
+      "canariesCaught": [
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:github-pat",
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:private-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:github-pat",
+        "tests/engineering/T02/evidence/r01-integrity.json:private-key",
+        "tests/engineering/T04/evidence/integration.json:github-pat",
+        "tests/engineering/T04/evidence/integration.json:private-key"
+      ],
+      "canaryCount": 6,
+      "otherFindings": [
+        "docs/AI-Editorial-Agent-SRS-v1.0.md:generic-api-key",
+        "tests/engineering/T02/evidence/r01-integrity.json:generic-api-key",
+        "tests/engineering/T04/evidence/integration.json:generic-api-key"
+      ],
+      "scanned": "1:44AM INF scanned ~151198 bytes (151.20 KB) in 30.9ms",
+      "logTail": [
+        "1:44AM INF scanned ~151198 bytes (151.20 KB) in 30.9ms",
+        "1:44AM WRN leaks found: 14"
+      ]
+    },
+    "legacyPreDeca2a1": {
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "caught": [],
+      "canariesCaught": [],
+      "canaryCount": 0,
+      "otherFindings": [],
+      "scanned": "1:44AM INF scanned ~0 bytes (0) in 6.69ms",
+      "logTail": [
+        "1:44AM INF scanned ~0 bytes (0) in 6.69ms",
+        "1:44AM INF no leaks found"
+      ]
+    }
+  },
+  "verdict": {
+    "canaryShapesCaughtByDefaultRulesAlone": true,
+    "deliveredCatchesAllSixCanaries": true,
+    "deliveredOnlyCanariesRemain": true,
+    "defaultsCatchesAllSixCanaries": true,
+    "legacyScanActuallyRan": true,
+    "legacyCatchesZeroCanaries": true,
+    "legacyScannerReportsZeroBytesForThem": true
+  }
+}

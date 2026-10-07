@@ -1,0 +1,215 @@
+{
+  "privateKeyShapes": {
+    "rsa-header-only": {
+      "bytes": 63,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:55AM INF scanned ~63 bytes (63 bytes) in 7.93ms"
+        ]
+      }
+    },
+    "rsa-two-lines": {
+      "bytes": 170,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:55AM INF scanned ~170 bytes (170 bytes) in 14.7ms"
+        ]
+      }
+    },
+    "rsa-eight-lines": {
+      "bytes": 494,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~494 bytes (494 bytes) in 13.3ms"
+        ]
+      }
+    },
+    "openssh-two-lines": {
+      "bytes": 178,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~178 bytes (178 bytes) in 11.4ms"
+        ]
+      }
+    },
+    "openssh-eight-lines": {
+      "bytes": 502,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~502 bytes (502 bytes) in 13.5ms"
+        ]
+      }
+    },
+    "pkcs8-eight-lines": {
+      "bytes": 486,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~486 bytes (486 bytes) in 18.6ms"
+        ]
+      }
+    },
+    "ec-eight-lines": {
+      "bytes": 492,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "private-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~492 bytes (492 bytes) in 20.1ms"
+        ]
+      }
+    }
+  },
+  "nameContainsGitleaksToml": {
+    "gitleaks.toml": {
+      "bytes": 67,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:56AM INF scanned ~0 bytes (0) in 0s"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:56AM INF scanned ~0 bytes (0) in 0s"
+        ]
+      },
+      "secretScanPatternCatches": true
+    },
+    "vendor-gitleaks.toml.bak": {
+      "bytes": 67,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:56AM INF scanned ~0 bytes (0) in 2ms"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:56AM INF scanned ~0 bytes (0) in 2ms"
+        ]
+      },
+      "secretScanPatternCatches": true
+    },
+    "config.txt": {
+      "bytes": 67,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "github-pat"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~67 bytes (67 bytes) in 10.6ms"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "github-pat"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~67 bytes (67 bytes) in 6.08ms"
+        ]
+      },
+      "secretScanPatternCatches": true
+    }
+  },
+  "awsSecretShape": {
+    "doc-example-value": {
+      "bytes": 65,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": [],
+        "scanned": [
+          "1:56AM INF scanned ~65 bytes (65 bytes) in 4.01ms"
+        ]
+      },
+      "secretScanPatternCatches": false
+    },
+    "random-looking-40": {
+      "bytes": 68,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~68 bytes (68 bytes) in 16.7ms"
+        ]
+      },
+      "secretScanPatternCatches": false
+    },
+    "quoted-random-40": {
+      "bytes": 68,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~68 bytes (68 bytes) in 10.4ms"
+        ]
+      },
+      "secretScanPatternCatches": false
+    },
+    "access-key-id-line": {
+      "bytes": 41,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ],
+        "scanned": [
+          "1:56AM INF scanned ~41 bytes (41 bytes) in 7.62ms"
+        ]
+      },
+      "secretScanPatternCatches": true
+    }
+  }
+}

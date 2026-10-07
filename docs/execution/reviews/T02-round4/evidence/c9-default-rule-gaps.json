@@ -1,0 +1,114 @@
+{
+  "akia-alone": {
+    "bytes": 21,
+    "tokenLen": 20,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "aws-access-token"
+      ]
+    },
+    "secretScanPatterns": true
+  },
+  "akia-with-keyword": {
+    "bytes": 41,
+    "tokenLen": 22,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "aws-access-token"
+      ]
+    },
+    "secretScanPatterns": true
+  },
+  "aws-example-with-slash": {
+    "bytes": 65,
+    "tokenLen": 42,
+    "gitleaksDefaults": {
+      "exit": 0,
+      "count": 0,
+      "rules": []
+    },
+    "secretScanPatterns": false
+  },
+  "base64-charset-with-plus": {
+    "bytes": 60,
+    "tokenLen": 45,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "generic-api-key"
+      ]
+    },
+    "secretScanPatterns": false
+  },
+  "bearer-jwt-style": {
+    "bytes": 87,
+    "tokenLen": 71,
+    "gitleaksDefaults": {
+      "exit": 0,
+      "count": 0,
+      "rules": []
+    },
+    "secretScanPatterns": false
+  },
+  "db-password-quoted-40": {
+    "bytes": 56,
+    "tokenLen": 55,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "generic-api-key"
+      ]
+    },
+    "secretScanPatterns": false
+  },
+  "db-password-short-env": {
+    "bytes": 34,
+    "tokenLen": 33,
+    "gitleaksDefaults": {
+      "exit": 0,
+      "count": 0,
+      "rules": []
+    },
+    "secretScanPatterns": false
+  },
+  "generic-40-mixedcase": {
+    "bytes": 66,
+    "tokenLen": 43,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "generic-api-key"
+      ]
+    },
+    "secretScanPatterns": false
+  },
+  "password-long-random-40": {
+    "bytes": 53,
+    "tokenLen": 43,
+    "gitleaksDefaults": {
+      "exit": 1,
+      "count": 1,
+      "rules": [
+        "generic-api-key"
+      ]
+    },
+    "secretScanPatterns": false
+  },
+  "password-short": {
+    "bytes": 33,
+    "tokenLen": 23,
+    "gitleaksDefaults": {
+      "exit": 0,
+      "count": 0,
+      "rules": []
+    },
+    "secretScanPatterns": false
+  }
+}

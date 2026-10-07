@@ -1,0 +1,119 @@
+{
+  "gitVisibleBytes": 37795737,
+  "files": 2187,
+  "scans": {
+    "delivered-config": {
+      "exit": 0,
+      "findingCount": 0,
+      "rules": [],
+      "findings": [],
+      "scannedLine": [
+        "1:39AM INF scanned ~37647470 bytes (37.65 MB) in 1.44s"
+      ],
+      "errorLines": []
+    },
+    "defaults-only": {
+      "exit": 1,
+      "findingCount": 15,
+      "rules": [
+        "generic-api-key"
+      ],
+      "findings": [
+        {
+          "rule": "generic-api-key",
+          "file": "docs/execution/reviews/T03-round5/evidence/checks.json",
+          "line": null,
+          "match": "openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "docs/execution/reviews/T03-round5/evidence/checks.json",
+          "line": null,
+          "match": "diff-pages-v1.1.openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "docs/execution/reviews/T03-round5/evidence/checks.json",
+          "line": null,
+          "match": "openapi.yaml=REDACTED "
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "docs/AI-Editorial-Agent-SRS-v1.0.md",
+          "line": null,
+          "match": "Idempotency-Key: REDACTED"
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "docs/execution/reviews/T07-round4/checks.json",
+          "line": null,
+          "match": "openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "docs/execution/reviews/T07-round4/checks.json",
+          "line": null,
+          "match": "diff-pages-v1.1.openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T03/evidence/session-cookie-r04.json",
+          "line": null,
+          "match": "openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T03/evidence/session-cookie-r04.json",
+          "line": null,
+          "match": "diff-pages-v1.1.openapi.yaml\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T04/evidence/integration.json",
+          "line": null,
+          "match": "key=REDACTED "
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "compose-missing-password.json\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "r01-secret-scan-final.json\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "r01-secret-scan.json\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "secret-patterns-final.json\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "scan_secrets.py\": \"REDACTED\""
+        },
+        {
+          "rule": "generic-api-key",
+          "file": "tests/engineering/T02/evidence/r01-integrity.json",
+          "line": null,
+          "match": "secret_scan.py\": \"REDACTED\""
+        }
+      ],
+      "scannedLine": [
+        "1:39AM INF scanned ~37647470 bytes (37.65 MB) in 1.27s"
+      ],
+      "errorLines": []
+    }
+  }
+}

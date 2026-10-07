@@ -1,0 +1,191 @@
+{
+  "configBytes": {
+    "delivered": 2076,
+    "wildcardShape": 492
+  },
+  "cases": {
+    "value-00": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-01": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-02": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-03": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-04": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-05": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-06": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    },
+    "value-07": {
+      "exact": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 0,
+        "reportedWildcard": 0
+      },
+      "middle": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 0
+      },
+      "first": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      },
+      "last": {
+        "liveUnderDefaults": 1,
+        "reportedDelivered": 1,
+        "reportedWildcard": 1
+      }
+    }
+  },
+  "verdict": {
+    "longLiteralsTested": 8,
+    "exactSuppressedUnderBoth": 8,
+    "middleMutationStillHiddenUnderWildcardShape": 8,
+    "middleMutationReportedUnderDeliveredShape": 8,
+    "implementerRebuttalCorrect": true
+  }
+}

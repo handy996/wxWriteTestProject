@@ -1,0 +1,201 @@
+{
+  "c3": {
+    "deliveredNeutralNameNoAllowlist": {
+      "bytes": 2076,
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "lines": [],
+      "scanned": [
+        "1:50AM INF scanned ~2076 bytes (2.08 KB) in 4.01ms"
+      ],
+      "leakLine": [
+        "1:50AM INF no leaks found"
+      ]
+    },
+    "deliveredUnderRealFileNameNoAllowlist": {
+      "bytes": 2076,
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "lines": [],
+      "scanned": [
+        "1:50AM INF scanned ~0 bytes (0) in 0s"
+      ],
+      "leakLine": [
+        "1:50AM INF no leaks found"
+      ]
+    },
+    "preDeca2a1NeutralNameNoAllowlist": {
+      "bytes": 1327,
+      "exit": 1,
+      "reportWritten": true,
+      "count": 2,
+      "rules": [
+        "generic-api-key"
+      ],
+      "lines": [
+        null
+      ],
+      "scanned": [
+        "1:50AM INF scanned ~1327 bytes (1.33 KB) in 7.4ms"
+      ],
+      "leakLine": [
+        "1:50AM WRN leaks found: 2"
+      ]
+    },
+    "preDeca2a1UnderRealFileNameNoAllowlist": {
+      "bytes": 1327,
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "lines": [],
+      "scanned": [
+        "1:50AM INF scanned ~0 bytes (0) in 0s"
+      ],
+      "leakLine": [
+        "1:50AM INF no leaks found"
+      ]
+    },
+    "filenameExceptionProbe": {
+      "namedGitleaksToml": {
+        "exit": 0,
+        "reportWritten": true,
+        "count": 0,
+        "rules": [],
+        "lines": [],
+        "scanned": [
+          "1:50AM INF scanned ~0 bytes (0) in 0s"
+        ],
+        "leakLine": [
+          "1:50AM INF no leaks found"
+        ]
+      },
+      "namedOtherwise": {
+        "exit": 0,
+        "reportWritten": true,
+        "count": 0,
+        "rules": [],
+        "lines": [],
+        "scanned": [
+          "1:50AM INF scanned ~0 bytes (0) in 2.62ms"
+        ],
+        "leakLine": [
+          "1:50AM INF no leaks found"
+        ]
+      }
+    }
+  },
+  "c4": {
+    "generateIntoScratch": {
+      "exit": 0,
+      "stdout": "271 delivery fingerprints; original migration unchanged; packaged SQL matches; test V1 absent",
+      "stderr": "",
+      "name": "generateManifestIntoScratch"
+    },
+    "manifestShape": {
+      "records": 271,
+      "bytes": 47792,
+      "sampleKeys": [
+        "path",
+        "sha256"
+      ],
+      "pathsFilterTop3": [
+        ".github/workflows/ci.yml",
+        "README.md",
+        "backend/.dockerignore"
+      ]
+    },
+    "manifestNoAllowlist": {
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "lines": [],
+      "scanned": [
+        "1:50AM INF scanned ~47792 bytes (47.79 KB) in 10.5ms"
+      ],
+      "leakLine": [
+        "1:50AM INF no leaks found"
+      ]
+    },
+    "manifestDeliveredConfig": {
+      "exit": 0,
+      "reportWritten": true,
+      "count": 0,
+      "rules": [],
+      "lines": [],
+      "scanned": [
+        "1:50AM INF scanned ~47792 bytes (47.79 KB) in 6.9ms"
+      ],
+      "leakLine": [
+        "1:50AM INF no leaks found"
+      ]
+    },
+    "pairedKeyAndHexLines": [],
+    "refuseFrozen-r01-integrity.json": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "refusing to rewrite frozen evidence record: tests/engineering/T02/evidence/r01-integrity.json",
+      "name": "refuseFrozen-r01-integrity.json"
+    },
+    "refuseFrozen-r01-integrity-run.json": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "refusing to rewrite frozen evidence record: tests/engineering/T02/evidence/r01-integrity-run.json",
+      "name": "refuseFrozen-r01-integrity-run.json"
+    },
+    "guardCoverageByDerivation": {
+      "guardedPaths": [
+        "tests/engineering/T02/evidence/r01-integrity.json",
+        "tests/engineering/T02/evidence/r01-integrity-run.json"
+      ],
+      "unguardedFrozenEvidenceRequiredInvariant": [
+        "tests/engineering/T02/evidence/gitleaks-findings.json"
+      ],
+      "frozenTupleInSource": [
+        "'tests/engineering/T02/evidence/r01-integrity.json',",
+        "'tests/engineering/T02/evidence/r01-integrity-run.json'"
+      ],
+      "note": "evidence/gitleaks-findings.json is required byte-invariant by this review but is not in the generator FROZEN tuple; --out on it would overwrite it, so it was NOT attempted"
+    },
+    "outsideRepoOut": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "codex\\wxAgent\\tests\\engineering\\T02\\revision_integrity.py\", line 39, in <module>\n    relative = (out if out.is_absolute() else ROOT / out).resolve().relative_to(ROOT).as_posix()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\eie04\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 682, in relative_to\n    raise ValueError(f\"{str(self)!r} is not in the subpath of {str(other)!r}\")\nValueError: 'C:\\\\Users\\\\eie04\\\\AppData\\\\Local\\\\Temp\\\\t02r4\\\\outside.json' is not in the subpath of 'E:\\\\project\\\\codex\\\\wxAgent'",
+      "name": "outOutsideRepo"
+    },
+    "serialiserRefusesPairing": "AssertionError: fingerprint manifest pairs path and digest on line(s) [2]",
+    "recordSplitIsClean": true,
+    "integrationHelp": {
+      "exit": 0,
+      "stdout": "on for a real\n                        upgrade\n  --evidence-name EVIDENCE_NAME\n                        Separate evidence stem; original records can be\n                        preserved\n  --app-port APP_PORT\n  --ui-wait-seconds {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60}",
+      "stderr": "",
+      "name": "integrationHelp"
+    },
+    "trackedIntegrationEvidence": {
+      "bytes": 75109,
+      "hasArtifactsKey": false,
+      "pairedKeyAndHexLines": [
+        13
+      ],
+      "note": "line shape of the serialiser used by digest_records.records()"
+    }
+  },
+  "frozenHashes": {
+    "tests/engineering/T02/evidence/r01-integrity.json": "1d18eef28322218a27a1a666198509050f1cbe4a86728a7f08a98b194221dd14",
+    "tests/engineering/T02/evidence/r01-integrity-run.json": "18be0c34fbc16ad1f018324e51fc339bf8ca3293d733d41ffe5e9c5bc4e78f27",
+    "tests/engineering/T02/evidence/gitleaks-findings.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "tests/engineering/T02/gitleaks.toml": "efd32a24525457b71dc4cc030dd6d468e66d065d449f0c40bcd9aef0b35fbc82"
+  },
+  "frozenHashesAfter": {
+    "tests/engineering/T02/evidence/r01-integrity.json": "1d18eef28322218a27a1a666198509050f1cbe4a86728a7f08a98b194221dd14",
+    "tests/engineering/T02/evidence/r01-integrity-run.json": "18be0c34fbc16ad1f018324e51fc339bf8ca3293d733d41ffe5e9c5bc4e78f27",
+    "tests/engineering/T02/evidence/gitleaks-findings.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "tests/engineering/T02/gitleaks.toml": "efd32a24525457b71dc4cc030dd6d468e66d065d449f0c40bcd9aef0b35fbc82"
+  },
+  "frozenUnchanged": true
+}

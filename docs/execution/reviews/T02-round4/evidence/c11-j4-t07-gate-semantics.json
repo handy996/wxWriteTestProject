@@ -1,0 +1,34 @@
+{
+  "A-noFindings": {
+    "plantedCanaries": 0,
+    "gitleaksExit": 0,
+    "findingPaths": [],
+    "oldAssertionWould": "FAIL",
+    "newInvariantWould": "PASS"
+  },
+  "B-oneCanaryInBlessed": {
+    "plantedCanaries": 1,
+    "gitleaksExit": 1,
+    "findingPaths": [
+      "tests/engineering/T02/evidence/r01-integrity.json"
+    ],
+    "oldAssertionWould": "FAIL",
+    "newInvariantWould": "FAIL"
+  },
+  "C-sixCanariesAllInBlessed": {
+    "plantedCanaries": 6,
+    "gitleaksExit": 1,
+    "findingPaths": [
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json",
+      "tests/engineering/T02/evidence/r01-integrity.json"
+    ],
+    "oldAssertionWould": "PASS",
+    "newInvariantWould": "FAIL"
+  },
+  "scratchRemoved": true,
+  "reading": "old predicate passes only for exactly six findings all inside the blessed file; scenario C shows six real secrets there still passes it, while the new invariant fails"
+}

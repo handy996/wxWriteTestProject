@@ -1,0 +1,648 @@
+{
+  "cases": {
+    "value-00": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-01": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-02": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-03": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-04": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-05": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-06": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-07": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-08": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-09": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    },
+    "value-10": {
+      "exact": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "prefixPlus": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      },
+      "plusSuffix": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 0,
+          "count": 0
+        }
+      },
+      "embedded": {
+        "defaults": {
+          "exit": 1,
+          "count": 1
+        },
+        "delivered": {
+          "exit": 0,
+          "count": 0
+        },
+        "wordBoundary": {
+          "exit": 1,
+          "count": 1
+        }
+      }
+    }
+  },
+  "verdict": {
+    "valuesWithLiveExactProbe": 11,
+    "exactStillSuppressed": 10,
+    "allSuperstringsReportedAgain": 10,
+    "wordBoundaryFixWorks": false
+  }
+}

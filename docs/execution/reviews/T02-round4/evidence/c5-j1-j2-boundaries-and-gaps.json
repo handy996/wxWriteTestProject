@@ -1,0 +1,305 @@
+{
+  "exemptValueHeads": [
+    "397c4e7a",
+    "55565d49",
+    "775fb076",
+    "ecfd7efc",
+    "ac4a337a",
+    "408651c6",
+    "394de144",
+    "568ac573",
+    "e2854717",
+    "0db04ea0",
+    "e2854717"
+  ],
+  "results": {
+    "akia-quoted": {
+      "bytes": 40,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "akia-with-keyword": {
+      "bytes": 41,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "aws-secret-access-key-context": {
+      "bytes": 65,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "bare-akia-line": {
+      "bytes": 21,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "aws-access-token"
+        ]
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "db-password-env": {
+      "bytes": 34,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "db-password-quoted": {
+      "bytes": 36,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "exempt-digest-neighbour-on-secret-line": {
+      "bytes": 91,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "exempt-digest-on-secret-line": {
+      "bytes": 91,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "exempt-uuid-neighbour-on-secret-key": {
+      "bytes": 49,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "exempt-uuid-on-secret-key": {
+      "bytes": 49,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "generic-api-key"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "github-pat": {
+      "bytes": 67,
+      "gitleaksDefaults": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "github-pat"
+        ]
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 1,
+        "count": 1,
+        "rules": [
+          "github-pat"
+        ]
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "openai-style": {
+      "bytes": 56,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "password-plaintext": {
+      "bytes": 33,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": false
+    },
+    "private-key-block": {
+      "bytes": 103,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "gitleaksDeliveredConfig": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "_binaryProbe": {
+      "sourceBytes": 43869,
+      "pngBytes": 43936,
+      "gitleaksDefaults": {
+        "exit": 0,
+        "count": 0,
+        "rules": []
+      },
+      "secretScanPatternsDefaultTable": true
+    },
+    "_filenameSkipProbe": {
+      "gitleaks.toml": {
+        "bytes": 77,
+        "scan": {
+          "exit": 0,
+          "count": 0,
+          "rules": []
+        }
+      },
+      "sub-gitleaks.toml": {
+        "bytes": 77,
+        "scan": {
+          "exit": 0,
+          "count": 0,
+          "rules": []
+        }
+      },
+      "gitleaks.toml.bak": {
+        "bytes": 77,
+        "scan": {
+          "exit": 0,
+          "count": 0,
+          "rules": []
+        }
+      },
+      ".gitleaks.toml": {
+        "bytes": 77,
+        "scan": {
+          "exit": 0,
+          "count": 0,
+          "rules": []
+        }
+      },
+      "plain.txt": {
+        "bytes": 77,
+        "scan": {
+          "exit": 1,
+          "count": 1,
+          "rules": [
+            "generic-api-key"
+          ]
+        }
+      },
+      "policy.txt": {
+        "bytes": 77,
+        "scan": {
+          "exit": 1,
+          "count": 1,
+          "rules": [
+            "generic-api-key"
+          ]
+        }
+      }
+    }
+  }
+}

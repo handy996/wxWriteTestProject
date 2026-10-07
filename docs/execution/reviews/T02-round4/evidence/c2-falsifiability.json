@@ -1,0 +1,1031 @@
+{
+  "values": [
+    "397c4e7a-d8f0-4d83-b885-342f8248d8e2",
+    "55565d49-a894-42ec-8a42-df7e2dc50a86",
+    "775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99",
+    "ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea",
+    "ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4",
+    "408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9",
+    "394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc",
+    "568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1",
+    "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b",
+    "0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd",
+    "e285471760a5dce4..."
+  ],
+  "rows": [
+    {
+      "valueHead": "397c4e7a-d",
+      "valueLen": 36,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "55565d49-a",
+      "valueLen": 36,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "775fb0764e",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "ecfd7efc82",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "ac4a337a11",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "408651c696",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "394de144ba",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "568ac57369",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "e285471760",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "0db04ea086",
+      "valueLen": 64,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "prefixPlus": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "plusSuffix": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "embedded": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ],
+      "ok": true
+    },
+    {
+      "valueHead": "e285471760",
+      "valueLen": 19,
+      "liveShape": "json-pair",
+      "defaultRuleCountsByShape": {
+        "json-pair": 2,
+        "idempotency": 1,
+        "api-key-assignment": 1,
+        "secret-key-line": 1
+      },
+      "cases": {
+        "exact": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": false
+        },
+        "first": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "midA": {
+          "liveUnderDefaults": 0,
+          "reportedUnderDelivered": 0,
+          "changedFromOriginal": true
+        },
+        "midB": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        },
+        "last": {
+          "liveUnderDefaults": 2,
+          "reportedUnderDelivered": 2,
+          "changedFromOriginal": true
+        }
+      },
+      "substringSuppressed": [],
+      "ok": true
+    }
+  ],
+  "perValue": [
+    {
+      "valueHead": "397c4e7a-d",
+      "len": 36,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "55565d49-a",
+      "len": 36,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "775fb0764e",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "ecfd7efc82",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "ac4a337a11",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "408651c696",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "394de144ba",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "568ac57369",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "e285471760",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "0db04ea086",
+      "len": 64,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midA",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": [
+        "embedded",
+        "plusSuffix",
+        "prefixPlus"
+      ]
+    },
+    {
+      "valueHead": "e285471760",
+      "len": 19,
+      "shape": "json-pair",
+      "exactSuppressed": true,
+      "liveMutations": [
+        "first",
+        "last",
+        "midB"
+      ],
+      "allMutationsReported": true,
+      "substringSuppressed": []
+    }
+  ],
+  "summary": {
+    "valuesTotal": 11,
+    "exactNotSuppressed": [],
+    "mutationsNotAllReported": [],
+    "inertMidSectionMutations": [],
+    "substringSuppressedValues": [
+      {
+        "valueHead": "397c4e7a-d",
+        "len": 36,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "55565d49-a",
+        "len": 36,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "775fb0764e",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "ecfd7efc82",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "ac4a337a11",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "408651c696",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "394de144ba",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "568ac57369",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "e285471760",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      },
+      {
+        "valueHead": "0db04ea086",
+        "len": 64,
+        "shape": "json-pair",
+        "exactSuppressed": true,
+        "liveMutations": [
+          "first",
+          "last",
+          "midA",
+          "midB"
+        ],
+        "allMutationsReported": true,
+        "substringSuppressed": [
+          "embedded",
+          "plusSuffix",
+          "prefixPlus"
+        ]
+      }
+    ],
+    "voidValues": []
+  }
+}
