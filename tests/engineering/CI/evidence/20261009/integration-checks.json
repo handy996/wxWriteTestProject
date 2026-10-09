@@ -1,0 +1,56 @@
+[
+  {
+    "name": "recorder-regression",
+    "command": [
+      "python",
+      "tests/engineering/T03/test_recorder.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "portability-regression",
+    "command": [
+      "python",
+      "tests/engineering/T03/test_portability.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "pg-runner-regression",
+    "command": [
+      "python",
+      "tests/engineering/T08/test_pg_runner.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "current-cookie",
+    "command": [
+      "python",
+      "tests/engineering/T03/check_session_cookie.py",
+      "--output",
+      "E:\\project\\codex\\wxAgent\\tests\\engineering\\CI\\evidence\\20261009\\integration-cookie.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "local-secret-scan",
+    "command": [
+      "python",
+      "tests/engineering/T02/secret_scan.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "gitleaks",
+    "command": [
+      "python",
+      "tests/engineering/T02/scan_secrets.py",
+      "--gitleaks",
+      ".tools/t02/gitleaks/gitleaks.exe",
+      "--report",
+      "E:\\project\\codex\\wxAgent\\tests\\engineering\\CI\\evidence\\20261009\\integration-gitleaks-findings.json"
+    ],
+    "exitCode": 0
+  }
+]

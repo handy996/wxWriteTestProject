@@ -1,0 +1,20 @@
+PASS  allowlists parsed from the delivered config  [blocks 4]
+PASS  no file-condition key in gitleaks.toml (paths occurrences must be 0)
+PASS  default rules extended, never replaced
+PASS  every allowlist is value-conditional (condition AND, regexTarget match, regexes present)
+PASS  exception count pinned for review  [11 seen / 11 expected]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 397c4e7a-d...  [literal len 36]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 55565d49-a...  [literal len 36]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 775fb0764e...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: ecfd7efc82...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: ac4a337a11...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 408651c696...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 394de144ba...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 568ac57369...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: e285471760...  [literal len 64]
+PASS  exception is one full literal value, delimiter-class anchored both sides, no wildcard: 0db04ea086...  [literal len 64]
+PASS  exception is a truncated-prose digest (literal dots + one non-hex character + closed right class), not a wildcard: e285471760...  [truncated len 19]
+PASS  pairing gate: digest_records refuses a path+digest written on one line
+PASS  pairing gate: a correctly split record is accepted (guard is not over-eager)
+PASS  assertion count: structure mode emits exactly 19 assertions (pinned, battery may not shrink or pad)  [emitted 18 before this guard, 19 with it / expected 19]
+GITLEAKS ALLOWLIST POLICY: PASSED (structure only)

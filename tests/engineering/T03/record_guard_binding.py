@@ -89,10 +89,15 @@ def read_recorded_argv(argv):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     parser.add_argument("--jdk", type=Path, required=True, help="JDK home to run the pinned suite with")
-    parser.add_argument("--output", type=Path, default=EVIDENCE / "guard-test-binding.json")
+    parser.add_argument("--output", type=Path, help="binding JSON path (default: inside --evidence-dir)")
+    parser.add_argument("--evidence-dir", type=Path, default=EVIDENCE,
+                        help="landing directory for this run's binding, XML, report and census")
     parser.add_argument("--dry-run", action="store_true", help="print the plan, run and record nothing")
     arguments = parser.parse_args()
     checker = gate()
+    evidence = arguments.evidence_dir.resolve()
+    checker.use_evidence_directory(evidence)
+    arguments.output = arguments.output or evidence / "guard-test-binding.json"
     argv = read_recorded_argv(checker.expected_argv())
     jdk = (arguments.jdk if arguments.jdk.is_absolute() else ROOT / arguments.jdk).resolve()
     launcher = next((jdk / "bin" / name for name in ("java.exe", "java") if (jdk / "bin" / name).exists()), None)
@@ -112,7 +117,7 @@ def main():
     fqcn = checker.GUARD_TEST_PACKAGE + "." + checker.GUARD_TEST_CLASS
     # (build-tree product, evidence target). Nothing is copied yet: the run is judged from these paths first.
     products = ((reports / ("TEST-" + fqcn + ".xml"), checker.SOURCES["guardTestXml"]),
-                (reports / (fqcn + ".txt"), EVIDENCE / (checker.GUARD_TEST_CLASS + ".txt")),
+                (reports / (fqcn + ".txt"), evidence / (checker.GUARD_TEST_CLASS + ".txt")),
                 (CENSUS_TARGET, checker.SOURCES["census"]))
     missing = sorted(relative(source) for source, _target in products if not source.exists())
     if missing:
@@ -130,7 +135,7 @@ def main():
         print(json.dumps({"exitCode": result.returncode, "counts": counts, "names": names}, ensure_ascii=False),
               file=sys.stderr)
         raise SystemExit("the pinned run is not clean; refusing to record a reproduction that did not pass, and "
-                         "no artefact of that run was written into " + relative(EVIDENCE))
+                         "no artefact of that run was written into " + relative(evidence))
 
     # Refuse to record a run that does not contain the executed proof the gate is going to demand: the assembly cases
     # and the binder census are the point of this artefact, so a suite that lost them must not be recorded as good.
@@ -159,7 +164,7 @@ def main():
     bound = dict(checker.binding_inputs())
     for name in ("guardTestXml", "census"):
         bound.setdefault(name, checker.SOURCES[name])
-    record = {"command": argv, "exitCode": result.returncode,
+    record = {"command": checker.expected_argv(portable=True), "exitCode": result.returncode,
               "counts": counts, "testNames": names,
               "executedRoles": {role: sorted(cases) and sorted(grouped) for role, grouped in sorted(roles.items())},
               "inputSha256": {name: (landing[path] if path in landing else sha256(path))

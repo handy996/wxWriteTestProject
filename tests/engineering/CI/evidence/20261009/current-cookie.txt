@@ -1,0 +1,2 @@
+wrote E:\project\codex\wxAgent\tests\engineering\CI\evidence\20261009\integration-cookie.json
+T03 session-cookie agreement gate: PASS - approved name 'EDITORIAL_SESSION'; 106/106 negative controls rejected, 36/36 benign probes accepted

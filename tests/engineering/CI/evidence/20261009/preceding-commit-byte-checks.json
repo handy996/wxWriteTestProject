@@ -1,0 +1,171 @@
+{
+  "note": "Exact intended bytes were compared with the index before each separate commit. The T03 recorder here intentionally excludes the later CI hunks.",
+  "groups": {
+    "T02": {
+      "commit": "dd27f77",
+      "files": [
+        {
+          "path": "docs/execution/reports/T02-Revision-R02.md",
+          "sha256": "7a5b72ad3008bd3d0d45104454751cbdbd840cea6883d778ad46124ed5c904ef",
+          "bytes": 24741,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "docs/execution/reports/T02-Revision-R05.md",
+          "sha256": "fbc694fb220fe76cecd621d2b65d64032af5548657ecc190e807c23c33975812",
+          "bytes": 23218,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "docs/execution/reports/T02-Revision-R06.md",
+          "sha256": "9f00f85af02895036efad2f0eb5e45af9a75070791f9eca907308b5b5b2294b7",
+          "bytes": 41826,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "docs/execution/reports/T02.md",
+          "sha256": "8a5b6ec0500c18abaf53b23fc5ac77a0222ae33a2f38db2712822d9686ead628",
+          "bytes": 37557,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/check_gitleaks_allowlists.py",
+          "sha256": "8c8183bcb5a9c0a6b5c1dc1afb869b34e5619eef41d52dcfa7091c8a4cc1cb0c",
+          "bytes": 29280,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-anchor-battery-after.json",
+          "sha256": "ae63c17b854b2ea001dc50486e44fabffd466e843e72a8d129d7f5588f932688",
+          "bytes": 20212,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-anchor-battery-before.json",
+          "sha256": "0f7296a2ce7ca01a9d5ba8d73e4cc680e9aa9efc4f166dc289e3263d2107d97f",
+          "bytes": 20322,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-assertion-count-ledger.json",
+          "sha256": "399a7cc21de4fa9d697fdc542632b39cdae5a7b285de0bab81eda036c487b5bd",
+          "bytes": 4267,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-assertion-count-pin.txt",
+          "sha256": "c4795f754d2708ea3e5d2995df5344983354a011cf4f6c313baa4454997f3efe",
+          "bytes": 3550,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-aws-three-doors.json",
+          "sha256": "c9f8d8b940331f435a8bc29e3267218eeb5daec4a75873a09f6339bfa7af34fd",
+          "bytes": 3057,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-match-span-adjacency.json",
+          "sha256": "73bc61c19c842065cbc232b06ae42c30f9b632492e0cba093a99acf29ceb0d26",
+          "bytes": 3703,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-red-control-variants-final.json",
+          "sha256": "e93a9752cad09b934e2834cb2238219fd0a11782be5e2b1147903f93acfc9a49",
+          "bytes": 3620,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/evidence/r06-red-control-variants.json",
+          "sha256": "d6b0b0dfc616529b19b0653f54cdf4ec5322629a718803fb37b2f276da319578",
+          "bytes": 4809,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T02/gitleaks.toml",
+          "sha256": "60e37e44e0429055221738b7612371452e20638a8d2ccb4377eb25c216e08070",
+          "bytes": 4987,
+          "indexEqualsIntendedBytes": true
+        }
+      ]
+    },
+    "T03": {
+      "commit": "8ba1f36",
+      "files": [
+        {
+          "path": "docs/execution/reports/T03-Revision-R11.md",
+          "sha256": "fda4b42eab0aee74b4ea66944ac6ad1a8baea395b090470699fbd91a6761a1d8",
+          "bytes": 5352,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/load-bearing-audit-r11-canary.json",
+          "sha256": "f3fce5aaef8c12ab2014543a61666f5eb3a52e14c35f333a832287ac4a3082ed",
+          "bytes": 34739,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/load-bearing-audit-r11.json",
+          "sha256": "3c17c1ce1a0e5647ee99880e88f9cf92f4079791763b0cf5f864829200fea5c5",
+          "bytes": 41199,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/r11-integration-canary.json",
+          "sha256": "f0149aef6cbebc595183575ee0463011f6a9cae7c4dfec57871117363e44dee3",
+          "bytes": 42577,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/r11-integration-canary.txt",
+          "sha256": "8838938a0c736312723e78207f9487bb5c06b669c379ce5e315900b3c4563a08",
+          "bytes": 4965,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/r11-integration-recorder.txt",
+          "sha256": "7e68edf41dc250ba13195f007038859f120e36ef8fca6588c9edc226ac810963",
+          "bytes": 105,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/r11-integration-split-recorder.txt",
+          "sha256": "ffabb04e7502a092493928844c718185af5e97b3934963f72f23f4e0b8775f63",
+          "bytes": 383,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/session-cookie-r10b.json",
+          "sha256": "8f1e9cfa173471a926affe06aee9d342c0f27c9877c482c139c100989b6da02e",
+          "bytes": 60738,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/evidence/session-cookie-r10c.json",
+          "sha256": "c53a4269802d914670ca5f936d706c3c91b5d00c16b4b67cd059cfe07f51a99e",
+          "bytes": 60738,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/load_bearing_audit.py",
+          "sha256": "2c62dd2251781c576f3c1a85775600fb185ca9431d1a4c78f4e3a734f0128924",
+          "bytes": 24836,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/record_guard_binding.py",
+          "sha256": "9930b6433288c47c3d99673e52f4f911076831c6c65b2cfaa62f735a361257ab",
+          "bytes": 11393,
+          "indexEqualsIntendedBytes": true
+        },
+        {
+          "path": "tests/engineering/T03/test_recorder.py",
+          "sha256": "d926243242f4e3a75183e4726ec6e84bdbed10f3533b9424d233f2745dff8f8d",
+          "bytes": 4755,
+          "indexEqualsIntendedBytes": true
+        }
+      ]
+    }
+  }
+}

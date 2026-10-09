@@ -120,7 +120,8 @@ BASE_CONFIG = "application.yml"
 BASE_LABEL = "config:" + str((CONFIG_ROOTS[0] / BASE_CONFIG).relative_to(ROOT)).replace("\\", "/")
 POM = ROOT / "backend/pom.xml"
 SPRING_FACTORIES = ROOT / "backend/src/main/resources/META-INF/spring.factories"
-MVN = ROOT / ".tools/t02/apache-maven-3.9.11/bin/mvn.cmd"
+MVN = ROOT / (".tools/t02/apache-maven-3.9.11/bin/mvn.cmd" if sys.platform == "win32"
+              else ".tools/t02/apache-maven-3.9.11/bin/mvn")
 REPO = ROOT / ".tools/t02/m2"
 SHELL_TOKENS = ("&&", "||", ";", "|", ">", "<", "&")
 FORBIDDEN_EXECUTABLES = ("echo", "cmd", "sh", "bash", "pwsh", "/c", "-c")
@@ -1480,15 +1481,47 @@ def executed_roles(java):
 T03_CONFIGURATION_SYMBOL = "T03Configuration"
 
 
-def expected_argv():
+def use_evidence_directory(directory):
+    """Read a current-run certificate without replacing any tracked historical evidence."""
+    directory = Path(directory).resolve()
+    for label, filename in (("binding", "guard-test-binding.json"),
+                            ("guardTestXml", GUARD_TEST_CLASS + ".xml"),
+                            ("census", "config-census.txt")):
+        SOURCES[label] = directory / filename
+
+
+def expected_argv(portable=False):
     """The one command a recorded run may claim, as a full argv rather than a string that contains a substring."""
-    return [str(MVN), "-B", "-ntp", "-o", "-f", "backend/pom.xml", "-Dmaven.repo.local=" + str(REPO),
+    return [relative(MVN) if portable else str(MVN), "-B", "-ntp", "-o", "-f", "backend/pom.xml",
+            "-Dmaven.repo.local=" + (relative(REPO) if portable else str(REPO)),
             "-Dtest=" + GUARD_TEST_CLASS, "test"]
 
 
 def normalize_argv(argv):
-    return [re.sub(r"\s+", " ", str(part)).replace("\\", "/").lower().replace(str(ROOT).replace("\\", "/").lower(),
-                                                                               "<root>") for part in argv]
+    """Compare repository paths, including old absolute records, independently of checkout and OS.
+
+    Only the pinned Maven launcher identifies the old root. Its repository argument must name that same root;
+    unrelated absolute paths and extra arguments remain different and are rejected by argv_check.
+    """
+    parts = [re.sub(r"\s+", " ", str(part)).replace("\\", "/").lower() for part in argv]
+    if not parts:
+        return parts
+    launcher = re.fullmatch(r"(?:(.+)/)?(\.tools/t02/apache-maven-3\.9\.11/bin/mvn)(?:\.cmd)?", parts[0])
+    if launcher is None:
+        return parts
+    old_root = launcher.group(1)
+    parts[0] = "<root>/" + launcher.group(2)
+    repo_prefix = "-dmaven.repo.local="
+    for index, part in enumerate(parts[1:], 1):
+        if not part.startswith(repo_prefix):
+            continue
+        path = part[len(repo_prefix):]
+        if old_root and path.startswith(old_root + "/"):
+            path = "<root>/" + path[len(old_root) + 1:]
+        elif path.startswith(".tools/"):
+            path = "<root>/" + path
+        parts[index] = repo_prefix + path
+    return parts
 
 
 def recorded_argv(recorded):
@@ -2893,10 +2926,15 @@ def run_benign_probes(sources):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     parser.add_argument("--output", type=Path, help="write the machine-readable verdict here")
+    parser.add_argument("--evidence-dir", type=Path,
+                        help="read the binding, XML and census produced by this run in this directory")
     parser.add_argument("--force", action="store_true", help="allow overwriting an existing output file")
     parser.add_argument("--skip-controls", action="store_true",
                         help="evaluate the tree only; the verdict then refuses to be PASS - this exists for debugging")
     arguments = parser.parse_args(argv)
+
+    if arguments.evidence_dir:
+        use_evidence_directory(arguments.evidence_dir)
 
     sources = read_sources()
     report = {"gate": relative(SOURCES["gate"]), "verdict": "CHANGES_REQUIRED",

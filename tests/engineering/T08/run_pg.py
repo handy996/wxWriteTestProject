@@ -12,6 +12,10 @@ The cluster listens on a free port with random scram-sha-256 passwords (redacted
 always stopped again by this script. No paid provider call is made and no contract is regenerated.
 
 Example:
+    # Windows or Linux; PostgreSQL comes from the image pinned in infra/compose.yml.
+    python tests/engineering/T08/run_pg.py --docker --expect-tests 65 --expect-skipped 0
+
+    # Native PostgreSQL remains available for machines without Docker.
     python tests/engineering/T08/run_pg.py \
         --pg-bin .tools/t02/postgresql-full/pgsql/bin \
         --maven .tools/t02/apache-maven-3.9.11/bin/mvn.cmd \
@@ -100,6 +104,26 @@ def executable(candidate: Path) -> Path:
     raise SystemExit(f'tool not found: {candidate} (pass --pg-bin/--java-home/--maven)')
 
 
+def docker_image() -> str:
+    """Use the same digest-pinned PostgreSQL image as the development topology."""
+    compose = (ROOT / 'infra/compose.yml').read_text(encoding='utf-8')
+    image = re.search(r'^\s+image:\s+(postgres:[^\s]+@sha256:[0-9a-f]{64})\s*$', compose, re.MULTILINE)
+    if image is None:
+        raise RuntimeError('infra/compose.yml must pin the PostgreSQL image by SHA-256')
+    return image.group(1)
+
+
+def container_path(path: Path, work: Path) -> str:
+    """Map only the SQL inputs mounted into the throwaway container."""
+    path = path.resolve()
+    if path == (ROOT / 'backend/docker/bootstrap.sql').resolve():
+        return '/bootstrap.sql'
+    for source, destination in ((MIGRATIONS.resolve(), '/migrations'), (work.resolve(), '/test-run')):
+        if source == path or source in path.parents:
+            return destination + '/' + path.relative_to(source).as_posix()
+    raise ValueError(f'path is not mounted in the test container: {path}')
+
+
 def decode_log(path: Path) -> str:
     """Tools answer in UTF-8 or in the Windows console codepage depending on the binary; take whichever decodes."""
     raw = path.read_bytes()
@@ -162,11 +186,38 @@ def wanted_suites(raw: str) -> list[str]:
     return [part.split('#', 1)[0].strip() for part in raw.split(',') if part.strip()]
 
 
+def judge_suites(suites, args):
+    """Fail closed on skipped, missing, empty or inconsistent Surefire results."""
+    totals = {'tests': sum(s['tests'] for s in suites),
+              'failures': sum(s['failures'] + s['errors'] for s in suites),
+              'skipped': sum(s['skipped'] for s in suites)}
+    problems = []
+    if totals['failures']:
+        problems.append(f"failures/errors={totals['failures']}")
+    if totals['tests'] != args.expect_tests:
+        problems.append(f"executed {totals['tests']} cases, expected {args.expect_tests}")
+    if totals['skipped'] != args.expect_skipped:
+        problems.append(f"skipped {totals['skipped']}, expected {args.expect_skipped}")
+    wanted = wanted_suites(args.tests)
+    reported = [s['suite'].rsplit('.', 1)[-1] for s in suites]
+    missing = [name for name in wanted if name not in reported]
+    if missing:
+        problems.append('no Surefire report for ' + ', '.join(missing))
+    for suite in suites:
+        if len(suite['cases']) != suite['tests']:
+            problems.append(f"{suite['suite']}: testcase count disagrees with tests={suite['tests']}")
+    return totals, problems
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument('--docker', action='store_true',
+                        help='provision PostgreSQL from the pinned Compose image instead of local PG binaries')
     parser.add_argument('--pg-bin', type=Path, default=ROOT / '.tools/t02/postgresql-full/pgsql/bin')
     parser.add_argument('--java-home', type=Path, default=ROOT / '.tools/t02/jdk-21.0.12.1+1')
-    parser.add_argument('--maven', type=Path, default=ROOT / '.tools/t02/apache-maven-3.9.11/bin/mvn.cmd')
+    parser.add_argument('--maven', type=Path, default=ROOT / ('.tools/t02/apache-maven-3.9.11/bin/mvn.cmd'
+                                                           if os.name == 'nt' else
+                                                           '.tools/t02/apache-maven-3.9.11/bin/mvn'))
     parser.add_argument('--m2', type=Path, default=ROOT / '.tools/t02/m2')
     parser.add_argument('--tests', default=TESTS_DEFAULT, help='comma separated Surefire test classes '
                                                               '(method filters such as CostPricingTest#foo are '
@@ -196,6 +247,10 @@ def main() -> int:
                         help='exit after proving the F-07 fix without booting anything: a relative --work-root '
                              'resolves to an absolute run directory inside the repository before any cluster exists')
     args = parser.parse_args()
+    for name in ('pg_bin', 'java_home', 'maven', 'm2'):
+        setattr(args, name, getattr(args, name).resolve())
+    if args.docker and args.keep_cluster:
+        parser.error('--docker does not support --keep-cluster; its fixture container is always removed')
     if Path(args.evidence_name).name != args.evidence_name:
         parser.error('--evidence-name must be a filename stem')
     for stream in (sys.stdout, sys.stderr):
@@ -256,8 +311,18 @@ def main() -> int:
     if (evidence_dir / (args.evidence_name + '.json')).exists():
         raise RuntimeError(f"evidence '{args.evidence_name}.json' already exists in {evidence_dir}; "
                            'choose a new name')
-    for required in (args.pg_bin / 'postgres', args.pg_bin / 'psql', args.pg_bin / 'initdb',
-                     args.pg_bin / 'pg_ctl', args.pg_bin / 'createdb', args.java_home / 'bin/java', args.maven):
+    required_tools = [args.java_home / 'bin/java', args.maven]
+    docker = None
+    if args.docker:
+        located = shutil.which('docker')
+        if located is None:
+            raise SystemExit('--docker requires the Docker CLI and a running engine')
+        docker = Path(located)
+        image = docker_image()
+        required_tools.append(docker)
+    else:
+        required_tools.extend(args.pg_bin / name for name in ('postgres', 'psql', 'initdb', 'pg_ctl', 'createdb'))
+    for required in required_tools:
         executable(required)
 
     work = work_root / uuid.uuid4().hex
@@ -276,6 +341,8 @@ def main() -> int:
                T08_ADMIN_URL=f'jdbc:postgresql://127.0.0.1:{port}/{DATABASE}',
                T08_ADMIN_USER=ADMIN_ROLE, T08_ADMIN_PASSWORD=passwords['admin'],
                T08_RUNTIME_PASSWORD=passwords['runtime'], MAVEN_OPTS='-Duser.language=en -Duser.country=US')
+    if args.docker:
+        env['POSTGRES_PASSWORD'] = passwords['admin']
 
     evidence = {
         'task': 'T08 cost ledger, pricing, usage and reconciliation on real PostgreSQL',
@@ -289,6 +356,8 @@ def main() -> int:
     }
     flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
     server = None
+    container = 'wxagent-t08-' + work.name if args.docker else None
+    container_attempted = False
     exit_code = 1
 
     def redact(text: str) -> str:
@@ -298,7 +367,11 @@ def main() -> int:
 
     def run(cmd, timeout=None, expect=0):
         log = work / f'command-{len(evidence["commands"])}.log'
-        argv = [str(executable(Path(str(cmd[0]))))] + [str(x) for x in cmd[1:]]
+        if args.docker and Path(cmd[0]).parent == args.pg_bin:
+            argv = [str(docker), 'exec', container, Path(cmd[0]).name]
+            argv.extend(container_path(x, work) if isinstance(x, Path) else str(x) for x in cmd[1:])
+        else:
+            argv = [str(executable(Path(str(cmd[0]))))] + [str(x) for x in cmd[1:]]
         with log.open('w', encoding='utf-8', errors='replace') as handle:
             done = subprocess.run(argv, cwd=str(ROOT), env=env, stdout=handle,
                                   stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
@@ -316,8 +389,7 @@ def main() -> int:
         return run([args.pg_bin / 'psql', '-X', '-v', 'ON_ERROR_STOP=1', '-Atc', ' '.join(statements)])
 
     try:
-        for probe_version in ([args.java_home / 'bin/java', '-version'], [str(args.maven), '-version'],
-                              [args.pg_bin / 'postgres', '--version'], [args.pg_bin / 'psql', '--version']):
+        for probe_version in ([args.java_home / 'bin/java', '-version'], [str(args.maven), '-version']):
             run(probe_version)
 
         shutil.copytree(ROOT / 'backend', work / 'backend', ignore=shutil.ignore_patterns('target'))
@@ -329,40 +401,66 @@ def main() -> int:
         evidence['copiedSourceFiles'] = sum(1 for path in (work / 'backend').rglob('*')
                                             if path.is_file() and path.suffix in {'.java', '.sql', '.yml', '.xml'})
 
-        init_password = work / 'init-password'
-        init_password.write_text(passwords['admin'], encoding='utf-8')
-        run([args.pg_bin / 'initdb', '-D', work / 'data', '-U', ADMIN_ROLE, '--auth=scram-sha-256',
-             '--pwfile=' + str(init_password), '--encoding=UTF8', '--locale=C'])
-        init_password.unlink()
-
-        # pg_ctl daemonising is unavailable inside some restricted shells; fall back to a child process we own.
-        try:
-            run([args.pg_bin / 'pg_ctl', '-D', work / 'data', '-l', str(work / 'postgres.log'), '-o',
-                 f'-p {port} -h 127.0.0.1', '-w', '-t', '60', 'start'])
-            evidence['clusterStart'] = 'pg_ctl'
-        except (RuntimeError, subprocess.TimeoutExpired):
-            evidence['clusterStart'] = 'direct child process (pg_ctl unavailable here)'
-            server = subprocess.Popen([str(executable(args.pg_bin / 'postgres')), '-D', str(work / 'data'),
-                                       '-p', str(port), '-c', 'listen_addresses=127.0.0.1',
-                                       '-c', 'logging_collector=off'],
-                                      cwd=str(ROOT), env=env, stdout=subprocess.DEVNULL,
-                                      stderr=subprocess.DEVNULL, creationflags=flags)
-
-            def ready() -> bool:
-                probe = subprocess.run([str(executable(args.pg_bin / 'psql')), '-d', 'postgres', '-X', '-Atc',
-                                        'select 1'],
-                                       cwd=str(ROOT), env=env, capture_output=True, text=True,
-                                       creationflags=flags)
-                return probe.returncode == 0 and '1' in probe.stdout
-
-            for _ in range(120):
-                if ready():
+        if args.docker:
+            container_attempted = True
+            run([docker, 'run', '--detach', '--name', container,
+                 '--publish', f'127.0.0.1:{port}:5432',
+                 '--env', f'POSTGRES_USER={ADMIN_ROLE}', '--env', f'POSTGRES_DB={DATABASE}',
+                 '--env', 'POSTGRES_PASSWORD', '--env', 'PGPASSWORD',
+                 '--env', 'DB_RUNTIME_PASSWORD', '--env', 'DB_MIGRATION_PASSWORD',
+                 '--env', 'PGHOST=127.0.0.1', '--env', 'PGPORT=5432',
+                 '--env', f'PGUSER={ADMIN_ROLE}', '--env', f'PGDATABASE={DATABASE}',
+                 '--env', 'POSTGRES_INITDB_ARGS=--auth=scram-sha-256',
+                 '--mount', f'type=bind,source={MIGRATIONS},target=/migrations,readonly',
+                 '--mount', f'type=bind,source={ROOT / "backend/docker/bootstrap.sql"},target=/bootstrap.sql,readonly',
+                 '--mount', f'type=bind,source={work},target=/test-run,readonly', image])
+            evidence['clusterStart'] = 'digest-pinned Docker container'
+            evidence['cluster']['image'] = image
+            for _ in range(60):
+                ready = subprocess.run([str(docker), 'exec', container, 'pg_isready'], env=env,
+                                       capture_output=True, timeout=10, creationflags=flags)
+                if ready.returncode == 0:
                     break
                 time.sleep(1)
             else:
-                raise RuntimeError('cluster did not become ready')
+                raise RuntimeError('Docker PostgreSQL did not become ready')
+        else:
+            init_password = work / 'init-password'
+            init_password.write_text(passwords['admin'], encoding='utf-8')
+            run([args.pg_bin / 'initdb', '-D', work / 'data', '-U', ADMIN_ROLE, '--auth=scram-sha-256',
+                 '--pwfile=' + str(init_password), '--encoding=UTF8', '--locale=C'])
+            init_password.unlink()
 
-        run([args.pg_bin / 'createdb', DATABASE])
+            # pg_ctl daemonising is unavailable inside some restricted shells; fall back to a child process we own.
+            try:
+                run([args.pg_bin / 'pg_ctl', '-D', work / 'data', '-l', str(work / 'postgres.log'), '-o',
+                     f'-p {port} -h 127.0.0.1', '-w', '-t', '60', 'start'])
+                evidence['clusterStart'] = 'pg_ctl'
+            except (RuntimeError, subprocess.TimeoutExpired):
+                evidence['clusterStart'] = 'direct child process (pg_ctl unavailable here)'
+                server = subprocess.Popen([str(executable(args.pg_bin / 'postgres')), '-D', str(work / 'data'),
+                                           '-p', str(port), '-c', 'listen_addresses=127.0.0.1',
+                                           '-c', 'logging_collector=off'],
+                                          cwd=str(ROOT), env=env, stdout=subprocess.DEVNULL,
+                                          stderr=subprocess.DEVNULL, creationflags=flags)
+
+                def ready() -> bool:
+                    probe = subprocess.run([str(executable(args.pg_bin / 'psql')), '-d', 'postgres', '-X', '-Atc',
+                                            'select 1'],
+                                           cwd=str(ROOT), env=env, capture_output=True, text=True,
+                                           creationflags=flags)
+                    return probe.returncode == 0 and '1' in probe.stdout
+
+                for _ in range(120):
+                    if ready():
+                        break
+                    time.sleep(1)
+                else:
+                    raise RuntimeError('cluster did not become ready')
+
+            run([args.pg_bin / 'createdb', DATABASE])
+        for probe_version in ([args.pg_bin / 'postgres', '--version'], [args.pg_bin / 'psql', '--version']):
+            run(probe_version)
         run([args.pg_bin / 'psql', '-X', '-v', 'ON_ERROR_STOP=1', '-f', ROOT / 'backend/docker/bootstrap.sql'])
 
         versioned = sorted((p for p in MIGRATIONS.glob('V*__*.sql')), key=lambda p: version_key(p.name))
@@ -372,13 +470,13 @@ def main() -> int:
         with wrapper.open('w', encoding='utf-8', newline='\n') as handle:
             handle.write('-- Flyway order: beforeMigrate callback, V1..Vn as editorial_migrator, then R__ scripts.\n')
             for callback in callbacks:
-                handle.write(f'\\i {callback.as_posix()}\n')
+                handle.write(f'\\i {container_path(callback, work) if args.docker else callback.as_posix()}\n')
             handle.write('SET ROLE editorial_migrator;\n')
             for migration in versioned:
-                handle.write(f'\\i {migration.as_posix()}\n')
+                handle.write(f'\\i {container_path(migration, work) if args.docker else migration.as_posix()}\n')
             handle.write('RESET ROLE;\n')
             for script in repeatable:
-                handle.write(f'\\i {script.as_posix()}\n')
+                handle.write(f'\\i {container_path(script, work) if args.docker else script.as_posix()}\n')
             handle.write("SELECT 'applied' AS state, count(*) AS tables FROM pg_class c"
                          " JOIN pg_namespace n ON n.oid=c.relnamespace"
                          " WHERE n.nspname='editorial' AND c.relkind='r';\n")
@@ -420,23 +518,10 @@ def main() -> int:
                            'timeSeconds': number('time'),
                            'cases': sorted(re.findall(r'<testcase name="([^"]*)"', text))})
         evidence['suites'] = suites
-        evidence['totals'] = {'tests': sum(s['tests'] for s in suites),
-                              'failures': sum(s['failures'] + s['errors'] for s in suites),
-                              'skipped': sum(s['skipped'] for s in suites)}
         # The count is a gate, not a caption: an empty run, a gated-off real-PG suite or a missing class must not
         # be able to exit 0. Defaults are the delivered self-test shape; --expect-tests overrides deliberately.
-        problems = []
-        if evidence['totals']['failures']:
-            problems.append(f"failures/errors={evidence['totals']['failures']}")
-        if evidence['totals']['tests'] != args.expect_tests:
-            problems.append(f"executed {evidence['totals']['tests']} cases, expected {args.expect_tests}")
-        if evidence['totals']['skipped'] != args.expect_skipped:
-            problems.append(f"skipped {evidence['totals']['skipped']}, expected {args.expect_skipped}")
+        evidence['totals'], problems = judge_suites(suites, args)
         wanted = wanted_suites(args.tests)
-        reported = [s['suite'].rsplit('.', 1)[-1] for s in suites]
-        missing = [name for name in wanted if name not in reported]
-        if missing:
-            problems.append('no Surefire report for ' + ', '.join(missing))
         evidence['expectations'] = {'tests': args.expect_tests, 'skipped': args.expect_skipped,
                                     'suitesRequested': wanted, 'problems': problems}
         if problems:
@@ -454,7 +539,14 @@ def main() -> int:
         evidence['failure'] = type(failure).__name__ + ': ' + str(failure)
         raise
     finally:
-        if server is not None:
+        if container_attempted:
+            try:
+                run([docker, 'rm', '--force', '--volumes', container])
+                evidence['clusterStopped'] = True
+            except Exception as stop:
+                evidence['clusterStopIssue'] = str(stop)
+                exit_code = 1
+        elif server is not None:
             if args.keep_cluster:
                 evidence['clusterLeftRunning'] = server.pid
                 # A kept cluster is for diagnosis, so hand back the throwaway credentials — one write, the

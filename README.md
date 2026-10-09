@@ -76,3 +76,20 @@ python tests/engineering/T02/integration.py --pg-bin /path/to/postgresql/bin --j
 审核整改回归：`integration.py` 可增加 `--legacy-jar <审核版本b115a40的JAR> --evidence-name <新记录名>` 验证真实升级；默认也会检查新函数默认拒绝、显式授权成功和重启保持。`python tests/engineering/T02/compose_smoke.py --entrypoint` 则实际调用开发入口 `up → down → up`，检查数据、迁移历史、页面/API 代理、函数权限和生产 mock 拒绝，最后删除自身测试卷。两个容器测试均使用本机 18080 端口，请顺序运行。
 
 CI 已接入构建、类型检查、契约指纹/回归、Gitleaks、依赖扫描与 Compose 启动测试。当前交付的实际运行结果、失败记录和待集成项见 [T02 报告](docs/execution/reports/T02.md)，由主 agent 审核，不代表最终验收。
+
+CI 还会实际执行 T08 成本测试：使用 Compose 中固定摘要的 PostgreSQL 镜像创建独立临时容器，应用正式迁移，要求 28 项单元测试和 37 项数据库测试全部执行、零失败、零跳过，并在结束时删除自己的测试容器。默认 Maven 构建仍会跳过需要真实数据库的测试，不能单独替代这一步。安装仓库固定的 Maven/JDK、准备好 `.tools/t02/m2` 离线依赖缓存后，本地可复跑：
+
+```sh
+python tests/engineering/T08/run_pg.py --docker --expect-tests 65 --expect-skipped 0
+```
+
+Cookie 检查在 CI 中先执行当前守卫测试，再验证本次生成的证据；命令记录使用仓库相对路径，Maven 启动器按 Windows/Linux 选择，JDK 指纹来自同一次运行。证据保存到独立目录，不覆盖历史受审记录：
+
+```sh
+python tests/engineering/T03/record_guard_binding.py --jdk .tools/t02/jdk-21.0.12.1+1 --evidence-dir .work/ci/t03
+python tests/engineering/T03/check_session_cookie.py --evidence-dir .work/ci/t03 --output .work/ci/t03/agreement.json
+```
+
+CI 将上传 Cookie 检查记录、T08 运行记录和 Surefire 原始结果。测试数量变化时，须同步审核更新 `--expect-tests`，不能通过允许跳过来满足计数。
+
+本次验证结果和未闭合事项见 [CI 修复记录](docs/execution/reports/CI-Portability-20261009.md)。离线 Maven 构建不生成 SBOM；依赖扫描须在在线 `verify` 生成清单后执行。

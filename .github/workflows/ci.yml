@@ -57,10 +57,25 @@ jobs:
           node tests/contracts/T00/hash-vector-js.cjs
           python tests/engineering/T02/check_contracts.py
           git diff --exit-code -- docs tests/fixtures tests/contracts
-      - name: Session cookie contract agreement gate
-        run: python tests/engineering/T03/check_session_cookie.py
       - name: Backend build, policy tests and dependency inventory
-        run: .tools/t02/apache-maven-3.9.11/bin/mvn -B -ntp -f backend/pom.xml verify
+        run: .tools/t02/apache-maven-3.9.11/bin/mvn -B -ntp -f backend/pom.xml -Dmaven.repo.local="$GITHUB_WORKSPACE/.tools/t02/m2" verify
+      - name: Record the current session cookie test run
+        run: python tests/engineering/T03/record_guard_binding.py --jdk .tools/t02/jdk-21.0.12.1+1 --evidence-dir .work/ci/t03
+      - name: Session cookie contract agreement gate
+        run: python tests/engineering/T03/check_session_cookie.py --evidence-dir .work/ci/t03 --output .work/ci/t03/agreement.json
+      - name: Cost contract and wiring checks
+        run: |
+          python tests/engineering/T03/test_recorder.py
+          python tests/engineering/T03/test_portability.py
+          python tests/engineering/T08/test_pg_runner.py
+          python tests/engineering/T08/verify.py
+      - name: Cost unit and PostgreSQL tests (65 executed, zero skipped)
+        run: |
+          python tests/engineering/T08/run_pg.py --docker \
+            --maven .tools/t02/apache-maven-3.9.11/bin/mvn \
+            --java-home .tools/t02/jdk-21.0.12.1+1 \
+            --work-root .work/ci/t08 --evidence-dir .work/ci/t08/evidence \
+            --evidence-name ci-cost --expect-tests 65 --expect-skipped 0
       - name: Frontend locked install, types and build
         working-directory: frontend
         run: |
@@ -97,3 +112,6 @@ jobs:
             backend/target/sbom
             frontend/dist
             tests/engineering/T02/evidence/ci-*.json
+            .work/ci/t03/
+            .work/ci/t08/evidence/
+          include-hidden-files: true

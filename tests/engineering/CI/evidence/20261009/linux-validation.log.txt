@@ -1,0 +1,36 @@
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+OK
+{
+  "exitCode": 0,
+  "counts": {
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cases": 15,
+  "censusFiles": 4,
+  "boundInputs": [
+    "census",
+    "code",
+    "config:backend/src/main/resources/application-dev.yml",
+    "config:backend/src/main/resources/application-mock.yml",
+    "config:backend/src/main/resources/application-prod.yml",
+    "config:backend/src/main/resources/application.yml",
+    "guardTest",
+    "guardTestXml",
+    "pom",
+    "test"
+  ],
+  "output": ".work/linux-validation/t03/guard-test-binding.json"
+}
+wrote /workspace/.work/linux-validation/t03/agreement.json
+T03 session-cookie agreement gate: PASS - approved name 'EDITORIAL_SESSION'; 106/106 negative controls rejected, 36/36 benign probes accepted

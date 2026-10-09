@@ -1,0 +1,203 @@
+{
+  "note": "Byte-faithful copies of local execution output. Original absolute paths identify historical scratch runs, not portable replay paths. Not a GitHub Actions run.",
+  "files": [
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/contracts.txt",
+      "sha256": "f5051548d22e0f1b24dc211fd520867232dc6f004d20b5b4a1f84f6e1973e28f",
+      "bytes": 56
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/current-cookie.txt",
+      "sha256": "d8da5fd6fd72ff887102c802ff9b1573eb7f4ca8496664835e46d0a89eb9506e",
+      "bytes": 238
+    },
+    {
+      "origin": ".work/ci-portability/t08/evidence/docker-cost-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/docker-cost-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "sha256": "b5802ff5ca0c30d793587ce1e37af0577c5bd82d48a307106ef8af911d068b6d",
+      "bytes": 34053
+    },
+    {
+      "origin": ".work/ci-portability/t08/evidence/docker-cost-test-results/TEST-com.example.editorial.cost.T08PostgresTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/docker-cost-test-results/TEST-com.example.editorial.cost.T08PostgresTest.xml",
+      "sha256": "aea97daf59698eab30d6b59328d10dbdece4e9dd7324382f7fa02e23fc7df560",
+      "bytes": 35178
+    },
+    {
+      "origin": ".work/ci-portability/t08/evidence/docker-cost.json",
+      "path": "tests/engineering/CI/evidence/20261009/docker-cost.json",
+      "sha256": "8bf2600385c36300e654a84bf06c991746a87a683f29e86db865612756e2f3ff",
+      "bytes": 18280
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/gitleaks.txt",
+      "sha256": "d6ea1bed890e176179b2f0ca307936cec3bb42706cb052f57b8387779c1a9c65",
+      "bytes": 93
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/integration-checks.json",
+      "sha256": "130093477e3c81aa5be966a46330c433c834de9c4fd69462b87a1146588959ad",
+      "bytes": 1268
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/integration-cookie.json",
+      "sha256": "4217e5b26ebfd50dbf08cc6cc4faf2c41952866971d32e48eb6350525b8e65bc",
+      "bytes": 60738
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/integration-gitleaks-findings.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "origin": ".work/ci-portability/linux-results/t03/agreement.json",
+      "path": "tests/engineering/CI/evidence/20261009/linux-cookie/agreement.json",
+      "sha256": "123f005868a6d5b4927cdbfe18ce50f2e3dc4b60d79a40e12ad62968a8a5e6da",
+      "bytes": 59300
+    },
+    {
+      "origin": ".work/ci-portability/linux-results/t03/config-census.txt",
+      "path": "tests/engineering/CI/evidence/20261009/linux-cookie/config-census.txt",
+      "sha256": "e2ff588e1ed43081a87c1c53c7b99e897bb6f5d501431a8f515dadde3fde2983",
+      "bytes": 792
+    },
+    {
+      "origin": ".work/ci-portability/linux-results/t03/guard-test-binding.json",
+      "path": "tests/engineering/CI/evidence/20261009/linux-cookie/guard-test-binding.json",
+      "sha256": "8956ff467e997b75f84ca22c5b1b03cc208d76b61675ad2b1eedbc49ed89d11a",
+      "bytes": 4849
+    },
+    {
+      "origin": ".work/ci-portability/linux-results/t03/T03SessionCookieGuardTest.txt",
+      "path": "tests/engineering/CI/evidence/20261009/linux-cookie/T03SessionCookieGuardTest.txt",
+      "sha256": "1b75f5d66f2dde395303c9d80d3c6403fa3bd60918367e4ccb551319cca7c518",
+      "bytes": 363
+    },
+    {
+      "origin": ".work/ci-portability/linux-results/t03/T03SessionCookieGuardTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/linux-cookie/T03SessionCookieGuardTest.xml",
+      "sha256": "f94654757b1817a0604cd4c071e1d51f90bc8e879b3eed840bb3a4b8a277690d",
+      "bytes": 28806
+    },
+    {
+      "origin": ".work/ci-portability/linux-validation.log",
+      "path": "tests/engineering/CI/evidence/20261009/linux-validation.log.txt",
+      "sha256": "ba60e3847728ff69ad95b8e09cf56d4747e8d43041419bdb66b8960dfb1e22e0",
+      "bytes": 1003
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/local-secret-scan.txt",
+      "sha256": "67c71056aeb9b62b53d89e1b1cc371162b44b128b6176944179d03fef1de1ff9",
+      "bytes": 33
+    },
+    {
+      "origin": ".work/ci-portability/t08-native/evidence/native-cost-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/native-cost-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "sha256": "3a016eff50a87276545c24e95033b7d8103d03f19618a94d07798bc1819c242f",
+      "bytes": 34098
+    },
+    {
+      "origin": ".work/ci-portability/t08-native/evidence/native-cost-test-results/TEST-com.example.editorial.cost.T08PostgresTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/native-cost-test-results/TEST-com.example.editorial.cost.T08PostgresTest.xml",
+      "sha256": "e520f8ec221f91d9442ded7037605c02149d6091d53d4baaee828b58c56f7a08",
+      "bytes": 35218
+    },
+    {
+      "origin": ".work/ci-portability/t08-native/evidence/native-cost.json",
+      "path": "tests/engineering/CI/evidence/20261009/native-cost.json",
+      "sha256": "1c5c1c994ef8f487a8da79a48435f81119cdaa459b491c94336f0d6fe9b1bc11",
+      "bytes": 18993
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/pg-runner-regression.txt",
+      "sha256": "46a59d823d772c3809446eba836399e2612ba33924b6c71abe8e15b736b8f4b7",
+      "bytes": 108
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/portability-regression.txt",
+      "sha256": "4a203f958ef9d765ff1f89816631e1bdf553b4acf1d56449f1d10ad92bb46ff3",
+      "bytes": 107
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/preceding-commit-byte-checks.json",
+      "sha256": "0ad36c27122fbf08e23a164e18d5374ad973df16b835652d06355855e2a17e88",
+      "bytes": 7039
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/recorder-regression.txt",
+      "sha256": "c410157b172d4ddcfeaa42802ffd0522b7b3c2bc1a1902c0b79cba4767a1d19c",
+      "bytes": 105
+    },
+    {
+      "origin": ".work/ci-portability/t08/reverse-controls.log",
+      "path": "tests/engineering/CI/evidence/20261009/reverse-controls.log.txt",
+      "sha256": "1abc6d4dae5e53891bb924ac31224787b0ecf8703240b450119181f3992e42f8",
+      "bytes": 12198
+    },
+    {
+      "origin": ".work/ci-portability/t08/static-checks.log",
+      "path": "tests/engineering/CI/evidence/20261009/static-checks.log.txt",
+      "sha256": "051adff71aafb0e163a73a5017c17b0b6601890d8156a19a56a19cfc45946fad",
+      "bytes": 5134
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/t02-controls.txt",
+      "sha256": "d06c840e000be5252ca5d4c7a2b116c48a0ca7b63fd4ce58888eaa704e50bf02",
+      "bytes": 31190
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/t02-secret-selftest.txt",
+      "sha256": "ab244498d6a3d9d503fc56b155c9622bc5b5af7cdb0a89a88385113fa8f7d7b7",
+      "bytes": 59
+    },
+    {
+      "origin": "2026-10-09 local integration verification",
+      "path": "tests/engineering/CI/evidence/20261009/t02-structure.txt",
+      "sha256": "8db5ebd44505315b82b3f6967482ec9431638687eeea7b6af6303285f1b162c0",
+      "bytes": 2142
+    },
+    {
+      "origin": ".work/ci-portability/t03/agreement.json",
+      "path": "tests/engineering/CI/evidence/20261009/windows-cookie/agreement.json",
+      "sha256": "1cfd2e6fa1022a0380dbfaeb904870dd90db7727c9c4dab46d78782f7ae91721",
+      "bytes": 60674
+    },
+    {
+      "origin": ".work/ci-portability/t03/config-census.txt",
+      "path": "tests/engineering/CI/evidence/20261009/windows-cookie/config-census.txt",
+      "sha256": "e2ff588e1ed43081a87c1c53c7b99e897bb6f5d501431a8f515dadde3fde2983",
+      "bytes": 792
+    },
+    {
+      "origin": ".work/ci-portability/t03/guard-test-binding.json",
+      "path": "tests/engineering/CI/evidence/20261009/windows-cookie/guard-test-binding.json",
+      "sha256": "b9fa01c600e594a2f92c8a7c3426b456b4fc56e7be801d921bb78241851ea0d6",
+      "bytes": 4856
+    },
+    {
+      "origin": ".work/ci-portability/t03/T03SessionCookieGuardTest.txt",
+      "path": "tests/engineering/CI/evidence/20261009/windows-cookie/T03SessionCookieGuardTest.txt",
+      "sha256": "2225455d880bed3c9426d593e7b0729560ab00210a883d7e97cc139c939f21a3",
+      "bytes": 363
+    },
+    {
+      "origin": ".work/ci-portability/t03/T03SessionCookieGuardTest.xml",
+      "path": "tests/engineering/CI/evidence/20261009/windows-cookie/T03SessionCookieGuardTest.xml",
+      "sha256": "c9286a2b8fc5cc0c75f7f6b6758ed2dde6e58dcf723a3e0e6742a01e2ea7193e",
+      "bytes": 34596
+    }
+  ]
+}

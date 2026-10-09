@@ -1,0 +1,1331 @@
+{
+  "agreement": {
+    "additiveScheme": {
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION",
+      "type": "apiKey"
+    },
+    "approvedName": "EDITORIAL_SESSION",
+    "assertionVocabulary": [
+      "assertDoesNotThrow",
+      "assertEquals",
+      "assertFalse",
+      "assertNotNull",
+      "assertThrows",
+      "assertTrue"
+    ],
+    "binding": {
+      "assertionVocabulary": [
+        "assertDoesNotThrow",
+        "assertEquals",
+        "assertFalse",
+        "assertNotNull",
+        "assertThrows",
+        "assertTrue"
+      ],
+      "binderCertificate": {
+        "boundName": "EDITORIAL_SESSION",
+        "files": [
+          "application-dev.yml",
+          "application-mock.yml",
+          "application-prod.yml",
+          "application.yml"
+        ],
+        "patterns": [
+          "classpath*:/application*.properties",
+          "classpath*:/application*.yaml",
+          "classpath*:/application*.yml",
+          "classpath*:/config/application*.properties",
+          "classpath*:/config/application*.yaml",
+          "classpath*:/config/application*.yml"
+        ],
+        "profiles": [
+          "base",
+          "dev",
+          "mock",
+          "prod"
+        ]
+      },
+      "boundInputs": [
+        "census",
+        "code",
+        "config:backend/src/main/resources/application-dev.yml",
+        "config:backend/src/main/resources/application-mock.yml",
+        "config:backend/src/main/resources/application-prod.yml",
+        "config:backend/src/main/resources/application.yml",
+        "guardTest",
+        "guardTestXml",
+        "pom",
+        "test"
+      ],
+      "executedCases": [
+        "absentCookieNameAbortsStartup",
+        "approvedNameStartsOutsideProd",
+        "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+        "assembledIdentitySecurityAbortsOnNonContractCookieName",
+        "assembledIdentitySecurityStartsWithContractCookieName",
+        "commentsAndEnvStyleKeysBindNoCookieName",
+        "configDirectoryLayerOvertakesTheResourcesRoot",
+        "constantIsTheApprovedContractLiteral",
+        "containerDefaultNameAbortsStartup",
+        "contractNameBindsInEveryProfileLayerThroughTheRealLoaders",
+        "duplicateCookieNameKeysAbortLoading",
+        "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader",
+        "prodAcceptsTheContractConformantCookie",
+        "prodRejectsEachInsecureCookieAttribute",
+        "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+      ],
+      "executedRoles": {
+        "anchorConstant": [
+          "absentCookieNameAbortsStartup",
+          "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+          "assembledIdentitySecurityAbortsOnNonContractCookieName",
+          "assembledIdentitySecurityStartsWithContractCookieName",
+          "constantIsTheApprovedContractLiteral",
+          "prodRejectsEachInsecureCookieAttribute",
+          "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+        ],
+        "assemblyAbort": [
+          "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+          "assembledIdentitySecurityAbortsOnNonContractCookieName"
+        ],
+        "assemblyLive": [
+          "assembledIdentitySecurityStartsWithContractCookieName"
+        ],
+        "binderCensus": [
+          "contractNameBindsInEveryProfileLayerThroughTheRealLoaders"
+        ],
+        "binderShapes": [
+          "commentsAndEnvStyleKeysBindNoCookieName",
+          "configDirectoryLayerOvertakesTheResourcesRoot",
+          "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader"
+        ],
+        "guardAbort": [
+          "absentCookieNameAbortsStartup",
+          "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+          "assembledIdentitySecurityAbortsOnNonContractCookieName",
+          "containerDefaultNameAbortsStartup",
+          "prodRejectsEachInsecureCookieAttribute",
+          "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+        ],
+        "guardLive": [
+          "approvedNameStartsOutsideProd",
+          "prodAcceptsTheContractConformantCookie"
+        ],
+        "loaderAbort": [
+          "duplicateCookieNameKeysAbortLoading"
+        ]
+      },
+      "limit": "byte agreement, argv equality and a re-parsed XML; not proof that a human ran the command",
+      "recordedArgv": [
+        ".tools/t02/apache-maven-3.9.11/bin/mvn.cmd",
+        "-B",
+        "-ntp",
+        "-o",
+        "-f",
+        "backend/pom.xml",
+        "-Dmaven.repo.local=.tools/t02/m2",
+        "-Dtest=T03SessionCookieGuardTest",
+        "test"
+      ],
+      "recordedCounts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 15
+      },
+      "toolchain": {
+        "crossCheckedWithXml": [
+          "basedir",
+          "java.home",
+          "localRepository",
+          "test",
+          "user.dir"
+        ],
+        "jdk": "re-hashed here",
+        "surefireJar": "re-hashed here"
+      }
+    },
+    "ci": {
+      "enforcedBy": "job verify on ['pull_request', 'push']",
+      "job": "verify",
+      "jobIndent": 4,
+      "jobLine": 6,
+      "limit": "structure only: this gate cannot show that GitHub ran the job, only that nothing can skip it",
+      "needsChain": [],
+      "skippableCopies": [],
+      "stepIndent": 8,
+      "stepIndex": 8,
+      "stepLine": 63,
+      "stepName": "Session cookie contract agreement gate",
+      "workflowTriggers": [
+        "pull_request",
+        "push",
+        "workflow_dispatch"
+      ]
+    },
+    "configFilesScanned": [
+      "config:backend/src/main/resources/application-dev.yml",
+      "config:backend/src/main/resources/application-mock.yml",
+      "config:backend/src/main/resources/application-prod.yml",
+      "config:backend/src/main/resources/application.yml"
+    ],
+    "frozenScheme": {
+      "in": "cookie",
+      "name": "EDITORIAL_SESSION",
+      "type": "apiKey"
+    },
+    "guardClausePaths": {
+      "clausesChecked": 7,
+      "guard": "verifySessionCookieContract",
+      "scope": [
+        5661,
+        6316
+      ]
+    },
+    "guardTestCaseRoles": {
+      "anchorConstant": [
+        "absentCookieNameAbortsStartup",
+        "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+        "assembledIdentitySecurityAbortsOnNonContractCookieName",
+        "assembledIdentitySecurityStartsWithContractCookieName",
+        "constantIsTheApprovedContractLiteral",
+        "prodRejectsEachInsecureCookieAttribute",
+        "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+      ],
+      "assemblyAbort": [
+        "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+        "assembledIdentitySecurityAbortsOnNonContractCookieName"
+      ],
+      "assemblyLive": [
+        "assembledIdentitySecurityStartsWithContractCookieName"
+      ],
+      "binderCensus": [
+        "contractNameBindsInEveryProfileLayerThroughTheRealLoaders"
+      ],
+      "binderShapes": [
+        "commentsAndEnvStyleKeysBindNoCookieName",
+        "configDirectoryLayerOvertakesTheResourcesRoot",
+        "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader"
+      ],
+      "guardAbort": [
+        "absentCookieNameAbortsStartup",
+        "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+        "assembledIdentitySecurityAbortsOnNonContractCookieName",
+        "containerDefaultNameAbortsStartup",
+        "prodRejectsEachInsecureCookieAttribute",
+        "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+      ],
+      "guardLive": [
+        "approvedNameStartsOutsideProd",
+        "prodAcceptsTheContractConformantCookie"
+      ],
+      "loaderAbort": [
+        "duplicateCookieNameKeysAbortLoading"
+      ]
+    },
+    "guardTestCases": [
+      "absentCookieNameAbortsStartup",
+      "approvedNameStartsOutsideProd",
+      "assembledIdentitySecurityAbortsOnInsecureProdCookie",
+      "assembledIdentitySecurityAbortsOnNonContractCookieName",
+      "assembledIdentitySecurityStartsWithContractCookieName",
+      "commentsAndEnvStyleKeysBindNoCookieName",
+      "configDirectoryLayerOvertakesTheResourcesRoot",
+      "constantIsTheApprovedContractLiteral",
+      "containerDefaultNameAbortsStartup",
+      "contractNameBindsInEveryProfileLayerThroughTheRealLoaders",
+      "duplicateCookieNameKeysAbortLoading",
+      "flowAliasAndMergeKeyShapesAreLiveToTheRealLoader",
+      "prodAcceptsTheContractConformantCookie",
+      "prodRejectsEachInsecureCookieAttribute",
+      "thirdNameAbortsStartupEvenThoughItIsNotTheContainerDefault"
+    ],
+    "javaConstant": "EDITORIAL_SESSION",
+    "oneTokenizerPerFile": {
+      "corpusFiles": 496,
+      "divergences": 0,
+      "note": "one lexer, three projections; measured on the sources and on a deterministic corpus",
+      "sources": [
+        {
+          "comments": 3,
+          "label": "code",
+          "literals": 39,
+          "textBlocks": 0,
+          "tokens": 89
+        },
+        {
+          "comments": 17,
+          "label": "guardTest",
+          "literals": 129,
+          "textBlocks": 7,
+          "tokens": 295
+        },
+        {
+          "comments": 1,
+          "label": "test",
+          "literals": 247,
+          "textBlocks": 0,
+          "tokens": 497
+        }
+      ]
+    },
+    "proofLayers": {
+      "ci": "the step that runs this gate sits in a job a push or pull request reaches, and nothing can skip it",
+      "executed": "the surefire XML of an offline run: the assembly cases really invoked the production bean method, and the binder certificate reports the name Spring's own loaders resolved",
+      "notProven": "that a human rather than a text editor produced the recorded run; that GitHub executed the CI job; a config layer outside the recorded surface; a condition javac cannot fold",
+      "staticStructure": "the guard call is a statement an assembly reaches, and the guard clauses are live code rather than prose; auxiliary to the executed proof and blind to a condition javac cannot fold",
+      "textCensus": "agreement of the contract anchors, every config declaration this census can attribute and the Java constant, all read after JLS 3.3 translation"
+    },
+    "runtimeAssertionLive": true,
+    "schemeKey": "session",
+    "staticCallSite": {
+      "basis": "direct statement of the assembled bean identitySecurity, every enclosing condition is open or compile-time satisfiable and no unconditional transfer precedes it",
+      "bean": "identitySecurity",
+      "live": true
+    },
+    "textCensusCookieNames": {
+      "config:backend/src/main/resources/application-dev.yml": {
+        "kind": "yaml",
+        "names": []
+      },
+      "config:backend/src/main/resources/application-mock.yml": {
+        "kind": "yaml",
+        "names": []
+      },
+      "config:backend/src/main/resources/application-prod.yml": {
+        "kind": "yaml",
+        "names": []
+      },
+      "config:backend/src/main/resources/application.yml": {
+        "kind": "yaml",
+        "names": [
+          "EDITORIAL_SESSION"
+        ]
+      }
+    },
+    "textCensusLimit": "attributed by text: block and flow mappings, multi-line flow, comments, quoting and case variants. Not attributed by text: anchors, merge keys, tags, block scalars and placeholders - those files are judged by the binder certificate below, which is why their bytes have to be in the recorded run.",
+    "textCensusUnattributable": {},
+    "unicodeEscapesTranslatedPerJls33": true
+  },
+  "controls": {
+    "benign": 36,
+    "benignAccepted": 36,
+    "detail": [
+      {
+        "claim": "the resources root stops declaring the approved name at all",
+        "detail": "config: config:backend/src/main/resources/application.yml must declare server.servlet.session.cookie.name exactly once, found []",
+        "kind": "negative",
+        "label": "config-drops-cookie-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the resources root declares a different name",
+        "detail": "config: config:backend/src/main/resources/application.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "config-changes-cookie-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the declaration moves where Boot cannot read it",
+        "detail": "config: config:backend/src/main/resources/application.yml must declare server.servlet.session.cookie.name exactly once, found []",
+        "kind": "negative",
+        "label": "cookie-path-relocated-under-unrelated-parent",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a second YAML document declares another name",
+        "detail": "config: config:backend/src/main/resources/application.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "extra-document-carries-second-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "every profile layer overrides the name, prod included",
+        "detail": "config: config:backend/src/main/resources/application-dev.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "all-profiles-override-cookie-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a flow mapping in the prod layer overrides the name",
+        "detail": "config: config:backend/src/main/resources/application-prod.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "flow-profile-override-cookie-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the same override with every key upper-cased",
+        "detail": "config: config:backend/src/main/resources/application-prod.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "case-variant-flow-override",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a flow mapping in the base layer adds a second name",
+        "detail": "config: config:backend/src/main/resources/application.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "flow-base-second-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a quoted duplicate key the loader itself would reject",
+        "detail": "config: config:backend/src/main/resources/application.yml declares the session cookie name 'SOME_OTHER_SESSION_COOKIE' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "quoted-duplicate-cookie-key",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an anchor and merge key carry the container default",
+        "detail": "binding: Spring's own binder resolved {'base': 'JSESSIONID'} at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "anchor-hides-name-text-cannot-attribute",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a merge key re-declares the name as something else",
+        "detail": "binding: Spring's own binder resolved {'base': 'SOME_OTHER_SESSION_COOKIE'} at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "merge-key-second-declaration",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a config/application.properties layer binds the container default",
+        "detail": "config: config:backend/src/main/resources/config/application.properties declares the session cookie name 'JSESSIONID' at server.servlet.session.cookie.name; the approved name is 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "properties-layer-wrong-name",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "one more config layer, absent from the recorded run",
+        "detail": "binding: the executed census and this gate disagree about the config surface; not read by the run ['application-local.yaml'], not in the declared surface []",
+        "kind": "negative",
+        "label": "config-adds-unrecorded-file",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the executed census stops enumerating one extension",
+        "detail": "binding: the executed census enumerated ['classpath*:/application*.properties', 'classpath*:/application*.yml', 'classpath*:/config/application*.properties', 'classpath*:/config/application*.yaml', 'classpath*:/config/application*.yml'] instead of ['classpath*:/application*.properties', 'classpath*:",
+        "kind": "negative",
+        "label": "config-surface-pattern-dropped",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the certificate reports checksums for bytes that are no longer there",
+        "detail": "binding: the census certificate is stale for the current bytes -> application.yml: certificate 29142e20d9c7.. != current 42acb38562eb..",
+        "kind": "negative",
+        "label": "config-checksum-stale-in-certificate",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the binder certificate stops covering one profile",
+        "detail": "binding: the binder certificate covers profiles ['base', 'dev', 'mock'] but the surface declares ['base', 'dev', 'mock', 'prod']",
+        "kind": "negative",
+        "label": "config-bind-profile-missing",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a location override moves the surface outside this census",
+        "detail": "config: a location override moves the config surface outside this census, which cannot attribute it -> ['config:backend/src/main/resources/application.yml:spring.config.location']; extend the executed census to that layer instead of trusting text",
+        "kind": "negative",
+        "label": "config-declares-location-override",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an optional import reaches a layer the census cannot name",
+        "detail": "config: a location override moves the config surface outside this census, which cannot attribute it -> ['config:backend/src/main/resources/application.yml:spring.config.import', 'config:backend/src/main/resources/application.yml:optional:']; extend the executed census to that layer instead of trusti",
+        "kind": "negative",
+        "label": "config-imports-optional-location",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a launch-time location override appears in the sources under review",
+        "detail": "config: a location override moves the config surface outside this census, which cannot attribute it -> ['code:spring.config.location']; extend the executed census to that layer instead of trusting text",
+        "kind": "negative",
+        "label": "code-declares-config-location",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a config-shaped file no face reads appears on the surface",
+        "detail": "config: ['config:backend/src/main/resources/application.r10probe.xml'] look like Boot config files but carry an extension this census and the executed loaders do not read (yml/yaml/properties); neither face can attribute them",
+        "kind": "negative",
+        "label": "config-unread-extension-on-surface",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the frozen contract declares another cookie name",
+        "detail": "frozenContract: declared cookie name 'SOME_OTHER_SESSION_COOKIE' != approved 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "contract-renames-cookie",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the additive contract no longer declares the scheme",
+        "detail": "additiveContract: session={'type': 'apiKey', 'in': 'cookie', 'name': 'SOME_OTHER_SESSION_COOKIE'} must equal frozen session={'type': 'apiKey', 'in': 'cookie', 'name': 'EDITORIAL_SESSION'}",
+        "kind": "negative",
+        "label": "additive-drops-scheme",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the additive scheme gains a key the frozen one does not have",
+        "detail": "additiveContract: session={'type': 'apiKey', 'in': 'cookie', 'description': 'divergent', 'name': 'EDITORIAL_SESSION'} must equal frozen session={'type': 'apiKey', 'in': 'cookie', 'name': 'EDITORIAL_SESSION'}",
+        "kind": "negative",
+        "label": "additive-scheme-extra-key",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the Java constant stops matching the contract",
+        "detail": "code: constant 'SOME_OTHER_SESSION_COOKIE' != approved 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "code-constant-drifts",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the assembly stops calling the guard",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "guard-call-deleted",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the call survives only as a comment",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "guard-call-commented-out",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the call lives in a method nothing assembles",
+        "detail": "code: no readable verifySessionCookieContract method body remains after translation and lexing",
+        "kind": "negative",
+        "label": "guard-call-moved-to-dead-method",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "if (false) with no braces, which brace arithmetic used to wave through",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: the call is the single statement a brace-less constant-false if (false) governs, which javac proves unreachable",
+        "kind": "negative",
+        "label": "guard-call-in-constant-false-branch",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "if (Boolean.FALSE.booleanValue()) with no braces",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: the call is the single statement a brace-less constant-false if (Boolean.FALSE.booleanValue()) governs, which javac proves unreachable",
+        "kind": "negative",
+        "label": "guard-call-under-boolean-false",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a static final false constant guarding the call",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: the call is the single statement a brace-less constant-false if (NEVER) governs, which javac proves unreachable",
+        "kind": "negative",
+        "label": "guard-call-under-static-final-false",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "while (false) { call }",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: the body of a compile-time constant-false condition (false) never executes",
+        "kind": "negative",
+        "label": "guard-call-under-while-false",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a return ahead of the call, which javac rejects as unreachable",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: an unconditional return leaves the block before the call",
+        "kind": "negative",
+        "label": "guard-call-after-unconditional-return",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a block comment written with \\u002f\\u002a hides the call",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "guard-call-under-escaped-block-comment",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a line comment written with \\u002f\\u002f replaces the call",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "guard-call-under-escaped-line-comment",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the call survives only inside a text block",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "guard-call-inside-text-block-prose",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the call moves into a lambda, so assembling the bean no longer runs it",
+        "detail": "code: the guard call is not a statement the assembly reaches -> identitySecurity: the call is only inside a lambda body, which bean assembly does not run",
+        "kind": "negative",
+        "label": "guard-call-moved-into-lambda",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the name comparison is commented out",
+        "detail": "code: no live (non-comment, non-prose, non-literal) cookie-name guard clause remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "guard-name-check-commented-out",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the rejection message no longer carries the T03_COOKIE marker",
+        "detail": "code: no live (non-comment, non-prose, non-literal) throw carrying rejection message 2 remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "guard-message-prefix-changed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the prod throw statement is deleted",
+        "detail": "code: no live (non-comment, non-prose, non-literal) throw carrying rejection message 2 remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "guard-line-deleted",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard becomes a method that returns before checking anything",
+        "detail": "code: the guard's own clauses are not reachable -> cookie-name guard clause: an unconditional return leaves the block before the call; if(env.matchesProfiles(\"prod\") && branch: an unconditional return leaves the block before the call; secure-attribute clause: an unconditional return leaves the block",
+        "kind": "negative",
+        "label": "guard-neutered-never-fires",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard compares a property Boot never reads",
+        "detail": "code: no live (non-comment, non-prose, non-literal) cookie-name guard clause remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "guard-reads-wrong-property",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the prod branch stops consulting matchesProfiles",
+        "detail": "code: no live (non-comment, non-prose, non-literal) if(env.matchesProfiles(\"prod\") && branch remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-check-neutered",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the prod branch is short-circuited with a constant false",
+        "detail": "code: no live (non-comment, non-prose, non-literal) if(env.matchesProfiles(\"prod\") && branch remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-branch-short-circuited",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard's production branch compares against another profile",
+        "detail": "code: no live (non-comment, non-prose, non-literal) if(env.matchesProfiles(\"prod\") && branch remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-profile-token-renamed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the http-only clause disappears",
+        "detail": "code: no live (non-comment, non-prose, non-literal) http-only clause remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-http-only-clause-deleted",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the same-site clause disappears",
+        "detail": "code: no live (non-comment, non-prose, non-literal) same-site clause compared to strict remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-same-site-clause-deleted",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the secure lookup defaults to true, so any cookie passes",
+        "detail": "code: no live (non-comment, non-prose, non-literal) secure-attribute clause remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "prod-secure-default-flipped",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the throw statements are replaced by strings that recite them",
+        "detail": "code: no live (non-comment, non-prose, non-literal) throw carrying rejection message 1, throw carrying rejection message 2 remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "message-only-in-literal",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the secure attribute is read from no more; the name survives as a string",
+        "detail": "code: no live (non-comment, non-prose, non-literal) secure-attribute clause remains inside verifySessionCookieContract",
+        "kind": "negative",
+        "label": "secure-clause-only-in-literal",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a text block's quotes must not fake a comment that hides the call",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "textblock-desyncs-commented-guard",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a malformed escape javac would refuse",
+        "detail": "illegal unicode escape '\\\\uZZZZy\";\\n  ': javac rejects this file (JLS 3.3)",
+        "kind": "negative",
+        "label": "illegal-unicode-escape",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an escape that turns a closing quote into string content",
+        "detail": "unclosed string literal: javac does not carry a literal across a line",
+        "kind": "negative",
+        "label": "escape-swallowing-a-closing-quote",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the container default written as text-block prose is still a value",
+        "detail": "guardTest: the container default is named in code outside containerDefaultNameAbortsStartup at [4109]; only the case that proves it aborts may name it",
+        "kind": "negative",
+        "label": "container-default-mentioned-in-a-text-block",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the container default written JSESSION\\u0049D outside the exempt case",
+        "detail": "guardTest: the container default is named in code outside containerDefaultNameAbortsStartup at [4067]; only the case that proves it aborts may name it",
+        "kind": "negative",
+        "label": "container-default-spelled-with-escape",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the integration test stops asserting the issued cookie name",
+        "detail": "test: no live (non-comment, non-prose) assertion that the runtime issues the declared cookie name via Set-Cookie remains",
+        "kind": "negative",
+        "label": "runtime-assertion-deleted",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the assertion is replaced by a trivially true one",
+        "detail": "test: no live (non-comment, non-prose) assertion that the runtime issues the declared cookie name via Set-Cookie remains",
+        "kind": "negative",
+        "label": "runtime-assertion-commented-out",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the case naming the container default is renamed, moving the exemption",
+        "detail": "guardTest: the container default is named in code outside containerDefaultNameAbortsStartup at [6899]; only the case that proves it aborts may name it",
+        "kind": "negative",
+        "label": "guard-test-hollow-container-default",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the exempt case becomes prose, so nothing names the default there",
+        "detail": "guardTest: the executed cases no longer cover every layer -> these cases execute no behaviour the gate can name: ['containerDefaultNameAbortsStartup']",
+        "kind": "negative",
+        "label": "guard-test-container-default-case-hollowed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard test stops exercising the prod cookie attributes",
+        "detail": "guardTest: the production attribute server.servlet.session.cookie.same-site is no longer read by live code anywhere in the file",
+        "kind": "negative",
+        "label": "guard-test-prod-clauses-dropped",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard test no longer holds the approved name as a literal",
+        "detail": "guardTest: no live string literal carries the approved anchor, so the cases compare against something other than rc.3's name",
+        "kind": "negative",
+        "label": "guard-test-anchor-literal-dropped",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the guard call survives only as the contents of a string literal",
+        "detail": "code: the guard call is not a statement the assembly reaches -> no verifySessionCookieContract(env) call in code at all",
+        "kind": "negative",
+        "label": "call-only-recited-in-a-string",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the approved name is left only as text-block prose",
+        "detail": "guardTest: no live string literal carries the approved anchor, so the cases compare against something other than rc.3's name",
+        "kind": "negative",
+        "label": "anchor-name-only-in-text-block-prose",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "two binder-shape cases are retired and the record agrees",
+        "detail": "guardTest: the executed cases no longer cover every layer -> binderShapes: found 1, need at least 2",
+        "kind": "negative",
+        "label": "binder-shape-floor-loses-its-cases",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "one executed case becomes prose, so a role loses its witness",
+        "detail": "guardTest: the executed cases no longer cover every layer -> these cases execute no behaviour the gate can name: ['prodRejectsEachInsecureCookieAttribute']",
+        "kind": "negative",
+        "label": "file-emptied-of-executed-roles",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the assembly case that must not abort becomes prose",
+        "detail": "guardTest: the executed cases no longer cover every layer -> assemblyLive: found 0, need at least 1; these cases execute no behaviour the gate can name: ['assembledIdentitySecurityStartsWithContractCookieName']",
+        "kind": "negative",
+        "label": "assembly-case-hollowed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the helper that really assembles the bean becomes prose",
+        "detail": "guardTest: the executed cases no longer cover every layer -> assemblyAbort: found 0, need at least 1; assemblyLive: found 0, need at least 1",
+        "kind": "negative",
+        "label": "assembly-helper-hollowed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the census case stops enumerating the classpath surface",
+        "detail": "guardTest: the executed cases no longer cover every layer -> binderCensus: found 0, need at least 1; these cases execute no behaviour the gate can name: ['contractNameBindsInEveryProfileLayerThroughTheRealLoaders']",
+        "kind": "negative",
+        "label": "binder-census-stops-reading-the-surface",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the flow/anchor/merge-key binder case becomes prose",
+        "detail": "guardTest: the executed cases no longer cover every layer -> these cases execute no behaviour the gate can name: ['flowAliasAndMergeKeyShapesAreLiveToTheRealLoader']",
+        "kind": "negative",
+        "label": "binder-shape-case-hollowed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the case proving config/ outranks the resources root becomes prose",
+        "detail": "guardTest: the executed cases no longer cover every layer -> these cases execute no behaviour the gate can name: ['configDirectoryLayerOvertakesTheResourcesRoot']",
+        "kind": "negative",
+        "label": "config-directory-layer-case-hollowed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an executed case is renamed, so the recorded XML no longer matches",
+        "detail": "binding: the run executed ['prodRejectsCookieAttributesRenamed', 'prodRejectsEachInsecureCookieAttribute'] which the current guard test does not have, or the current test has cases the recorded run never executed",
+        "kind": "negative",
+        "label": "guard-test-case-renamed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the workflow stops running this gate",
+        "detail": "ci: no step in any job runs this gate, so cookie name drift has no automatic police",
+        "kind": "negative",
+        "label": "ci-drops-cookie-gate",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the step keeps running but its failure is ignored",
+        "detail": "ci: every step that runs this gate can be skipped -> verify#8: continue-on-error",
+        "kind": "negative",
+        "label": "ci-gate-step-continue-on-error",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the step is skipped for pull requests",
+        "detail": "ci: every step that runs this gate can be skipped -> verify#8: if: github.event_name == 'push'",
+        "kind": "negative",
+        "label": "ci-gate-step-skippable-if",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the whole job is marked non-blocking",
+        "detail": "ci: every step that runs this gate can be skipped -> verify#8: continue-on-error",
+        "kind": "negative",
+        "label": "ci-job-continue-on-error",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the whole job only runs on main",
+        "detail": "ci: every step that runs this gate can be skipped -> verify#8: if: github.ref == 'refs/heads/main'",
+        "kind": "negative",
+        "label": "ci-job-skippable-if",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the job is reached only through a job that can be skipped",
+        "detail": "ci: every step that runs this gate can be skipped -> verify#8: needs holder",
+        "kind": "negative",
+        "label": "ci-gate-behind-skippable-ancestor",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the workflow is triggered by a schedule, never by push or pull request",
+        "detail": "ci: job verify runs this gate but the workflow triggers are ['schedule'], so a push or pull request does not reach it",
+        "kind": "negative",
+        "label": "ci-workflow-schedule-only",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the gate lives in a job a push or pull request never reaches",
+        "detail": "ci: every step that runs this gate can be skipped -> nightly#0: continue-on-error, if: github.event_name == 'schedule'",
+        "kind": "negative",
+        "label": "ci-moves-gate-to-schedule-only-job",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the step runs a different file",
+        "detail": "ci: no step in any job runs this gate, so cookie name drift has no automatic police",
+        "kind": "negative",
+        "label": "ci-gate-path-renamed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a step that is both uses and run, which GitHub rejects",
+        "detail": "ci: verify step 8 mixes uses: with the gate run, cannot attribute",
+        "kind": "negative",
+        "label": "ci-gate-step-mixed-uses",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "no recorded run at all",
+        "detail": "binding: the recorded reproduction is missing; rerun record_guard_binding.py",
+        "kind": "negative",
+        "label": "binding-file-missing",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded run did not succeed",
+        "detail": "binding: recorded exitCode is 1, not 0",
+        "kind": "negative",
+        "label": "binding-exit-code-nonzero",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded command is prose instead of the argv the recorder ran",
+        "detail": "binding: command is not a full argv array; the recorder must emit one so shell words are visible instead of hidden in a joined string",
+        "kind": "negative",
+        "label": "binding-command-not-pinned",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an argv that only echoes the real command",
+        "detail": "binding: recorded command ['echo', 'e:/project/codex/wxagent/.tools/t02/apache-maven-3.9.11/bin/mvn.cmd', '-b', '-ntp', '-o', '-f', 'backend/pom.xml', '-dtest=t03sessioncookieguardtest', 'test'] is not the pinned argv ['<root>/.tools/t02/apache-maven-3.9.11/bin/mvn', '-b', '-ntp', '-o', '-f', 'backe",
+        "kind": "negative",
+        "label": "binding-command-echo-argv",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an argv with one more flag than the pinned constant table",
+        "detail": "binding: recorded command ['<root>/.tools/t02/apache-maven-3.9.11/bin/mvn', '-b', '-ntp', '-o', '-f', 'backend/pom.xml', '-dmaven.repo.local=<root>/.tools/t02/m2', '-dtest=t03sessioncookieguardtest', 'test', '-dsurefire.failifnospecifiedtests=false'] is not the pinned argv ['<root>/.tools/t02/apache",
+        "kind": "negative",
+        "label": "binding-command-extra-flag",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an argv that names a different test class",
+        "detail": "binding: recorded command ['<root>/.tools/t02/apache-maven-3.9.11/bin/mvn', '-b', '-ntp', '-o', '-f', 'backend/pom.xml', '-dtest=t02contracttest', 'test'] is not the pinned argv ['<root>/.tools/t02/apache-maven-3.9.11/bin/mvn', '-b', '-ntp', '-o', '-f', 'backend/pom.xml', '-dmaven.repo.local=<root>/",
+        "kind": "negative",
+        "label": "binding-command-dtest-swapped",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the note stops saying exactly what the gate re-verifies",
+        "detail": "binding: the note is not the recorder's wording, so the claim attached to this record is not the one this gate knows how to check",
+        "kind": "negative",
+        "label": "binding-note-claim-drift",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the pinned surefire jar hash does not match this machine",
+        "detail": "binding: surefireJarSha256 eb01b0ab55c1.. does not match .tools/t02/m2/org/apache/maven/surefire/maven-surefire-common/3.5.6/maven-surefire-common-3.5.6.jar on this machine",
+        "kind": "negative",
+        "label": "binding-surefire-jar-hash-wrong",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the surefire jar is recorded outside the pinned repository",
+        "detail": "binding: surefireJar '.tools/other/m2/some.jar' is not a repo-relative maven-surefire-common jar inside the pinned local repository, so the gate has nothing to re-hash",
+        "kind": "negative",
+        "label": "binding-surefire-jar-path-foreign",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the vendored launcher hash does not match this machine",
+        "detail": "binding: jdkLauncherSha256 2def4c8d7f40.. does not match .tools/t02/jdk-21.0.12.1+1/bin/java.exe on this machine",
+        "kind": "negative",
+        "label": "binding-jdk-hash-wrong",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the JDK is recorded as a system path the gate cannot re-hash",
+        "detail": "binding: jdk '/usr/lib/jvm/java-21' is not the repo-relative vendored toolchain under .tools/, so the gate cannot re-hash it",
+        "kind": "negative",
+        "label": "binding-jdk-path-foreign",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded JDK is a different directory than the run reported",
+        "detail": "binding: the run reports java.home='E:\\\\project\\\\codex\\\\wxAgent\\\\.tools\\\\t02\\\\jdk-21.0.12.1+1', which is not the recorded '.tools/t02/jdk-17.0.9'",
+        "kind": "negative",
+        "label": "binding-jdk-not-the-run-java-home",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded JDK version disagrees with the XML property",
+        "detail": "binding: recorded jdkVersion='17.0.9' disagrees with the XML java.version='21.0.12.1'",
+        "kind": "negative",
+        "label": "binding-jdk-version-disagrees",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded vendor disagrees with the XML property",
+        "detail": "binding: recorded jdkVendor='Amazon' disagrees with the XML java.vendor='Eclipse Adoptium'",
+        "kind": "negative",
+        "label": "binding-jdk-vendor-disagrees",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "one input is quietly left out of the record",
+        "detail": "binding: the recorded input set and the surface this gate enumerates differ (not recorded ['code'], not present here [])",
+        "kind": "negative",
+        "label": "binding-input-key-missing",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "an input is recorded under a name this checkout does not have",
+        "detail": "binding: the recorded input set and the surface this gate enumerates differ (not recorded ['code'], not present here ['backend/src/main/java/elsewhere.java'])",
+        "kind": "negative",
+        "label": "binding-input-key-renamed",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a config layer the record does not mention",
+        "detail": "binding: the recorded input set and the surface this gate enumerates differ (not recorded ['config:backend/src/main/resources/application-mock.yml'], not present here [])",
+        "kind": "negative",
+        "label": "binding-config-layer-unrecorded",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the record binds a config file whose bytes changed after the run",
+        "detail": "binding: recorded evidence is stale for the current bytes -> config:backend/src/main/resources/application.yml: recorded 29142e20d9c7.. != current 42acb38562eb..",
+        "kind": "negative",
+        "label": "binding-profile-stale",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded case names are not the ones the XML reports",
+        "detail": "binding: recorded testNames are not the XML's testcases",
+        "kind": "negative",
+        "label": "binding-testnames-fabricated",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the recorded counts do not match the re-parsed XML",
+        "detail": "binding: recorded counts {'tests': 8, 'failures': 0, 'errors': 0, 'skipped': 0} disagree with the XML {'tests': 15, 'failures': 0, 'errors': 0, 'skipped': 0}",
+        "kind": "negative",
+        "label": "binding-counts-disagree-with-xml",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the XML declares more cases than it carries and says so consistently",
+        "detail": "binding: the XML declares tests=99 but carries 15 testcase elements",
+        "kind": "negative",
+        "label": "binding-xml-tests-count-inflated",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a case was skipped, and the record says so too",
+        "detail": "binding: the recorded run is not clean: {'tests': 15, 'failures': 0, 'errors': 0, 'skipped': 1}",
+        "kind": "negative",
+        "label": "binding-xml-skipped-case",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "a case failed in the recorded run, and the record claims it",
+        "detail": "binding: the recorded run is not clean: {'tests': 15, 'failures': 1, 'errors': 0, 'skipped': 0}",
+        "kind": "negative",
+        "label": "binding-xml-failure",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the XML hash does not match the tracked artefact",
+        "detail": "binding: surefireXmlSha256 is not the hash of the tracked XML",
+        "kind": "negative",
+        "label": "binding-xml-sha-wrong",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the record credits a layer with cases that never drove it",
+        "detail": "binding: which case proves which layer is an executed fact, not a claim about wording -> guardAbort: recorded ['approvedNameStartsOutsideProd', 'constantIsTheApprovedContractLiteral', 'prodAcceptsTheContractConformantCookie'] != current ['absentCookieNameAbortsStartup', 'assembledIdentitySecurityAbo",
+        "kind": "negative",
+        "label": "binding-roles-miscredited",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "every source agrees on a name that is not the approved anchor",
+        "detail": "frozenContract: declared cookie name 'SOME_OTHER_SESSION_COOKIE' != approved 'EDITORIAL_SESSION'",
+        "kind": "negative",
+        "label": "all-sources-rename-in-lockstep",
+        "verdict": "rejected"
+      },
+      {
+        "claim": "the call runs in a try/finally, still assembly-reachable",
+        "detail": "",
+        "kind": "benign",
+        "label": "guard-call-in-try-finally",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the call runs in a switch default branch",
+        "detail": "",
+        "kind": "benign",
+        "label": "guard-call-in-switch-default",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the call runs in an else arm",
+        "detail": "",
+        "kind": "benign",
+        "label": "guard-call-in-else-arm",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the call runs while a different @Bean is assembled",
+        "detail": "",
+        "kind": "benign",
+        "label": "call-moved-to-another-assembled-bean",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the same statements, reformatted across lines",
+        "detail": "",
+        "kind": "benign",
+        "label": "guard-reflowed-with-whitespace",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "an annotation sits between @Bean and the signature",
+        "detail": "",
+        "kind": "benign",
+        "label": "annotation-between-bean-and-signature",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a class-level text block holding braces and comment openers",
+        "detail": "",
+        "kind": "benign",
+        "label": "bean-body-string-contains-brace",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a text block holding unbalanced quotes and a comment opener",
+        "detail": "",
+        "kind": "benign",
+        "label": "textblock-odd-quotes-intact",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a literal containing what looks like a comment opener",
+        "detail": "",
+        "kind": "benign",
+        "label": "url-string-looks-like-comment",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "char literals containing quote and slash characters",
+        "detail": "",
+        "kind": "benign",
+        "label": "char-literals-hold-quote-chars",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a block comment with quotes and a fake closer",
+        "detail": "",
+        "kind": "benign",
+        "label": "block-comment-containing-slashes-and-quotes",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "an escape sequence inside a block comment",
+        "detail": "",
+        "kind": "benign",
+        "label": "escaped-newline-inside-block-comment",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "an escaped comment that hides nothing",
+        "detail": "",
+        "kind": "benign",
+        "label": "escaped-comment-around-nothing",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a string quotes the call beside the live call",
+        "detail": "",
+        "kind": "benign",
+        "label": "call-recited-in-a-string-while-live",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a string quotes the comment delimiters as double backslashes, beside the live call",
+        "detail": "",
+        "kind": "benign",
+        "label": "double-backslash-note-in-a-string",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the approved name as prose and as a live literal",
+        "detail": "",
+        "kind": "benign",
+        "label": "anchor-name-in-prose-and-live-literal",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the container default appears only in a comment",
+        "detail": "",
+        "kind": "benign",
+        "label": "container-default-mentioned-in-prose-only",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a config comment discussing a location override",
+        "detail": "",
+        "kind": "benign",
+        "label": "location-override-mentioned-in-comment",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a config comment naming the container default",
+        "detail": "",
+        "kind": "benign",
+        "label": "container-default-in-config-comment",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "an identifier spelled with \\u escapes, which javac accepts",
+        "detail": "",
+        "kind": "benign",
+        "label": "escape-in-identifier-is-legal",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a flow mapping that touches nothing the contract cares about",
+        "detail": "",
+        "kind": "benign",
+        "label": "yaml-flow-unrelated-keys",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the approved name declared through a flow mapping",
+        "detail": "",
+        "kind": "benign",
+        "label": "yaml-flow-approved-name",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "an anchor and merge key the text census cannot attribute, binding the approved name",
+        "detail": "",
+        "kind": "benign",
+        "label": "merge-key-carries-approved-name",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a comment trailing a flow value",
+        "detail": "",
+        "kind": "benign",
+        "label": "comment-after-flow-value",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the wrong name inside a block scalar, which is prose not a mapping",
+        "detail": "",
+        "kind": "benign",
+        "label": "block-scalar-holds-an-unrelated-name",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "underscore-separated keys outside the cookie path",
+        "detail": "",
+        "kind": "benign",
+        "label": "env-style-underscore-keys",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "a properties layer whose comment names the container default",
+        "detail": "",
+        "kind": "benign",
+        "label": "properties-comment-names-default",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the same command written as a block scalar",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-invokes-gate-as-block-scalar",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the step gains an explicit shell",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-adds-shell-to-gate-step",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the step is renamed, which must not break the anchor",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-renames-gate-step",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the step calls python3 instead of python",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-invokes-gate-with-python3",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "another job with no skip conditions appears",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-adds-unrelated-ungated-job",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the gate also runs in another job a push reaches",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-runs-gate-twice-in-second-job",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the workflow gains a trigger but keeps push and pull_request",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-adds-workflow-call-trigger",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the step moves after the backend step, still in the same job",
+        "detail": "",
+        "kind": "benign",
+        "label": "ci-moves-gate-later-in-same-job",
+        "verdict": "accepted"
+      },
+      {
+        "claim": "the record is re-serialised with different indentation, same content",
+        "detail": "",
+        "kind": "benign",
+        "label": "binding-note-whitespace-rewrite",
+        "verdict": "accepted"
+      }
+    ],
+    "failures": [],
+    "negative": 106,
+    "negativeRejected": 106,
+    "total": 142
+  },
+  "evidence": {
+    "additiveContract": "0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd",
+    "binding": "b9fa01c600e594a2f92c8a7c3426b456b4fc56e7be801d921bb78241851ea0d6",
+    "census": "e2ff588e1ed43081a87c1c53c7b99e897bb6f5d501431a8f515dadde3fde2983",
+    "ci": "ddbaad7ececb6a573cad7f57c5b82da3f8e832f332d3a83135fda6941be2a74a",
+    "code": "bda8f72167fc1a4634a414af16843c22f9258edda4180ccf3473f8a97a5eee44",
+    "frozenContract": "e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b",
+    "gate": "5b82436d1a4b415cb93918f6e9d7bf81aaf28be80f8b9e48ee5c012ef5a65012",
+    "guardTest": "3fa69c6ed386e20e348afb04c1d4edfe99fd39bc3c0042e46642ca94cff3471b",
+    "guardTestXml": "c9286a2b8fc5cc0c75f7f6b6758ed2dde6e58dcf723a3e0e6742a01e2ea7193e",
+    "pom": "40cc552889b988f944916d8396de4e7ba35520ddd2cd7ee5ed212f9d05330fee",
+    "recorder": "3b9ecc32e848971920bf25b41822dc9c5c7e5d6c2e19a5e964842f3edb47a555",
+    "test": "ecc2eaed5f10e223bc5302a38f797663d3d15767cc44a4cf3b31037755585392"
+  },
+  "gate": "tests/engineering/T03/check_session_cookie.py",
+  "verdict": "PASS"
+}
