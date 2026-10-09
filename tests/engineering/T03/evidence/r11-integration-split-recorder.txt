@@ -1,0 +1,7 @@
+test_incomplete_proof_preserves_published_bytes (test_recorder.RejectedRunKeepsEvidence.test_incomplete_proof_preserves_published_bytes) ... ok
+test_unclean_run_preserves_published_bytes (test_recorder.RejectedRunKeepsEvidence.test_unclean_run_preserves_published_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.905s
+
+OK

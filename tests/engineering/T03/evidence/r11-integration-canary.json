@@ -1,0 +1,1332 @@
+{
+  "baseline": {
+    "controls": 106,
+    "controlsRejected": 106,
+    "probes": 36,
+    "probesAccepted": 36,
+    "rehashedRecords": true
+  },
+  "budget": 300.0,
+  "canaries": [
+    "canary-report-numbers",
+    "canary-shell-word-scan",
+    "canary-construct-reasons"
+  ],
+  "claim": "registered 57 judgements against 83 `raise Rejected` sites in the gate; 4 benign-half, 1 declared-diagnostic, 46 own-witness, 3 shared-witness, 3 unwatched; nothing is claimed about judgements that are not registered",
+  "classes": {
+    "benign-half": [
+      "comment-blanking",
+      "textblock-blanking",
+      "tokenizer-selfcheck",
+      "yaml-comment-stripping"
+    ],
+    "declared-diagnostic": [
+      "yaml-construct-reasons"
+    ],
+    "own-witness": [
+      "anchor-literal",
+      "argv-equality",
+      "bean-bodies",
+      "binder-certificate",
+      "brace-stop-in-header",
+      "braceless-dead-rule",
+      "case-closure",
+      "ci-clean",
+      "ci-needs-chain",
+      "ci-skippable-copies",
+      "ci-structure",
+      "ci-trigger-required",
+      "constant-folding",
+      "container-default-exemption",
+      "contract-agreement",
+      "contract-frozen-name",
+      "cookie-name-clause",
+      "dead-path-walk",
+      "drift-scan",
+      "executed-roles",
+      "guard-body-scope",
+      "guard-messages",
+      "http-only-clause",
+      "input-bytes",
+      "jls-translation",
+      "literal-masking",
+      "location-overrides",
+      "note-verbatim",
+      "per-case-role",
+      "prod-attribute-paths",
+      "prod-if-clause",
+      "recorded-counts",
+      "recorded-exit-code",
+      "recorded-roles",
+      "runtime-assertion",
+      "same-site-clause",
+      "secure-clause",
+      "static-reachability",
+      "toolchain-rehash",
+      "unread-extension",
+      "xml-clean",
+      "xml-count-internal",
+      "xml-name-set",
+      "xml-sha",
+      "yaml-census",
+      "yaml-flow-expansion"
+    ],
+    "shared-witness": [
+      "input-set-both-directions",
+      "properties-census",
+      "recorded-current-cases"
+    ],
+    "unwatched": [
+      "canary-construct-reasons",
+      "canary-report-numbers",
+      "canary-shell-word-scan"
+    ]
+  },
+  "corpusCap": 40,
+  "declaredDiagnostic": [
+    "yaml-construct-reasons"
+  ],
+  "gate": {
+    "path": "tests/engineering/T03/check_session_cookie.py",
+    "sha256": "5b82436d1a4b415cb93918f6e9d7bf81aaf28be80f8b9e48ee5c012ef5a65012"
+  },
+  "mode": "self-test",
+  "registered": 57,
+  "registryFromRoundTen": 54,
+  "rejectionSites": 83,
+  "selfTest": {
+    "canaries": [
+      "canary-report-numbers",
+      "canary-shell-word-scan",
+      "canary-construct-reasons"
+    ],
+    "detectorIdle": false,
+    "missed": [],
+    "reported": [
+      "canary-report-numbers",
+      "canary-shell-word-scan",
+      "canary-construct-reasons"
+    ]
+  },
+  "sharedWitness": [
+    "properties-census",
+    "input-set-both-directions",
+    "recorded-current-cases"
+  ],
+  "stubResults": [
+    {
+      "claim": "unicode escapes are translated the way javac reads them",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "container-default-spelled-with-escape",
+        "escape-swallowing-a-closing-quote",
+        "guard-call-under-escaped-block-comment",
+        "illegal-unicode-escape"
+      ],
+      "moved": [],
+      "probeFlips": [
+        "escape-in-identifier-is-legal"
+      ],
+      "stub": "jls-translation"
+    },
+    {
+      "claim": "the projections are measured against 600 synthetic shapes and every real source",
+      "class": "benign-half",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "tokenizer-selfcheck"
+    },
+    {
+      "claim": "comments are blanked out in every view",
+      "class": "benign-half",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "comment-blanking"
+    },
+    {
+      "claim": "the masked view blanks literal contents",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "call-only-recited-in-a-string"
+      ],
+      "moved": [
+        "guard-call-inside-text-block-prose"
+      ],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "literal-masking"
+    },
+    {
+      "claim": "the statements view blanks text-block prose",
+      "class": "benign-half",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "textblock-blanking"
+    },
+    {
+      "claim": "guard_call_site decides whether the assembly reaches the call",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "call-only-recited-in-a-string",
+        "guard-call-after-unconditional-return",
+        "guard-call-commented-out",
+        "guard-call-deleted",
+        "guard-call-in-constant-false-branch",
+        "guard-call-inside-text-block-prose",
+        "guard-call-moved-into-lambda",
+        "guard-call-under-boolean-false",
+        "guard-call-under-escaped-block-comment",
+        "guard-call-under-escaped-line-comment",
+        "guard-call-under-static-final-false",
+        "guard-call-under-while-false",
+        "textblock-desyncs-commented-guard"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "static-reachability"
+    },
+    {
+      "claim": "which method bodies a bean assembly runs",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "anchor-hides-name-text-cannot-attribute",
+        "anchor-name-only-in-text-block-prose",
+        "assembly-case-hollowed",
+        "assembly-helper-hollowed",
+        "binder-census-stops-reading-the-surface",
+        "binder-shape-case-hollowed",
+        "binder-shape-floor-loses-its-cases",
+        "binding-command-dtest-swapped",
+        "binding-command-echo-argv",
+        "binding-command-extra-flag",
+        "binding-command-not-pinned",
+        "binding-config-layer-unrecorded",
+        "binding-counts-disagree-with-xml",
+        "binding-exit-code-nonzero",
+        "binding-file-missing",
+        "binding-input-key-missing",
+        "binding-input-key-renamed",
+        "binding-jdk-hash-wrong",
+        "binding-jdk-not-the-run-java-home",
+        "binding-jdk-path-foreign",
+        "binding-jdk-vendor-disagrees",
+        "binding-jdk-version-disagrees",
+        "binding-note-claim-drift",
+        "binding-profile-stale",
+        "binding-roles-miscredited",
+        "binding-surefire-jar-hash-wrong",
+        "binding-surefire-jar-path-foreign",
+        "binding-testnames-fabricated",
+        "binding-xml-failure",
+        "binding-xml-sha-wrong",
+        "binding-xml-skipped-case",
+        "binding-xml-tests-count-inflated",
+        "call-only-recited-in-a-string",
+        "ci-drops-cookie-gate",
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-path-renamed",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-mixed-uses",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job",
+        "ci-workflow-schedule-only",
+        "config-adds-unrecorded-file",
+        "config-bind-profile-missing",
+        "config-checksum-stale-in-certificate",
+        "config-directory-layer-case-hollowed",
+        "config-surface-pattern-dropped",
+        "container-default-mentioned-in-a-text-block",
+        "container-default-spelled-with-escape",
+        "file-emptied-of-executed-roles",
+        "guard-call-after-unconditional-return",
+        "guard-call-commented-out",
+        "guard-call-deleted",
+        "guard-call-in-constant-false-branch",
+        "guard-call-inside-text-block-prose",
+        "guard-call-moved-into-lambda",
+        "guard-call-under-boolean-false",
+        "guard-call-under-escaped-block-comment",
+        "guard-call-under-escaped-line-comment",
+        "guard-call-under-static-final-false",
+        "guard-call-under-while-false",
+        "guard-test-anchor-literal-dropped",
+        "guard-test-case-renamed",
+        "guard-test-container-default-case-hollowed",
+        "guard-test-hollow-container-default",
+        "guard-test-prod-clauses-dropped",
+        "merge-key-second-declaration",
+        "runtime-assertion-commented-out",
+        "runtime-assertion-deleted",
+        "textblock-desyncs-commented-guard"
+      ],
+      "moved": [],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "bean-bodies"
+    },
+    {
+      "claim": "conditions javac can fold to false are dead",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-call-in-constant-false-branch",
+        "guard-call-under-boolean-false",
+        "guard-call-under-static-final-false",
+        "guard-call-under-while-false"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "constant-folding"
+    },
+    {
+      "claim": "a brace-less constant-false if/while/for never runs its single statement",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-call-in-constant-false-branch",
+        "guard-call-under-boolean-false",
+        "guard-call-under-static-final-false"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "braceless-dead-rule"
+    },
+    {
+      "claim": "a top-level brace ends a statement header, so a body is a body",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-call-under-while-false"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "brace-stop-in-header"
+    },
+    {
+      "claim": "describe_dead_path explains why a call is unreachable",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-call-after-unconditional-return",
+        "guard-call-in-constant-false-branch",
+        "guard-call-moved-into-lambda",
+        "guard-call-under-boolean-false",
+        "guard-call-under-static-final-false",
+        "guard-call-under-while-false",
+        "guard-neutered-never-fires"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "dead-path-walk"
+    },
+    {
+      "claim": "the guard's clauses are judged inside the guard's own body",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-line-deleted",
+        "guard-message-prefix-changed",
+        "guard-name-check-commented-out",
+        "guard-neutered-never-fires",
+        "guard-reads-wrong-property",
+        "message-only-in-literal",
+        "prod-branch-short-circuited",
+        "prod-check-neutered",
+        "prod-http-only-clause-deleted",
+        "prod-profile-token-renamed",
+        "prod-same-site-clause-deleted",
+        "prod-secure-default-flipped",
+        "secure-clause-only-in-literal"
+      ],
+      "moved": [
+        "guard-call-moved-to-dead-method"
+      ],
+      "probeFlips": [],
+      "stub": "guard-body-scope"
+    },
+    {
+      "claim": "the cookie-name comparison is present and reachable",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-reads-wrong-property"
+      ],
+      "moved": [
+        "guard-name-check-commented-out",
+        "guard-neutered-never-fires"
+      ],
+      "probeFlips": [],
+      "stub": "cookie-name-clause"
+    },
+    {
+      "claim": "the matchesProfiles(\"prod\") branch is present and reachable",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "prod-branch-short-circuited",
+        "prod-check-neutered",
+        "prod-profile-token-renamed"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "prod-if-clause"
+    },
+    {
+      "claim": "the secure attribute is read from the environment",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "prod-secure-default-flipped",
+        "secure-clause-only-in-literal"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "secure-clause"
+    },
+    {
+      "claim": "the http-only attribute is read from the environment",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "prod-http-only-clause-deleted"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "http-only-clause"
+    },
+    {
+      "claim": "the same-site attribute is compared to strict",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "prod-same-site-clause-deleted"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "same-site-clause"
+    },
+    {
+      "claim": "each rejection carries its T03_COOKIE message",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-line-deleted",
+        "guard-message-prefix-changed",
+        "message-only-in-literal"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "guard-messages"
+    },
+    {
+      "claim": "the integration test asserts the issued cookie name",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "runtime-assertion-commented-out",
+        "runtime-assertion-deleted"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "runtime-assertion"
+    },
+    {
+      "claim": "the container default may not be named in code",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "container-default-mentioned-in-a-text-block",
+        "container-default-spelled-with-escape",
+        "guard-test-hollow-container-default"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "drift-scan"
+    },
+    {
+      "claim": "only the exempt case may name the container default",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "container-default-mentioned-in-a-text-block",
+        "container-default-spelled-with-escape",
+        "guard-test-hollow-container-default"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "container-default-exemption"
+    },
+    {
+      "claim": "the guard test holds the approved name as a live literal",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "anchor-name-only-in-text-block-prose",
+        "guard-test-anchor-literal-dropped"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "anchor-literal"
+    },
+    {
+      "claim": "the production attribute names appear in live test code",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-test-prod-clauses-dropped"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "prod-attribute-paths"
+    },
+    {
+      "claim": "assertions are followed through the file's own helper methods",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "anchor-hides-name-text-cannot-attribute",
+        "anchor-name-only-in-text-block-prose",
+        "binding-command-dtest-swapped",
+        "binding-command-echo-argv",
+        "binding-command-extra-flag",
+        "binding-command-not-pinned",
+        "binding-config-layer-unrecorded",
+        "binding-counts-disagree-with-xml",
+        "binding-exit-code-nonzero",
+        "binding-file-missing",
+        "binding-input-key-missing",
+        "binding-input-key-renamed",
+        "binding-jdk-hash-wrong",
+        "binding-jdk-not-the-run-java-home",
+        "binding-jdk-path-foreign",
+        "binding-jdk-vendor-disagrees",
+        "binding-jdk-version-disagrees",
+        "binding-note-claim-drift",
+        "binding-profile-stale",
+        "binding-roles-miscredited",
+        "binding-surefire-jar-hash-wrong",
+        "binding-surefire-jar-path-foreign",
+        "binding-testnames-fabricated",
+        "binding-xml-failure",
+        "binding-xml-sha-wrong",
+        "binding-xml-skipped-case",
+        "binding-xml-tests-count-inflated",
+        "ci-drops-cookie-gate",
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-path-renamed",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-mixed-uses",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job",
+        "ci-workflow-schedule-only",
+        "config-adds-unrecorded-file",
+        "config-bind-profile-missing",
+        "config-checksum-stale-in-certificate",
+        "config-surface-pattern-dropped",
+        "container-default-mentioned-in-a-text-block",
+        "guard-test-case-renamed",
+        "merge-key-second-declaration"
+      ],
+      "moved": [
+        "assembly-case-hollowed",
+        "binder-census-stops-reading-the-surface",
+        "binder-shape-case-hollowed",
+        "binder-shape-floor-loses-its-cases",
+        "config-directory-layer-case-hollowed",
+        "container-default-spelled-with-escape",
+        "file-emptied-of-executed-roles",
+        "guard-test-anchor-literal-dropped",
+        "guard-test-container-default-case-hollowed",
+        "guard-test-hollow-container-default",
+        "guard-test-prod-clauses-dropped"
+      ],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "case-closure"
+    },
+    {
+      "claim": "each layer keeps its minimum number of executed cases",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binder-shape-floor-loses-its-cases"
+      ],
+      "moved": [
+        "assembly-case-hollowed",
+        "assembly-helper-hollowed",
+        "binder-census-stops-reading-the-surface"
+      ],
+      "probeFlips": [],
+      "stub": "executed-roles"
+    },
+    {
+      "claim": "every executed case drives a behaviour the gate can name",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "guard-test-container-default-case-hollowed"
+      ],
+      "moved": [
+        "binder-shape-case-hollowed",
+        "config-directory-layer-case-hollowed",
+        "file-emptied-of-executed-roles"
+      ],
+      "probeFlips": [],
+      "stub": "per-case-role"
+    },
+    {
+      "claim": "the YAML census attributes declarations across the whole surface",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "anchor-hides-name-text-cannot-attribute",
+        "anchor-name-only-in-text-block-prose",
+        "assembly-case-hollowed",
+        "assembly-helper-hollowed",
+        "binder-census-stops-reading-the-surface",
+        "binder-shape-case-hollowed",
+        "binder-shape-floor-loses-its-cases",
+        "binding-command-dtest-swapped",
+        "binding-command-echo-argv",
+        "binding-command-extra-flag",
+        "binding-command-not-pinned",
+        "binding-config-layer-unrecorded",
+        "binding-counts-disagree-with-xml",
+        "binding-exit-code-nonzero",
+        "binding-file-missing",
+        "binding-input-key-missing",
+        "binding-input-key-renamed",
+        "binding-jdk-hash-wrong",
+        "binding-jdk-not-the-run-java-home",
+        "binding-jdk-path-foreign",
+        "binding-jdk-vendor-disagrees",
+        "binding-jdk-version-disagrees",
+        "binding-note-claim-drift",
+        "binding-profile-stale",
+        "binding-roles-miscredited",
+        "binding-surefire-jar-hash-wrong",
+        "binding-surefire-jar-path-foreign",
+        "binding-testnames-fabricated",
+        "binding-xml-failure",
+        "binding-xml-sha-wrong",
+        "binding-xml-skipped-case",
+        "binding-xml-tests-count-inflated",
+        "call-only-recited-in-a-string",
+        "ci-drops-cookie-gate",
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-path-renamed",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-mixed-uses",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job",
+        "ci-workflow-schedule-only",
+        "code-constant-drifts",
+        "code-declares-config-location",
+        "config-adds-unrecorded-file",
+        "config-bind-profile-missing",
+        "config-checksum-stale-in-certificate",
+        "config-declares-location-override",
+        "config-directory-layer-case-hollowed",
+        "config-imports-optional-location",
+        "config-surface-pattern-dropped",
+        "container-default-mentioned-in-a-text-block",
+        "container-default-spelled-with-escape",
+        "escape-swallowing-a-closing-quote",
+        "file-emptied-of-executed-roles",
+        "guard-call-after-unconditional-return",
+        "guard-call-commented-out",
+        "guard-call-deleted",
+        "guard-call-in-constant-false-branch",
+        "guard-call-inside-text-block-prose",
+        "guard-call-moved-into-lambda",
+        "guard-call-moved-to-dead-method",
+        "guard-call-under-boolean-false",
+        "guard-call-under-escaped-block-comment",
+        "guard-call-under-escaped-line-comment",
+        "guard-call-under-static-final-false",
+        "guard-call-under-while-false",
+        "guard-line-deleted",
+        "guard-message-prefix-changed",
+        "guard-name-check-commented-out",
+        "guard-neutered-never-fires",
+        "guard-reads-wrong-property",
+        "guard-test-anchor-literal-dropped",
+        "guard-test-case-renamed",
+        "guard-test-container-default-case-hollowed",
+        "guard-test-hollow-container-default",
+        "guard-test-prod-clauses-dropped",
+        "illegal-unicode-escape",
+        "merge-key-second-declaration",
+        "message-only-in-literal",
+        "prod-branch-short-circuited",
+        "prod-check-neutered",
+        "prod-http-only-clause-deleted",
+        "prod-profile-token-renamed",
+        "prod-same-site-clause-deleted",
+        "prod-secure-default-flipped",
+        "runtime-assertion-commented-out",
+        "runtime-assertion-deleted",
+        "secure-clause-only-in-literal",
+        "textblock-desyncs-commented-guard"
+      ],
+      "moved": [
+        "all-profiles-override-cookie-name",
+        "case-variant-flow-override",
+        "config-changes-cookie-name",
+        "extra-document-carries-second-name",
+        "flow-base-second-name",
+        "flow-profile-override-cookie-name",
+        "quoted-duplicate-cookie-key"
+      ],
+      "probeFlips": [
+        "anchor-name-in-prose-and-live-literal",
+        "annotation-between-bean-and-signature",
+        "bean-body-string-contains-brace",
+        "binding-note-whitespace-rewrite",
+        "block-comment-containing-slashes-and-quotes",
+        "block-scalar-holds-an-unrelated-name",
+        "call-moved-to-another-assembled-bean",
+        "call-recited-in-a-string-while-live",
+        "char-literals-hold-quote-chars",
+        "ci-adds-shell-to-gate-step",
+        "ci-adds-unrelated-ungated-job",
+        "ci-adds-workflow-call-trigger",
+        "ci-invokes-gate-as-block-scalar",
+        "ci-invokes-gate-with-python3",
+        "ci-moves-gate-later-in-same-job",
+        "ci-renames-gate-step",
+        "ci-runs-gate-twice-in-second-job",
+        "comment-after-flow-value",
+        "container-default-in-config-comment",
+        "container-default-mentioned-in-prose-only",
+        "double-backslash-note-in-a-string",
+        "env-style-underscore-keys",
+        "escape-in-identifier-is-legal",
+        "escaped-comment-around-nothing",
+        "escaped-newline-inside-block-comment",
+        "guard-call-in-else-arm",
+        "guard-call-in-switch-default",
+        "guard-call-in-try-finally",
+        "guard-reflowed-with-whitespace",
+        "location-override-mentioned-in-comment",
+        "merge-key-carries-approved-name",
+        "properties-comment-names-default",
+        "textblock-odd-quotes-intact",
+        "url-string-looks-like-comment",
+        "yaml-flow-approved-name",
+        "yaml-flow-unrelated-keys"
+      ],
+      "stub": "yaml-census"
+    },
+    {
+      "claim": "properties layers are censused",
+      "class": "shared-witness",
+      "error": null,
+      "lost": [],
+      "moved": [
+        "properties-layer-wrong-name"
+      ],
+      "probeFlips": [],
+      "stub": "properties-census"
+    },
+    {
+      "claim": "multi-line flow mappings are folded before reading",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "flow-profile-override-cookie-name"
+      ],
+      "moved": [
+        "case-variant-flow-override",
+        "flow-base-second-name"
+      ],
+      "probeFlips": [
+        "yaml-flow-approved-name"
+      ],
+      "stub": "yaml-flow-expansion"
+    },
+    {
+      "claim": "trailing comments are cut before a line is parsed",
+      "class": "benign-half",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [
+        "comment-after-flow-value",
+        "location-override-mentioned-in-comment"
+      ],
+      "stub": "yaml-comment-stripping"
+    },
+    {
+      "claim": "anchors, merge keys and tags are reported as not attributed by text",
+      "class": "declared-diagnostic",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "yaml-construct-reasons"
+    },
+    {
+      "claim": "config files whose extension no face reads are reported",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "config-unread-extension-on-surface"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "unread-extension"
+    },
+    {
+      "claim": "declarations that move the surface out of the census",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "code-declares-config-location",
+        "config-declares-location-override",
+        "config-imports-optional-location"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "location-overrides"
+    },
+    {
+      "claim": "the frozen contract declares the approved name",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "contract-renames-cookie"
+      ],
+      "moved": [
+        "all-sources-rename-in-lockstep"
+      ],
+      "probeFlips": [],
+      "stub": "contract-frozen-name"
+    },
+    {
+      "claim": "the two contracts agree with each other",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "additive-scheme-extra-key"
+      ],
+      "moved": [
+        "additive-drops-scheme"
+      ],
+      "probeFlips": [],
+      "stub": "contract-agreement"
+    },
+    {
+      "claim": "the executed binder/census certificate is re-derived and compared",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "anchor-hides-name-text-cannot-attribute",
+        "config-adds-unrecorded-file",
+        "config-bind-profile-missing",
+        "config-checksum-stale-in-certificate",
+        "config-surface-pattern-dropped",
+        "merge-key-second-declaration"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "binder-certificate"
+    },
+    {
+      "claim": "the recorded argv against the pinned constant table",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-command-dtest-swapped",
+        "binding-command-echo-argv",
+        "binding-command-extra-flag",
+        "binding-command-not-pinned"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "argv-equality"
+    },
+    {
+      "claim": "provider jar and JDK launcher re-hashed and cross-checked with the XML",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-jdk-hash-wrong",
+        "binding-jdk-not-the-run-java-home",
+        "binding-jdk-path-foreign",
+        "binding-jdk-vendor-disagrees",
+        "binding-jdk-version-disagrees",
+        "binding-surefire-jar-hash-wrong",
+        "binding-surefire-jar-path-foreign"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "toolchain-rehash"
+    },
+    {
+      "claim": "the recorded input keys against the surface this gate enumerates",
+      "class": "shared-witness",
+      "error": null,
+      "lost": [],
+      "moved": [
+        "binding-config-layer-unrecorded",
+        "binding-input-key-missing",
+        "binding-input-key-renamed"
+      ],
+      "probeFlips": [],
+      "stub": "input-set-both-directions"
+    },
+    {
+      "claim": "every bound input re-hashed against the record",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-profile-stale"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "input-bytes"
+    },
+    {
+      "claim": "recorded case names against the XML's own testcases",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-testnames-fabricated"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "xml-name-set"
+    },
+    {
+      "claim": "the XML's declared test count against its own testcase elements",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-xml-tests-count-inflated"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "xml-count-internal"
+    },
+    {
+      "claim": "the recorded run has to be clean",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-xml-failure",
+        "binding-xml-skipped-case"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "xml-clean"
+    },
+    {
+      "claim": "the tracked XML's hash",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-xml-sha-wrong"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "xml-sha"
+    },
+    {
+      "claim": "the recorded counts against the re-parsed XML",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-counts-disagree-with-xml"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "recorded-counts"
+    },
+    {
+      "claim": "which case proves which layer, recorded and current, both directions",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-roles-miscredited"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "recorded-roles"
+    },
+    {
+      "claim": "the recorded run executed exactly the cases the current file has",
+      "class": "shared-witness",
+      "error": null,
+      "lost": [],
+      "moved": [
+        "guard-test-case-renamed"
+      ],
+      "probeFlips": [],
+      "stub": "recorded-current-cases"
+    },
+    {
+      "claim": "the note is exactly the recorder's wording",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-note-claim-drift"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "note-verbatim"
+    },
+    {
+      "claim": "the recorded run succeeded",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "binding-exit-code-nonzero"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "recorded-exit-code"
+    },
+    {
+      "claim": "the CI structural enforcement of the gate step",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "ci-drops-cookie-gate",
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-path-renamed",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-mixed-uses",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job",
+        "ci-workflow-schedule-only"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "ci-structure"
+    },
+    {
+      "claim": "a step or job that can be skipped does not police anything",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "ci-clean"
+    },
+    {
+      "claim": "an ancestor job that could be skipped",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "ci-gate-behind-skippable-ancestor"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "ci-needs-chain"
+    },
+    {
+      "claim": "every copy of the gate step is checked for skippability",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "ci-gate-behind-skippable-ancestor",
+        "ci-gate-step-continue-on-error",
+        "ci-gate-step-skippable-if",
+        "ci-job-continue-on-error",
+        "ci-job-skippable-if",
+        "ci-moves-gate-to-schedule-only-job"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "ci-skippable-copies"
+    },
+    {
+      "claim": "the job is reached by push or pull request",
+      "class": "own-witness",
+      "error": null,
+      "lost": [
+        "ci-workflow-schedule-only"
+      ],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "ci-trigger-required"
+    },
+    {
+      "claim": "the tokenizer self-measurement has to report numbers (the reviewer's own type)",
+      "class": "unwatched",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "canary-report-numbers"
+    },
+    {
+      "claim": "an argv element that is a shell word cannot run the suite",
+      "class": "unwatched",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "canary-shell-word-scan"
+    },
+    {
+      "claim": "anchors, merge keys and tags are reported as not attributed by text",
+      "class": "unwatched",
+      "error": null,
+      "lost": [],
+      "moved": [],
+      "probeFlips": [],
+      "stub": "canary-construct-reasons"
+    }
+  ],
+  "unwatched": [
+    "canary-report-numbers",
+    "canary-shell-word-scan",
+    "canary-construct-reasons"
+  ]
+}

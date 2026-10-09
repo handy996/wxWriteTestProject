@@ -1,0 +1,68 @@
+baseline: 106/106 negative controls rejected, 36/36 benign probes accepted (records re-hashed, corpus capped at 40)
+  jls-translation              lost  4  moved  0  probes  1  own-witness
+  tokenizer-selfcheck          lost  0  moved  0  probes 36  benign-half
+  comment-blanking             lost  0  moved  0  probes 36  benign-half
+  literal-masking              lost  1  moved  1  probes 36  own-witness
+  textblock-blanking           lost  0  moved  0  probes 36  benign-half
+  static-reachability          lost 13  moved  0  probes  0  own-witness
+  bean-bodies                  lost 71  moved  0  probes 36  own-witness
+  constant-folding             lost  4  moved  0  probes  0  own-witness
+  braceless-dead-rule          lost  3  moved  0  probes  0  own-witness
+  brace-stop-in-header         lost  1  moved  0  probes  0  own-witness
+  dead-path-walk               lost  7  moved  0  probes  0  own-witness
+  guard-body-scope             lost 13  moved  1  probes  0  own-witness
+  cookie-name-clause           lost  1  moved  2  probes  0  own-witness
+  prod-if-clause               lost  3  moved  0  probes  0  own-witness
+  secure-clause                lost  2  moved  0  probes  0  own-witness
+  http-only-clause             lost  1  moved  0  probes  0  own-witness
+  same-site-clause             lost  1  moved  0  probes  0  own-witness
+  guard-messages               lost  3  moved  0  probes  0  own-witness
+  runtime-assertion            lost  2  moved  0  probes  0  own-witness
+  drift-scan                   lost  3  moved  0  probes  0  own-witness
+  container-default-exemption  lost  3  moved  0  probes  0  own-witness
+  anchor-literal               lost  2  moved  0  probes  0  own-witness
+  prod-attribute-paths         lost  1  moved  0  probes  0  own-witness
+  case-closure                 lost 44  moved 11  probes 36  own-witness
+  executed-roles               lost  1  moved  3  probes  0  own-witness
+  per-case-role                lost  1  moved  3  probes  0  own-witness
+  yaml-census                  lost 91  moved  7  probes 36  own-witness
+  properties-census            lost  0  moved  1  probes  0  shared-witness
+  yaml-flow-expansion          lost  1  moved  2  probes  1  own-witness
+  yaml-comment-stripping       lost  0  moved  0  probes  2  benign-half
+  yaml-construct-reasons       lost  0  moved  0  probes  0  declared-diagnostic
+  unread-extension             lost  1  moved  0  probes  0  own-witness
+  location-overrides           lost  3  moved  0  probes  0  own-witness
+  contract-frozen-name         lost  1  moved  1  probes  0  own-witness
+  contract-agreement           lost  1  moved  1  probes  0  own-witness
+  binder-certificate           lost  6  moved  0  probes  0  own-witness
+  argv-equality                lost  4  moved  0  probes  0  own-witness
+  toolchain-rehash             lost  7  moved  0  probes  0  own-witness
+  input-set-both-directions    lost  0  moved  3  probes  0  shared-witness
+  input-bytes                  lost  1  moved  0  probes  0  own-witness
+  xml-name-set                 lost  1  moved  0  probes  0  own-witness
+  xml-count-internal           lost  1  moved  0  probes  0  own-witness
+  xml-clean                    lost  2  moved  0  probes  0  own-witness
+  xml-sha                      lost  1  moved  0  probes  0  own-witness
+  recorded-counts              lost  1  moved  0  probes  0  own-witness
+  recorded-roles               lost  1  moved  0  probes  0  own-witness
+  recorded-current-cases       lost  0  moved  1  probes  0  shared-witness
+  note-verbatim                lost  1  moved  0  probes  0  own-witness
+  recorded-exit-code           lost  1  moved  0  probes  0  own-witness
+  ci-structure                 lost 10  moved  0  probes  0  own-witness
+  ci-clean                     lost  6  moved  0  probes  0  own-witness
+  ci-needs-chain               lost  1  moved  0  probes  0  own-witness
+  ci-skippable-copies          lost  6  moved  0  probes  0  own-witness
+  ci-trigger-required          lost  1  moved  0  probes  0  own-witness
+  canary-report-numbers        lost  0  moved  0  probes  0  unwatched
+  canary-shell-word-scan       lost  0  moved  0  probes  0  unwatched
+  canary-construct-reasons     lost  0  moved  0  probes  0  unwatched
+
+registered 57 judgements against 83 `raise Rejected` sites in the gate; 4 benign-half, 1 declared-diagnostic, 46 own-witness, 3 shared-witness, 3 unwatched; nothing is claimed about judgements that are not registered
+  unwatched: canary-report-numbers
+  unwatched: canary-shell-word-scan
+  unwatched: canary-construct-reasons
+  shared witness: properties-census
+  shared witness: input-set-both-directions
+  shared witness: recorded-current-cases
+declared diagnostics (no verdict may depend on them): yaml-construct-reasons
+detector bit: every expected-inert canary was reported as unguarded (red by design)
