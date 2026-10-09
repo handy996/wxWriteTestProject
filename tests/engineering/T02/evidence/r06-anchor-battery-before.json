@@ -1,0 +1,964 @@
+{
+  "record": "T02 R06 anchor battery (before)",
+  "tool": "docs/execution/reviews/T02-round5/evidence/r5-harness-probe.py attack (reviewer harness, run read-only)",
+  "configUnderTest": "tests/engineering/T02/gitleaks.toml at 641c19b6b16282db (word-boundary anchors)",
+  "configSha256Prefix16": "641c19b6b16282db",
+  "probes": 104,
+  "summary": {
+    "reported": 34,
+    "suppressed": 56,
+    "voidDefaultRuleDoesNotFire": 3,
+    "exactValueProbes": 11
+  },
+  "punctuationAdjacency": {
+    "probes": 51,
+    "suppressed": 51,
+    "shapes": [
+      "suf-dash",
+      "pre-dash",
+      "mid-dash",
+      "suf-dot",
+      "suf-eq"
+    ],
+    "note": "counts are per probe over values 00-09; shape names match the reviewer harness"
+  },
+  "rows": [
+    {
+      "probe": "10-dots-four",
+      "shape": "truncated-family",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-dash",
+      "shape": "truncated-family",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-lowerhex",
+      "shape": "truncated-family",
+      "kind": "void",
+      "baseFindings": 0,
+      "baseExit": 0,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-nonhex-Z",
+      "shape": "truncated-family",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-nonhex-g",
+      "shape": "truncated-family",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-space-word",
+      "shape": "truncated-family",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-then-upperhex",
+      "shape": "truncated-family",
+      "kind": "void",
+      "baseFindings": 0,
+      "baseExit": 0,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "10-dots-two",
+      "shape": "truncated-family",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "10-other-prefix",
+      "shape": "truncated-family",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "10-pre-dash",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "coll-64hex-embedded",
+      "shape": "collision",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "coll-full-hex-same-prefix",
+      "shape": "collision",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "coll-full-hex-same-prefix-2",
+      "shape": "collision",
+      "kind": "void",
+      "baseFindings": 0,
+      "baseExit": 0,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-00",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-01",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-02",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-03",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-04",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-05",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-06",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-07",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-08",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-09",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "exact-10",
+      "shape": "alnum",
+      "kind": "exact",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-00",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-01",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-02",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-03",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-04",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-05",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-06",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-07",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-08",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "mid-dash-09",
+      "shape": "mid-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-alnum-00",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-01",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-02",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-03",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-04",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-05",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-06",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-07",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-08",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-alnum-09",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "pre-dash-00",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-01",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-02",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-03",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-04",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-05",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-06",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-07",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-08",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "pre-dash-09",
+      "shape": "pre-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-alnum-00",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-01",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-02",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-03",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-04",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-05",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-06",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-07",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-08",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-alnum-09",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-dash-00",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-01",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-02",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-03",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-04",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-05",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-06",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-07",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-08",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dash-09",
+      "shape": "suf-dash",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-00",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-01",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-02",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-03",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-04",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-05",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-06",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-07",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-08",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-dot-09",
+      "shape": "suf-dot",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-00",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-01",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-02",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-03",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-04",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-05",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-06",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-07",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-08",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-eq-09",
+      "shape": "suf-eq",
+      "kind": "suppressed",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 0,
+      "gateExit": 0
+    },
+    {
+      "probe": "suf-us-00",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-01",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-02",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-03",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-04",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-05",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-06",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-07",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-08",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    },
+    {
+      "probe": "suf-us-09",
+      "shape": "alnum",
+      "kind": "reported",
+      "baseFindings": 1,
+      "baseExit": 1,
+      "gateFindings": 1,
+      "gateExit": 1
+    }
+  ],
+  "masking": "token text and Match text dropped before writing; no exempt value survives here"
+}

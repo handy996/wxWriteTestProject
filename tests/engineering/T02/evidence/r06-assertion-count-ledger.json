@@ -1,0 +1,117 @@
+{
+  "record": "T02 R06 assertion-count ledger (round-5 review section 3, structural weakness 1)",
+  "pinned": {
+    "structure": 19,
+    "controls": 223
+  },
+  "history": [
+    {
+      "run": 0,
+      "round": "R05 delivered battery",
+      "controlsAssertions": 139,
+      "guard": "none",
+      "note": "the round-5 review showed 139 could silently become 115 when the config was wildcarded: nothing looked at the total"
+    },
+    {
+      "run": 1,
+      "round": "R06, punctuation and underscore super-strings added, pin guessed at 195",
+      "controlsAssertions": 197,
+      "exit": 1,
+      "note": "the only FAIL was the pin itself (emitted 196 before the guard, 197 with it, expected 195)"
+    },
+    {
+      "run": 2,
+      "round": "R06, pin set to the measured 197",
+      "controlsAssertions": 197,
+      "exit": 0
+    },
+    {
+      "run": 3,
+      "round": "R06, 14 span controls added, pin still 197",
+      "controlsAssertions": 211,
+      "exit": 1,
+      "note": "emitted 210 before the guard, 211 with it / expected 197"
+    },
+    {
+      "run": 4,
+      "round": "R06, pin set to the measured 211",
+      "controlsAssertions": 211,
+      "exit": 0
+    },
+    {
+      "run": 5,
+      "round": "R06, ninth adjacency shape (mdash, dashes on both sides) added and the pin recomputed by category before running",
+      "controlsAssertions": 222,
+      "exit": 0,
+      "note": "first run where the pin did not fail: 211 + 11 probes for the new shape = 222, verified rather than guessed after the fact"
+    },
+    {
+      "run": 6,
+      "round": "R06, concurrency defect found and fixed: the battery keeps its probe tree under a per-process scratch directory, so two runs in the same working tree stop deleting each other's files mid-battery; one assertion added to pin that property",
+      "controlsAssertions": 223,
+      "exit": 0,
+      "note": "this pin was computed by category (222 + 1) and verified by two simultaneous full runs, both green - the pair of runs is itself the regression test for the collision"
+    }
+  ],
+  "composition": {
+    "structure": {
+      "config-shape": 5,
+      "per-value label": 11,
+      "pairing": 2,
+      "count guard": 1
+    },
+    "controls": {
+      "structure lines": 18,
+      "scanner": 1,
+      "positive": 10,
+      "aws-shape corners": 3,
+      "blind-spot": 3,
+      "reverse battery": 68,
+      "super-string controls": 99,
+      "span controls": 14,
+      "benign": 4,
+      "process-scoped scratch": 1,
+      "scratch deleted": 1,
+      "count guard": 1
+    },
+    "reverseBatteryBreakdown": {
+      "not-void cross-check": 1,
+      "per-value liveness": 11,
+      "one-character mutations": 44,
+      "battery size": 1,
+      "unchanged value suppressed": 11
+    },
+    "superShapeNames": [
+      "pre",
+      "suf",
+      "emb",
+      "usuf",
+      "pdash",
+      "sdash",
+      "sdot",
+      "seq",
+      "mdash"
+    ]
+  },
+  "deltaFromR05": {
+    "superStringControlsAdded": 66,
+    "awsEntropyAndExampleCorners": 2,
+    "spanControls": 14,
+    "processScopedScratch": 1,
+    "countGuard": 1,
+    "deletedFromR05Battery": 0,
+    "total": 223
+  },
+  "voidProbes": {
+    "structure": 0,
+    "controlsFinal": 0,
+    "note": "void means the default rule itself does not fire, so nothing can be said about the exception for that probe; void probes are printed as NOTE and excluded from per-probe assertions, which is exactly how a battery shrinks silently - the pin is what makes that loud"
+  },
+  "concurrencyDefect": {
+    "symptom": "two full-battery runs started in the same working tree reported 170/221 PASS with void probes and false failures, because the scratch path was a constant and the second run's rmtree wiped the first run's probe files mid-battery",
+    "howItWasMistakenFor": "a real gate failure - it reddened the mandatory matrix twice before the cause was identified",
+    "fix": "scratch = WORK / ('allowlist-controls-%d' % os.getpid())",
+    "regression": "one assertion pins the process-scoped name, and two simultaneous runs of the delivered battery both exit 0 with 223 PASS / 0 FAIL / 0 NOTE",
+    "tradeoffLeftOpen": "a crashed run now leaves its own directory under the gitignored .work tree; nothing sweeps the prefix, because sweeping would re-open the race"
+  }
+}

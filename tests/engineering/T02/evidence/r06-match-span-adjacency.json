@@ -1,0 +1,139 @@
+{
+  "record": "T02 R06 generic-api-key Match-span adjacency table (why word boundaries were the wrong anchor)",
+  "rule": "generic-api-key token class [\\w.=-]{10,150}: a character that the class accepts continues the Match span, so suppressing a finding whose span covers value+joiner+tail is substring allowlisting; a character outside the class ends the span, so suppressing there is value allowlisting",
+  "configUnderTest": "defaults only (the span is a property of the rule, not of the exception)",
+  "syntheticValue": "64 hex characters generated at runtime, never written to the repository",
+  "observedContinuers": [],
+  "observedTerminators": [],
+  "rows": [
+    {
+      "joiner": "U+002D",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+002E",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+003D",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+005F",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+002F",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+002B",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0030",
+      "joinerIsAlphanumeric": true,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0061",
+      "joinerIsAlphanumeric": true,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+003B",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0022",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0027",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0060",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0020",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+0009",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+003A",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    },
+    {
+      "joiner": "U+002C",
+      "joinerIsAlphanumeric": false,
+      "findings": 0,
+      "exit": 0,
+      "tailCoveredByMatch": false,
+      "matchLength": 0
+    }
+  ],
+  "residualCase": "value + space + high-entropy tail stays suppressed under the delivered config because the Match span ends at the whitespace (33 characters for the truncated form, tail not covered); pinned by the span controls in check_gitleaks_allowlists.py --with-controls"
+}

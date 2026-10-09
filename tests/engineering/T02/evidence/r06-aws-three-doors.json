@@ -1,0 +1,100 @@
+{
+  "record": "T02 R06 aws-access-token three doors (round-5 review R5-2 / R5-3 / R5-5)",
+  "rule": "aws-access-token default regex = (?:A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z2-7]{16}, entropy = 3 (exact, measured over the whole match string because regexTarget defaults to match), plus the rule's own allowlist regex .+EXAMPLE$",
+  "conjunctionDefect": "writing the criterion as \"base32 AND entropy\" omits the third door and therefore overstates detection: the example vector passes both stated doors (whole-match entropy 3.6842) and is still not reported",
+  "entropyUnit": {
+    "threshold": 3.0,
+    "measuredOver": "whole 20-character match including the AKIA prefix",
+    "alsoStatedForReference": "suffix-only readings 2.5613 (miss) and 2.7806 (hit), range (2.561, 2.781] - a different unit, not a contradiction",
+    "flipPairWholeMatch": [
+      2.8282,
+      3.0037
+    ]
+  },
+  "probes": [
+    {
+      "case": "door1-alphabet-legal-live-canary",
+      "matchLength": 20,
+      "suffixEntropy": 4.0,
+      "wholeMatchEntropy": 3.8842,
+      "defaultsFindings": 1,
+      "deliveredFindings": 1,
+      "defaultsExit": 1,
+      "deliveredExit": 1,
+      "rules": [
+        "aws-access-token"
+      ]
+    },
+    {
+      "case": "door1-alphabet-violation-one-digit",
+      "matchLength": 24,
+      "suffixEntropy": 3.8842,
+      "wholeMatchEntropy": 3.705,
+      "defaultsFindings": 0,
+      "deliveredFindings": 0,
+      "defaultsExit": 0,
+      "deliveredExit": 0,
+      "rules": []
+    },
+    {
+      "case": "door2-legal-base32-low-entropy",
+      "matchLength": 20,
+      "suffixEntropy": 2.0,
+      "wholeMatchEntropy": 2.3464,
+      "defaultsFindings": 0,
+      "deliveredFindings": 0,
+      "defaultsExit": 0,
+      "deliveredExit": 0,
+      "rules": []
+    },
+    {
+      "case": "door3-upstream-example-vector",
+      "matchLength": 20,
+      "suffixEntropy": 3.625,
+      "wholeMatchEntropy": 3.6842,
+      "defaultsFindings": 0,
+      "deliveredFindings": 0,
+      "defaultsExit": 0,
+      "deliveredExit": 0,
+      "rules": []
+    },
+    {
+      "case": "door3-example-vector-last-char-changed",
+      "matchLength": 20,
+      "suffixEntropy": 3.625,
+      "wholeMatchEntropy": 3.6842,
+      "defaultsFindings": 1,
+      "deliveredFindings": 1,
+      "defaultsExit": 1,
+      "deliveredExit": 1,
+      "rules": [
+        "aws-access-token"
+      ]
+    },
+    {
+      "case": "flip-lowest-distribution-k6",
+      "matchLength": 20,
+      "suffixEntropy": 2.5613,
+      "wholeMatchEntropy": 2.8282,
+      "defaultsFindings": 0,
+      "deliveredFindings": 0,
+      "defaultsExit": 0,
+      "deliveredExit": 0,
+      "rules": []
+    },
+    {
+      "case": "flip-lowest-distribution-k7",
+      "matchLength": 20,
+      "suffixEntropy": 2.7806,
+      "wholeMatchEntropy": 3.0037,
+      "defaultsFindings": 1,
+      "deliveredFindings": 1,
+      "defaultsExit": 1,
+      "deliveredExit": 1,
+      "rules": [
+        "aws-access-token"
+      ]
+    }
+  ],
+  "masking": "no secret-shaped value is written here; only lengths, entropies and counts"
+}

@@ -7,7 +7,8 @@ useDefault = true
 # value test never runs and a real credential committed into that file is invisible. This file
 # therefore carries no file-condition entry at all; every exception below is an exact value, and
 # the file holding that value stays scanned. Ban asserted by the check script and by CI.
-# Reproduce the semantics: docs/execution/reports/T02-Revision-R05.md.
+# Reproduce the semantics: docs/execution/reports/T02-Revision-R05.md; the widened-anchor finding
+# and this replacement: docs/execution/reviews/T02-round5/review.md R5-1 and R06.
 #
 # `condition = "AND"` is measured to act BETWEEN dimensions (paths / commits / regexes): a block
 # suppresses only if every present dimension matches. WITHIN one block, several `regexes` are an
@@ -15,49 +16,62 @@ useDefault = true
 # fingerprints share one block and each value on its own suppresses its line). The scanner never
 # requires all regexes in a block to match the same finding.
 #
-# Each exception is anchored with a word boundary so value-allowlisting is NOT substring-
-# allowlisting: `\b<value>\b` suppresses the exact token but lets a longer secret that merely
-# CONTAINS the value (prefix+value, value+suffix, embedded) be reported again. The truncated
-# prose digest (19 chars, ends in literal `...`) cannot take a trailing `\b` because `.` is a
-# non-word char, so it is guarded by a RE2-safe `[^0-9a-f]` after the dots. Lookaround
-# (`(?<!...)`/`(?!...)`) is NOT used: gitleaks 8.30.1 embeds RE2 and panics with
-# "invalid perl operator" on it, aborting the whole config (measured in R05).
+# Anchoring, round 6 (R5-1): a word boundary is NOT a token boundary. `regexTarget = "match"`
+# searches the exception inside the rule's Match span, and generic-api-key's token class is
+# `[\w.=-]{10,150}`, so `-`, `.` and `=` are simultaneously legal token characters and `\b`
+# boundaries. Measured with `\b<value>\b`: `<value>-SECRET`, `SECRET-<value>`, `<value>.SECRET`,
+# `<value>=SECRET` each stayed suppressed on 10 of 10 values (50 cases), i.e. allowing a value
+# allowed every longer token that merely touches it with punctuation. `\b` is therefore replaced
+# by two CLOSED delimiter classes, RE2-expressible and measured in R06:
+#   left  `(?:^|[\x60'"=:\s])`   right  `(?:$|[\x60'"\s;])`
+# (backtick written as \x60 so the class stays a plain TOML literal string). Every character that
+# measured continues the token span - alphanumerics, `_`, `-`, `.`, `=`, `/`, `+` - is excluded
+# from both classes, so a joined super-string is reported again; whitespace, quotes, backtick,
+# `;`, `:` and `=` on the left are the shapes real records put around a value. The exception is
+# still value-only: it never mentions a path, a file type or a directory.
+# Lookaround (`(?<!...)`/`(?!...)`) is still NOT used: gitleaks 8.30.1 embeds RE2 and panics with
+# "invalid perl operator" on it, aborting the whole config - measured in R05 and re-measured by
+# the round-5 reviewer (three forms, exit 2, untouched entries went 0-hit too).
+# The 11th exception is the truncated prose digest: 16 hex characters plus three literal dots.
+# `.` is a token character, so after the dots a RE2-safe `[^0-9a-f]` still consumes exactly one
+# character (never a wildcard tail) and the closed right class then bounds it: an appended
+# non-hex character followed by anything token-shaped is reported again.
 
 [[allowlists]]
-description = "SRS public example request identifier (fixture), exact value only, word-boundary anchored"
+description = "SRS public example request identifier (fixture), exact value only, delimiter-class anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''\b397c4e7a\-d8f0\-4d83\-b885\-342f8248d8e2\b''',
+  '''(?:^|[\x60'"=:\s])397c4e7a\-d8f0\-4d83\-b885\-342f8248d8e2(?:$|[\x60'"\s;])''',
 ]
 
 [[allowlists]]
-description = "UUID of a deleted T04 integration test object quoted in frozen evidence, exact value only, word-boundary anchored"
+description = "UUID of a deleted T04 integration test object quoted in frozen evidence, exact value only, delimiter-class anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''\b55565d49\-a894\-42ec\-8a42\-df7e2dc50a86\b''',
+  '''(?:^|[\x60'"=:\s])55565d49\-a894\-42ec\-8a42\-df7e2dc50a86(?:$|[\x60'"\s;])''',
 ]
 
 [[allowlists]]
-description = "Six R01 delivery fingerprints quoted in the frozen r01-integrity record, exact values only, word-boundary anchored"
+description = "Six R01 delivery fingerprints quoted in the frozen r01-integrity record, exact values only, delimiter-class anchored"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''\b775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99\b''',
-  '''\becfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea\b''',
-  '''\bac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4\b''',
-  '''\b408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9\b''',
-  '''\b394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc\b''',
-  '''\b568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1\b''',
+  '''(?:^|[\x60'"=:\s])775fb0764e03432b244442b8669942fc5300c8e45268b54ca6bc16f8ec65ec99(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])ecfd7efc8206f890bc399b096c9627de4b348eece6ee83b883f1823bb881a8ea(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])ac4a337a11169f14168abdb644d8d7c2df62c21ff26b5d0c9d3496dee0bd8cc4(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])408651c696839292bfb9c713eefbf65f5f525e864a5a49466608822626576ac9(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])394de144ba3293d6b1affcc1be4722a94d4bfe56990c7e6e9a3f702ccfebf4bc(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])568ac57369de4cb42da124ae56570797323abadcded57f5fcf40933b3a9f6eb1(?:$|[\x60'"\s;])''',
 ]
 
 [[allowlists]]
-description = "Two frozen 1.0.0-rc.3 contract file digests (word-boundary anchored), plus one 16-character truncated-prose digest (literal dots, RE2-safe non-hex guard), exact values only"
+description = "Two frozen 1.0.0-rc.3 contract file digests (delimiter-class anchored), plus one 16-character truncated-prose digest (literal dots, one non-hex character, then the closed right class), exact values only"
 condition = "AND"
 regexTarget = "match"
 regexes = [
-  '''\be285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b\b''',
-  '''\b0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd\b''',
-  '''\be285471760a5dce4\.\.\.[^0-9a-f]''',
+  '''(?:^|[\x60'"=:\s])e285471760a5dce4f3df7445b6dcf29dcb1e7fefbefd3e9b535440ac8c67eb2b(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])0db04ea086c2c563b2153b851b54e44c80d1d1c23d927ee49f62f9cc92da68fd(?:$|[\x60'"\s;])''',
+  '''(?:^|[\x60'"=:\s])e285471760a5dce4\.\.\.[^0-9a-f](?:$|[\x60'"\s;])''',
 ]

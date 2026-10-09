@@ -1,0 +1,51 @@
+# R06 assertion-count pin: the runs where the guard failed its own author
+
+Command (every run): `$py tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe`
+Working directory: repository root. `$py` = the runtime python. Exit codes were captured immediately
+after each command (`$LASTEXITCODE`), never inferred from the wrapper (a pwsh exit 0 with a failed
+inner command is the trap this round keeps hitting).
+
+| run | what changed | pinned | emitted (incl. the pin) | exit | the only FAIL |
+|---|---|---|---|---|---|
+| 1 | super-strings widened to 8 adjacency shapes | 195 | 197 | 1 | the pin |
+| 2 | pin set to the measured value | 197 | 197 | 0 | none |
+| 3 | 14 span controls added | 197 | 211 | 1 | the pin |
+| 4 | pin set to the measured value | 211 | 211 | 0 | none |
+| 5 | 9th adjacency shape `mdash` added, pin recomputed by category | 222 | 222 | 0 | none |
+| 6 | concurrency fix: probe tree becomes per-process, one assertion pins it | 223 | 223 | 0 | none |
+
+Verbatim FAIL lines (in both red runs the pin was the only failing assertion):
+
+```
+FAIL  assertion count: controls mode emits exactly 195 assertions (pinned, battery may not shrink or pad)  [emitted 196 before this guard, 197 with it / expected 195]
+FAIL  assertion count: controls mode emits exactly 197 assertions (pinned, battery may not shrink or pad)  [emitted 210 before this guard, 211 with it / expected 197]
+```
+
+Verbatim PASS lines of the green runs:
+
+```
+PASS  assertion count: controls mode emits exactly 197 assertions (pinned, battery may not shrink or pad)  [emitted 196 before this guard, 197 with it / expected 197]
+PASS  assertion count: controls mode emits exactly 211 assertions (pinned, battery may not shrink or pad)  [emitted 210 before this guard, 211 with it / expected 211]
+PASS  assertion count: controls mode emits exactly 222 assertions (pinned, battery may not shrink or pad)  [emitted 221 before this guard, 222 with it / expected 222]
+```
+
+Structure mode is pinned the same way:
+
+```
+PASS  assertion count: structure mode emits exactly 19 assertions (pinned, battery may not shrink or pad)  [emitted 18 before this guard, 19 with it / expected 19]
+```
+
+Composition, R05 -> R06 (real counts; nothing was deleted to reach the number):
+
+- R05 shipped **139** controls assertions. The round-5 review's structural weakness was that a
+  wildcarded config could take 139 down to 115 with every remaining line green: no assertion looked at
+  the total, and void probes are excluded silently.
+- R06 adds **+66** super-string controls (6 new adjacency shapes - `_`, dash-prefix, dash-suffix,
+  dot-suffix, `=`-suffix, and dashes on both sides - over 11 values), **+2** AWS entropy/example
+  corner controls, **+14** span controls, **+1** the pin = **222**, with 0 void probes.
+- The `>= 40` mutation tolerance is now `mutation_total == 44` plus a per-value
+  "all 4 single-character probes stay live" for each of the 11 values.
+- Red control: a variant of the gate with the pinned total moved off the measured value makes the pin
+  the ONLY failing assertion (see evidence/r06-red-control-variants-final.json).
+
+The concurrency line (run 6) is not cosmetic: before it, two full-battery runs started in this working tree wiped each other's probe files through a shared fixed scratch path and produced two false reds. The delivered battery now keeps its probes under `allowlist-controls-<pid>`, and the regression test is two simultaneous runs that both come back `223 PASS / 0 FAIL / 0 NOTE`, exit 0.

@@ -1,28 +1,38 @@
-"""Gitleaks exception policy gate for T02 (CI: run with --with-controls and the pinned scanner).
+r"""Gitleaks exception policy gate for T02 (CI: run with --with-controls and the pinned scanner).
 
 Structure mode always runs and needs no scanner. It proves `tests/engineering/T02/gitleaks.toml`
 carries no file-condition exception: in Gitleaks 8.30.1 an allowlist entry with a file condition
 makes the scanner skip that file entirely (its own log reports "scanned 0 bytes"), so the paired
 value test never runs and any credential committed into that file stays invisible.
 
-Value exceptions in the delivered config are word-boundary anchored (`\\b<value>\\b`) so allowing a
-value is NOT the same as allowing any string that contains it: prefix+value, value+suffix and an
-embedded value are all reported again. The truncated 19-character prose digest cannot take a
-trailing `\\b` (it ends in a literal dot), so it is guarded by a RE2-safe `[^0-9a-f]`. Lookaround is
-not used because Gitleaks 8.30.1 embeds RE2 and panics on `(?<!`/`(?!` (aborting the whole config).
+Value exceptions in the delivered config are anchored between two CLOSED delimiter classes
+(`(?:^|[\x60'"=:\s])<value>(?:$|[\x60'"\s;])`) so allowing a value is NOT the same as allowing any
+string that touches it: prefix+value, value+suffix, an embedded value, and a value joined by `-`,
+`.`, `=` or `_` are all reported again. A word boundary is not enough here: `regexTarget="match"`
+searches inside the rule's Match span, generic-api-key's token class is `[\w.=-]{10,150}`, and
+`-`/`.`/`=` are both token characters and `\b` boundaries - measured as 50 suppressed punctuation
+joins in docs/execution/reviews/T02-round5/review.md (R5-1) and re-measured by this gate's
+punctuation controls. The truncated 19-character prose digest cannot end in a delimiter right after
+its literal dots (a dot IS a token character), so one RE2-safe `[^0-9a-f]` consumes exactly one
+character and the closed right class bounds the rest. Lookaround is not used because Gitleaks 8.30.1
+embeds RE2 and panics on `(?<!`/`(?!` (aborting the whole config, exit 2).
 
 Controls mode runs the acceptance controls with Gitleaks against copies inside gitignored `.work`
 only; nothing is written to a tracked path and the scratch tree is deleted before exit:
 
   positive   synthetic credentials (GitHub PAT, PEM key, AWS-shaped id) planted in copies of the
-             three formerly exempted files are caught; a near-miss AWS id (alphabet outside the
-             rule's A-Z2-7 set) is planted too and is documented NOT to fire (feature, not defect);
+             three formerly exempted files are caught; two near-miss AWS ids are planted too and
+             are documented NOT to fire (feature, not defect) - one with characters outside the
+             rule's A-Z2-7 alphabet, one legal base32 whose entropy stays under the rule's gate;
   blind spot the same tree, scanned with the withdrawn file-condition shape, catches none of them;
   reverse    every exempted value changed by one character (first / two middles / last = 44 probes)
-             is reported again; the exact value stays suppressed; and substring super-strings of the
-             value are reported again (the anchoring is falsifiable);
+             is reported again; the exact value stays suppressed; and substring super-strings of
+             the value - alphanumeric and punctuation-joined - are reported again (the anchoring
+             is falsifiable, and the total number of assertions is pinned so that a probe quietly
+             turning void cannot shrink the battery without a failure);
   benign     the fingerprint manifest the T02 generator now writes stays clean with no allowlist;
-  pairing    digest_records refuses a path+digest record written on one line (the F-03 root cause).
+  pairing    digest_records refuses a path+digest record written on one line (the F-03 root cause),
+             which is a precondition on the moment a manifest is written, not a scan of history.
 """
 import argparse
 import json
@@ -43,12 +53,47 @@ FORMERLY_EXEMPT = ('docs/AI-Editorial-Agent-SRS-v1.0.md',
                    'tests/engineering/T04/evidence/integration.json',
                    'tests/engineering/T02/evidence/r01-integrity.json')
 EXEMPT_VALUE_COUNT = 11
+MUTATION_BATTERY = 44          # 11 values x four de-duplicated single-character positions, no tolerance band
 BARE_METACHARACTER = re.compile(r'[.*+?^${}()\[\]|]')   # wildcard shapes that must never appear
-GUARD = '[^0-9a-f]'                                      # RE2-safe trailing guard for the dots value
+GUARD = '[^0-9a-f]'                                      # RE2-safe one-character guard for the dots value
+# The closed delimiter classes the delivered config is required to use (backtick as \x60 so the
+# entry stays a plain TOML literal string). Left allows what legitimately precedes a quoted value;
+# right allows what legitimately follows it. Neither allows a character that continues the token.
+LEFT = "(?:^|[\\x60'\"=:\\s])"
+RIGHT = "(?:$|[\\x60'\"\\s;])"
+# Assertion lines emitted by each mode, pinned so a silently shrinking battery is a failure.
+# Structure: 5 config-shape + 11 per-value labels + 2 pairing + 1 this guard = 19.
+# Controls, by measured category (this is the 223, not a guess):
+#   18 structure lines + 1 scanner + 10 positive controls + 3 AWS-shape corners + 3 blind-spot
+#   + 68 reverse battery (1 not-void + 11 per-value liveness + 44 one-character mutations
+#     + 1 battery size + 11 unchanged-value-suppressed)
+#   + 99 super-string controls (9 adjacency shapes x 11 values) + 14 span controls + 4 benign
+#   + 1 process-scoped scratch + 1 scratch-deleted + 1 this guard = 223, with 0 void probes.
+# R05 shipped 139: +66 super-string controls (six new adjacency shapes over 11 values), +2 AWS
+# entropy-corner controls, +14 span controls, +1 process-scoped scratch, +1 pin = 223. Nothing was
+# deleted to reach this number; the pin itself caught two wrong guesses (195 and 197) before it was
+# right, and each time the only red line in the run was the pin.
+EXPECTED_STRUCTURE_ASSERTIONS = 19
+EXPECTED_CONTROL_ASSERTIONS = 223
 failures = []
+EMITTED = 0
+
+# gitleaks writes microsecond timings with a 'µ' in its log line, and some of those lines end up in
+# assertion details. On a GBK console (Windows PowerShell default) printing it raises
+# UnicodeEncodeError and kills the whole gate mid-battery - measured in round 6 while running the
+# red-control variants, where the reconstructed-shape note contained '12.3µs'. Reconfigure the
+# stream so the gate degrades to a backslash escape instead of crashing.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, 'reconfigure'):
+        try:
+            _stream.reconfigure(encoding='utf-8', errors='backslashreplace')
+        except (ValueError, OSError):
+            pass
 
 
 def check(label, condition, detail=''):
+    global EMITTED
+    EMITTED += 1
     print(('PASS  ' if condition else 'FAIL  ') + label + (('  [' + str(detail) + ']') if detail else ''))
     if not condition:
         failures.append(label)
@@ -65,20 +110,24 @@ def entries_of(text):
 def unwrap(entry):
     """Split an anchored exception regex into (kind, core-regex, plain-value).
 
-    kind is 'literal' for `\\b<value>\\b` or 'truncated' for the dots value guarded by `[^0-9a-f]`.
-    core-regex still carries regex escapes; plain-value is the un-escaped secret string.
+    Only the closed delimiter classes count as anchored: kind is 'literal' for
+    `LEFT <value> RIGHT` and 'truncated' for `LEFT <hex16>\\... <GUARD> RIGHT`. A bare `\\b`, an
+    entry missing either side, or a wildcard anywhere returns 'unanchored' so the label assertions
+    below go red instead of silently accepting a wider exemption (round-5 R5-1 / A-8).
+    Core-regex still carries regex escapes; plain-value is the un-escaped secret string.
     """
     body = entry
-    anchored = body.startswith(r'\b')
-    if anchored:
-        body = body[2:]
-    if body.endswith(r'\b'):
-        body, kind = body[:-2], 'literal'
-    elif body.endswith(GUARD):
-        body, kind = body[:-len(GUARD)], 'truncated'
+    if not body.startswith(LEFT):
+        return 'unanchored', body, re.sub(r'\\(.)', r'\1', body)
+    body = body[len(LEFT):]
+    truncated = body.endswith(GUARD + RIGHT)
+    if truncated:
+        body = body[:-(len(GUARD) + len(RIGHT))]
+    elif body.endswith(RIGHT):
+        body = body[:-len(RIGHT)]
     else:
-        kind = 'unanchored'
-    return kind, body, re.sub(r'\\(.)', r'\1', body)
+        return 'unanchored', body, re.sub(r'\\(.)', r'\1', body)
+    return ('truncated' if truncated else 'literal'), body, re.sub(r'\\(.)', r'\1', body)
 
 
 def value_of(entry):
@@ -104,13 +153,14 @@ def structure(text):
         bare = re.sub(r'\\.', '', core)
         meta_free = not BARE_METACHARACTER.search(bare)
         if kind == 'literal':
-            label = 'exception is one full literal value, word-boundary anchored, no wildcard'
+            label = 'exception is one full literal value, delimiter-class anchored both sides, no wildcard'
             ok = meta_free and value != entry and len(value) >= 16
         elif kind == 'truncated':
-            label = 'exception is a truncated-prose digest (literal dots + non-hex guard), not a wildcard'
+            label = 'exception is a truncated-prose digest (literal dots + one non-hex character + closed right class), not a wildcard'
             ok = meta_free and value.endswith('...') and len(value) >= 16
         else:
-            label = 'exception is anchored (word-boundary or non-hex guard)'
+            label = ('exception is anchored by the two closed delimiter classes '
+                     '(a bare word boundary or a wildcard tail is too wide)')
             ok = False
         check(label + ': ' + value[:10] + '...', ok, '%s len %d' % (kind, len(value)))
     return [value_of(entry) for entry in entries]
@@ -159,7 +209,14 @@ def resolve_scanner(spec):
 
 
 def canary_block():
-    """Synthetic credential shapes, assembled at runtime so this source never holds one."""
+    """Synthetic credential shapes, assembled at runtime so this source never holds one.
+
+    Three AWS shapes, deliberately one per door of `aws-access-token` (alphabet / entropy /
+    its own EXAMPLE exemption), so the battery is a triangle and not a single near-miss:
+      live      `AKIA` + 16 pure base32 characters, high entropy -> must be caught;
+      alphabet  same string with one `1` (outside A-Z2-7)     -> must NOT be caught (feature);
+      entropy   legal base32, four distinct characters        -> must NOT be caught (feature).
+    """
     token = 'ghp_' + 'SYNTHETICNOTAREALKEY0123456789abcdefghij'
     pem = ('-----BEGIN RSA PRI' 'VATE KEY-----\n'
            'MIIBVgIBADANBgkqhkiG9w0BAQEFAgCVSYNTHETICNOTAREALKEYaaaaaaaaaaaaaaaa\n'
@@ -168,12 +225,15 @@ def canary_block():
     live_akia = 'AKIA' + alphabet                                     # shape aws-access-token matches
     near = list(alphabet)
     near[7] = '1'                                                     # digit outside the A-Z2-7 set
-    near_akia = 'AKIA' + ''.join(near)                                # documented near-miss
+    near_akia = 'AKIA' + ''.join(near)                                # documented alphabet near-miss
+    lowent = 'AKIA' + 'ABCD' * 4                                      # legal base32, entropy 2.0 < 3.0
+    lowent_akia = lowent                                              # documented entropy near-miss
     return (line for line in (
         'github_token: ' + token,
         pem.rstrip('\n'),
         'aws_access_key_id = ' + live_akia,
         'nearmiss_aws_access_key_id = ' + near_akia,
+        'lowentropy_aws_access_key_id = ' + lowent_akia,
     ))
 
 
@@ -196,6 +256,14 @@ def positive_and_blind_spot(gitleaks, scratch):
     aws_hits = [f for f in findings if f['RuleID'] == 'aws-access-token']
     check('AWS-shape control: only the three base32 ids fired (near-miss with 0/1/8/9 stayed silent)',
           len(aws_hits) == 3, 'aws-access-token findings %d' % len(aws_hits))
+    live_suffix = ''.join(chr(ord('A') + i) for i in range(16))
+    lowent_suffix = 'ABCD' * 4
+    fired = [live_suffix in f.get('Match', '') for f in aws_hits]
+    check('AWS-shape control: every aws-access-token finding is the high-entropy live id',
+          all(fired), 'matches %d of %d' % (sum(fired), len(aws_hits)))
+    check('AWS-shape control: the entropy door still leaks a legal-base32 low-entropy id (feature, not defect)',
+          not any(lowent_suffix in f.get('Match', '') for f in aws_hits),
+          'suffix entropy 2.0, whole-match entropy 2.346, rule threshold 3.0')
     pattern = r"'''(?i)(?:SRS-v1\.0\.md|evidence.integration\.json|r01-integrity\.json)'''"
     legacy = scratch / 'legacy-shape.toml'
     legacy.write_text(re.sub(r'(?m)^condition = "AND"$', 'condition = "AND"\npaths = [' + pattern + ']',
@@ -221,6 +289,24 @@ def _probe(tree, name, token):
                              % (token, token), encoding='utf-8', newline='\n')
 
 
+# High-entropy tail used to build super-strings. Characters measured (R06, joiner battery) to
+# continue generic-api-key's Match span: alphanumerics, `_`, `-`, `.`, `=`, `/`, `+`. Those are
+# exactly the joiners an attacker can use, so the battery covers them; `;`, quote, backtick and
+# whitespace end the span and are the delimiters the exceptions are allowed to see.
+TAIL = 'Zk3xQ9mTg7Lp5Rw2'
+SUPER_SHAPES = (
+    ('pre', 'ab{0}', 'alphanumeric prefix'),
+    ('suf', '{0}cd', 'alphanumeric suffix'),
+    ('emb', '0123456789{0}abcdef', 'embedded in alphanumerics'),
+    ('usuf', '{0}_' + TAIL, 'underscore suffix'),
+    ('pdash', TAIL + '-{0}', 'dash prefix'),
+    ('sdash', '{0}-' + TAIL, 'dash suffix'),
+    ('sdot', '{0}.' + TAIL, 'dot suffix'),
+    ('seq', '{0}=' + TAIL, 'equals suffix'),
+    ('mdash', TAIL[:8] + '-{0}-' + TAIL[8:], 'dashes on both sides (mid-token face)'),
+)
+
+
 def reverse_control(gitleaks, scratch, values, defaults):
     tree = scratch / 'reverse'
     tree.mkdir(parents=True)
@@ -241,9 +327,9 @@ def reverse_control(gitleaks, scratch, values, defaults):
         exact = 'case-%02d-exact.json' % number
         _probe(tree, exact, value)
         cases[exact] = (number, 'exact', 'exact')
-        for stag, token in (('pre', 'ab' + value), ('suf', value + 'cd'), ('emb', '0123456789' + value + 'abcdef')):
+        for stag, shape, _ in SUPER_SHAPES:
             name = 'case-%02d-super-%s.json' % (number, stag)
-            _probe(tree, name, token)
+            _probe(tree, name, shape.format(value))
             cases[name] = (number, stag, 'super')
     results, void = {}, []
     for name in sorted(cases):
@@ -262,21 +348,24 @@ def reverse_control(gitleaks, scratch, values, defaults):
         mutated = [name for name, (n, tag, kind) in cases.items() if n == number and kind == 'mutation']
         live = [name for name in mutated if results[name][0]]
         mutation_total += len(live)
-        check('reverse control: at least two single-character probes stay live for value %02d' % number,
-              len(live) >= 2, 'live %d of %d' % (len(live), len(mutated)))
+        check('reverse control: all %d single-character probes stay live for value %02d' % (len(mutated), number),
+              len(live) == len(mutated), 'live %d of %d' % (len(live), len(mutated)))
         for name in live:
             check('reverse control: one-character change in %s is reported again' % name, results[name][1],
                   'gate suppressed it')
-    check('reverse control: the 44-mutation battery is present (>= 40 live single-character probes)',
-          mutation_total >= 40, 'live mutation probes %d' % mutation_total)
+    check('reverse control: the 44-mutation battery is present (exactly 44 live single-character probes)',
+          mutation_total == MUTATION_BATTERY, 'live mutation probes %d / expected exactly %d'
+          % (mutation_total, MUTATION_BATTERY))
 
     for name, (number, stag, kind) in sorted(cases.items()):
         if kind != 'super':
             continue
         if name in void:
             continue
-        check('substring control: super-string %s for value %02d is reported again (not swallowed)' % (stag, number),
-              results[name][1], 'the anchored value exception swallowed a longer token')
+        shape = dict((s, d) for s, _, d in SUPER_SHAPES)[stag]
+        check('substring control: super-string %s for value %02d is reported again (%s, not swallowed)'
+              % (stag, number, shape), results[name][1],
+              'the anchored value exception swallowed a longer token')
 
     for name in sorted(exact_names):
         if name in void:
@@ -285,6 +374,39 @@ def reverse_control(gitleaks, scratch, values, defaults):
               not results[name][1], 'gate reported the exact value')
     if void:
         print('NOTE    probes the rule itself does not report (entropy gate), excluded from the count: %s' % void)
+
+
+def span_control(gitleaks, scratch, values, defaults):
+    """R06 (round-5 R5-1 residual): pin what the rule's Match span actually covers.
+
+    `regexTarget = "match"` means an exception is searched inside the rule's Match text, so whether
+    a joined super-string is the same finding as the exempt value depends on the token class of
+    `generic-api-key`, measured here character by character: `-`, `.`, `=`, `_`, `/`, `+` and
+    alphanumerics CONTINUE the span (so suppressing one of those would be substring allowlisting,
+    and the delivered config must not); `;`, quote, backtick and whitespace TERMINATE it (so a
+    finding whose span ends there is just the exact value, and suppressing it is value
+    allowlisting). This is the falsifiable form of the one residual suppression the battery still
+    shows: if a future scanner or rule lets a span cross whitespace and swallow a longer token,
+    the terminator assertion below goes red instead of the exception quietly becoming a prefix
+    match. The continuation half proves the assertion is not vacuous.
+    """
+    tree = scratch / 'span'
+    tree.mkdir(parents=True)
+    continues = ('-', '.', '=', '_', '/', '+')
+    terminates = (';', chr(34), chr(39), chr(96), ' ')
+    probes = [('continues', ch, values[2]) for ch in continues]
+    probes += [('terminates', ch, values[2]) for ch in terminates]
+    probes += [('continues', '-', values[10]), ('terminates', ' ', values[10]),
+               ('terminates', chr(9), values[10])]
+    for index, (expected, ch, value) in enumerate(probes):
+        name = 'span-%02d.json' % index
+        _probe(tree, name, value + ch + TAIL)
+        code, findings, _ = scan(gitleaks, tree / name, defaults, scratch, 'span-base')
+        covered = any(TAIL in f.get('Match', '') for f in findings)
+        check('span control: value + U+%04X + tail -> the Match span %s the tail (measured, not assumed)'
+              % (ord(ch), 'continues through' if expected == 'continues' else 'stops before'),
+              bool(findings) and covered == (expected == 'continues'),
+              'exit %s; findings %d; tail covered %s; expected %s' % (code, len(findings), covered, expected))
 
 
 def benign_control(gitleaks, scratch, defaults):
@@ -332,6 +454,19 @@ def pairing_gate():
     check('pairing gate: a correctly split record is accepted (guard is not over-eager)', quiet)
 
 
+def count_guard(mode, expected):
+    """Pin the size of the battery (round-5 review section 3, structural weakness 1).
+
+    A probe whose default rule does not fire is excluded from the per-probe assertions, so a
+    widening of the delivered config can turn '139 PASS' into '115 PASS' with nothing failing: the
+    battery shrinks by deletion, not by red. This guard makes the total itself a checked quantity,
+    in both directions, so a shrinking or a padded battery is a failure rather than a smaller number.
+    """
+    check('assertion count: %s mode emits exactly %d assertions (pinned, battery may not shrink or pad)'
+          % (mode, expected), EMITTED + 1 == expected,
+          'emitted %d before this guard, %d with it / expected %d' % (EMITTED, EMITTED + 1, expected))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--gitleaks', default='gitleaks')
@@ -340,6 +475,7 @@ def main():
     values = structure(CONFIG.read_text(encoding='utf-8'))
     pairing_gate()
     if not args.with_controls:
+        count_guard('structure', EXPECTED_STRUCTURE_ASSERTIONS)
         print('GITLEAKS ALLOWLIST POLICY: ' + ('FAILED ' + json.dumps(failures) if failures else 'PASSED (structure only)'))
         raise SystemExit(1 if failures else 0)
     scanner, problem = resolve_scanner(args.gitleaks)
@@ -351,18 +487,27 @@ def main():
     check('pinned scanner runs', version.returncode == 0,
           (version.stdout + version.stderr).decode('utf-8', 'replace').strip())
     WORK.mkdir(exist_ok=True)
-    scratch = WORK / 'allowlist-controls'
+    # The scratch tree is named per process on purpose: two runs in the same working tree (a developer
+    # plus CI, or two agent sessions - which is what happened in this repository today) used to
+    # `rmtree` each other's probe files mid-battery, and the victim's report came out as void probes
+    # and false failures. A crashed run leaves its own directory behind under the gitignored .work
+    # tree; that is the cheaper failure, so nothing sweeps the prefix (sweeping would re-open the race).
+    scratch = WORK / ('allowlist-controls-%d' % os.getpid())
     shutil.rmtree(scratch, ignore_errors=True)
     scratch.mkdir()
+    check('scratch is process-scoped, so a concurrent run cannot delete this run\'s probes',
+          scratch.name == 'allowlist-controls-%d' % os.getpid(), scratch.name)
     try:
         defaults = scratch / 'no-allowlist.toml'
         defaults.write_text('title = "defaults only"\n[extend]\nuseDefault = true\n', encoding='utf-8', newline='\n')
         positive_and_blind_spot(scanner, scratch)
         reverse_control(scanner, scratch, values, defaults)
+        span_control(scanner, scratch, values, defaults)
         benign_control(scanner, scratch, defaults)
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
         check('scratch tree deleted before exit', not scratch.exists(), scratch.relative_to(ROOT).as_posix())
+    count_guard('controls', EXPECTED_CONTROL_ASSERTIONS)
     print('GITLEAKS ALLOWLIST POLICY: ' + ('FAILED ' + json.dumps(failures, ensure_ascii=False) if failures else 'PASSED'))
     raise SystemExit(1 if failures else 0)
 

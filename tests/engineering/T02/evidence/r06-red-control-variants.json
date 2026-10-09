@@ -1,0 +1,107 @@
+{
+  "record": "T02 R06 red-control variants (round-5 review R5-1 reverse half + section 3 pin falsifiability)",
+  "how": "copies of the delivered gate under gitignored tests/engineering/T02/.work/r06-repro/<variant>/ with ROOT/CONFIG/WORK and the pinned totals patched; the delivered files are never touched. Each variant is EXPECTED to exit 1; a variant that goes green would mean the guard is decorative.",
+  "unsyncedVariants": "delivered gate, gate-side LEFT/RIGHT constants unchanged: a non-conforming entry stops yielding a usable probe value, so both the labels and part of the behaviour battery go red together. Still red, still exit 1, but the red is partly \"the entry is not the required shape\" rather than purely behavioural.",
+  "syncedVariants": "same config widening, plus the gate's own LEFT/RIGHT expectation widened to match, so the 11 per-value labels stay green: only the behavioural probes may fail. This is the form that proves the punctuation/underscore super-string controls are load-bearing.",
+  "measured": [
+    {
+      "variant": "pre-change",
+      "verdictLine": "FAILED",
+      "passLines": 170,
+      "failLines": 28,
+      "redGroups": {
+        "exception is anchored by the two closed deli": 11,
+        "reverse control": 13,
+        "span control": 3,
+        "assertion count": 1
+      },
+      "crashed": false,
+      "firstRed": "exception is anchored by the two closed delimiter classes (a bare word boundary or a wildcard tail is too wide): b397c4e7a-...  [unanchored len 38]"
+    },
+    {
+      "variant": "substring-synced",
+      "verdictLine": "FAILED",
+      "passLines": 25,
+      "failLines": 11,
+      "redGroups": {
+        "exception is one full literal value": 11
+      },
+      "crashed": true,
+      "firstRed": "exception is one full literal value, delimiter-class anchored both sides, no wildcard: ...  [literal len 0]"
+    },
+    {
+      "variant": "tamper-pin",
+      "verdictLine": "FAILED",
+      "passLines": 210,
+      "failLines": 1,
+      "redGroups": {
+        "assertion count": 1
+      },
+      "crashed": false,
+      "firstRed": "assertion count: controls mode emits exactly 210 assertions (pinned, battery may not shrink or pad)  [emitted 210 before this guard, 211 with it / exp"
+    },
+    {
+      "variant": "unanchor-one",
+      "verdictLine": "FAILED",
+      "passLines": 33,
+      "failLines": 1,
+      "redGroups": {
+        "exception is anchored by the two closed deli": 1
+      },
+      "crashed": true,
+      "firstRed": "exception is anchored by the two closed delimiter classes (a bare word boundary or a wildcard tail is too wide): 394de144ba...  [unanchored len 64]"
+    },
+    {
+      "variant": "wide-left",
+      "verdictLine": "FAILED",
+      "passLines": 29,
+      "failLines": 39,
+      "redGroups": {
+        "exception is anchored by the two closed deli": 11,
+        "reverse control": 13,
+        "span control": 14,
+        "assertion count": 1
+      },
+      "crashed": false,
+      "firstRed": "exception is anchored by the two closed delimiter classes (a bare word boundary or a wildcard tail is too wide): (?:^|[x60'...  [unanchored len 68]"
+    },
+    {
+      "variant": "wide-left-synced",
+      "verdictLine": "FAILED",
+      "passLines": 200,
+      "failLines": 11,
+      "redGroups": {
+        "substring control": 11
+      },
+      "crashed": false,
+      "firstRed": "substring control: super-string pdash for value 00 is reported again (dash prefix, not swallowed)  [the anchored value exception swallowed a longer to"
+    },
+    {
+      "variant": "wide-right",
+      "verdictLine": "FAILED",
+      "passLines": 29,
+      "failLines": 39,
+      "redGroups": {
+        "exception is anchored by the two closed deli": 11,
+        "reverse control": 13,
+        "span control": 14,
+        "assertion count": 1
+      },
+      "crashed": false,
+      "firstRed": "exception is anchored by the two closed delimiter classes (a bare word boundary or a wildcard tail is too wide): 397c4e7a-d...  [unanchored len 52]"
+    },
+    {
+      "variant": "wide-right-synced",
+      "verdictLine": "FAILED",
+      "passLines": 201,
+      "failLines": 10,
+      "redGroups": {
+        "substring control": 10
+      },
+      "crashed": false,
+      "firstRed": "substring control: super-string sdash for value 00 is reported again (dash suffix, not swallowed)  [the anchored value exception swallowed a longer to"
+    }
+  ],
+  "defectFoundByTheseRuns": "the gate printed gitleaks' microsecond timing (\"12.3 µs\") inside an assertion detail and died with UnicodeEncodeError on a GBK console before finishing the battery; fixed by reconfiguring stdout/stderr to utf-8 with backslashreplace, which is why the delivered script now carries that block",
+  "pinCatchingItsAuthor": "evidence/r06-assertion-count-pin.txt"
+}

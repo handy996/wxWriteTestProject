@@ -1,0 +1,68 @@
+{
+  "record": "T02 R06 behavioural red controls, final battery (9 adjacency shapes, pin 222) - round-5 review R5-1 reverse half (parent ruling 3) and section 3 falsifiability",
+  "command": "$py tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks .tools/t02/gitleaks/gitleaks.exe   (working directory = repository root, run inside a patched copy; exit codes read from the child process)",
+  "whyCopies": "each variant is a patched COPY under the gitignored tests/engineering/T02/.work/r06-repro-final/ tree; the delivered gate and config are never modified by a red control. Copies hold full exempt values in their probe scratch, which is why they cannot be staged and why the evidence recorded here is counts and four-character masks only.",
+  "syncedMeans": "\"synced\" = the gate copy's own LEFT/RIGHT expectation is widened together with the config, so the eleven per-value labels stay green and everything that still fails is behaviour. The unsynchronised form (see evidence/r06-red-control-variants.json) also reddens the labels, which mixes the two halves.",
+  "expected": "every variant exits 1; a variant that went green would prove the guard is decorative",
+  "measured": [
+    {
+      "variant": "pre-change-synced",
+      "passLines": 150,
+      "failLines": 58,
+      "crashed": false,
+      "labelsGreen": 10,
+      "redSuperStringShapes": {
+        "mdash": 10,
+        "pdash": 10,
+        "sdash": 10,
+        "sdot": 10,
+        "seq": 10
+      },
+      "redGroups": {
+        "exception is anchored by the two closed deli": 1,
+        "reverse control": 3,
+        "substring control": 50,
+        "span control": 3,
+        "assertion count": 1
+      },
+      "firstRed": "exception is anchored by the two closed delimiter classes (a bare word boundary or a wildcard tail is too wide): e285…...  [unanchored "
+    },
+    {
+      "variant": "tamper-pin",
+      "passLines": 221,
+      "failLines": 1,
+      "crashed": false,
+      "labelsGreen": 11,
+      "redSuperStringShapes": {},
+      "redGroups": {
+        "assertion count": 1
+      },
+      "firstRed": "assertion count: controls mode emits exactly 221 assertions (pinned, battery may not shrink or pad)  [emitted 221 before this guard, 222 wit"
+    },
+    {
+      "variant": "wide-right-synced",
+      "passLines": 212,
+      "failLines": 10,
+      "crashed": false,
+      "labelsGreen": 11,
+      "redSuperStringShapes": {
+        "sdash": 10
+      },
+      "redGroups": {
+        "substring control": 10
+      },
+      "firstRed": "substring control: super-string sdash for value 00 is reported again (dash suffix, not swallowed)  [the anchored value exception swallowed a"
+    }
+  ],
+  "headline": {
+    "pre-change-synced": "50 super-string controls go red inside the DELIVERED gate when the config is reverted to the round-5 word-boundary form - five punctuation/dash faces x ten values - with ten labels still green. That is the same 50 suppressed cases the round-5 review measured with its own harness, reproduced by a second, independent implementation.",
+    "wide-right-synced": "widening only the RIGHT delimiter class to let a dash through swallows the dash-suffix face: exactly 10 red substring controls, 0 label reds.",
+    "tamper-pin": "moving the pinned assertion total off the measured value makes the count guard the ONLY failing line: 221 PASS / 1 FAIL. The guard cannot be satisfied by deleting probes, and it is not satisfied by the author's arithmetic."
+  },
+  "deliveredGateBaseline": {
+    "controlsAssertions": 222,
+    "structureAssertions": 19,
+    "exit": 0,
+    "voidProbes": 0
+  }
+}
