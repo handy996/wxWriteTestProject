@@ -526,19 +526,23 @@ def main() -> int:
                                     'suitesRequested': wanted, 'problems': problems}
         if problems:
             raise RuntimeError('test totals rejected the run: ' + '; '.join(problems))
-        target = evidence_dir / (args.evidence_name + '-test-results')
-        try:
-            shutil.copytree(reports, target)
-            evidence['testResults'] = inside_repo(target)
-        except OSError as blocked:
-            # A restricted shell may refuse writes under tests/; the reports still live in the ignored work dir.
-            evidence['testResultsCopyBlocked'] = f'{type(blocked).__name__}: {blocked}'
-            evidence['testResults'] = inside_repo(reports)
         exit_code = 0
     except Exception as failure:
         evidence['failure'] = type(failure).__name__ + ': ' + str(failure)
         raise
     finally:
+        # Maven failures and rejected totals still need their original Surefire reports.
+        # Do this before cluster cleanup, which may itself fail.
+        reports = work / 'backend/target/surefire-reports'
+        if reports.is_dir():
+            target = evidence_dir / (args.evidence_name + '-test-results')
+            try:
+                shutil.copytree(reports, target)
+                evidence['testResults'] = inside_repo(target)
+            except OSError as blocked:
+                evidence['testResultsCopyBlocked'] = f'{type(blocked).__name__}: {blocked}'
+                evidence['testResults'] = inside_repo(reports)
+                exit_code = 1
         if container_attempted:
             try:
                 run([docker, 'rm', '--force', '--volumes', container])

@@ -11,6 +11,13 @@ jobs:
       PYTHONUTF8: '1'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Verify fresh checkout
+        run: |
+          test -z "$(git status --porcelain)"
+          test ! -e .tools
+          test ! -e .work
+          mkdir -p .work/ci
+          git rev-parse HEAD > .work/ci/checkout-sha.txt
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24.15.0'
@@ -18,6 +25,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install pinned build tools
+        id: tools
         run: |
           set -eu
           mkdir -p .tools/t02
@@ -58,6 +66,7 @@ jobs:
           python tests/engineering/T02/check_contracts.py
           git diff --exit-code -- docs tests/fixtures tests/contracts
       - name: Backend build, policy tests and dependency inventory
+        id: backend
         run: .tools/t02/apache-maven-3.9.11/bin/mvn -B -ntp -f backend/pom.xml -Dmaven.repo.local="$GITHUB_WORKSPACE/.tools/t02/m2" verify
       - name: Record the current session cookie test run
         run: python tests/engineering/T03/record_guard_binding.py --jdk .tools/t02/jdk-21.0.12.1+1 --evidence-dir .work/ci/t03
@@ -77,11 +86,12 @@ jobs:
             --work-root .work/ci/t08 --evidence-dir .work/ci/t08/evidence \
             --evidence-name ci-cost --expect-tests 65 --expect-skipped 0
       - name: Frontend locked install, types and build
+        id: frontend
         working-directory: frontend
         run: |
           npm ci
           npm run build
-      - name: Secret and dependency scans (fail on findings or unavailable service)
+      - name: Secret scans (fail on findings)
         run: |
           set -eu
           # Exemptions must be value-shaped: a gitleaks allowlist with a paths clause leaves the whole file
@@ -89,10 +99,22 @@ jobs:
           python tests/engineering/T02/secret_scan.py --self-test
           python tests/engineering/T02/check_gitleaks_allowlists.py
           python tests/engineering/T02/secret_scan.py
-          python tests/engineering/T02/scan_secrets.py --gitleaks "${GITLEAKS_BIN:?gitleaks binary unresolved}"
-          python tests/engineering/T02/dependency_scan.py
-          npm --prefix frontend audit
+          mkdir -p .work/ci/scans
+          python tests/engineering/T02/scan_secrets.py --gitleaks "${GITLEAKS_BIN:?gitleaks binary unresolved}" --report .work/ci/scans/gitleaks.json
+      - name: Maven dependency scan (fail on findings or unavailable service)
+        if: ${{ !cancelled() && steps.backend.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          mkdir -p .work/ci/scans
+          python tests/engineering/T02/dependency_scan.py | tee .work/ci/scans/maven-osv.json
+      - name: npm dependency scan (fail on findings or unavailable service)
+        if: ${{ !cancelled() && steps.frontend.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          mkdir -p .work/ci/scans
+          npm --prefix frontend audit --json | tee .work/ci/scans/npm-audit.json
       - name: Gitleaks suppression controls (canary must be caught, benign manifest must stay clean)
+        if: ${{ !cancelled() && steps.tools.outcome == 'success' }}
         run: |
           set -eu
           # Separate step on purpose: earlier these controls sat before the real scans in one bash -e block, so a
@@ -100,9 +122,13 @@ jobs:
           test -x "${GITLEAKS_BIN:?gitleaks binary unresolved}"
           python tests/engineering/T02/check_gitleaks_allowlists.py --with-controls --gitleaks "${GITLEAKS_BIN}"
       - name: Actual Docker topology cold start and repeat migration
+        if: ${{ !cancelled() && steps.backend.outcome == 'success' && steps.frontend.outcome == 'success' }}
         run: |
           python tests/engineering/T02/record.py --name ci-compose-real -- python tests/engineering/T02/compose_smoke.py
           python tests/engineering/T02/record.py --name ci-entrypoint-real -- python tests/engineering/T02/compose_smoke.py --entrypoint
+      - name: Verify report retention after a real Maven test failure
+        if: ${{ !cancelled() && steps.backend.outcome == 'success' }}
+        run: python tests/engineering/CI/probe_failed_reports.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
@@ -114,4 +140,9 @@ jobs:
             tests/engineering/T02/evidence/ci-*.json
             .work/ci/t03/
             .work/ci/t08/evidence/
+            .work/ci/t08/**/backend/target/surefire-reports/
+            .work/ci/checkout-sha.txt
+            .work/ci/scans/
+            .work/ci/report-failure/evidence/
+            .work/ci/report-failure/probe.json
           include-hidden-files: true
