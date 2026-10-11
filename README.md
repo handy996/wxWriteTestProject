@@ -92,4 +92,10 @@ python tests/engineering/T03/check_session_cookie.py --evidence-dir .work/ci/t03
 
 CI 将上传 Cookie 检查记录、T08 运行记录和 Surefire 原始结果。测试数量变化时，须同步审核更新 `--expect-tests`，不能通过允许跳过来满足计数。
 
+各项扫描独立执行；已有构建成功时，后续 npm、Gitleaks 控制、Compose 和失败报告探针会继续运行，任何真实门禁失败仍使流水线失败。探针只在隔离副本新增 1 条必败 JUnit 用例，要求运行器返回失败并保留原始 XML；它不计入正常成本测试的 65 项。上传步骤使用 `always()`，同时收集原始报告目录作为复制失败时的后备路径。
+
+Compose 的后端镜像使用仓库根作为构建上下文，`backend/Dockerfile.dockerignore` 仅放行源码和冻结测试输入。手工构建请在仓库根执行 `docker build -f backend/Dockerfile .`，使容器中的契约夹具测试也实际执行。T02 完整控制还需要历史基线提交，CI 因此使用完整历史检出。
+
 本次验证结果和未闭合事项见 [CI 修复记录](docs/execution/reports/CI-Portability-20261009.md)。离线 Maven 构建不生成 SBOM；依赖扫描须在在线 `verify` 生成清单后执行。
+
+2026-10-11 的 [干净 GitHub Actions 验收](docs/execution/reports/CI-Acceptance-20261011.md) 已完成：Cookie、成本 65 项零跳过、构建/Compose、密钥/npm 扫描及失败报告下载通过；Maven OSV 两项公告仍阻塞整条流水线，按用户决定另行 [Boot 4 迁移](docs/execution/plans/Boot4-Migration.md)。

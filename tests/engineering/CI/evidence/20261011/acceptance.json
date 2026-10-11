@@ -1,0 +1,305 @@
+{
+  "verifiedOn": "2026-10-11",
+  "runUrl": "https://github.com/handy996/wxWriteTestProject/actions/runs/38146179873",
+  "overallConclusion": "failure",
+  "onlyFailedStep": "Maven dependency scan (fail on findings or unavailable service)",
+  "artifact": {
+    "id": 11704783222,
+    "name": "t02-build-evidence",
+    "size_in_bytes": 293432,
+    "url": "https://api.github.com/repos/handy996/wxWriteTestProject/actions/artifacts/11704783222",
+    "archive_download_url": "https://api.github.com/repos/handy996/wxWriteTestProject/actions/artifacts/11704783222/zip",
+    "expired": false,
+    "created_at": "2026-10-11T14:17:47Z",
+    "expires_at": "2027-01-09T14:11:32Z",
+    "updated_at": "2026-10-11T14:17:47Z",
+    "digest": "sha256:a4c3f66117fdd64d84beb188914b6943c43001eeac350fbcc22f870209dabb31",
+    "workflow_run": {
+      "id": 38146179873,
+      "repository_id": 1413927091,
+      "head_repository_id": 1413927091,
+      "head_branch": "codex/ci-clean-checkout-acceptance",
+      "head_sha": "2a232ac272d681cb8f3d14d23650e11411d9e462"
+    }
+  },
+  "verification": {
+    "testedCommit": "2a232ac272d681cb8f3d14d23650e11411d9e462",
+    "zipSha256": "a4c3f66117fdd64d84beb188914b6943c43001eeac350fbcc22f870209dabb31",
+    "artifactFiles": 97,
+    "cookie": {
+      "counts": {
+        "tests": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jdkVersion": "21.0.12.1",
+      "recordedCommand": [
+        ".tools/t02/apache-maven-3.9.11/bin/mvn",
+        "-B",
+        "-ntp",
+        "-o",
+        "-f",
+        "backend/pom.xml",
+        "-Dmaven.repo.local=.tools/t02/m2",
+        "-Dtest=T03SessionCookieGuardTest",
+        "test"
+      ],
+      "negativeRejected": 106,
+      "benignAccepted": 36,
+      "xmlHashMatchesBinding": true
+    },
+    "cost": {
+      "suites": [
+        {
+          "suite": "com.example.editorial.cost.CostPricingTest",
+          "tests": 28,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "com.example.editorial.cost.T08PostgresTest",
+          "tests": 37,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "totals": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "clusterStopped": true
+    },
+    "buildOutputs": {
+      "sbom": true,
+      "frontend": true
+    },
+    "checkoutShaMatches": true,
+    "scans": {
+      "gitleaks.json": [],
+      "maven-osv.json": {
+        "source": "https://api.osv.dev/v1/querybatch",
+        "packagesChecked": 78,
+        "findings": [
+          {
+            "package": {
+              "package": {
+                "ecosystem": "Maven",
+                "name": "org.springframework:spring-webmvc"
+              },
+              "version": "6.2.19"
+            },
+            "advisories": [
+              {
+                "id": "GHSA-j9f9-w8pj-32f8",
+                "modified": "2026-10-07T13:30:04.802772Z"
+              },
+              {
+                "id": "GHSA-pc63-qcmh-9cmg",
+                "modified": "2026-10-05T23:30:04.884745Z"
+              }
+            ]
+          }
+        ]
+      },
+      "npm-audit.json": {
+        "auditReportVersion": 2,
+        "vulnerabilities": {},
+        "metadata": {
+          "vulnerabilities": {
+            "info": 0,
+            "low": 0,
+            "moderate": 0,
+            "high": 0,
+            "critical": 0,
+            "total": 0
+          },
+          "dependencies": {
+            "prod": 48,
+            "dev": 46,
+            "optional": 27,
+            "peer": 6,
+            "peerOptional": 0,
+            "total": 99
+          }
+        }
+      }
+    },
+    "compose": {
+      "coldStartAndRepeatMigration": true,
+      "entrypointUpDownUp": true
+    },
+    "failureReportProbe": {
+      "purpose": "expected failure probe, separate from the mandatory 65-case clean run",
+      "runnerExitCode": 1,
+      "checks": {
+        "runnerFailed": true,
+        "exportedReportReferenced": true,
+        "xmlCounts": true,
+        "expectedFailureOnly": true,
+        "clusterStopped": true,
+        "originalSourceUnchanged": true
+      },
+      "report": ".work/ci/report-failure/evidence/expected-failure-test-results/TEST-com.example.editorial.cost.CostPricingTest.xml",
+      "reportSha256": "32a07ce760c78dc15ca2493ea023ec27a24c3a6b8219e4c8c347029c90284cb5"
+    }
+  },
+  "gitleaksControlAssertions": 223,
+  "workflowSteps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1
+    },
+    {
+      "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2
+    },
+    {
+      "name": "Verify fresh checkout",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3
+    },
+    {
+      "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4
+    },
+    {
+      "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5
+    },
+    {
+      "name": "Install pinned build tools",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6
+    },
+    {
+      "name": "Locate the pinned gitleaks binary",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7
+    },
+    {
+      "name": "Approved contract, schema and cross-language vectors",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8
+    },
+    {
+      "name": "Backend build, policy tests and dependency inventory",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9
+    },
+    {
+      "name": "Record the current session cookie test run",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10
+    },
+    {
+      "name": "Session cookie contract agreement gate",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11
+    },
+    {
+      "name": "Cost contract and wiring checks",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12
+    },
+    {
+      "name": "Cost unit and PostgreSQL tests (65 executed, zero skipped)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13
+    },
+    {
+      "name": "Frontend locked install, types and build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14
+    },
+    {
+      "name": "Secret scans (fail on findings)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15
+    },
+    {
+      "name": "Maven dependency scan (fail on findings or unavailable service)",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 16
+    },
+    {
+      "name": "npm dependency scan (fail on findings or unavailable service)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17
+    },
+    {
+      "name": "Gitleaks suppression controls (canary must be caught, benign manifest must stay clean)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 18
+    },
+    {
+      "name": "Actual Docker topology cold start and repeat migration",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19
+    },
+    {
+      "name": "Verify report retention after a real Maven test failure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20
+    },
+    {
+      "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 21
+    },
+    {
+      "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 40
+    },
+    {
+      "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 41
+    },
+    {
+      "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 42
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 43
+    }
+  ],
+  "scope": "Downloaded Actions ZIP verified locally; no claim that the blocked OSV gate passed. Normal cost 65 excludes the isolated expected-failure probe."
+}

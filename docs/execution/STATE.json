@@ -1,9 +1,9 @@
 {
   "schemaVersion": "editorial.execution.state/1",
   "purpose": "主 agent 唯一状态入口。会话只读本文件 + 任务卡相关段落 + 声明边界内的 diff；规格全文、生成契约与已 PASS 源码不重读。",
-  "capturedAt": "2026-10-09",
+  "capturedAt": "2026-10-11",
   "reviewedBaselineCommit": "b072abe53bd8945993801d35af88335fb0916d0a",
-  "pendingReviewCommit": "T02 R06: dd27f77；T03 R11: 8ba1f36；CI 可移植性/数据库自动执行: 1100fc5。实现与本地验证已分别入库，T02 第六轮、T03 第十一轮独立复审仍待完成。T08 第六轮复审草稿位于未跟踪 docs/execution/reviews/T08-round6/，未纳入本次提交；不认定旧 agent 仍在运行。reviewedBaselineCommit 保持不变。",
+  "pendingReviewCommit": "T02 R06: dd27f77；T03 R11: 8ba1f36；CI 可移植性/数据库自动执行: 1100fc5。实现与本地验证已分别入库，T02 第六轮、T03 第十一轮独立复审仍待完成。T08 第六轮复审草稿位于未跟踪 docs/execution/reviews/T08-round6/，未纳入本次提交；不认定旧 agent 仍在运行。reviewedBaselineCommit 保持不变。 2026-10-11：CI 修复 c121111 / 2a232ac 在验收分支，尚未合并 main；真实 Actions 仅 OSV 两项公告失败，Boot 4 迁移单独登记。",
   "rounds": {
     "T07-3rd": "c12738f → CHANGES_REQUIRED（开 R03）",
     "T07-4th": "b072abe → PASS（关 R03 与 CR-T07-01，新开 R04）",
@@ -38,10 +38,11 @@
     "T08-5th-remediation": "第五轮整改（agent-6ff99be4 实施，主 agent 集成入库 ef2859c：6 路径 / 348,632 B，按归属逐条显式暂存）：F-R5-01 把 `bound_in` 从「五件事出现在体内」改为**数据流**判据（add 的目标环境必须就是 `from(env)` 读的那具环境、体内禁 `new *PropertySource(` 与 `setProperty/merge`、`from(env)` 后再触碰 env 即拒），G1/G2 收编进 MUTATIONS 并证红；实施方**自造两型 H3/H4**（loader 正确解析后在 env 上再拼接平铺写入 / 整段绑定挪进同文件 helper），两者都逃过第四轮的子串检查、只在新数据流子句上转红 ⇒ 它不必写「未找到第三型」。F-R5-02 落点判据由等值改**祖先包含**（共享 helper 同时用于决策与 JSON 字段）、拒绝移到启集群之前（可达，不躲在 `if False:` 后）、门 13 从「读句子」改「读决策」并加 4 条内置反向控制。F-R5-03 自检改用操作者 `--tests`（回显原值 + 剥 `#method` 过滤器 + 报未知套件）。F-R5-04 走**用例钉住**而不重开已裁的 edit-distance 语义权衡（`providers().isEmpty()` 与 `unconfigured()==UNLIMITED` 加进既有 @Test，用例数保持 65）。F-R5-05 `T08.md:122` 的「默认 57」改 65 并补 57→65 逐发现台账，历史运行行（49/57/66/44）**保留**。F-R5-06 `credentials.txt` 两处写去重为一处且 `database=` 仍在",
     "T08-5th-my-integration-runs": "主 agent 代跑（agent-6ff99be4 §L，全部**留存输出**，python 落字节无 BOM）：`check_contracts.py` exit **0**（27 哈希）；`verify.py` exit **0**（16/16）；`verify.py --reverse-control` exit **0**（**77** 条减弱全 [REJECT] + 8 条良性全绿，`blind=none, misplaced=none, brittle=none`，154.9 s）；`run_pg.py --path-selftest --work-root …/evidence` 与 `--work-root …/evidence/sub` 均 exit **1**（`problems` 非空、`insideControlledDirectory=true`，改前是 exit 0）；`--tests \"CostPricingTest#someMethod,NotARealSuite\"` exit **1**（回显 `testsInput` + `methodFilterStripped` 并报未知套件）；交付路径真库整轮 exit **0**，`totals tests=65 / failures=0 / skipped=0`，我**逐份解析 surefire XML 而非信包装器**：单元 `CostPricingTest` **28** + 活库 `T08PostgresTest` **37** = 65（活库 15.142 s，整轮 33.0 s），`expectations.problems=[]`、`evidenceLanding.explicitlyChosen=true`，件 `r5fix-65.json` 18,999 B / `183764ADD66D` + 同名 -test-results 5 份；拒绝半边真实运行 exit **1** 且**不产任何证据**（glob 验证 `r5-should-refuse*` 为空）。仓库根 `backend/target` 全程未被这些副本跑写过（最新 mtime 仍 07:11:20，早于 07:41:35 的 L5 结束）",
     "T08-5th-live-criterion-falsified": "**本轮最重要的一条：一条被双方写成验收标准的期望，在构造上不可能成立。**第五轮复审与第五轮整改方都写「掏空副本的活库整轮应退出非 0」。我原样跑复审方自己的 `r5_gutted_live.py`（`<abs-scratch> <G1|G2|CONTROL> <name>`），先确认削弱**真的被应用**（`changedFromOriginal=true`、G1 一条重写 / G2 两条重写、CONTROL 为空），再测：**G1 与 G2 的活库整轮都 exit 0、65 项全绿**（证据 `r5-main-g1/g2/control.json` 各约 19 KB + 三份 -test-results，入库 d524147）。原因不是漏判而是**行为等价**：G1 结尾照样是 `service(BudgetPolicyConfig.from(env))`，喂进去的值完全相同，所以任何运行时断言都看不见它——而掏空**必须**保持行为，否则测试会因错误的理由红。⇒ (1) 该期望应从验收标准删除，改写为**结构判据**（门 11 的数据流子句）；(2) 绑定证据的可依赖性**全部**压在 `verify.py` 上，活套件对该主张**零覆盖**，这条边界必须写明而不是靠暗示；(3) 若将来有人再拿「活库红了」当绑定类缺陷的闭环证据，那是范畴错误。我已把这条写进协议，并在第六轮派单里要求复审方**自己再造一型行为保持掏空**去撞门 11、同时判定边界是否已如实写明。**顺带撤回我的一句话**：我在 `FORMAL-NO-PROVENANCE-STAMP` 里写「给 formal.py 加 `--produced-by` 并写入 JSON（**与 run_pg.py 一致**）」——我实测 `run_pg.py` 全文 `produced` 出现 **0 次**，**它根本没有这个字段**；`r4-integration-main.json` 里那个 `producedBy` 来自**我当时手写的集成记录**（它的键 `task/note/cluster/suites/totals/purpose` 就不是 run_pg 的输出模式）。我不引用别人的工装能力却不去 grep，就又制造了一次假比较",
-    "integration-20261009": "T02/T03/CI 分组入库；记录器先校验后发布归 T03，相对命令与独立证据目录归 CI。T02 最终计数 19/223；T03 旧 canary 36/57 是残件，已保留并补齐当前 57 项自测；远端 Actions 未运行。见 reports/CI-Portability-20261009.md 与 T03-Revision-R11.md。"
+    "integration-20261009": "T02/T03/CI 分组入库；记录器先校验后发布归 T03，相对命令与独立证据目录归 CI。T02 最终计数 19/223；T03 旧 canary 36/57 是残件，已保留并补齐当前 57 项自测；远端 Actions 未运行。见 reports/CI-Portability-20261009.md 与 T03-Revision-R11.md。",
+    "ci-acceptance-20261011": "BLOCKED（仅 Maven OSV）：2a232ac 的干净 GitHub Actions 38146179873 已完成。Cookie 15/0/0/0、106/36；成本 28+37=65 零失败/错误/跳过；密钥与 npm 扫描、Gitleaks 223、前后端/Compose、真实失败报告探针及下载摘要复算通过。两项 Spring MVC 公告待单独 Boot 4 迁移。见 reports/CI-Acceptance-20261011.md。此为执行验收，不是 T02/T03 独立复审。"
   },
   "integrationBase": "5413cf4",
-  "branch": "main",
+  "branch": "codex/ci-clean-checkout-acceptance",
   "trackedFilesAtReviewedBaseline": 1834,
   "baselineInvariant": "reviewedBaselineCommit 是最后一个已复审的字节基线；其后的提交（包括本文件的后续修订）未经复审，一律不得当作 PASS 依据",
   "contract": {
@@ -1210,12 +1211,22 @@
       "requiredFix": "与 FORMAL-NO-PROVENANCE-STAMP 合并处理：给 `formal.py` 与 `run_pg.py` **都**加 `--produced-by` 并写入 JSON，由主 agent 在两条链的复审结束后改（共享工装，不能让被审方改自己的考题）；改完把「本件由谁跑」变成工件内字段而非散文",
       "openedAt": "2026-10-08",
       "foundBy": "主 agent 准备给自己的代跑补署名时发现 flag 不存在，进而复核出台账里那句「与 run_pg.py 一致」为假"
+    },
+    {
+      "id": "CI-BOOT4-MIGRATION",
+      "task": "CI",
+      "severity": "P2",
+      "status": "OPEN",
+      "issue": "真实干净 Actions 的 spring-webmvc 6.2.19 命中 GHSA-j9f9-w8pj-32f8 / GHSA-pc63-qcmh-9cmg，完整流水线因 OSV 失败。",
+      "requiredFix": "用户选择单独 Boot 4 迁移；按 docs/execution/plans/Boot4-Migration.md 更新依赖并处理兼容性，再实跑全部门禁。不得仅混搭 Spring MVC 7 或豁免公告。",
+      "openedAt": "2026-10-11",
+      "evidence": "tests/engineering/CI/evidence/20261011/acceptance.json"
     }
   ],
   "next": [
     "1) 对已入库 T02 R06 / T03 R11 分别完成独立复审；以当前提交字节和新证据为准，不将本地绿灯作为人工批准。",
     "2) 完成 T08 第六轮复审，修复 T1/T3 YAML 绑定来源判据绕过；明确结构与运行时行为的验收边界，再安排 T09 依赖评估。复审草稿暂不提交。",
-    "3) 配置 Git remote 后触发真实 GitHub Actions，核验固定 JDK 21.0.12.1 的完整构建、Cookie、65 项成本测试、扫描、Compose 与证据上传。当前 Linux 试跑使用 Temurin 21.0.9，不能替代这一验收。",
+    "3) 按用户决定单独实施 Boot 4 迁移（plans/Boot4-Migration.md），清除 Spring MVC 两项公告后重新验收完整流水线；CI 修复分支尚未合并 main，当前 Actions 整体仍因 OSV 失败。",
     "4) 整改 dependency_scan.py 缺 SBOM 的具名诊断，补 formal.py 证据来源标记；离线 verify 不产生 SBOM，不能据此声称依赖扫描通过。",
     "5) T03 继续独立新桩验证和真实失败 Java 前后对照；整组证据发布的 I/O/并发故障恢复尚未验证。",
     "6) 保留人工/环境事项：T03-APPROVAL、T04 B01 私有桶、T01-HUMAN 金标签、配额与 provider/global 语义、COMPAT-INVENTORY、T07 基线重录。T10/T11 持久化调度等仍未实现。"
@@ -1319,9 +1330,9 @@
     "python tests/engineering/T08/verify.py --reverse-control  # 77 削弱拒绝 + 8 良性通过，blind/misplaced/brittle 均 none",
     "python tests/engineering/T08/run_pg.py --docker --work-root .work/ci/t08 --evidence-dir .work/ci/t08/evidence --evidence-name ci-cost --expect-tests 65 --expect-skipped 0  # 28 单元 + 37 真库，失败/错误/跳过均 0；需 Docker、固定工具链与离线缓存",
     "python tests/engineering/T08/run_pg.py --pg-bin <pgsql/bin> --work-root <新目录> --evidence-name <新名> --expect-tests 65 --expect-skipped 0  # 保留原生 PostgreSQL 入口",
-    "python tests/engineering/T02/dependency_scan.py  # 需在线 verify 的 SBOM 和 OSV 可用；缺件诊断仍待整改，本轮未重新验收",
-    "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix frontend audit  # 本轮未重新验收",
-    "python tests/engineering/T02/compose_smoke.py  # 需 Docker，完整 Compose 本轮未重新验收",
+    "python tests/engineering/T02/dependency_scan.py  # 2026-10-11 在线 Actions 扫 78 包，2 项公告；缺 SBOM 诊断仍待整改",
+    "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix frontend audit  # 2026-10-11 Actions 构建通过、0 漏洞",
+    "python tests/engineering/T02/compose_smoke.py  # 2026-10-11 Actions 实跑退出 0，开发入口复跑也为 0",
     "python tests/engineering/T02/compose_smoke.py --entrypoint  # 与前一命令顺序执行，避免 18080 冲突",
     "python tests/engineering/integration/formal.py --suite identity --evidence-name <新名> --inject server.servlet.session.cookie.name=WRONGNAME  # 非零且根因 T03_COOKIE；本轮未重跑，不宣称每条 error 都独立装配失败",
     "python tests/engineering/T07/verify_delivery.py --run revision-v1-first --upgrade upgrade-final --evidence-name <新名>  # T07 基线陈旧事项仍 OPEN"
@@ -1339,26 +1350,26 @@
   },
   "latestIntegrationCommit": "1100fc5b702d2899941f60b5b8d9c9a67b4d12be",
   "currentVerification": {
-    "date": "2026-10-09",
-    "commits": {
-      "T02": "dd27f77",
-      "T03": "8ba1f36",
-      "CI": "1100fc5b702d2899941f60b5b8d9c9a67b4d12be"
-    },
-    "evidence": "tests/engineering/CI/evidence/20261009/",
+    "date": "2026-10-11",
+    "branch": "codex/ci-clean-checkout-acceptance (not merged into main)",
+    "testedCommit": "2a232ac272d681cb8f3d14d23650e11411d9e462",
+    "runUrl": "https://github.com/handy996/wxWriteTestProject/actions/runs/38146179873",
+    "conclusion": "BLOCKED_BY_OSV",
+    "evidence": "tests/engineering/CI/evidence/20261011/acceptance.json",
     "verified": [
-      "T02 19/223、0 NOTE；全量 Gitleaks 0 命中；冻结契约 27 哈希",
-      "T03 Windows/Linux 15 项真运行、106 负向/36 良性；当前完整审计 57 行含 3 红控；7 拒绝发布子场景",
-      "T08 Docker/原生 PostgreSQL 各 65 项零失败/跳过；静态 16；反向 77+8",
-      "可移植性/PG 判定回归 Windows/Linux 9 项；本次 Windows 合计 11 个回归测试方法"
+      "真实 ubuntu-24.04 干净检出；JDK 21.0.12.1；固定工具下载校验，在线 verify 生成 SBOM",
+      "Cookie 当次 15 项零失败/错误/跳过，XML 指纹与 binding 一致，106 负向拒绝、36 良性通过",
+      "成本 CostPricingTest 28 + T08PostgresTest 37 = 65 项，零失败/错误/跳过；集群已停止",
+      "密钥扫描零命中、npm audit 零漏洞、Gitleaks 控制 223；冻结契约、前后端及 Compose 冷启动/重复迁移/开发入口通过",
+      "隔离副本真实 JUnit 失败后 runner exit 1，29 项中恰好 1 项失败，XML 导出；失败流水线上传后已下载工件并复算 ZIP/XML 摘要"
     ],
     "notVerified": [
-      "真实 GitHub Actions 与 CI 固定 JDK 21.0.12.1 下的完整流水线",
-      "在线 SBOM/漏洞扫描、前端及 Compose 本轮未重新验收",
-      "T02/T03 独立复审和人工批准，T08 来源判据绕过整改",
-      "记录器真实失败 Java 前后对照、整组发布的 I/O/并发故障恢复"
+      "Maven OSV 查 78 个包、spring-webmvc 6.2.19 命中两项公告；扫描未通过，Boot 4 迁移未实施",
+      "T02/T03 独立复审、T03 人工批准、T08 来源判据绕过整改及 T04 私有桶等原有开放项",
+      "T03 记录器真实失败 Java 前后对照、整组发布 I/O/并发故障恢复；本轮 T08 报告保留探针不替代这些证明",
+      "默认 Maven 305 项仍跳过 149 项需外部环境的测试，正常成本 65 项零跳过不代表所有套件零跳过"
     ],
-    "preservedUncommitted": "docs/execution/reviews/T08-round6/",
+    "preservedUncommitted": "primary worktree docs/execution/reviews/T08-round6/",
     "reviewedBaselineUnchanged": true
   }
 }
