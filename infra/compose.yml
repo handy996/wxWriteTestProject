@@ -19,7 +19,9 @@ services:
       retries: 20
     restart: unless-stopped
   backend:
-    build: ../backend
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
     environment:
       SPRING_PROFILES_ACTIVE: ${APP_PROFILE:-mock}
       DB_URL: jdbc:postgresql://db:5432/editorial

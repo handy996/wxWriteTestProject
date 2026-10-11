@@ -1,0 +1,15 @@
+# Repository-root context: send only backend sources and frozen test inputs.
+**
+!backend/
+!backend/pom.xml
+!backend/src/
+!backend/src/**
+!docs/
+!docs/schemas/
+!docs/schemas/editorial.schema.json
+!tests/
+!tests/fixtures/
+!tests/fixtures/contracts/
+!tests/fixtures/contracts/T00/
+!tests/fixtures/contracts/T00/rc3/
+!tests/fixtures/contracts/T00/rc3/**
